@@ -1,0 +1,15 @@
+{
+    "parser": "babel-eslint", // 支援es5語法
+    "env": {
+        "es6": true, // 支援es6語法
+        "browser": true, // 會在瀏覽器上跑
+        "node": true // 會在node server上跑
+    },
+    "rules": {
+        // 可討論要不要設定其他rule
+        "react/jsx-filename-extension": 0, // jsx副檔名可以是.js
+        "no-console": "off", // 可以使用console.log
+        "react/jsx-one-expression-per-line": "off" // 不要限制jsx一行只能有一個元件
+    },
+    "extends": ["airbnb", "airbnb/hooks"] // style guideline 使用airbnb style (且支援react hook)
+}
