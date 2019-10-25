@@ -24,3 +24,10 @@ yarn-error.log*
 
 # git credential
 credentials.csv
+
+# Editor settings
+## Webstorm
+/.idea
+## VSCode
+*.code-workspace
+/.vscode
