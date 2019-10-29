@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
-import mapBackgroundImage from '../assets/images/map-bg-image.png';
+import mapBackgroundImage from '../../assets/images/map-bg-image.png';
 
 const useStyles = makeStyles((theme) => ({
   page: {
