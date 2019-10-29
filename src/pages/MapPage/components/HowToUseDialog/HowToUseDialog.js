@@ -19,7 +19,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import NearMeIcon from '@material-ui/icons/NearMe';
 import PersonIcon from '@material-ui/icons/Person';
 
-import HowToUseItem from './HowToUseItem'
+import HowToUseItem from './HowToUseItem';
 
 HowToUseDialog.propTypes = {
   open: PropTypes.bool.isRequired,
