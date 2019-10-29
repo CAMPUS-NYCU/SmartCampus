@@ -7,9 +7,11 @@ import HelpIcon from '@material-ui/icons/Help';
 import NavBottom from './components/NavBottom';
 import mapBackgroundImage from '../../assets/images/map-bg-image.png';
 import HowToUseDialog from './components/HowToUseDialog';
+import SearchBar from './components/SearchBar';
 
 const useStyles = makeStyles((theme) => ({
   map: {
+    position: 'relative',
     height: 'calc(100vh - 56px)',
     width: '100vw',
     // 白色透明 overlay
@@ -39,16 +41,18 @@ export default function MapPage() {
 
   return (
     <div>
-      <div className={classes.map} />
+      <div className={classes.map}>
+        <Fab
+          color="primary"
+          aria-label="how-to-use"
+          className={classes.fab}
+          onClick={handleOpenHelp}
+        >
+          <HelpIcon />
+        </Fab>
+      </div>
 
-      <Fab
-        color="primary"
-        aria-label="how-to-use"
-        className={classes.fab}
-        onClick={handleOpenHelp}
-      >
-        <HelpIcon />
-      </Fab>
+      <SearchBar />
 
       <NavBottom />
 
