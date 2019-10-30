@@ -28,7 +28,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginPage() {
+export default function LoginPage(props) {
+  const {
+    signInWithGoogle,
+    signOut,
+    user,
+  } = props;
   const classes = useStyles();
 
   return (
@@ -36,32 +41,57 @@ export default function LoginPage() {
       <Card className={classes.card}>
         <CardContent>
           <Box m={2}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Sign in with Google
-            </Button>
+            {
+              user
+                ? <p>Hello, {user.displayName}</p>
+                : <p>Please sign in.</p>
+            }
           </Box>
-          <Box m={2}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Sign in with Facebook
-            </Button>
-          </Box>
-          <Box m={2}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Sign in with NCTU Portal
-            </Button>
-          </Box>
+          {
+            user ? (
+              <Box m={2}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={signOut}
+                >
+                  Sign Out
+                </Button>
+              </Box>
+            ) : (
+              <>
+                <Box m={2}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={signInWithGoogle}
+                  >
+                    Sign in with Google
+                  </Button>
+                </Box>
+                <Box m={2}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                  >
+                    Sign in with Facebook
+                  </Button>
+                </Box>
+                <Box m={2}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                  >
+                    Sign in with NCTU Portal
+                  </Button>
+                </Box>
+              </>
+            )
+          }
         </CardContent>
       </Card>
     </div>
