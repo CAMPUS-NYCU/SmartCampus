@@ -23,6 +23,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firebaseAppAuth = firebaseApp.auth();
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
+  facebookProvider: new firebase.auth.FacebookAuthProvider(),
 };
 
 const theme = createMuiTheme({
@@ -32,6 +33,7 @@ function App(props) {
   const {
     /** These props are provided by withFirebaseAuth HOC */
     signInWithGoogle,
+    signInWithFacebook,
     signOut,
     user,
   } = props;
@@ -51,6 +53,7 @@ function App(props) {
             <Route path={LOGIN_PATH} exact>
               <LoginPage
                 signInWithGoogle={signInWithGoogle}
+                signInWithFacebook={signInWithFacebook}
                 signOut={signOut}
                 user={user}
               />

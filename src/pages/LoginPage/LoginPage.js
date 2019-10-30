@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage(props) {
   const {
     signInWithGoogle,
+    signInWithFacebook,
     signOut,
     user,
   } = props;
@@ -76,6 +77,7 @@ export default function LoginPage(props) {
                     fullWidth
                     variant="contained"
                     color="primary"
+                    onClick={signInWithFacebook}
                   >
                     Sign in with Facebook
                   </Button>
@@ -85,6 +87,7 @@ export default function LoginPage(props) {
                     fullWidth
                     variant="contained"
                     color="primary"
+                    disabled
                   >
                     Sign in with NCTU Portal
                   </Button>
