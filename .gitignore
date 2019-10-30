@@ -34,3 +34,6 @@ credentials.csv
 
 # environment files
 .env
+
+# firebase caches
+.firebase
