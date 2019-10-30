@@ -31,3 +31,6 @@ credentials.csv
 ## VSCode
 *.code-workspace
 /.vscode
+
+# environment files
+.env
