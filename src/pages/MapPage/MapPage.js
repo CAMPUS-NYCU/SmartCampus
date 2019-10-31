@@ -31,6 +31,7 @@ export default function MapPage() {
       <Fab
         color="primary"
         aria-label="how-to-use"
+        size="small"
         className={classes.fab}
         onClick={handleOpenHelp}
       >
