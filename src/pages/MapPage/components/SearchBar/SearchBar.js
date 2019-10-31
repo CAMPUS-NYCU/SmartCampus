@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 
+import ProfilePopover from './ProfilePopover';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
@@ -34,21 +36,36 @@ const useStyles = makeStyles((theme) => ({
 function SearchBar() {
   const classes = useStyles();
 
+  const [profileAnchorEl, setProfileAnchorEl] = React.useState(null);
+  const handleClickProfile = (event) => setProfileAnchorEl(event.currentTarget);
+  const handleCloseProfile = () => setProfileAnchorEl(null);
+
   return (
-    <Paper className={classes.root}>
-      <IconButton className={classes.iconButton} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      <InputBase
-        className={classes.input}
-        placeholder="Search"
-        inputProps={{ 'aria-label': 'search' }}
+    <>
+      <Paper className={classes.root}>
+        <IconButton className={classes.iconButton} aria-label="search">
+          <SearchIcon />
+        </IconButton>
+        <InputBase
+          className={classes.input}
+          placeholder="Search"
+          inputProps={{ 'aria-label': 'search' }}
+        />
+        <Divider className={classes.divider} orientation="vertical" />
+        <IconButton
+          className={classes.iconButton}
+          aria-label="profile"
+          onClick={handleClickProfile}
+        >
+          <PersonIcon />
+        </IconButton>
+      </Paper>
+
+      <ProfilePopover
+        anchorEl={profileAnchorEl}
+        handleClose={handleCloseProfile}
       />
-      <Divider className={classes.divider} orientation="vertical" />
-      <IconButton className={classes.iconButton} aria-label="profile">
-        <PersonIcon />
-      </IconButton>
-    </Paper>
+    </>
   );
 }
 
