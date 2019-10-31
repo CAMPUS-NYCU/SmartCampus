@@ -32,6 +32,7 @@ function Map() {
     <ReactMapGL
       {...viewport}
       onViewportChange={setViewport}
+      mapStyle="mapbox://styles/mapbox/outdoors-v10"
       mapboxApiAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
     >
       <div className={classes.navigation}>
