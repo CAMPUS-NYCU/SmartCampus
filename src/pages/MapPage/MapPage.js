@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import HelpIcon from '@material-ui/icons/Help';
 
-import NavBottom from './components/NavBottom';
 import HowToUseDialog from './components/HowToUseDialog';
 import SearchBar from './components/SearchBar';
 import Map from './components/Map';
@@ -12,7 +11,7 @@ import Map from './components/Map';
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: 'absolute',
-    bottom: 56 + theme.spacing(4),
+    bottom: theme.spacing(4),
     right: theme.spacing(2),
   },
 }));
@@ -39,8 +38,6 @@ export default function MapPage() {
       </Fab>
 
       <SearchBar />
-
-      <NavBottom />
 
       <HowToUseDialog
         open={helpOpen}

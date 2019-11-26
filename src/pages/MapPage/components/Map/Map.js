@@ -20,7 +20,7 @@ function Map() {
   const classes = useStyles();
   const INITIAL_VIEWPORT = {
     width: '100vw',
-    height: 'calc(100vh - 56px)',
+    height: '100vh',
     longitude: 120.9969249, // 交大經緯度
     latitude: 24.7872616,
     zoom: 17,
