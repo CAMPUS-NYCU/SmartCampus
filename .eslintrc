@@ -10,7 +10,8 @@
         "react/jsx-filename-extension": 0, // jsx副檔名可以是.js
         "no-console": "off", // 可以使用console.log
         "react/jsx-one-expression-per-line": "off", // 不要限制jsx一行只能有一個元件
-        "no-use-before-define": 0 // 讓 function 可在定義前就被使用，PropTypes 定義才能放在檔案最上方
+        "no-use-before-define": 0, // 讓 function 可在定義前就被使用，PropTypes 定義才能放在檔案最上方
+        "react/jsx-props-no-spreading": 0 // 可以 prop spreading
     },
     "extends": ["airbnb", "airbnb/hooks"] // style guideline 使用airbnb style (且支援react hook)
 }
