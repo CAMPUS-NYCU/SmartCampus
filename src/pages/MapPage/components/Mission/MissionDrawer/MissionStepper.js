@@ -31,6 +31,9 @@ const useStyles = makeStyles({
     width: '100%',
     backgroundColor: 'rgba(0,0,0,0)', // 不要預設的灰底
   },
+  button: {
+    minWidth: 80,
+  },
 });
 
 function MissionStepper(props) {
@@ -56,22 +59,22 @@ function MissionStepper(props) {
       className={classes.stepper}
       backButton={
         step <= minStep ? (
-          <Button size="small" onClick={handleCloseDrawer}>
+          <Button size="small" onClick={handleCloseDrawer} className={classes.button}>
             <CloseIcon fontSize="small" /> 關閉
           </Button>
         ) : (
-          <Button size="small" onClick={handleBack}>
+          <Button size="small" onClick={handleBack} className={classes.button}>
             <KeyboardArrowLeft /> 上一步
           </Button>
         )
       }
       nextButton={
         step >= maxStep ? (
-          <Button color="primary" size="small" onClick={handleComplete}>
+          <Button color="primary" size="small" onClick={handleComplete} className={classes.button}>
             完成 <DoneIcon fontSize="small" />
           </Button>
         ) : (
-          <Button size="small" onClick={handleNext} disabled={step === maxStep}>
+          <Button size="small" onClick={handleNext} disabled={step === maxStep} className={classes.button}>
             下一步 <KeyboardArrowRight />
           </Button>
         )
