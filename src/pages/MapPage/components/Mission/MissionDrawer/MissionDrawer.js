@@ -17,6 +17,7 @@ import MissionStep5 from './MissionStep5';
 MissionDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  handleAddMissionComplete: PropTypes.func.isRequired,
 };
 
 const MAX_STEP = 4;
@@ -38,6 +39,7 @@ function MissionDrawer(props) {
   const {
     open,
     onClose,
+    handleAddMissionComplete,
   } = props;
   const classes = useStyles();
 
@@ -77,7 +79,7 @@ function MissionDrawer(props) {
           maxStep={MAX_STEP}
           minStep={MIN_STEP}
           handleCloseDrawer={onClose}
-          handleComplete={onClose}
+          handleComplete={handleAddMissionComplete}
         />
       </div>
     </Drawer>

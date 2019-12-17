@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MapPage() {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [helpOpen, setHelpOpen] = React.useState(false);
   const handleOpenHelp = () => setHelpOpen(true);
@@ -28,12 +30,21 @@ export default function MapPage() {
 
   const missionDrawer = useModal();
 
+  const handleAddMissionComplete = () => {
+    missionDrawer.setClose();
+    enqueueSnackbar('標注完成', { variant: 'success' });
+  };
+
   return (
     <div>
       <Map />
 
       <MissionFab onClick={missionDrawer.setOpen} />
-      <MissionDrawer open={missionDrawer.open} onClose={missionDrawer.setClose} />
+      <MissionDrawer
+        open={missionDrawer.open}
+        onClose={missionDrawer.setClose}
+        handleAddMissionComplete={handleAddMissionComplete}
+      />
 
       <Fab
         color="primary"
