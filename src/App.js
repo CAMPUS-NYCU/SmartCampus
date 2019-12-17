@@ -15,7 +15,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import firebaseConfig from './constants/firebaseConfig';
 import { INDEX_PATH, MAP_PATH, LOGIN_PATH } from './constants/pageUrls';
 import MapPage from './pages/MapPage';
-import IndexPage from './pages/IndexPage';
 import LoginPage from './pages/LoginPage';
 
 // Firebase Google authentication settings
@@ -45,7 +44,7 @@ function App(props) {
         <BrowserRouter>
           <Switch>
             <Route path={INDEX_PATH} exact>
-              <IndexPage />
+              <MapPage />
             </Route>
             <Route path={MAP_PATH} exact>
               <MapPage />
