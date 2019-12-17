@@ -6,11 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
 import FlagIcon from '@material-ui/icons/Flag';
 import CloseIcon from '@material-ui/icons/Close';
 import LayersIcon from '@material-ui/icons/Layers';
@@ -22,8 +19,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import HowToUseItem from './HowToUseItem';
 
 HowToUseDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  control: PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    setClose: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -37,24 +36,26 @@ const useStyles = makeStyles((theme) => ({
 
 
 function HowToUseDialog(props) {
-  const { open, handleClose } = props;
+  const {
+    control: {
+      open,
+      setClose,
+    },
+  } = props;
   const classes = useStyles();
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <Dialog
-      onClose={handleClose}
+      onClose={setClose}
       aria-labelledby="how-to-use-dialog"
       open={open}
-      fullScreen={fullScreen}
       fullWidth
     >
-      <DialogTitle disableTypography onClose={handleClose}>
+      <DialogTitle disableTypography onClose={setClose}>
         <Typography variant="h6">
           如何使用
         </Typography>
-        <IconButton aria-label="close" className={classes.closeButton} onClick={handleClose}>
+        <IconButton aria-label="close" className={classes.closeButton} onClick={setClose}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -96,11 +97,6 @@ function HowToUseDialog(props) {
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={handleClose} color="primary">
-          OK
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }

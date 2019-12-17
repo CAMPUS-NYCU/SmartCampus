@@ -11,6 +11,7 @@ import Map from './components/Map';
 import useModal from '../../utils/hooks/useModal';
 import MissionFab from './components/Mission/MissionFab';
 import MissionDrawer from './components/Mission/MissionDrawer';
+import ProfileDialog from './components/ProfileDialog/ProfileDialog';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -24,10 +25,8 @@ export default function MapPage() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [helpOpen, setHelpOpen] = React.useState(false);
-  const handleOpenHelp = () => setHelpOpen(true);
-  const handleCloseHelp = () => setHelpOpen(false);
-
+  const howToUseDialogControl = useModal();
+  const profileDialogControl = useModal();
   const missionDrawer = useModal();
 
   const handleAddMissionComplete = () => {
@@ -51,17 +50,23 @@ export default function MapPage() {
         aria-label="how-to-use"
         size="small"
         className={classes.fab}
-        onClick={handleOpenHelp}
+        onClick={howToUseDialogControl.setOpen}
       >
         <HelpIcon />
       </Fab>
 
-      <SearchBar />
-
-      <HowToUseDialog
-        open={helpOpen}
-        handleClose={handleCloseHelp}
+      <SearchBar
+        menuControls={{
+          handleOpenProfile: profileDialogControl.setOpen,
+          handleOpenHistory: profileDialogControl.setOpen,
+          handleOpenSetting: profileDialogControl.setOpen,
+          handleOpenHowToUse: howToUseDialogControl.setOpen,
+          handleOpenTerms: profileDialogControl.setOpen,
+        }}
       />
+
+      <ProfileDialog control={profileDialogControl} />
+      <HowToUseDialog control={howToUseDialogControl} />
     </div>
   );
 }

@@ -1,14 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import PersonIcon from '@material-ui/icons/Person';
+import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
-import ProfilePopover from './ProfilePopover';
+import useMenu from '../../../../utils/hooks/useMenu';
+import SearchBarMenu from './SearchBarMenu';
+
+SearchBar.propTypes = {
+  menuControls: PropTypes.object.isRequired,
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,12 +39,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchBar() {
+function SearchBar(props) {
+  const { menuControls } = props;
   const classes = useStyles();
-
-  const [profileAnchorEl, setProfileAnchorEl] = React.useState(null);
-  const handleClickProfile = (event) => setProfileAnchorEl(event.currentTarget);
-  const handleCloseProfile = () => setProfileAnchorEl(null);
+  const menuControl = useMenu();
 
   return (
     <>
@@ -54,16 +58,16 @@ function SearchBar() {
         <Divider className={classes.divider} orientation="vertical" />
         <IconButton
           className={classes.iconButton}
-          aria-label="profile"
-          onClick={handleClickProfile}
+          aria-label="menu"
+          onClick={menuControl.setOpen}
         >
-          <PersonIcon />
+          <MenuIcon />
         </IconButton>
       </Paper>
 
-      <ProfilePopover
-        anchorEl={profileAnchorEl}
-        handleClose={handleCloseProfile}
+      <SearchBarMenu
+        control={menuControl}
+        menuControls={menuControls}
       />
     </>
   );
