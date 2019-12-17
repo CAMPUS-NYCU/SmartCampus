@@ -3,6 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import HelpIcon from '@material-ui/icons/Help';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
 
 import HowToUseDialog from './components/HowToUseDialog';
 import SearchBar from './components/SearchBar';
@@ -13,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: theme.spacing(4),
     right: theme.spacing(2),
+  },
+  missionFab: {
+    position: 'absolute',
+    bottom: theme.spacing(4),
+    left: 'calc(50vw - 28px)',
   },
 }));
 
@@ -26,6 +32,16 @@ export default function MapPage() {
   return (
     <div>
       <Map />
+
+      <Fab
+        color="primary"
+        aria-label="mission"
+        size="large"
+        className={classes.missionFab}
+        // onClick={handleOpenHelp}
+      >
+        <AddLocationIcon fontSize="large" />
+      </Fab>
 
       <Fab
         color="primary"
