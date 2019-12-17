@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,6 +17,8 @@ MissionStepper.propTypes = {
   }).isRequired,
   maxStep: PropTypes.number.isRequired,
   minStep: PropTypes.number,
+  handleCloseDrawer: PropTypes.func.isRequired,
+  handleComplete: PropTypes.func.isRequired,
 };
 MissionStepper.defaultProps = {
   minStep: 0,
@@ -22,7 +26,10 @@ MissionStepper.defaultProps = {
 
 const useStyles = makeStyles({
   stepper: {
-    flexGrow: 1,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0)', // 不要預設的灰底
   },
 });
 
@@ -35,6 +42,8 @@ function MissionStepper(props) {
     },
     maxStep,
     minStep,
+    handleCloseDrawer,
+    handleComplete,
   } = props;
   const classes = useStyles();
 
@@ -45,16 +54,28 @@ function MissionStepper(props) {
       position="static"
       activeStep={step}
       className={classes.stepper}
-      nextButton={(
-        <Button size="small" onClick={handleNext} disabled={step === maxStep}>
-          下一步 <KeyboardArrowRight />
-        </Button>
-      )}
-      backButton={(
-        <Button size="small" onClick={handleBack} disabled={step === minStep}>
-          <KeyboardArrowLeft /> 上一步
-        </Button>
-      )}
+      backButton={
+        step <= minStep ? (
+          <Button size="small" onClick={handleCloseDrawer}>
+            <CloseIcon fontSize="small" /> 關閉
+          </Button>
+        ) : (
+          <Button size="small" onClick={handleBack}>
+            <KeyboardArrowLeft /> 上一步
+          </Button>
+        )
+      }
+      nextButton={
+        step >= maxStep ? (
+          <Button color="primary" size="small" onClick={handleComplete}>
+            完成 <DoneIcon fontSize="small" />
+          </Button>
+        ) : (
+          <Button size="small" onClick={handleNext} disabled={step === maxStep}>
+            下一步 <KeyboardArrowRight />
+          </Button>
+        )
+      }
     />
   );
 }
