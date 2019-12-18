@@ -12,10 +12,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import useMenu from '../../../../utils/hooks/useMenu';
 import SearchBarMenu from './SearchBarMenu';
 
-SearchBar.propTypes = {
-  menuControls: PropTypes.object.isRequired,
-};
-
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
@@ -39,13 +35,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchBar(props) {
-  const { menuControls } = props;
+
+const SearchBar = React.forwardRef((props, ref) => {
+  const {
+    menuControls,
+    ...otherProps
+  } = props;
   const classes = useStyles();
   const menuControl = useMenu();
 
   return (
-    <>
+    <div ref={ref} {...otherProps}>
       <Paper className={classes.root}>
         <IconButton className={classes.iconButton} aria-label="search">
           <SearchIcon />
@@ -69,8 +69,12 @@ function SearchBar(props) {
         control={menuControl}
         menuControls={menuControls}
       />
-    </>
+    </div>
   );
-}
+});
+
+SearchBar.propTypes = {
+  menuControls: PropTypes.object.isRequired,
+};
 
 export default SearchBar;
