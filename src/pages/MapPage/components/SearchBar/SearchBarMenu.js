@@ -7,6 +7,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
+import HistoryIcon from '@material-ui/icons/History';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HelpIcon from '@material-ui/icons/Help';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import { makeStyles } from '@material-ui/core/styles';
 
 SearchBarMenu.propTypes = {
@@ -25,12 +29,9 @@ SearchBarMenu.propTypes = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  list: {
-    minWidth: 160,
-  },
   listIcon: {
     minWidth: 0,
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
 }));
 
@@ -51,6 +52,39 @@ function SearchBarMenu(props) {
   } = props;
   const classes = useStyles();
 
+  const menuItems = [
+    {
+      id: 1,
+      text: '個人資料',
+      action: handleOpenProfile,
+      icon: <PersonIcon />,
+    },
+    {
+      id: 2,
+      text: '歷史回報',
+      action: handleOpenHistory,
+      icon: <HistoryIcon />,
+    },
+    {
+      id: 3,
+      text: '通知設定',
+      action: handleOpenSetting,
+      icon: <SettingsIcon />,
+    },
+    {
+      id: 4,
+      text: '功能介紹',
+      action: handleOpenHowToUse,
+      icon: <HelpIcon />,
+    },
+    {
+      id: 5,
+      text: '條款事項',
+      action: handleOpenTerms,
+      icon: <AssignmentIcon />,
+    },
+  ];
+
   return (
     <Popover
       open={open}
@@ -66,80 +100,23 @@ function SearchBarMenu(props) {
       }}
     >
       <List className={classes.list} dense disablePadding>
-        <ListItem
-          button
-          dense
-          divider
-          onClick={() => {
-            handleOpenProfile();
-            setClose();
-          }}
-        >
-          <ListItemIcon className={classes.listIcon}>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="個人資料" />
-        </ListItem>
-
-        <ListItem
-          button
-          dense
-          divider
-          onClick={() => {
-            handleOpenHistory();
-            setClose();
-          }}
-        >
-          <ListItemIcon className={classes.listIcon}>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="歷史回報" />
-        </ListItem>
-
-        <ListItem
-          button
-          dense
-          divider
-          onClick={() => {
-            handleOpenSetting();
-            setClose();
-          }}
-        >
-          <ListItemIcon className={classes.listIcon}>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="通知設定" />
-        </ListItem>
-
-        <ListItem
-          button
-          dense
-          divider
-          onClick={() => {
-            handleOpenHowToUse();
-            setClose();
-          }}
-        >
-          <ListItemIcon className={classes.listIcon}>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="功能介紹" />
-        </ListItem>
-
-        <ListItem
-          button
-          dense
-          divider
-          onClick={() => {
-            handleOpenTerms();
-            setClose();
-          }}
-        >
-          <ListItemIcon className={classes.listIcon}>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="條款事項" />
-        </ListItem>
+        {menuItems.map((item) => (
+          <ListItem
+            key={item.id}
+            button
+            dense
+            divider
+            onClick={() => {
+              item.action();
+              setClose();
+            }}
+          >
+            <ListItemIcon className={classes.listIcon}>
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItem>
+        ))}
       </List>
     </Popover>
   );
