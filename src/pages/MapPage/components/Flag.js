@@ -12,11 +12,13 @@ Flag.defaultProps = {
 
 function Flag({ size, ...other }) {
   return (
-    <img
-      src={flagImg}
-      alt="flag icon"
+    <div
       style={{
+        display: 'inline-block',
         height: size,
+        width: size,
+        objectFit: 'cover',
+        backgroundImage: `url(${flagImg})`,
       }}
       {...other}
     />
