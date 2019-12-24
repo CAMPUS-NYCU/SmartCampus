@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import { useMissionValue } from '../../../contexts/MissionContext';
-import flagImg from '../../../../../assets/images/red-flag.svg';
+import Flag from '../../Flag';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
   roundButton: {
     borderRadius: 15,
-    margin: theme.spacing(1),
-  },
-  flagImg: {
-    height: 20,
-    margin: theme.spacing(1),
   },
 }));
 
@@ -38,19 +33,23 @@ function MissionBar(props) {
   return (
     <Paper className={classes.root} {...props}>
       <Box display="flex" alignItems="center">
-        <img src={flagImg} className={classes.flagImg} alt="flag icon" />
+        <Box m={1}>
+          <Flag />
+        </Box>
         <Typography>
           標注
         </Typography>
       </Box>
-      <Button
-        onClick={handleCloseMission}
-        className={classes.roundButton}
-        variant="outlined"
-        size="small"
-      >
+      <Box m={1}>
+        <Button
+          onClick={handleCloseMission}
+          className={classes.roundButton}
+          variant="outlined"
+          size="small"
+        >
         取消
-      </Button>
+        </Button>
+      </Box>
     </Paper>
   );
 }
