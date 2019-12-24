@@ -16,12 +16,12 @@ import { MissionStep, useMissionValue } from '../../../contexts/MissionContext';
 const useStyles = makeStyles({
   drawerContent: {
     minHeight: 150,
-    height: '20vh',
+    height: window.innerHeight * 0.2,
     width: '100%',
   },
   drawerContentFull: {
     minHeight: 400,
-    height: '85vh',
+    height: window.innerHeight * 0.85,
   },
 });
 

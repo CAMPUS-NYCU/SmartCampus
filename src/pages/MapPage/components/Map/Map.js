@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -19,7 +19,7 @@ function Map(props) {
 
   return (
     <div style={{
-      height: '100vh',
+      height: window.innerHeight,
       width: '100vw',
     }}
     >

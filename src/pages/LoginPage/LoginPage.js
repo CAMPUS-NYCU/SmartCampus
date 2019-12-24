@@ -10,7 +10,7 @@ import mapBackgroundImage from '../../assets/images/map-bg-image.png';
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    height: '100vh',
+    height: window.innerHeight,
     width: '100vw',
     // 白色透明 overlay
     background: `linear-gradient(0deg,rgba(255,255,255,0.7),rgba(255,255,255,0.7)),url(${mapBackgroundImage})`,
