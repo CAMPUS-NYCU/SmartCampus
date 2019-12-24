@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import AccessibilitySelect from './AccessibilitySelect';
-import { useMissionValue } from '../../../../contexts/MissionContext';
+import { SubOptionOther, useMissionValue } from '../../../../contexts/MissionContext';
 import { Missions } from '../../../../constants/missionData';
 
 function MissionStep4() {
@@ -14,6 +14,8 @@ function MissionStep4() {
     selectedMissionId,
     selectedSubOptionId,
     setSelectedSubOptionId,
+    subOptionOtherText,
+    handleChangeSubOptionOtherText,
   } = useMissionValue();
 
   // selectedMission
@@ -48,12 +50,20 @@ function MissionStep4() {
           ))}
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <TextField
-          label="其他"
-          fullWidth
-        />
-      </Grid>
+
+      {selectedSubOptionId === SubOptionOther && (
+        <Grid item xs={12}>
+          <TextField
+            name="subOptionOtherText"
+            label="其他"
+            fullWidth
+            margin="dense"
+            onChange={handleChangeSubOptionOtherText}
+            value={subOptionOtherText}
+          />
+        </Grid>
+      )}
+
       <Grid item xs={12}>
         <Typography>
           Accessibility:

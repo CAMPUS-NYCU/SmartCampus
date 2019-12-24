@@ -1,3 +1,5 @@
+import { SubOptionOther } from '../contexts/MissionContext';
+
 export const Missions = [
   // ==================== 無障礙設施 ====================
   {
@@ -29,6 +31,10 @@ export const Missions = [
         {
           id: 6,
           name: '廁所',
+        },
+        {
+          id: SubOptionOther,
+          name: '其他',
         },
       ],
     },
@@ -72,6 +78,10 @@ export const Missions = [
         {
           id: 5,
           name: '垃圾堆積',
+        },
+        {
+          id: SubOptionOther,
+          name: '其他',
         },
       ],
     },

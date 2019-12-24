@@ -56,9 +56,9 @@ export const MissionContext = React.createContext({
   handleSetMarkerPosition: () => {},
   handleSetSelectedMissionId: () => {},
   setSelectedSubOptionId: () => {},
-  setSubOptionOtherText: () => {},
+  handleChangeSubOptionOtherText: () => {},
   setSelectedSubRate: () => {},
-  setMoreDescriptionText: () => {},
+  handleChangeMoreDescriptionText: () => {},
   setPhotos: () => {},
   ...InitialMissionValue,
 });
@@ -132,8 +132,10 @@ export const MissionContextProvider = ({ children }) => {
   };
   const [selectedSubOptionId, setSelectedSubOptionId] = useState(InitialMissionValue.selectedSubOptionId);
   const [subOptionOtherText, setSubOptionOtherText] = useState(InitialMissionValue.subOptionOtherText);
+  const handleChangeSubOptionOtherText = (event) => setSubOptionOtherText(event.target.value);
   const [selectedSubRate, setSelectedSubRate] = useState(InitialMissionValue.selectedSubRate);
   const [moreDescriptionText, setMoreDescriptionText] = useState(InitialMissionValue.moreDescriptionText);
+  const handleChangeMoreDescriptionText = (event) => setMoreDescriptionText(event.target.value);
   const [photos, setPhotos] = useState(InitialMissionValue.photos);
 
   const clearMissionData = () => {
@@ -167,11 +169,11 @@ export const MissionContextProvider = ({ children }) => {
     selectedSubOptionId,
     setSelectedSubOptionId,
     subOptionOtherText,
-    setSubOptionOtherText,
+    handleChangeSubOptionOtherText,
     selectedSubRate,
     setSelectedSubRate,
     moreDescriptionText,
-    setMoreDescriptionText,
+    handleChangeMoreDescriptionText,
     photos,
     setPhotos,
   };
