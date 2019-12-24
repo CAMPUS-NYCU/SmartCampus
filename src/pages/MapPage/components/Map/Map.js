@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import React  from 'react';
 
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../../../../constants/envValues';
 import { useMissionValue } from '../../contexts/MissionContext';
-
-const INITIAL_VIEWPORT = {
-  longitude: 120.9969249, // 交大經緯度
-  latitude: 24.7872616,
-  zoom: 17,
-};
+import Flag from '../Flag';
 
 function Map(props) {
-  const { handleToggleShowControl } = useMissionValue();
-
-  const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
-
-  const onViewportChange = (newViewport) => {
-    const { width, height, ...other } = newViewport;
-    setViewport(other);
-  };
+  const {
+    handleToggleShowControl,
+    isInMission,
+    viewport,
+    handleViewportChange,
+    markerPosition,
+    handleSetMarkerPosition,
+  } = useMissionValue();
 
   return (
     <div style={{
@@ -33,11 +28,24 @@ function Map(props) {
         width="100%"
         {...viewport}
         onClick={handleToggleShowControl}
-        onViewportChange={onViewportChange}
+        onViewportChange={handleViewportChange}
         mapStyle="mapbox://styles/mapbox/outdoors-v10"
         mapboxApiAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
         {...props}
-      />
+      >
+        {isInMission && (
+          <Marker
+            longitude={markerPosition.longitude}
+            latitude={markerPosition.latitude}
+            offsetTop={-30}
+            offsetLeft={-3}
+            draggable
+            onDragEnd={handleSetMarkerPosition}
+          >
+            <Flag size={30} />
+          </Marker>
+        )}
+      </ReactMapGL>
     </div>
   );
 }
