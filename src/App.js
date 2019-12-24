@@ -11,7 +11,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -19,6 +19,7 @@ import firebaseConfig from './constants/firebaseConfig';
 import { INDEX_PATH, MAP_PATH, LOGIN_PATH } from './constants/pageUrls';
 import MapPage from './pages/MapPage';
 import LoginPage from './pages/LoginPage';
+import { theme } from './utils/theme';
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -27,9 +28,6 @@ const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
   facebookProvider: new firebase.auth.FacebookAuthProvider(),
 };
-
-const theme = createMuiTheme({
-});
 
 function App(props) {
   const {
