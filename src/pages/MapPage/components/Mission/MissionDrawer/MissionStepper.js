@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -8,21 +7,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import { makeStyles } from '@material-ui/core/styles';
-
-MissionStepper.propTypes = {
-  control: PropTypes.shape({
-    step: PropTypes.number.isRequired,
-    handleNext: PropTypes.func.isRequired,
-    handleBack: PropTypes.func.isRequired,
-  }).isRequired,
-  maxStep: PropTypes.number.isRequired,
-  minStep: PropTypes.number,
-  handleCloseDrawer: PropTypes.func.isRequired,
-  handleComplete: PropTypes.func.isRequired,
-};
-MissionStepper.defaultProps = {
-  minStep: 0,
-};
+import {
+  MISSION_MAX_STEP,
+  MISSION_MIN_STEP,
+  MISSION_NUM_STEPS,
+  useMissionValue,
+} from '../../../contexts/MissionContext';
 
 const useStyles = makeStyles({
   stepper: {
@@ -37,29 +27,25 @@ const useStyles = makeStyles({
 });
 
 function MissionStepper(props) {
-  const {
-    control: {
-      step,
-      handleNext,
-      handleBack,
-    },
-    maxStep,
-    minStep,
-    handleCloseDrawer,
-    handleComplete,
-  } = props;
   const classes = useStyles();
+  const {
+    currentStep,
+    handleBack,
+    handleNext,
+    handleCompleteMission,
+    handleCloseMission,
+  } = useMissionValue();
 
   return (
     <MobileStepper
       variant="dots"
-      steps={maxStep + 1}
+      steps={MISSION_NUM_STEPS}
       position="static"
-      activeStep={step}
+      activeStep={currentStep}
       className={classes.stepper}
       backButton={
-        step <= minStep ? (
-          <Button size="small" onClick={handleCloseDrawer} className={classes.button}>
+        currentStep <= MISSION_MIN_STEP ? (
+          <Button size="small" onClick={handleCloseMission} className={classes.button}>
             <CloseIcon fontSize="small" /> 關閉
           </Button>
         ) : (
@@ -69,16 +55,17 @@ function MissionStepper(props) {
         )
       }
       nextButton={
-        step >= maxStep ? (
-          <Button color="primary" size="small" onClick={handleComplete} className={classes.button}>
+        currentStep >= MISSION_MAX_STEP ? (
+          <Button color="primary" size="small" onClick={handleCompleteMission} className={classes.button}>
             完成 <DoneIcon fontSize="small" />
           </Button>
         ) : (
-          <Button size="small" onClick={handleNext} disabled={step === maxStep} className={classes.button}>
+          <Button size="small" onClick={handleNext} className={classes.button}>
             下一步 <KeyboardArrowRight />
           </Button>
         )
       }
+      {...props}
     />
   );
 }

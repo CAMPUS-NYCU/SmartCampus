@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { useMissionValue } from '../../../contexts/MissionContext';
 
 const useStyles = makeStyles((theme) => ({
   missionFab: {
@@ -14,10 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MissionFab = React.forwardRef((props, ref) => {
-  const {
-    onClick,
-    ...otherProps
-  } = props;
+  const { handleStartMission } = useMissionValue();
   const classes = useStyles();
   return (
     <Fab
@@ -25,20 +23,13 @@ const MissionFab = React.forwardRef((props, ref) => {
       aria-label="mission"
       size="large"
       className={classes.missionFab}
-      onClick={onClick}
+      onClick={handleStartMission}
       ref={ref}
-      {...otherProps}
+      {...props}
     >
       <AddLocationIcon fontSize="large" />
     </Fab>
   );
 });
-
-MissionFab.propTypes = {
-  onClick: PropTypes.func,
-};
-MissionFab.defaultProps = {
-  onClick: null,
-};
 
 export default MissionFab;

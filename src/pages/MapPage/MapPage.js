@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSnackbar } from 'notistack';
 
 import Fade from '@material-ui/core/Fade';
 
@@ -10,23 +9,24 @@ import useModal from '../../utils/hooks/useModal';
 import MissionFab from './components/Mission/MissionFab';
 import MissionDrawer from './components/Mission/MissionDrawer';
 import ProfileDialog from './components/ProfileDialog/ProfileDialog';
+import { MissionContextProvider } from './contexts/MissionContext';
 
 export default function MapPage() {
-  const { enqueueSnackbar } = useSnackbar();
+  return (
+    <MissionContextProvider>
+      <MapPageContent />
+    </MissionContextProvider>
+  );
+}
 
+const MapPageContent = () => {
   const howToUseDialogControl = useModal();
   const profileDialogControl = useModal();
-  const missionDrawer = useModal();
 
   // 是否顯示各控制元件，點地圖來toggle
   const [showControl, setShowControl] = useState(true);
   const handleMapClick = () => {
     setShowControl(!showControl);
-  };
-
-  const handleAddMissionComplete = () => {
-    missionDrawer.setClose();
-    enqueueSnackbar('標注完成', { variant: 'success' });
   };
 
   return (
@@ -36,13 +36,9 @@ export default function MapPage() {
       />
 
       <Fade in={showControl}>
-        <MissionFab onClick={missionDrawer.setOpen} />
+        <MissionFab />
       </Fade>
-      <MissionDrawer
-        open={missionDrawer.open}
-        onClose={missionDrawer.setClose}
-        handleAddMissionComplete={handleAddMissionComplete}
-      />
+      <MissionDrawer />
 
       <Fade in={showControl}>
         <SearchBar
@@ -60,4 +56,4 @@ export default function MapPage() {
       <HowToUseDialog control={howToUseDialogControl} />
     </div>
   );
-}
+};
