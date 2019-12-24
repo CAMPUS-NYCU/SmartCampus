@@ -18,13 +18,6 @@ const ThemeSettings = {
         textTransform: 'none !important',
       },
     },
-    /* 設定 input 和 select 背景色為白色，預設是透明 */
-    MuiInputBase: {
-      root: {
-        backgroundColor: 'white !important',
-        borderRadius: 4, // 須設定 border，否則白色背景會凸出 border
-      },
-    },
   },
 };
 
