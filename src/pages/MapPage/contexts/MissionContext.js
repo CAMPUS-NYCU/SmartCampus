@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
@@ -26,6 +26,8 @@ export const MissionContext = React.createContext({
   handleStartMission: () => {},
   handleCloseMission: () => {},
   handleCompleteMission: () => {},
+  showControl: true,
+  handleToggleShowControl: () => {},
 });
 
 export const MissionContextProvider = ({ children }) => {
@@ -40,8 +42,17 @@ export const MissionContextProvider = ({ children }) => {
     maxStep: MISSION_MAX_STEP,
     minStep: MISSION_MIN_STEP,
   });
+  const isInMission = currentStep >= MissionStep.PlaceFlagOnMap;
+
+  // 是否顯示各控制元件，點地圖來toggle
+  const [showControl, setShowControl] = useState(true);
+  const handleToggleShowControl = () => {
+    if (isInMission) return; // 正在標注中就不能調整
+    setShowControl(!showControl);
+  };
 
   const handleStartMission = () => {
+    setShowControl(true);
     setStep(MissionStep.PlaceFlagOnMap);
   };
 
@@ -56,13 +67,15 @@ export const MissionContextProvider = ({ children }) => {
 
   const contextValues = {
     currentStep,
-    isInMission: currentStep >= MissionStep.PlaceFlagOnMap,
+    isInMission,
     handleBack,
     handleNext,
     handleSetStep: setStep,
     handleStartMission,
     handleCloseMission,
     handleCompleteMission,
+    showControl,
+    handleToggleShowControl,
   };
   return (
     <MissionContext.Provider value={contextValues}>

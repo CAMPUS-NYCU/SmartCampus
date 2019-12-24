@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import ReactMapGL from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../../../../constants/envValues';
+import { useMissionValue } from '../../contexts/MissionContext';
 
-Map.propTypes = {
-  handleMapClick: PropTypes.func.isRequired,
+const INITIAL_VIEWPORT = {
+  longitude: 120.9969249, // 交大經緯度
+  latitude: 24.7872616,
+  zoom: 17,
 };
 
 function Map(props) {
-  const { handleMapClick } = props;
-
-  const INITIAL_VIEWPORT = {
-    longitude: 120.9969249, // 交大經緯度
-    latitude: 24.7872616,
-    zoom: 17,
-  };
+  const { handleToggleShowControl } = useMissionValue();
 
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
 
@@ -36,10 +32,11 @@ function Map(props) {
         height="100%"
         width="100%"
         {...viewport}
-        onClick={handleMapClick}
+        onClick={handleToggleShowControl}
         onViewportChange={onViewportChange}
         mapStyle="mapbox://styles/mapbox/outdoors-v10"
         mapboxApiAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
+        {...props}
       />
     </div>
   );
