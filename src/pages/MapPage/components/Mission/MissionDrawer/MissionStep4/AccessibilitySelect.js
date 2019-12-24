@@ -5,35 +5,34 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-const getHintText = (rating) => {
-  // TODO 確認 hint 文字
-  switch (rating) {
-    case 1:
-      return '完全無法使用';
-    case 2:
-      return '不方便使用';
-    case 3:
-      return '可以使用，些微損毀';
-    case 4:
-      return '能使用';
-    case 5:
-      return '方便使用';
-    default:
-      return '';
-  }
-};
+import { Missions } from '../../../../constants/missionData';
+import { useMissionValue } from '../../../../contexts/MissionContext';
 
 function AccessibilitySelect() {
-  const [rating, setRating] = React.useState(0);
+  const {
+    selectedMissionId,
+    selectedSubRate,
+    setSelectedSubRate,
+  } = useMissionValue();
+
+  // selectedMission
+  const {
+    subRate: {
+      textMin = '',
+      textMax = '',
+      textEachStar = [],
+    } = {},
+  } = Missions.find((mission) => mission.id === selectedMissionId) || {};
 
   return (
     <div>
       <Box display="flex" justifyContent="center" mt={1}>
         <Rating
-          value={rating}
+          value={selectedSubRate}
           onChange={(event, newValue) => {
-            setRating(newValue);
+            setSelectedSubRate(newValue);
           }}
+          max={textEachStar.length}
           size="large"
           emptyIcon={<StarBorderIcon fontSize="inherit" />}
         />
@@ -41,16 +40,16 @@ function AccessibilitySelect() {
 
       <Box display="flex" justifyContent="space-between" mb={1}>
         <Typography variant="body2">
-          不能使用
+          {textMin}
         </Typography>
         <Typography variant="body2">
-          方便使用
+          {textMax}
         </Typography>
       </Box>
 
       <Box my={4}>
         <Typography variant="subtitle1" align="center" color="primary">
-          {getHintText(rating)}
+          {textEachStar[selectedSubRate - 1]}
         </Typography>
       </Box>
     </div>

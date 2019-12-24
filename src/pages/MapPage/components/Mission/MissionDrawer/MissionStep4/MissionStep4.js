@@ -21,8 +21,11 @@ function MissionStep4() {
   // selectedMission
   const {
     subOption: {
-      title = '尚未選擇標註任務，請返回上一步', // 正常流程不會出現
+      subOptionTitle = '尚未選擇標註任務，請返回上一步', // 正常流程不會出現
       options = [],
+    } = {},
+    subRate: {
+      subRateTitle = '',
     } = {},
   } = Missions.find((mission) => mission.id === selectedMissionId) || {};
 
@@ -30,7 +33,7 @@ function MissionStep4() {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography>
-          4. {title}
+          4. {subOptionTitle}
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -66,7 +69,7 @@ function MissionStep4() {
 
       <Grid item xs={12}>
         <Typography>
-          Accessibility:
+          {subRateTitle}
         </Typography>
       </Grid>
       <Grid item xs={12}>
