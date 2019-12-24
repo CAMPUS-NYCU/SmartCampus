@@ -10,6 +10,7 @@ import MissionFab from './components/Mission/MissionFab';
 import MissionDrawer from './components/Mission/MissionDrawer';
 import ProfileDialog from './components/ProfileDialog/ProfileDialog';
 import { MissionContextProvider, useMissionValue } from './contexts/MissionContext';
+import MissionBar from './components/Mission/MissionBar';
 
 export default function MapPage() {
   return (
@@ -22,7 +23,7 @@ export default function MapPage() {
 const MapPageContent = () => {
   const howToUseDialogControl = useModal();
   const profileDialogControl = useModal();
-  const { showControl } = useMissionValue();
+  const { showControl, isInMission } = useMissionValue();
 
   return (
     <div>
@@ -34,15 +35,21 @@ const MapPageContent = () => {
       <MissionDrawer />
 
       <Fade in={showControl}>
-        <SearchBar
-          menuControls={{
-            handleOpenProfile: profileDialogControl.setOpen,
-            handleOpenHistory: profileDialogControl.setOpen,
-            handleOpenSetting: profileDialogControl.setOpen,
-            handleOpenHowToUse: howToUseDialogControl.setOpen,
-            handleOpenTerms: profileDialogControl.setOpen,
-          }}
-        />
+        {
+          isInMission ? (
+            <MissionBar />
+          ) : (
+            <SearchBar
+              menuControls={{
+                handleOpenProfile: profileDialogControl.setOpen,
+                handleOpenHistory: profileDialogControl.setOpen,
+                handleOpenSetting: profileDialogControl.setOpen,
+                handleOpenHowToUse: howToUseDialogControl.setOpen,
+                handleOpenTerms: profileDialogControl.setOpen,
+              }}
+            />
+          )
+        }
       </Fade>
 
       <ProfileDialog control={profileDialogControl} />
