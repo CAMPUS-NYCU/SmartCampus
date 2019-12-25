@@ -17,6 +17,8 @@ const useStyles = makeStyles({
   drawerContent: {
     minHeight: 150,
     height: window.innerHeight * 0.2,
+    transitionProperty: 'height min-height',
+    transitionDuration: '0.3s',
     width: '100%',
   },
   drawerContentFull: {
