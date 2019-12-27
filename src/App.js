@@ -58,7 +58,7 @@ function App(props) {
           preventDuplicate
           ref={notistackRef}
           action={(key) => (
-            <IconButton onClick={onClickDismiss(key)} style={{ color: 'white' }}>
+            <IconButton onClick={onClickDismiss(key)} style={{ color: 'white' }} size="small">
               <CloseIcon color="inherit" />
             </IconButton>
           )}
