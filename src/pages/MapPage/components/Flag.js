@@ -10,7 +10,7 @@ Flag.defaultProps = {
   size: 20,
 };
 
-function Flag({ size, ...other }) {
+function Flag({ size }) {
   return (
     <div
       style={{
@@ -20,7 +20,6 @@ function Flag({ size, ...other }) {
         objectFit: 'cover',
         backgroundImage: `url(${flagImg})`,
       }}
-      {...other}
     />
   );
 }
