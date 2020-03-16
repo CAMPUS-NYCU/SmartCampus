@@ -10,6 +10,8 @@ import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
+import { ApolloProvider } from '@apollo/react-hooks';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,6 +22,7 @@ import { INDEX_PATH, MAP_PATH, LOGIN_PATH } from './constants/pageUrls';
 import MapPage from './pages/MapPage';
 import LoginPage from './pages/LoginPage';
 import { theme } from './utils/theme';
+import { apolloClient } from './utils/grahpql';
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -45,9 +48,9 @@ function App(props) {
   };
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ApolloProvider client={apolloClient}>
         <SnackbarProvider
           maxSnack={1}
           autoHideDuration={2000}
@@ -82,8 +85,8 @@ function App(props) {
             </Switch>
           </BrowserRouter>
         </SnackbarProvider>
-      </ThemeProvider>
-    </>
+      </ApolloProvider>
+    </ThemeProvider>
   );
 }
 

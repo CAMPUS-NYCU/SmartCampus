@@ -4,6 +4,8 @@ import GoogleMapReact from 'google-map-react';
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues';
 import { useMissionValue } from '../../contexts/MissionContext';
 import Flag from '../Flag';
+import { useTagValue } from '../../contexts/TagContext';
+import Tag from '../Tag';
 
 function Map() {
   const {
@@ -15,6 +17,7 @@ function Map() {
     markerPosition,
     // handleSetMarkerPosition,
   } = useMissionValue();
+  const { tags } = useTagValue();
 
   return (
     <div style={{
@@ -34,6 +37,13 @@ function Map() {
           fullscreenControl: false,
         }}
       >
+        {tags.map((tag) => (
+          <Tag
+            key={tag.id}
+            lng={tag.coordinates.longitude}
+            lat={tag.coordinates.latitude}
+          />
+        ))}
         {isInMission && (
           <Flag
             lng={markerPosition.longitude}

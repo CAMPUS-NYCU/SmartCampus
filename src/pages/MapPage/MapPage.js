@@ -11,12 +11,15 @@ import MissionDrawer from './components/Mission/MissionDrawer';
 import ProfileDialog from './components/ProfileDialog/ProfileDialog';
 import { MissionContextProvider, useMissionValue } from './contexts/MissionContext';
 import MissionBar from './components/Mission/MissionBar';
+import { TagContextProvider } from './contexts/TagContext';
 
 export default function MapPage() {
   return (
-    <MissionContextProvider>
-      <MapPageContent />
-    </MissionContextProvider>
+    <TagContextProvider>
+      <MissionContextProvider>
+        <MapPageContent />
+      </MissionContextProvider>
+    </TagContextProvider>
   );
 }
 

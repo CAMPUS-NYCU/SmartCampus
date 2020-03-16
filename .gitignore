@@ -37,3 +37,7 @@ credentials.csv
 
 # firebase caches
 .firebase
+
+# graphql
+.graphqlconfig
+schema.graphql
