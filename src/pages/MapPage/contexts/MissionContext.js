@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
 import useStep from '../../../utils/hooks/useStep';
-
-const INITIAL_VIEWPORT = {
-  longitude: 120.9969249, // 交大經緯度
-  latitude: 24.7872616,
-  zoom: 17,
-};
+import { DefaultCenter, DefaultZoom } from '../constants/mapConstants';
 
 export const MISSION_MAX_STEP = 4;
 export const MISSION_MIN_STEP = 0;
@@ -50,8 +45,9 @@ export const MissionContext = React.createContext({
   handleCloseMission: () => {},
   handleCompleteMission: () => {},
   showControl: true,
-  viewport: INITIAL_VIEWPORT,
-  handleViewportChange: () => {},
+  center: DefaultCenter,
+  zoom: DefaultZoom,
+  handleMapChange: () => {},
   handleToggleShowControl: () => {},
   handleSetMarkerPosition: () => {},
   handleSetSelectedMissionId: () => {},
@@ -81,8 +77,8 @@ export const MissionContextProvider = ({ children }) => {
   const handleStartMission = () => {
     setShowControl(true);
     setMarkerPosition({
-      longitude: viewport.longitude,
-      latitude: viewport.latitude,
+      longitude: center.lng,
+      latitude: center.lat,
     });
     setStep(MissionStep.PlaceFlagOnMap);
   };
@@ -105,11 +101,11 @@ export const MissionContextProvider = ({ children }) => {
   };
 
   // ==================== Map viewport control ====================
-  const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
-
-  const handleViewportChange = (newViewport) => {
-    const { width, height, ...other } = newViewport;
-    setViewport(other);
+  const [center, setCenter] = React.useState(DefaultCenter);
+  const [zoom, setZoom] = React.useState(DefaultZoom);
+  const handleMapChange = ({ center: newCenter, zoom: newZoom }) => {
+    setCenter(newCenter);
+    setZoom(newZoom);
   };
 
   // ==================== Marker control ====================
@@ -160,8 +156,9 @@ export const MissionContextProvider = ({ children }) => {
     handleCompleteMission,
     showControl,
     handleToggleShowControl,
-    viewport,
-    handleViewportChange,
+    center,
+    zoom,
+    handleMapChange,
     markerPosition,
     handleSetMarkerPosition,
     selectedMissionId,

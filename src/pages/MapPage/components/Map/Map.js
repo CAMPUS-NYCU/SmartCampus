@@ -1,20 +1,19 @@
 import React from 'react';
+import GoogleMapReact from 'google-map-react';
 
-import ReactMapGL, { Marker } from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-
-import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../../../../constants/envValues';
+import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues';
 import { useMissionValue } from '../../contexts/MissionContext';
 import Flag from '../Flag';
 
-function Map(props) {
+function Map() {
   const {
     handleToggleShowControl,
     isInMission,
-    viewport,
-    handleViewportChange,
+    center,
+    zoom,
+    handleMapChange,
     markerPosition,
-    handleSetMarkerPosition,
+    // handleSetMarkerPosition,
   } = useMissionValue();
 
   return (
@@ -23,29 +22,27 @@ function Map(props) {
       width: '100vw',
     }}
     >
-      <ReactMapGL
-        height="100%"
-        width="100%"
-        {...viewport}
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: REACT_APP_GOOGLE_MAP_API_KEY }}
+        center={center}
+        zoom={zoom}
+        onChange={handleMapChange}
         onClick={handleToggleShowControl}
-        onViewportChange={handleViewportChange}
-        mapStyle="mapbox://styles/mapbox/outdoors-v10"
-        mapboxApiAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
-        {...props}
+        // onChildClick={onMapChildClick} // click on marker
+        options={{
+          clickableIcons: false,
+          fullscreenControl: false,
+        }}
       >
         {isInMission && (
-          <Marker
-            longitude={markerPosition.longitude}
-            latitude={markerPosition.latitude}
-            offsetTop={-30}
-            offsetLeft={-3}
-            draggable
-            onDragEnd={handleSetMarkerPosition}
-          >
-            <Flag size={30} />
-          </Marker>
+          <Flag
+            lng={markerPosition.longitude}
+            lat={markerPosition.latitude}
+            size={30}
+            // onDragEnd={handleSetMarkerPosition} // from mapbox
+          />
         )}
-      </ReactMapGL>
+      </GoogleMapReact>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-// MapBox
-export const REACT_APP_MAPBOX_ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
+// Google Map
+export const REACT_APP_GOOGLE_MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY || '';
 
 // Firebase
 export const REACT_APP_FIREBASE_API_KEY = process.env.REACT_APP_FIREBASE_API_KEY || '';
