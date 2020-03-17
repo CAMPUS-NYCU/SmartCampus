@@ -21,11 +21,11 @@ function MissionStep4() {
   // selectedMission
   const {
     subOption: {
-      subOptionTitle = '尚未選擇標註任務，請返回上一步', // 正常流程不會出現
+      title: subOptionTitle = '尚未選擇標註任務，請返回上一步', // 正常流程不會出現
       options = [],
     } = {},
     subRate: {
-      subRateTitle = '',
+      title: subRateTitle = '',
     } = {},
   } = Missions.find((mission) => mission.id === selectedMissionId) || {};
 
