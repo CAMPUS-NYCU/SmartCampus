@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
 import useStep from '../../../utils/hooks/useStep';
-import { DefaultCenter, DefaultZoom } from '../constants/mapConstants';
 
 export const MISSION_MAX_STEP = 4;
 export const MISSION_MIN_STEP = 0;
@@ -45,9 +44,6 @@ export const MissionContext = React.createContext({
   handleCloseMission: () => {},
   handleCompleteMission: () => {},
   showControl: true,
-  center: DefaultCenter,
-  zoom: DefaultZoom,
-  handleMapChange: () => {},
   handleToggleShowControl: () => {},
   handleSetMarkerPosition: () => {},
   handleSetSelectedMissionId: () => {},
@@ -56,6 +52,7 @@ export const MissionContext = React.createContext({
   setSelectedSubRate: () => {},
   handleChangeMoreDescriptionText: () => {},
   setPhotos: () => {},
+  handleMapOnLoad: () => {},
   ...InitialMissionValue,
 });
 
@@ -76,9 +73,10 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleStartMission = () => {
     setShowControl(true);
+    const center = mapInstance.getCenter();
     setMarkerPosition({
-      longitude: center.lng,
-      latitude: center.lat,
+      longitude: center.lng(),
+      latitude: center.lat(),
     });
     setStep(MissionStep.PlaceFlagOnMap);
   };
@@ -101,19 +99,17 @@ export const MissionContextProvider = ({ children }) => {
   };
 
   // ==================== Map viewport control ====================
-  const [center, setCenter] = React.useState(DefaultCenter);
-  const [zoom, setZoom] = React.useState(DefaultZoom);
-  const handleMapChange = ({ center: newCenter, zoom: newZoom }) => {
-    setCenter(newCenter);
-    setZoom(newZoom);
+  const [mapInstance, setMapInstance] = React.useState(null);
+  const handleMapOnLoad = (map) => {
+    setMapInstance(map);
   };
 
   // ==================== Marker control ====================
   const [markerPosition, setMarkerPosition] = useState(InitialMissionValue.markerPosition);
   const handleSetMarkerPosition = (event) => {
     setMarkerPosition({
-      longitude: event.lngLat[0],
-      latitude: event.lngLat[1],
+      longitude: event.latLng.lng(),
+      latitude: event.latLng.lat(),
     });
   };
 
@@ -156,9 +152,6 @@ export const MissionContextProvider = ({ children }) => {
     handleCompleteMission,
     showControl,
     handleToggleShowControl,
-    center,
-    zoom,
-    handleMapChange,
     markerPosition,
     handleSetMarkerPosition,
     selectedMissionId,
@@ -173,6 +166,7 @@ export const MissionContextProvider = ({ children }) => {
     handleChangeMoreDescriptionText,
     photos,
     setPhotos,
+    handleMapOnLoad,
   };
   return (
     <MissionContext.Provider value={contextValues}>

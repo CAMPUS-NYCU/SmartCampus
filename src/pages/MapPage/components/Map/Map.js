@@ -1,21 +1,20 @@
 import React from 'react';
-import GoogleMapReact from 'google-map-react';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues';
 import { useMissionValue } from '../../contexts/MissionContext';
-import Flag from '../Flag';
 import { useTagValue } from '../../contexts/TagContext';
-import Tag from '../Tag';
+import HandicapIcon from '../../../../assets/images/handicap-icon.svg';
+import flagImg from '../../../../assets/images/red-flag.svg';
+import { DefaultCenter, DefaultZoom } from '../../constants/mapConstants';
 
 function Map() {
   const {
     handleToggleShowControl,
     isInMission,
-    center,
-    zoom,
-    handleMapChange,
     markerPosition,
-    // handleSetMarkerPosition,
+    handleSetMarkerPosition,
+    handleMapOnLoad,
   } = useMissionValue();
   const { tags } = useTagValue();
 
@@ -25,34 +24,38 @@ function Map() {
       width: '100vw',
     }}
     >
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: REACT_APP_GOOGLE_MAP_API_KEY }}
-        center={center}
-        zoom={zoom}
-        onChange={handleMapChange}
-        onClick={handleToggleShowControl}
-        // onChildClick={onMapChildClick} // click on marker
-        options={{
-          clickableIcons: false,
-          fullscreenControl: false,
-        }}
-      >
-        {tags.map((tag) => (
-          <Tag
-            key={tag.id}
-            lng={tag.coordinates.longitude}
-            lat={tag.coordinates.latitude}
+      <LoadScript googleMapsApiKey={REACT_APP_GOOGLE_MAP_API_KEY}>
+        <GoogleMap
+          clickableIcons={false}
+          center={DefaultCenter}
+          zoom={DefaultZoom}
+          onClick={handleToggleShowControl}
+          onLoad={handleMapOnLoad}
+          mapContainerStyle={{
+            height: '100%',
+            width: '100%',
+          }}
+        >
+          {tags.map((tag) => (
+            <Marker
+              key={tag.id}
+              position={tag.position}
+              icon={{ url: HandicapIcon, scaledSize: { width: 20, height: 20 } }}
+            />
+          ))}
+          {isInMission && (
+          <Marker
+            draggable
+            onDragEnd={handleSetMarkerPosition}
+            position={{
+              lat: markerPosition.latitude,
+              lng: markerPosition.longitude,
+            }}
+            icon={{ url: flagImg, scaledSize: { width: 30, height: 30 } }}
           />
-        ))}
-        {isInMission && (
-          <Flag
-            lng={markerPosition.longitude}
-            lat={markerPosition.latitude}
-            size={30}
-            // onDragEnd={handleSetMarkerPosition} // from mapbox
-          />
-        )}
-      </GoogleMapReact>
+          )}
+        </GoogleMap>
+      </LoadScript>
     </div>
   );
 }
