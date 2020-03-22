@@ -11,7 +11,8 @@ import MissionDrawer from './components/Mission/MissionDrawer';
 import ProfileDialog from './components/ProfileDialog/ProfileDialog';
 import { MissionContextProvider, useMissionValue } from './contexts/MissionContext';
 import MissionBar from './components/Mission/MissionBar';
-import { TagContextProvider } from './contexts/TagContext';
+import { TagContextProvider, useTagValue } from './contexts/TagContext';
+import TagDetailDialog from './TagDetailDialog';
 
 export default function MapPage() {
   return (
@@ -26,7 +27,9 @@ export default function MapPage() {
 const MapPageContent = () => {
   const howToUseDialogControl = useModal();
   const profileDialogControl = useModal();
+
   const { showControl, isInMission } = useMissionValue();
+  const { activeTag, resetActiveTag } = useTagValue();
 
   return (
     <div>
@@ -57,6 +60,7 @@ const MapPageContent = () => {
 
       <ProfileDialog control={profileDialogControl} />
       <HowToUseDialog control={howToUseDialogControl} />
+      <TagDetailDialog activeTag={activeTag} onClose={resetActiveTag} />
     </div>
   );
 };

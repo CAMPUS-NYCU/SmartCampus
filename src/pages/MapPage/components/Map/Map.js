@@ -16,7 +16,7 @@ function Map() {
     handleSetMarkerPosition,
     handleMapOnLoad,
   } = useMissionValue();
-  const { tags } = useTagValue();
+  const { tags, setActiveTagId } = useTagValue();
 
   return (
     <div style={{
@@ -41,6 +41,8 @@ function Map() {
               key={tag.id}
               position={tag.position}
               icon={{ url: HandicapIcon, scaledSize: { width: 20, height: 20 } }}
+              clickable
+              onClick={() => setActiveTagId(tag.id)}
             />
           ))}
           {isInMission && (
