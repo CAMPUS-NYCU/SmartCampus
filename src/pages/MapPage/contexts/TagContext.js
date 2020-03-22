@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import useTagList from '../hooks/useTagList';
+import useMissionList from '../hooks/useMissionList'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -9,10 +10,12 @@ export const TagContext = React.createContext({
   activeTagId: null,
   setActiveTagId: () => {},
   resetActiveTag: () => {},
+  missionList: [],
 });
 
 export const TagContextProvider = ({ children }) => {
   const { tags } = useTagList();
+  const { missionList } = useMissionList();
 
   const [activeTagId, setActiveTagId] = useState(null);
   const resetActiveTag = () => setActiveTagId(null);
@@ -24,6 +27,7 @@ export const TagContextProvider = ({ children }) => {
     activeTagId,
     setActiveTagId,
     resetActiveTag,
+    missionList,
   };
 
   return (

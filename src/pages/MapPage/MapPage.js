@@ -13,6 +13,7 @@ import { MissionContextProvider, useMissionValue } from './contexts/MissionConte
 import MissionBar from './components/Mission/MissionBar';
 import { TagContextProvider, useTagValue } from './contexts/TagContext';
 import TagDetailDialog from './TagDetailDialog';
+import FilterFab from './components/FilterFab';
 
 export default function MapPage() {
   return (
@@ -36,28 +37,28 @@ const MapPageContent = () => {
       <Map />
 
       <Fade in={showControl}>
-        <MissionFab />
+        <div>
+          {
+            isInMission ? (
+              <MissionBar />
+            ) : (
+              <SearchBar
+                menuControls={{
+                  handleOpenProfile: profileDialogControl.setOpen,
+                  handleOpenHistory: profileDialogControl.setOpen,
+                  handleOpenSetting: profileDialogControl.setOpen,
+                  handleOpenHowToUse: howToUseDialogControl.setOpen,
+                  handleOpenTerms: profileDialogControl.setOpen,
+                }}
+              />
+            )
+          }
+          <MissionFab />
+          <FilterFab />
+        </div>
       </Fade>
+
       <MissionDrawer />
-
-      <Fade in={showControl}>
-        {
-          isInMission ? (
-            <MissionBar />
-          ) : (
-            <SearchBar
-              menuControls={{
-                handleOpenProfile: profileDialogControl.setOpen,
-                handleOpenHistory: profileDialogControl.setOpen,
-                handleOpenSetting: profileDialogControl.setOpen,
-                handleOpenHowToUse: howToUseDialogControl.setOpen,
-                handleOpenTerms: profileDialogControl.setOpen,
-              }}
-            />
-          )
-        }
-      </Fade>
-
       <ProfileDialog control={profileDialogControl} />
       <HowToUseDialog control={howToUseDialogControl} />
       <TagDetailDialog activeTag={activeTag} onClose={resetActiveTag} />
