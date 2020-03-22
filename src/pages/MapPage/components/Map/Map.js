@@ -31,6 +31,11 @@ function Map() {
           zoom={DefaultZoom}
           onClick={handleToggleShowControl}
           onLoad={handleMapOnLoad}
+          options={{
+            fullscreenControl: false,
+            mapTypeControl: false,
+            streetViewControl: false,
+          }}
           mapContainerStyle={{
             height: '100%',
             width: '100%',
