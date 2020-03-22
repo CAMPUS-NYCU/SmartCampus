@@ -1,11 +1,13 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { usePosition } from 'use-position';
 
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues';
 import { useMissionValue } from '../../contexts/MissionContext';
 import { useTagValue } from '../../contexts/TagContext';
 import HandicapIcon from '../../../../assets/images/handicap-icon.svg';
 import flagImg from '../../../../assets/images/red-flag.svg';
+import myLocationImg from '../../../../assets/images/my-location.png';
 import { DefaultCenter, DefaultZoom } from '../../constants/mapConstants';
 
 function Map() {
@@ -17,6 +19,11 @@ function Map() {
     handleMapOnLoad,
   } = useMissionValue();
   const { tags, setActiveTagId } = useTagValue();
+  const {
+    latitude: positionLat,
+    longitude: positionLng,
+    error: positionError,
+  } = usePosition(true, { enableHighAccuracy: true });
 
   return (
     <div style={{
@@ -41,6 +48,16 @@ function Map() {
             width: '100%',
           }}
         >
+          {!positionError && (
+            <Marker
+              clickable={false}
+              position={{
+                lat: positionLat,
+                lng: positionLng,
+              }}
+              icon={{ url: myLocationImg, scaledSize: { width: 20, height: 20 } }}
+            />
+          )}
           {tags.map((tag) => (
             <Marker
               key={tag.id}
