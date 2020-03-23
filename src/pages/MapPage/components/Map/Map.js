@@ -23,7 +23,7 @@ function Map() {
     latitude: positionLat,
     longitude: positionLng,
     error: positionError,
-  } = usePosition(true, { enableHighAccuracy: true });
+  } = usePosition(false, { enableHighAccuracy: true });
 
   return (
     <div style={{
