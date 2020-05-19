@@ -5,24 +5,23 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-import { Missions } from '../../../../constants/missionData';
 import { useMissionValue } from '../../../../contexts/MissionContext';
+
+const textEachStar = [
+  '完全無法使用',
+  '不方便使用',
+  '可以使用，些微損毀',
+  '能使用',
+  '方便使用',
+];
+const textMin = '不能使用';
+const textMax = '方便使用';
 
 function AccessibilitySelect() {
   const {
-    selectedMissionId,
     selectedSubRate,
     setSelectedSubRate,
   } = useMissionValue();
-
-  // selectedMission
-  const {
-    subRate: {
-      textMin = '',
-      textMax = '',
-      textEachStar = [],
-    } = {},
-  } = Missions.find((mission) => mission.id === selectedMissionId) || {};
 
   return (
     <div>

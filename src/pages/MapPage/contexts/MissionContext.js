@@ -1,8 +1,19 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
+import { gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
 
 import useStep from '../../../utils/hooks/useStep';
+
+export const TAG_UPDATE_MUTATION = gql`
+  mutation TagUpdateMutation($input: TagUpdateInput!) {
+    tagUpdate(data: $input) {
+      success
+      message
+    }
+  }
+`;
 
 export const MISSION_MAX_STEP = 4;
 export const MISSION_MIN_STEP = 0;
@@ -57,6 +68,8 @@ export const MissionContext = React.createContext({
 });
 
 export const MissionContextProvider = ({ children }) => {
+  const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION);
+
   // ==================== Step control ====================
   const { enqueueSnackbar } = useSnackbar();
   const {
@@ -86,8 +99,43 @@ export const MissionContextProvider = ({ children }) => {
   };
 
   const handleCompleteMission = () => {
-    clearMissionData();
-    enqueueSnackbar('標注完成', { variant: 'success' });
+    tagUpdate({
+      variables: {
+        input: {
+          modify: false,
+          title: 'TEST',
+          accessibility: selectedSubRate,
+          missionID: selectedMissionId.toString(),
+          discoveryIDs: [selectedSubOptionId.toString()],
+          coordinates: {
+            latitude: markerPosition.latitude.toString(),
+            longitude: markerPosition.longitude.toString(),
+          },
+          createUserID: 'NO_USER',
+          description: moreDescriptionText,
+          imageUrl: [],
+        },
+      },
+    })
+      .then(({
+        data: {
+          tagUpdate: {
+            success,
+            message,
+          },
+        },
+      }) => {
+        if (success) {
+          clearMissionData();
+          enqueueSnackbar('標注完成', { variant: 'success' });
+          // refetch取得最新tag list
+          // refetch()
+        } else {
+          enqueueSnackbar(message, { variant: 'error' });
+        }
+      });
+    // .catch()
+    // .finally()
   };
 
   // ==================== UI toggle control ====================

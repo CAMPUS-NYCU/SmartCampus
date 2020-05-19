@@ -5,13 +5,16 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 import { useMissionValue } from '../../../../contexts/MissionContext';
-import { Missions } from '../../../../constants/missionData';
+import { useTagValue } from '../../../../contexts/TagContext';
 
 function MissionStep3() {
   const {
     selectedMissionId,
     handleSetSelectedMissionId,
   } = useMissionValue();
+  const {
+    missionList,
+  } = useTagValue();
 
   return (
     <Grid container spacing={2}>
@@ -20,7 +23,7 @@ function MissionStep3() {
           3. 選擇你想要的標注任務
         </Typography>
       </Grid>
-      {Missions.map((mission) => (
+      {missionList.map((mission) => (
         <Grid key={mission.id} item xs={4}>
           <Button
             variant="contained"
