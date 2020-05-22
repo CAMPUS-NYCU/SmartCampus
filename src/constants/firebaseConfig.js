@@ -4,8 +4,8 @@ import {
   REACT_APP_FIREBASE_DATABASE_URL,
   REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   REACT_APP_FIREBASE_PROJECT_ID,
-  REACT_APP_FIREBASE_STORAGE_BUCKET,
-} from './envValues';
+  REACT_APP_FIREBASE_STORAGE_BUCKET
+} from './envValues'
 
 const config = {
   apiKey: REACT_APP_FIREBASE_API_KEY,
@@ -13,7 +13,7 @@ const config = {
   databaseURL: REACT_APP_FIREBASE_DATABASE_URL,
   projectId: REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-};
+  messagingSenderId: REACT_APP_FIREBASE_MESSAGING_SENDER_ID
+}
 
-export default config;
+export default config

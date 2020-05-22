@@ -1,3 +1,3 @@
-import MissionBar from './MissionBar';
+import MissionBar from './MissionBar'
 
-export default MissionBar;
+export default MissionBar

@@ -1,3 +1,3 @@
-import HowToUseDialog from './HowToUseDialog';
+import HowToUseDialog from './HowToUseDialog'
 
-export default HowToUseDialog;
+export default HowToUseDialog

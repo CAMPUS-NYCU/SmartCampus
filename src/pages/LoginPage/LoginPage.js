@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
 
-import mapBackgroundImage from '../../assets/images/map-bg-image.png';
+import mapBackgroundImage from '../../assets/images/map-bg-image.png'
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -21,82 +21,66 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   card: {
-    minWidth: 275,
-  },
-}));
+    minWidth: 275
+  }
+}))
 
 export default function LoginPage(props) {
-  const {
-    signInWithGoogle,
-    signInWithFacebook,
-    signOut,
-    user,
-  } = props;
-  const classes = useStyles();
+  const { signInWithGoogle, signInWithFacebook, signOut, user } = props
+  const classes = useStyles()
 
   return (
     <div className={classes.page}>
       <Card className={classes.card}>
         <CardContent>
           <Box m={2}>
-            {
-              user
-                ? <p>Hello, {user.displayName}</p>
-                : <p>Please sign in.</p>
-            }
+            {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
           </Box>
-          {
-            user ? (
+          {user ? (
+            <Box m={2}>
+              <Button
+                fullWidth
+                variant='contained'
+                color='primary'
+                onClick={signOut}
+              >
+                Sign Out
+              </Button>
+            </Box>
+          ) : (
+            <>
               <Box m={2}>
                 <Button
                   fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={signOut}
+                  variant='contained'
+                  color='primary'
+                  onClick={signInWithGoogle}
                 >
-                  Sign Out
+                  Sign in with Google
                 </Button>
               </Box>
-            ) : (
-              <>
-                <Box m={2}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={signInWithGoogle}
-                  >
-                    Sign in with Google
-                  </Button>
-                </Box>
-                <Box m={2}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={signInWithFacebook}
-                  >
-                    Sign in with Facebook
-                  </Button>
-                </Box>
-                <Box m={2}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    disabled
-                  >
-                    Sign in with NCTU Portal
-                  </Button>
-                </Box>
-              </>
-            )
-          }
+              <Box m={2}>
+                <Button
+                  fullWidth
+                  variant='contained'
+                  color='primary'
+                  onClick={signInWithFacebook}
+                >
+                  Sign in with Facebook
+                </Button>
+              </Box>
+              <Box m={2}>
+                <Button fullWidth variant='contained' color='primary' disabled>
+                  Sign in with NCTU Portal
+                </Button>
+              </Box>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useSnackbar } from 'notistack';
-import { gql } from 'apollo-boost';
-import { useMutation } from '@apollo/react-hooks';
+import React, { useContext, useState } from 'react'
+import PropTypes from 'prop-types'
+import { useSnackbar } from 'notistack'
+import { gql } from 'apollo-boost'
+import { useMutation } from '@apollo/react-hooks'
 
-import useStep from '../../../utils/hooks/useStep';
+import useStep from '../../../utils/hooks/useStep'
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation TagUpdateMutation($input: TagUpdateInput!) {
@@ -13,15 +13,15 @@ export const TAG_UPDATE_MUTATION = gql`
       message
     }
   }
-`;
+`
 
-export const MISSION_MAX_STEP = 4;
-export const MISSION_MIN_STEP = 0;
-export const MISSION_NUM_STEPS = 5;
+export const MISSION_MAX_STEP = 4
+export const MISSION_MIN_STEP = 0
+export const MISSION_NUM_STEPS = 5
 
 // 特殊的 selectedSubOptionId 數值，
 // 當 user 要手動輸入 subOption 的文字框時，selectedSubOptionId 會是這個
-export const SubOptionOther = Symbol('SubOptionOther');
+export const SubOptionOther = Symbol('SubOptionOther')
 
 export const MissionStep = {
   Init: -1,
@@ -29,22 +29,22 @@ export const MissionStep = {
   PlaceFlagOnStreet: 1,
   SelectMission: 2,
   SelectDetail: 3,
-  UploadPhoto: 4,
-};
+  UploadPhoto: 4
+}
 
 const InitialMissionValue = {
   currentStep: MissionStep.Init,
   markerPosition: {
     longitude: 0,
-    latitude: 0,
+    latitude: 0
   },
   selectedMissionId: null,
   selectedSubOptionId: null,
   subOptionOtherText: '',
   selectedSubRate: 0,
   moreDescriptionText: '',
-  photos: [],
-};
+  photos: []
+}
 
 export const MissionContext = React.createContext({
   isInMission: false,
@@ -64,39 +64,34 @@ export const MissionContext = React.createContext({
   handleChangeMoreDescriptionText: () => {},
   setPhotos: () => {},
   handleMapOnLoad: () => {},
-  ...InitialMissionValue,
-});
+  ...InitialMissionValue
+})
 
 export const MissionContextProvider = ({ children }) => {
-  const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION);
+  const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION)
 
   // ==================== Step control ====================
-  const { enqueueSnackbar } = useSnackbar();
-  const {
-    step: currentStep,
-    handleBack,
-    handleNext,
-    setStep,
-  } = useStep({
+  const { enqueueSnackbar } = useSnackbar()
+  const { step: currentStep, handleBack, handleNext, setStep } = useStep({
     initialStep: MissionStep.Init,
     maxStep: MISSION_MAX_STEP,
-    minStep: MISSION_MIN_STEP,
-  });
-  const isInMission = currentStep >= MissionStep.PlaceFlagOnMap;
+    minStep: MISSION_MIN_STEP
+  })
+  const isInMission = currentStep >= MissionStep.PlaceFlagOnMap
 
   const handleStartMission = () => {
-    setShowControl(true);
-    const center = mapInstance.getCenter();
+    setShowControl(true)
+    const center = mapInstance.getCenter()
     setMarkerPosition({
       longitude: center.lng(),
-      latitude: center.lat(),
-    });
-    setStep(MissionStep.PlaceFlagOnMap);
-  };
+      latitude: center.lat()
+    })
+    setStep(MissionStep.PlaceFlagOnMap)
+  }
 
   const handleCloseMission = () => {
-    setStep(MissionStep.Init);
-  };
+    setStep(MissionStep.Init)
+  }
 
   const handleCompleteMission = () => {
     tagUpdate({
@@ -109,85 +104,97 @@ export const MissionContextProvider = ({ children }) => {
           discoveryIDs: [selectedSubOptionId.toString()],
           coordinates: {
             latitude: markerPosition.latitude.toString(),
-            longitude: markerPosition.longitude.toString(),
+            longitude: markerPosition.longitude.toString()
           },
           createUserID: 'NO_USER',
           description: moreDescriptionText,
-          imageUrl: [],
-        },
-      },
-    })
-      .then(({
+          imageUrl: []
+        }
+      }
+    }).then(
+      ({
         data: {
-          tagUpdate: {
-            success,
-            message,
-          },
-        },
+          tagUpdate: { success, message }
+        }
       }) => {
         if (success) {
-          clearMissionData();
-          enqueueSnackbar('標注完成', { variant: 'success' });
+          clearMissionData()
+          enqueueSnackbar('標注完成', { variant: 'success' })
           // refetch取得最新tag list
           // refetch()
         } else {
-          enqueueSnackbar(message, { variant: 'error' });
+          enqueueSnackbar(message, { variant: 'error' })
         }
-      });
+      }
+    )
     // .catch()
     // .finally()
-  };
+  }
 
   // ==================== UI toggle control ====================
   // 是否顯示各控制元件，點地圖來toggle
-  const [showControl, setShowControl] = useState(true);
+  const [showControl, setShowControl] = useState(true)
   const handleToggleShowControl = () => {
-    if (isInMission) return; // 正在標注中就不能調整
-    setShowControl(!showControl);
-  };
+    if (isInMission) return // 正在標注中就不能調整
+    setShowControl(!showControl)
+  }
 
   // ==================== Map viewport control ====================
-  const [mapInstance, setMapInstance] = React.useState(null);
+  const [mapInstance, setMapInstance] = React.useState(null)
   const handleMapOnLoad = (map) => {
-    setMapInstance(map);
-  };
+    setMapInstance(map)
+  }
 
   // ==================== Marker control ====================
-  const [markerPosition, setMarkerPosition] = useState(InitialMissionValue.markerPosition);
+  const [markerPosition, setMarkerPosition] = useState(
+    InitialMissionValue.markerPosition
+  )
   const handleSetMarkerPosition = (event) => {
     setMarkerPosition({
       longitude: event.latLng.lng(),
-      latitude: event.latLng.lat(),
-    });
-  };
+      latitude: event.latLng.lat()
+    })
+  }
 
   // ==================== Option control ====================
   // TODO 使用 useReducer 優化這坨 useState？
-  const [selectedMissionId, setSelectedMissionId] = useState(InitialMissionValue.selectedMissionId);
+  const [selectedMissionId, setSelectedMissionId] = useState(
+    InitialMissionValue.selectedMissionId
+  )
   const handleSetSelectedMissionId = (newMissionId) => {
-    setSelectedMissionId(newMissionId);
+    setSelectedMissionId(newMissionId)
     // mission和subOption有從屬關係，
     // 修改mission的話，subOption也要被重設
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId);
-  };
-  const [selectedSubOptionId, setSelectedSubOptionId] = useState(InitialMissionValue.selectedSubOptionId);
-  const [subOptionOtherText, setSubOptionOtherText] = useState(InitialMissionValue.subOptionOtherText);
-  const handleChangeSubOptionOtherText = (event) => setSubOptionOtherText(event.target.value);
-  const [selectedSubRate, setSelectedSubRate] = useState(InitialMissionValue.selectedSubRate);
-  const [moreDescriptionText, setMoreDescriptionText] = useState(InitialMissionValue.moreDescriptionText);
-  const handleChangeMoreDescriptionText = (event) => setMoreDescriptionText(event.target.value);
-  const [photos, setPhotos] = useState(InitialMissionValue.photos);
+    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
+  }
+  const [selectedSubOptionId, setSelectedSubOptionId] = useState(
+    InitialMissionValue.selectedSubOptionId
+  )
+  const [subOptionOtherText, setSubOptionOtherText] = useState(
+    InitialMissionValue.subOptionOtherText
+  )
+  const handleChangeSubOptionOtherText = (event) =>
+    setSubOptionOtherText(event.target.value)
+  const [selectedSubRate, setSelectedSubRate] = useState(
+    InitialMissionValue.selectedSubRate
+  )
+  const [moreDescriptionText, setMoreDescriptionText] = useState(
+    InitialMissionValue.moreDescriptionText
+  )
+  const handleChangeMoreDescriptionText = (event) =>
+    setMoreDescriptionText(event.target.value)
+  const [photos, setPhotos] = useState(InitialMissionValue.photos)
 
   const clearMissionData = () => {
-    setStep(InitialMissionValue.currentStep);
-    setMarkerPosition(InitialMissionValue.markerPosition);
-    setSelectedMissionId(InitialMissionValue.selectedMissionId);
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId);
-    setSubOptionOtherText(InitialMissionValue.subOptionOtherText);
-    setSelectedSubRate(InitialMissionValue.selectedSubRate);
-    setMoreDescriptionText(InitialMissionValue.moreDescriptionText);
-    setPhotos(InitialMissionValue.photos);
-  };
+    setStep(InitialMissionValue.currentStep)
+    setMarkerPosition(InitialMissionValue.markerPosition)
+    setSelectedMissionId(InitialMissionValue.selectedMissionId)
+    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
+    setSubOptionOtherText(InitialMissionValue.subOptionOtherText)
+    setSelectedSubRate(InitialMissionValue.selectedSubRate)
+    setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
+    setPhotos(InitialMissionValue.photos)
+  }
 
   const contextValues = {
     currentStep,
@@ -214,19 +221,19 @@ export const MissionContextProvider = ({ children }) => {
     handleChangeMoreDescriptionText,
     photos,
     setPhotos,
-    handleMapOnLoad,
-  };
+    handleMapOnLoad
+  }
   return (
     <MissionContext.Provider value={contextValues}>
       {children}
     </MissionContext.Provider>
-  );
-};
+  )
+}
 MissionContextProvider.propTypes = {
-  children: PropTypes.any,
-};
+  children: PropTypes.any
+}
 MissionContextProvider.defaultProps = {
-  children: null,
-};
+  children: null
+}
 
-export const useMissionValue = () => useContext(MissionContext);
+export const useMissionValue = () => useContext(MissionContext)

@@ -1,7 +1,5 @@
-import React from 'react';
+import React from 'react'
 
 export default function IndexPage() {
-  return (
-    <p>IndexPage</p>
-  );
+  return <p>IndexPage</p>
 }

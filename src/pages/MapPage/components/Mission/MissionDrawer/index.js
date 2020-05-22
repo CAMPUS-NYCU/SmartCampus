@@ -1,3 +1,3 @@
-import MissionDrawer from './MissionDrawer';
+import MissionDrawer from './MissionDrawer'
 
-export default MissionDrawer;
+export default MissionDrawer

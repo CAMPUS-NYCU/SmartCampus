@@ -1,3 +1,3 @@
-import IndexPage from './IndexPage';
+import IndexPage from './IndexPage'
 
-export default IndexPage;
+export default IndexPage

@@ -1,5 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
 
 export const GET_MISSION_LIST_QUERY = gql`
   query getMissionList {
@@ -20,17 +20,14 @@ export const GET_MISSION_LIST_QUERY = gql`
       }
     }
   }
-`;
+`
 
 function useMissionList() {
-  const {
-    data: {
-      missionList = [],
-      discoveryList = [],
-    } = {},
-  } = useQuery(GET_MISSION_LIST_QUERY);
+  const { data: { missionList = [], discoveryList = [] } = {} } = useQuery(
+    GET_MISSION_LIST_QUERY
+  )
 
-  return { missionList, discoveryList };
+  return { missionList, discoveryList }
 }
 
-export default useMissionList;
+export default useMissionList

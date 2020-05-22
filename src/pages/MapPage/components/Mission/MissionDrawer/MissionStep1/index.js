@@ -1,3 +1,3 @@
-import MissionStep1 from './MissionStep1';
+import MissionStep1 from './MissionStep1'
 
-export default MissionStep1;
+export default MissionStep1

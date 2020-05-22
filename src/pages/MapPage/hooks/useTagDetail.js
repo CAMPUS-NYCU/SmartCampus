@@ -1,5 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
 
 export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
@@ -18,7 +18,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
       imageUrl
     }
   }
-`;
+`
 
 function useTagDetail(id) {
   const {
@@ -27,18 +27,13 @@ function useTagDetail(id) {
         tagID,
         createTime = null,
         lastUpdateTime = null,
-        createUser: {
-          id: createUserId = null,
-          name: createUserName = '',
-        },
-        location: {
-          geoInfo,
-        } = {},
+        createUser: { id: createUserId = null, name: createUserName = '' },
+        location: { geoInfo } = {},
         description = '',
-        imageUrl: imageUrl = [],
-      },
-    } = {},
-  } = useQuery(GET_TAG_DETAIL_QUERY, { variables: { id } });
+        imageUrl: imageUrl = []
+      }
+    } = {}
+  } = useQuery(GET_TAG_DETAIL_QUERY, { variables: { id } })
 
   const tagDetail = {
     id: tagID,
@@ -48,10 +43,10 @@ function useTagDetail(id) {
     createUserName,
     geoInfo,
     description,
-    imageUrl,
-  };
+    imageUrl
+  }
 
-  return { tagDetail };
+  return { tagDetail }
 }
 
-export default useTagDetail;
+export default useTagDetail

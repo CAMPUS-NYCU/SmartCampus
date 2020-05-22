@@ -1,89 +1,85 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Popover from '@material-ui/core/Popover';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import PersonIcon from '@material-ui/icons/Person';
-import HistoryIcon from '@material-ui/icons/History';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpIcon from '@material-ui/icons/Help';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import { makeStyles } from '@material-ui/core/styles';
+import Popover from '@material-ui/core/Popover'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import PersonIcon from '@material-ui/icons/Person'
+import HistoryIcon from '@material-ui/icons/History'
+import SettingsIcon from '@material-ui/icons/Settings'
+import HelpIcon from '@material-ui/icons/Help'
+import AssignmentIcon from '@material-ui/icons/Assignment'
+import { makeStyles } from '@material-ui/core/styles'
 
 SearchBarMenu.propTypes = {
   control: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     anchorEl: PropTypes.element,
-    setClose: PropTypes.func.isRequired,
+    setClose: PropTypes.func.isRequired
   }).isRequired,
   menuControls: PropTypes.shape({
     handleOpenProfile: PropTypes.func.isRequired,
     handleOpenHistory: PropTypes.func.isRequired,
     handleOpenSetting: PropTypes.func.isRequired,
     handleOpenHowToUse: PropTypes.func.isRequired,
-    handleOpenTerms: PropTypes.func.isRequired,
-  }).isRequired,
-};
+    handleOpenTerms: PropTypes.func.isRequired
+  }).isRequired
+}
 
 const useStyles = makeStyles((theme) => ({
   listIcon: {
     minWidth: 0,
-    marginRight: theme.spacing(1),
-  },
-}));
+    marginRight: theme.spacing(1)
+  }
+}))
 
 function SearchBarMenu(props) {
   const {
-    control: {
-      open,
-      anchorEl,
-      setClose,
-    },
+    control: { open, anchorEl, setClose },
     menuControls: {
       handleOpenProfile,
       handleOpenHistory,
       handleOpenSetting,
       handleOpenHowToUse,
-      handleOpenTerms,
-    },
-  } = props;
-  const classes = useStyles();
+      handleOpenTerms
+    }
+  } = props
+  const classes = useStyles()
 
   const menuItems = [
     {
       id: 1,
       text: '個人資料',
       action: handleOpenProfile,
-      icon: <PersonIcon />,
+      icon: <PersonIcon />
     },
     {
       id: 2,
       text: '歷史回報',
       action: handleOpenHistory,
-      icon: <HistoryIcon />,
+      icon: <HistoryIcon />
     },
     {
       id: 3,
       text: '通知設定',
       action: handleOpenSetting,
-      icon: <SettingsIcon />,
+      icon: <SettingsIcon />
     },
     {
       id: 4,
       text: '功能介紹',
       action: handleOpenHowToUse,
-      icon: <HelpIcon />,
+      icon: <HelpIcon />
     },
     {
       id: 5,
       text: '條款事項',
       action: handleOpenTerms,
-      icon: <AssignmentIcon />,
-    },
-  ];
+      icon: <AssignmentIcon />
+    }
+  ]
 
   return (
     <Popover
@@ -92,11 +88,11 @@ function SearchBarMenu(props) {
       onClose={setClose}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'center',
+        horizontal: 'center'
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'right',
+        horizontal: 'right'
       }}
     >
       <List className={classes.list} dense disablePadding>
@@ -107,8 +103,8 @@ function SearchBarMenu(props) {
             dense
             divider
             onClick={() => {
-              item.action();
-              setClose();
+              item.action()
+              setClose()
             }}
           >
             <ListItemIcon className={classes.listIcon}>
@@ -119,7 +115,7 @@ function SearchBarMenu(props) {
         ))}
       </List>
     </Popover>
-  );
+  )
 }
 
-export default SearchBarMenu;
+export default SearchBarMenu

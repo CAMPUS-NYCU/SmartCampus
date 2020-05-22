@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 HowToUseItem.propTypes = {
   icon: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired,
-  description: PropTypes.string,
-};
+  description: PropTypes.string
+}
 HowToUseItem.defaultProps = {
-  description: '',
-};
+  description: ''
+}
 
 function HowToUseItem({ icon, title, description }) {
   return (
@@ -20,17 +20,11 @@ function HowToUseItem({ icon, title, description }) {
         {icon}
       </Grid>
       <Grid item xs={10}>
-        <Typography variant="h6">
-          {title}
-        </Typography>
-        {description && (
-          <Typography>
-            {description}
-          </Typography>
-        )}
+        <Typography variant='h6'>{title}</Typography>
+        {description && <Typography>{description}</Typography>}
       </Grid>
     </>
-  );
+  )
 }
 
-export default HowToUseItem;
+export default HowToUseItem

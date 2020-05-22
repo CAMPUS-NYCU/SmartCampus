@@ -1,3 +1,3 @@
-import MissionFab from './MissionFab';
+import MissionFab from './MissionFab'
 
-export default MissionFab;
+export default MissionFab

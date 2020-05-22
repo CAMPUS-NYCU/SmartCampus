@@ -1,24 +1,24 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles'
 
 const ThemeSettings = {
   palette: {
     primary: {
-      main: '#00dfaf',
-      contrastText: '#ffffff',
+      main: '#FDCC4F',
+      contrastText: '#ffffff'
     },
     secondary: {
       main: '#4db3fd',
-      contrastText: '#ffffff',
-    },
+      contrastText: '#ffffff'
+    }
   },
   overrides: {
     /* 讓Material-UI的button不要強制大寫 */
     MuiButton: {
       root: {
-        textTransform: 'none !important',
-      },
-    },
-  },
-};
+        textTransform: 'none !important'
+      }
+    }
+  }
+}
 
-export const theme = createMuiTheme(ThemeSettings);
+export const theme = createMuiTheme(ThemeSettings)

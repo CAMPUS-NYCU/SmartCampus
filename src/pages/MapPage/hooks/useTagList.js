@@ -1,5 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
@@ -21,14 +21,10 @@ export const GET_TAG_LIST_QUERY = gql`
       }
     }
   }
-`;
+`
 
 function useTagList() {
-  const {
-    data: {
-      tagRenderList = [],
-    } = {},
-  } = useQuery(GET_TAG_LIST_QUERY);
+  const { data: { tagRenderList = [] } = {} } = useQuery(GET_TAG_LIST_QUERY)
 
   // Reformat tags
   const tags = tagRenderList.map((tag) => {
@@ -36,16 +32,10 @@ function useTagList() {
       id,
       title,
       accessibility,
-      coordinates: {
-        latitude,
-        longitude,
-      },
-      mission: {
-        id: missionId,
-        name: missionName,
-      },
-      discoveries = [],
-    } = tag;
+      coordinates: { latitude, longitude },
+      mission: { id: missionId, name: missionName },
+      discoveries = []
+    } = tag
 
     return {
       id,
@@ -53,16 +43,16 @@ function useTagList() {
       accessibility,
       position: {
         lat: parseFloat(latitude),
-        lng: parseFloat(longitude),
+        lng: parseFloat(longitude)
       },
       missionId,
       missionName,
       discoveryId: discoveries.length ? discoveries[0].id : null,
-      discoveryName: discoveries.length ? discoveries[0].name : null,
-    };
-  });
+      discoveryName: discoveries.length ? discoveries[0].name : null
+    }
+  })
 
-  return { tags };
+  return { tags }
 }
 
-export default useTagList;
+export default useTagList
