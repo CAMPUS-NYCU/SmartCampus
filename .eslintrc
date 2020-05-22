@@ -7,13 +7,29 @@
     },
     "rules": {
         // 可討論要不要設定其他rule
-        "react/jsx-filename-extension": 0, // jsx副檔名可以是.js
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], // jsx副檔名可以是.js
         "no-console": "off", // 可以使用console.log
         "react/jsx-one-expression-per-line": "off", // 不要限制jsx一行只能有一個元件
-        "no-use-before-define": 0, // 讓 function 可在定義前就被使用，PropTypes 定義才能放在檔案最上方
-        "react/jsx-props-no-spreading": 0, // 可以 prop spreading
-        "react/forbid-prop-types": 0, // 可以用 object PropType
-        "import/prefer-default-export": 0 // 不用一定要 default export
+        "no-use-before-define": "warn", // 讓 function 可在定義前就被使用，PropTypes 定義才能放在檔案最上方
+        "react/jsx-props-no-spreading": "off", // 可以 prop spreading
+        "react/forbid-prop-types": "warn", // 可以用 object PropType
+        "import/prefer-default-export": "warn", // 不用一定要 default export
+        "react/require-default-props": "warn",
+        "react/prop-types": "warn",
+        "no-empty": "warn",
+        "no-param-reassign": "warn"
     },
-    "extends": ["airbnb", "airbnb/hooks"] // style guideline 使用airbnb style (且支援react hook)
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "airbnb/hooks",
+        "plugin:prettier/recommended"
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["src"] // 允許 absolute path import
+            }
+        }
+    }
 }
