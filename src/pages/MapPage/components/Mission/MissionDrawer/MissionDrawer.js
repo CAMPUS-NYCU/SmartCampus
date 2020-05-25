@@ -32,7 +32,7 @@ function MissionDrawer(props) {
   const classes = useStyles()
 
   const { currentStep } = useMissionValue()
-
+  console.log(props)
   return (
     <Drawer
       anchor='bottom'

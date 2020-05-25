@@ -9,6 +9,10 @@ const ThemeSettings = {
     secondary: {
       main: '#4db3fd',
       contrastText: '#ffffff'
+    },
+    test:{
+      main:'#dce775',
+      contrastText: '#ffffff'
     }
   },
   overrides: {
