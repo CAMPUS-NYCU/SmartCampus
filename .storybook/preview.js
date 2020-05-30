@@ -21,3 +21,9 @@ addParameters({
 // 啟用 a11y addon
 import { withA11y } from '@storybook/addon-a11y'
 addDecorator(withA11y)
+
+// ========================================
+
+// 啟用 story-router addon
+import StoryRouter from 'storybook-react-router'
+addDecorator(StoryRouter())
