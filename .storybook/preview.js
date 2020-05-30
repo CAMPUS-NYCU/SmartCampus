@@ -1,3 +1,4 @@
+import React from 'react'
 import { addParameters, addDecorator } from '@storybook/react'
 
 // ========================================
@@ -37,3 +38,19 @@ addParameters({
     current: 'dark'
   }
 })
+
+// ========================================
+
+// 包入 Material-UI ThemeProvider 和 CssBaseline
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@material-ui/core/styles'
+import { theme } from '../src/utils/theme'
+const MuiDecorator = (storyFn) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {storyFn()}
+    </ThemeProvider>
+  )
+}
+addDecorator(MuiDecorator)
