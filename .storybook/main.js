@@ -6,6 +6,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-storysource',
     '@storybook/addon-viewport/register',
-    '@storybook/addon-a11y/register'
+    '@storybook/addon-a11y/register',
+    'storybook-mobile'
   ]
 }
