@@ -27,3 +27,13 @@ addDecorator(withA11y)
 // 啟用 story-router addon
 import StoryRouter from 'storybook-react-router'
 addDecorator(StoryRouter())
+
+// ========================================
+
+// 設定darkmode addon預設啟用黑色主題
+addParameters({
+  darkMode: {
+    // Set the initial theme
+    current: 'dark'
+  }
+})
