@@ -125,6 +125,7 @@ export const MissionContextProvider = ({ children }) => {
           title: 'TEST',
           missionID: selectedMissionId.toString(),
           discoveryIDs: [selectedSubOptionId.toString()],
+          accessibility: 0, // API目前accessibility必填，因此先保留
           coordinates: {
             latitude: markerPosition.latitude.toString(),
             longitude: markerPosition.longitude.toString()
