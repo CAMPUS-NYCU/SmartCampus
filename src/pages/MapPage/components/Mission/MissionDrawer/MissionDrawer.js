@@ -55,6 +55,11 @@ function MissionDrawer(props) {
       variant='persistent'
       open={isInMission}
       onClose={handleCloseMission}
+      PaperProps={{
+        style: {
+          borderRadius: '20px 20px 0 0'
+        }
+      }}
       {...props}
     >
       <div
