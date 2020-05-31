@@ -1,14 +1,20 @@
 import React from 'react'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  StreetViewPanorama
+} from '@react-google-maps/api'
 import { usePosition } from 'use-position'
 
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues'
-import { useMissionValue } from '../../contexts/MissionContext'
+import { useMissionValue, MissionStep } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
 import HandicapIcon from '../../../../assets/images/handicap-icon.svg'
 import flagImg from '../../../../assets/images/red-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.png'
 import { DefaultCenter, DefaultZoom } from '../../constants/mapConstants'
+import PinTarget from '../PinTarget'
 
 function Map() {
   const {
@@ -16,7 +22,12 @@ function Map() {
     isInMission,
     markerPosition,
     handleSetMarkerPosition,
-    handleMapOnLoad
+    handleMapOnLoad,
+    currentStep,
+    handleStreetViewOnLoad,
+    streetViewPosition,
+    handleChangeStreetViewPosition,
+    handleChangeStreetViewPOV
   } = useMissionValue()
   const { tags, setActiveTagId } = useTagValue()
   const {
@@ -77,6 +88,7 @@ function Map() {
           {isInMission && (
             <Marker
               draggable
+              // draggable={currentStep === MissionStep.PlaceFlagOnMap}
               onDragEnd={handleSetMarkerPosition}
               position={{
                 lat: markerPosition.latitude,
@@ -84,6 +96,21 @@ function Map() {
               }}
               icon={{ url: flagImg, scaledSize: { width: 30, height: 30 } }}
             />
+          )}
+          {currentStep === MissionStep.PlaceFlagOnStreet && (
+            <>
+              <PinTarget />
+              <StreetViewPanorama
+                position={{
+                  lat: streetViewPosition.latitude,
+                  lng: streetViewPosition.longitude
+                }}
+                visible={currentStep === MissionStep.PlaceFlagOnStreet}
+                onLoad={handleStreetViewOnLoad}
+                onPanoChanged={handleChangeStreetViewPosition}
+                onPovChanged={handleChangeStreetViewPOV}
+              />
+            </>
           )}
         </GoogleMap>
       </LoadScript>
