@@ -31,6 +31,7 @@ function MissionStep3() {
 
   return (
     <Grid container spacing={2}>
+      {/* * ==================== 1.經緯度標註 ==================== */}
       <Grid item xs={12}>
         <Typography>
           1. <LocationOnIcon /> 已選擇：
@@ -53,6 +54,28 @@ function MissionStep3() {
         </Button>
       </Grid>
 
+      {/* * ==================== 2.街景 ==================== */}
+      <Grid item xs={12}>
+        <Typography>2. 透過街景標記更精確的位置</Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Button variant='contained' fullWidth size='small' color='primary'>
+          {/* TODO 串接google map 地點to文字 API */}
+          精確位置已選擇
+        </Button>
+      </Grid>
+      <Grid item xs={4}>
+        <Button
+          variant='contained'
+          fullWidth
+          size='small'
+          onClick={() => handleSetStep(MissionStep.PlaceFlagOnStreet)}
+        >
+          修改
+        </Button>
+      </Grid>
+
+      {/* * ==================== 3.ABC三任務選擇 ==================== */}
       <Grid item xs={12}>
         <Typography>3. 選擇回報任務類型</Typography>
       </Grid>
@@ -69,6 +92,8 @@ function MissionStep3() {
           </Button>
         </Grid>
       ))}
+
+      {/* * ==================== 4.任務mission大類別 ==================== */}
       <Grid item xs={12}>
         <Typography>4. 選擇任務</Typography>
       </Grid>
@@ -85,6 +110,8 @@ function MissionStep3() {
           </Button>
         </Grid>
       ))}
+
+      {/* * ==================== 5.任務discovery子類別 ==================== */}
       <Grid item xs={12}>
         <Typography>5. 具體設施</Typography>
       </Grid>
@@ -107,6 +134,8 @@ function MissionStep3() {
           ))}
         </Grid>
       </Grid>
+
+      {/* * ==================== 6.補充文字框 ==================== */}
       <Grid item xs={12}>
         <Typography>6. 現象描述</Typography>
       </Grid>
@@ -122,6 +151,8 @@ function MissionStep3() {
           onChange={handleChangeMoreDescriptionText}
         />
       </Grid>
+
+      {/* * ==================== 7.上傳照片 ==================== */}
       <Grid item xs={12}>
         <Typography>7. 相關照片</Typography>
       </Grid>
