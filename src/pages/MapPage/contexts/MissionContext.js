@@ -70,12 +70,22 @@ export const MissionContextProvider = ({ children }) => {
 
   // ==================== Step control ====================
   const { enqueueSnackbar } = useSnackbar()
-  const { step: currentStep, handleBack, handleNext, setStep } = useStep({
+  const {
+    step: currentStep,
+    handleBack,
+    handleNext: handleNextStep,
+    setStep
+  } = useStep({
     initialStep: MissionStep.Init,
     maxStep: MISSION_MAX_STEP,
     minStep: MISSION_MIN_STEP
   })
   const isInMission = currentStep >= MissionStep.PlaceFlagOnMap
+
+  const handleNext = () => {
+    // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
+    handleNextStep()
+  }
 
   const handleStartMission = () => {
     setShowControl(true)

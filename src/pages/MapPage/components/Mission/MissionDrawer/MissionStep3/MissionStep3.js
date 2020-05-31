@@ -4,8 +4,12 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import LocationOnIcon from '@material-ui/icons/LocationOn'
 
-import { useMissionValue } from '../../../../contexts/MissionContext'
+import {
+  useMissionValue,
+  MissionStep
+} from '../../../../contexts/MissionContext'
 import { useTagValue } from '../../../../contexts/TagContext'
 import ImageUpload from '../../ImageUpload'
 
@@ -18,7 +22,8 @@ function MissionStep3() {
     selectedSubOptionId,
     setSelectedSubOptionId,
     moreDescriptionText,
-    handleChangeMoreDescriptionText
+    handleChangeMoreDescriptionText,
+    handleSetStep
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
   const { discoveries = [] } =
@@ -26,6 +31,28 @@ function MissionStep3() {
 
   return (
     <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Typography>
+          1. <LocationOnIcon /> 已選擇：
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Button variant='contained' fullWidth size='small' color='primary'>
+          {/* TODO 串接google map 地點to文字 API */}
+          地點已選擇
+        </Button>
+      </Grid>
+      <Grid item xs={4}>
+        <Button
+          variant='contained'
+          fullWidth
+          size='small'
+          onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}
+        >
+          修改地點
+        </Button>
+      </Grid>
+
       <Grid item xs={12}>
         <Typography>3. 選擇回報任務類型</Typography>
       </Grid>
@@ -42,7 +69,6 @@ function MissionStep3() {
           </Button>
         </Grid>
       ))}
-
       <Grid item xs={12}>
         <Typography>4. 選擇任務</Typography>
       </Grid>
@@ -59,7 +85,6 @@ function MissionStep3() {
           </Button>
         </Grid>
       ))}
-
       <Grid item xs={12}>
         <Typography>5. 具體設施</Typography>
       </Grid>
@@ -82,7 +107,6 @@ function MissionStep3() {
           ))}
         </Grid>
       </Grid>
-
       <Grid item xs={12}>
         <Typography>6. 現象描述</Typography>
       </Grid>
