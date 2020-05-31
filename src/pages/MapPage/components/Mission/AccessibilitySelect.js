@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 
-import { useMissionValue } from '../../../../contexts/MissionContext'
+import { useMissionValue } from '../../contexts/MissionContext'
 
 const textEachStar = [
   '完全無法使用',

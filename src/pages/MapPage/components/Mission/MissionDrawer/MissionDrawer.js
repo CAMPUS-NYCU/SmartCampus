@@ -9,8 +9,6 @@ import MissionStepper from './MissionStepper'
 import MissionStep1 from './MissionStep1'
 import MissionStep2 from './MissionStep2'
 import MissionStep3 from './MissionStep3'
-import MissionStep4 from './MissionStep4'
-import MissionStep5 from './MissionStep5'
 import { MissionStep, useMissionValue } from '../../../contexts/MissionContext'
 
 const useStyles = makeStyles({
@@ -23,7 +21,7 @@ const useStyles = makeStyles({
   },
   drawerContentFull: {
     minHeight: 400,
-    height: window.innerHeight * 0.85
+    height: 'calc(var(--vh, 1vh) * 100 - 100px)'
   }
 })
 
@@ -51,10 +49,8 @@ function MissionDrawer(props) {
           {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
           {currentStep === MissionStep.PlaceFlagOnStreet && <MissionStep2 />}
           {currentStep === MissionStep.SelectMission && <MissionStep3 />}
-          {currentStep === MissionStep.SelectDetail && <MissionStep4 />}
-          {currentStep === MissionStep.UploadPhoto && <MissionStep5 />}
         </Box>
-
+        <Box height={48} />
         <MissionStepper />
       </div>
     </Drawer>

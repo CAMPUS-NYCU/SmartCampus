@@ -15,9 +15,9 @@ export const TAG_UPDATE_MUTATION = gql`
   }
 `
 
-export const MISSION_MAX_STEP = 4
+export const MISSION_MAX_STEP = 2
 export const MISSION_MIN_STEP = 0
-export const MISSION_NUM_STEPS = 5
+export const MISSION_NUM_STEPS = 3
 
 // 特殊的 selectedSubOptionId 數值，
 // 當 user 要手動輸入 subOption 的文字框時，selectedSubOptionId 會是這個
@@ -27,9 +27,7 @@ export const MissionStep = {
   Init: -1,
   PlaceFlagOnMap: 0,
   PlaceFlagOnStreet: 1,
-  SelectMission: 2,
-  SelectDetail: 3,
-  UploadPhoto: 4
+  SelectMission: 2
 }
 
 const InitialMissionValue = {
