@@ -7,11 +7,12 @@ import TextField from '@material-ui/core/TextField'
 
 import { useMissionValue } from '../../../../contexts/MissionContext'
 import { useTagValue } from '../../../../contexts/TagContext'
-import AccessibilitySelect from '../../AccessibilitySelect'
 import ImageUpload from '../../ImageUpload'
 
 function MissionStep3() {
   const {
+    selectedCategoryId,
+    handleSetSelectedCategoryId,
     selectedMissionId,
     handleSetSelectedMissionId,
     selectedSubOptionId,
@@ -19,14 +20,31 @@ function MissionStep3() {
     moreDescriptionText,
     handleChangeMoreDescriptionText
   } = useMissionValue()
-  const { missionList } = useTagValue()
+  const { missionList, categoryList } = useTagValue()
   const { discoveries = [] } =
     missionList.find((mission) => mission.id === selectedMissionId) || {}
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography>3. 選擇你想要的標注任務</Typography>
+        <Typography>3. 選擇回報任務類型</Typography>
+      </Grid>
+      {categoryList.map((category) => (
+        <Grid key={category.id} item xs={4}>
+          <Button
+            variant='contained'
+            fullWidth
+            size='small'
+            color={selectedCategoryId === category.id ? 'primary' : 'default'}
+            onClick={() => handleSetSelectedCategoryId(category.id)}
+          >
+            {category.name}
+          </Button>
+        </Grid>
+      ))}
+
+      <Grid item xs={12}>
+        <Typography>4. 選擇任務</Typography>
       </Grid>
       {missionList.map((mission) => (
         <Grid key={mission.id} item xs={4}>
@@ -43,7 +61,7 @@ function MissionStep3() {
       ))}
 
       <Grid item xs={12}>
-        <Typography>4. 這裡有什麼？</Typography>
+        <Typography>5. 具體設施</Typography>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
@@ -66,14 +84,7 @@ function MissionStep3() {
       </Grid>
 
       <Grid item xs={12}>
-        <Typography>Accessibility</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <AccessibilitySelect />
-      </Grid>
-
-      <Grid item xs={12}>
-        <Typography>5. 關於這地點的描述？</Typography>
+        <Typography>6. 現象描述</Typography>
       </Grid>
       <Grid item xs={12}>
         <TextField
@@ -88,7 +99,7 @@ function MissionStep3() {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography>6. 相關的照片</Typography>
+        <Typography>7. 相關照片</Typography>
       </Grid>
       <Grid item xs={12}>
         <ImageUpload />

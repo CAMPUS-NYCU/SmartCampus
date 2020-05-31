@@ -36,6 +36,7 @@ const InitialMissionValue = {
     longitude: 0,
     latitude: 0
   },
+  selectedCategoryId: null,
   selectedMissionId: null,
   selectedSubOptionId: null,
   subOptionOtherText: '',
@@ -55,6 +56,7 @@ export const MissionContext = React.createContext({
   showControl: true,
   handleToggleShowControl: () => {},
   handleSetMarkerPosition: () => {},
+  handleSetSelectedCategoryId: () => {},
   handleSetSelectedMissionId: () => {},
   setSelectedSubOptionId: () => {},
   handleChangeSubOptionOtherText: () => {},
@@ -156,6 +158,16 @@ export const MissionContextProvider = ({ children }) => {
 
   // ==================== Option control ====================
   // TODO 使用 useReducer 優化這坨 useState？
+
+  // --------------- Category ---------------
+  const [selectedCategoryId, setSelectedCategoryId] = useState(
+    InitialMissionValue.selectedCategoryId
+  )
+  const handleSetSelectedCategoryId = (newCategoryId) => {
+    setSelectedCategoryId(newCategoryId)
+  }
+
+  // --------------- Mission ---------------
   const [selectedMissionId, setSelectedMissionId] = useState(
     InitialMissionValue.selectedMissionId
   )
@@ -165,6 +177,8 @@ export const MissionContextProvider = ({ children }) => {
     // 修改mission的話，subOption也要被重設
     setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
   }
+
+  // --------------- Discovery ---------------
   const [selectedSubOptionId, setSelectedSubOptionId] = useState(
     InitialMissionValue.selectedSubOptionId
   )
@@ -176,6 +190,8 @@ export const MissionContextProvider = ({ children }) => {
   const [selectedSubRate, setSelectedSubRate] = useState(
     InitialMissionValue.selectedSubRate
   )
+
+  // --------------- Description ---------------
   const [moreDescriptionText, setMoreDescriptionText] = useState(
     InitialMissionValue.moreDescriptionText
   )
@@ -183,9 +199,11 @@ export const MissionContextProvider = ({ children }) => {
     setMoreDescriptionText(event.target.value)
   const [photos, setPhotos] = useState(InitialMissionValue.photos)
 
+  // ==================== Clear ====================
   const clearMissionData = () => {
     setStep(InitialMissionValue.currentStep)
     setMarkerPosition(InitialMissionValue.markerPosition)
+    setSelectedCategoryId(InitialMissionValue.selectedCategoryId)
     setSelectedMissionId(InitialMissionValue.selectedMissionId)
     setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
     setSubOptionOtherText(InitialMissionValue.subOptionOtherText)
@@ -207,6 +225,8 @@ export const MissionContextProvider = ({ children }) => {
     handleToggleShowControl,
     markerPosition,
     handleSetMarkerPosition,
+    selectedCategoryId,
+    handleSetSelectedCategoryId,
     selectedMissionId,
     handleSetSelectedMissionId,
     selectedSubOptionId,

@@ -10,12 +10,29 @@ export const TagContext = React.createContext({
   activeTagId: null,
   setActiveTagId: () => {},
   resetActiveTag: () => {},
-  missionList: []
+  missionList: [],
+  categoryList: []
 })
 
 export const TagContextProvider = ({ children }) => {
   const { tags } = useTagList()
   const { missionList } = useMissionList()
+
+  // ! TEMP: 之後會串接 API 拿category列表？
+  const categoryList = [
+    {
+      id: 1,
+      name: '校園設施'
+    },
+    {
+      id: 2,
+      name: '校園問題'
+    },
+    {
+      id: 3,
+      name: '校園狀態'
+    }
+  ]
 
   const [activeTagId, setActiveTagId] = useState(null)
   const resetActiveTag = () => setActiveTagId(null)
@@ -27,7 +44,8 @@ export const TagContextProvider = ({ children }) => {
     activeTagId,
     setActiveTagId,
     resetActiveTag,
-    missionList
+    missionList,
+    categoryList
   }
 
   return (
