@@ -40,7 +40,6 @@ const InitialMissionValue = {
   selectedMissionId: null,
   selectedSubOptionId: null,
   subOptionOtherText: '',
-  selectedSubRate: 0,
   moreDescriptionText: '',
   photos: []
 }
@@ -60,7 +59,6 @@ export const MissionContext = React.createContext({
   handleSetSelectedMissionId: () => {},
   setSelectedSubOptionId: () => {},
   handleChangeSubOptionOtherText: () => {},
-  setSelectedSubRate: () => {},
   handleChangeMoreDescriptionText: () => {},
   setPhotos: () => {},
   handleMapOnLoad: () => {},
@@ -99,7 +97,6 @@ export const MissionContextProvider = ({ children }) => {
         input: {
           modify: false,
           title: 'TEST',
-          accessibility: selectedSubRate,
           missionID: selectedMissionId.toString(),
           discoveryIDs: [selectedSubOptionId.toString()],
           coordinates: {
@@ -187,9 +184,6 @@ export const MissionContextProvider = ({ children }) => {
   )
   const handleChangeSubOptionOtherText = (event) =>
     setSubOptionOtherText(event.target.value)
-  const [selectedSubRate, setSelectedSubRate] = useState(
-    InitialMissionValue.selectedSubRate
-  )
 
   // --------------- Description ---------------
   const [moreDescriptionText, setMoreDescriptionText] = useState(
@@ -207,7 +201,6 @@ export const MissionContextProvider = ({ children }) => {
     setSelectedMissionId(InitialMissionValue.selectedMissionId)
     setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
     setSubOptionOtherText(InitialMissionValue.subOptionOtherText)
-    setSelectedSubRate(InitialMissionValue.selectedSubRate)
     setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
     setPhotos(InitialMissionValue.photos)
   }
@@ -233,8 +226,6 @@ export const MissionContextProvider = ({ children }) => {
     setSelectedSubOptionId,
     subOptionOtherText,
     handleChangeSubOptionOtherText,
-    selectedSubRate,
-    setSelectedSubRate,
     moreDescriptionText,
     handleChangeMoreDescriptionText,
     photos,
