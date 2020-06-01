@@ -25,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
+  },
+  clickableFont: {
+    fontSize: '0.8em',
+    color: 'gray'
   }
 }))
 
@@ -40,7 +44,7 @@ function TagDetailDialog(props) {
     >
       <DialogTitle disableTypography onClose={onClose}>
         <Typography variant='h5'>
-          {activeTag ? activeTag.title : '詳細資訊'}
+          {activeTag ? activeTag.discoveryName : '詳細資訊'}
         </Typography>
         <IconButton
           aria-label='close'
@@ -57,12 +61,14 @@ function TagDetailDialog(props) {
             display='flex'
             alignItems='center'
             flexDirection='row'
-            justifyContent='space-around'
+            justifyContent='space-between'
             width='100%'
           >
-            <img src={HandicapIcon} alt='' />
-            <Typography>{activeTag.missionName}</Typography>
-            <Typography>{activeTag.discoveryName}</Typography>
+            <Box display='flex' alignItems='center' justifyContent='space-around' width='50%'>
+              <img src={HandicapIcon} alt='' />
+              <Typography>{activeTag.missionName}</Typography>
+              <Typography>圖書館</Typography>
+            </Box>
             <Button
               variant='contained'
               style={{ background: '#dce775', cursor: 'default' }}
@@ -76,12 +82,14 @@ function TagDetailDialog(props) {
             display='flex'
             alignItems='center'
             flexDirection='row'
-            style={{ margin: '4vw 0 0 0' }}
+            justifyContent='flex-start'
+            style={{ margin: '4vw 0 0 0', width: "100vw" }}
+
           >
             <div
               style={{
                 width: '100vw',
-                height: '80vw',
+                height: '40vh',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundImage:
@@ -102,10 +110,10 @@ function TagDetailDialog(props) {
           >
             <Button variant='contained'>更改狀態</Button>
             <Box display='flex' flexDirection='column' alignItems='flex-end'>
-              <p style={{ fontSize: '0.5em' }}>狀態編輯紀錄</p>
-              <p style={{ fontSize: '0.5em' }}>
+              <Box className={classes.clickableFont} style={{ textDecoration: 'underline', cursor: 'pointer' }} m={0.5}>狀態編輯紀錄</Box>
+              <Box className={classes.clickableFont} m={0.5}>
                 {activeTag.detail.lastUpdateTimeNew}
-              </p>
+              </Box>
             </Box>
           </Box>
           <div
@@ -117,14 +125,14 @@ function TagDetailDialog(props) {
             }}
           >
             {activeTag.detail.description ? (
-              <p>{activeTag.detail.description}</p>
+              <Box my={2} textOverflow="ellipsis" component="div" overflow="hidden" height="4.5em">{activeTag.detail.description}</Box>
             ) : (
-              <p>無描述</p>
-            )}
+                <p>無描述</p>
+              )}
             <Box display='flex' justifyContent='flex-end'>
-              <p style={{ fontSize: '0.5em' }}>
+              <Box className={classes.clickableFont} m={0.5}>
                 {activeTag.detail.createTimeNew}
-              </p>
+              </Box>
             </Box>
           </div>
           <Box
@@ -134,15 +142,15 @@ function TagDetailDialog(props) {
             width='80%'
             m={2}
           >
-            <p style={{ fontSize: '0.7em' }}>86人贊同此問題待處理</p>
+            <Box className={classes.clickableFont} m={0.5}>86人贊同此問題待處理</Box>
             <Button variant='contained' style={{ marginLeft: '8px' }}>
               贊同
             </Button>
           </Box>
         </Box>
       ) : (
-        <Typography>讀取中...</Typography>
-      )}
+          <Typography>讀取中...</Typography>
+        )}
     </Drawer>
   )
 }
