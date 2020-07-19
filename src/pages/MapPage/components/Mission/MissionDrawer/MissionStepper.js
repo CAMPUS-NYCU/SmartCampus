@@ -16,10 +16,10 @@ import {
 
 const useStyles = makeStyles({
   stepper: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 0,
-    width: '100%',
-    backgroundColor: 'rgba(0,0,0,0)' // 不要預設的灰底
+    width: '100%'
+    // backgroundColor: 'rgba(0,0,0,0)' // 不要預設的灰底
   },
   button: {
     minWidth: 80
@@ -40,7 +40,7 @@ function MissionStepper(props) {
     <MobileStepper
       variant='dots'
       steps={MISSION_NUM_STEPS}
-      position='static'
+      position='bottom'
       activeStep={currentStep}
       className={classes.stepper}
       backButton={

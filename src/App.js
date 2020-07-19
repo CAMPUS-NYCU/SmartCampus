@@ -13,6 +13,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 
+import WindowHeightProvider from 'components/WindowHeightProvider'
 import firebaseConfig from './constants/firebaseConfig'
 import { INDEX_PATH, MAP_PATH, LOGIN_PATH } from './constants/pageUrls'
 import MapPage from './pages/MapPage'
@@ -46,6 +47,7 @@ function App(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <WindowHeightProvider />
       <ApolloProvider client={apolloClient}>
         <SnackbarProvider
           maxSnack={1}
