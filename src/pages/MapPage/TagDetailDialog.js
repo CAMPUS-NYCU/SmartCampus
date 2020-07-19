@@ -64,7 +64,12 @@ function TagDetailDialog(props) {
             justifyContent='space-between'
             width='100%'
           >
-            <Box display='flex' alignItems='center' justifyContent='space-around' width='50%'>
+            <Box
+              display='flex'
+              alignItems='center'
+              justifyContent='space-around'
+              width='50%'
+            >
               <img src={HandicapIcon} alt='' />
               <Typography>{activeTag.missionName}</Typography>
               <Typography>圖書館</Typography>
@@ -83,8 +88,7 @@ function TagDetailDialog(props) {
             alignItems='center'
             flexDirection='row'
             justifyContent='flex-start'
-            style={{ margin: '4vw 0 0 0', width: "100vw" }}
-
+            style={{ margin: '4vw 0 0 0', width: '100vw' }}
           >
             <div
               style={{
@@ -110,7 +114,13 @@ function TagDetailDialog(props) {
           >
             <Button variant='contained'>更改狀態</Button>
             <Box display='flex' flexDirection='column' alignItems='flex-end'>
-              <Box className={classes.clickableFont} style={{ textDecoration: 'underline', cursor: 'pointer' }} m={0.5}>狀態編輯紀錄</Box>
+              <Box
+                className={classes.clickableFont}
+                style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                m={0.5}
+              >
+                狀態編輯紀錄
+              </Box>
               <Box className={classes.clickableFont} m={0.5}>
                 {activeTag.detail.lastUpdateTimeNew}
               </Box>
@@ -125,9 +135,17 @@ function TagDetailDialog(props) {
             }}
           >
             {activeTag.detail.description ? (
-              <Box my={2} textOverflow="ellipsis" component="div" overflow="hidden" height="4.5em">{activeTag.detail.description}</Box>
+              <Box
+                my={2}
+                textOverflow='ellipsis'
+                component='div'
+                overflow='hidden'
+                height='4.5em'
+              >
+                {activeTag.detail.description}
+              </Box>
             ) : (
-                <p>無描述</p>
+              <p>無描述</p>
               )}
             <Box display='flex' justifyContent='flex-end'>
               <Box className={classes.clickableFont} m={0.5}>
@@ -142,14 +160,16 @@ function TagDetailDialog(props) {
             width='80%'
             m={2}
           >
-            <Box className={classes.clickableFont} m={0.5}>86人贊同此問題待處理</Box>
+            <Box className={classes.clickableFont} m={0.5}>
+              86人贊同此問題待處理
+            </Box>
             <Button variant='contained' style={{ marginLeft: '8px' }}>
               贊同
             </Button>
           </Box>
         </Box>
       ) : (
-          <Typography>讀取中...</Typography>
+        <Typography>讀取中...</Typography>
         )}
     </Drawer>
   )
