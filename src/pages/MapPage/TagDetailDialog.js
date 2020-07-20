@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -10,6 +10,7 @@ import Drawer from '@material-ui/core/Drawer'
 import { Box } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import HandicapIcon from '../../assets/images/handicap-icon.svg'
+import useTagDetail from './hooks/useTagDetail'
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
@@ -34,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 function TagDetailDialog(props) {
   const { activeTag, onClose } = props
+  const detail = useTagDetail(activeTag.id)
+  console.log(detail)
   const classes = useStyles()
   return (
     <Drawer
@@ -55,7 +58,7 @@ function TagDetailDialog(props) {
         </IconButton>
       </DialogTitle>
 
-      {activeTag ? (
+      {activeTag && detail ? (
         <Box display='flex' flexDirection='column' alignItems='center'>
           <Box
             display='flex'
@@ -100,9 +103,6 @@ function TagDetailDialog(props) {
                   'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)'
               }}
             />
-            {/* <div
-              style={{ width: '100vw', height: '80vw', overflowY: 'scroll', backgroundSize: 'cover', backgroundPosition: 'center', backgroundImage: 'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)' }}
-            /> */}
           </Box>
           <Box
             display='flex'
@@ -122,7 +122,7 @@ function TagDetailDialog(props) {
                 狀態編輯紀錄
               </Box>
               <Box className={classes.clickableFont} m={0.5}>
-                {activeTag.detail.lastUpdateTimeNew}
+                {detail.newLastUpdateTime}
               </Box>
             </Box>
           </Box>
@@ -134,7 +134,7 @@ function TagDetailDialog(props) {
               paddingBottom: '2'
             }}
           >
-            {activeTag.detail.description ? (
+            {detail.description ? (
               <Box
                 my={2}
                 textOverflow='ellipsis'
@@ -142,14 +142,14 @@ function TagDetailDialog(props) {
                 overflow='hidden'
                 height='4.5em'
               >
-                {activeTag.detail.description}
+                {detail.description}
               </Box>
             ) : (
               <p>無描述</p>
-              )}
+            )}
             <Box display='flex' justifyContent='flex-end'>
               <Box className={classes.clickableFont} m={0.5}>
-                {activeTag.detail.createTimeNew}
+                {detail.newCreateTime}
               </Box>
             </Box>
           </div>
@@ -170,7 +170,7 @@ function TagDetailDialog(props) {
         </Box>
       ) : (
         <Typography>讀取中...</Typography>
-        )}
+      )}
     </Drawer>
   )
 }

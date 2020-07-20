@@ -7,10 +7,6 @@ export const GET_TAG_DETAIL_QUERY = gql`
       tagID
       createTime
       lastUpdateTime
-      createUser {
-        id
-        name
-      }
       location {
         geoInfo
       }
@@ -20,33 +16,72 @@ export const GET_TAG_DETAIL_QUERY = gql`
   }
 `
 
-function useTagDetail(id) {
-  const {
-    data: {
-      tagDetail: {
-        tagID,
-        createTime = null,
-        lastUpdateTime = null,
-        createUser: { id: createUserId = null, name: createUserName = '' },
-        location: { geoInfo } = {},
-        description = '',
-        imageUrl: imageUrl = []
-      }
-    } = {}
-  } = useQuery(GET_TAG_DETAIL_QUERY, { variables: { id } })
+const generateTime = (time) => {
+  console.log(typeof time)
+  const times = time.split(' ')
+  var month = 0
+  switch (times[1]) {
+    case 'Jan':
+      month = 1
+      break
+    case 'Feb':
+      month = 2
+      break
+    case 'Mar':
+      month = 3
+      break
+    case 'Apr':
+      month = 4
+      break
+    case 'May':
+      month = 5
+      break
+    case 'Jun':
+      month = 6
+      break
+    case 'Jul':
+      month = 7
+      break
+    case 'Aug':
+      month = 8
+      break
+    case 'Sep':
+      month = 9
+      break
+    case 'Oct':
+      month = 10
+      break
+    case 'Nov':
+      month = 11
+      break
+    case 'Dec':
+      month = 12
+      break
+    default:
+      month = 0
+      break
+  }
+  return `${times[3]}-${month}-${times[2]} ${times[4]}`
+}
 
-  const tagDetail = {
-    id: tagID,
-    createTime,
-    lastUpdateTime,
-    createUserId,
-    createUserName,
-    geoInfo,
-    description,
-    imageUrl
+function useTagDetail(id) {
+  const { loading, data: { tagDetail = {} } = {} } = useQuery(
+    GET_TAG_DETAIL_QUERY,
+    {
+      variables: { id }
+    }
+  )
+  if (!loading) {
+    const detail = {
+      ...tagDetail,
+      newCreateTime: generateTime(tagDetail.createTime),
+      newLastUpdateTime: generateTime(tagDetail.lastUpdateTime)
+    }
+    return detail
   }
 
-  return { tagDetail }
+  // console.log(typeof tagDetail.createTime)
+  return null
 }
 
 export default useTagDetail

@@ -33,7 +33,7 @@ const MapPageContent = () => {
   const profileDialogControl = useModal()
 
   const { showControl, isInMission } = useMissionValue()
-  const { activeTag, resetActiveTag } = useTagValue()
+  const { activeTag, resetActiveTag, activeTagDetail } = useTagValue()
 
   return (
     <div>
@@ -62,7 +62,13 @@ const MapPageContent = () => {
       <MissionDrawer />
       <ProfileDialog control={profileDialogControl} />
       <HowToUseDialog control={howToUseDialogControl} />
-      <TagDetailDialog activeTag={activeTag} onClose={resetActiveTag} />
+      {activeTag && (
+        <TagDetailDialog
+          activeTag={activeTag}
+          tagDetail={activeTagDetail}
+          onClose={resetActiveTag}
+        />
+      )}
     </div>
   )
 }
