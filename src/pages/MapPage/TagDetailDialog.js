@@ -11,6 +11,7 @@ import { Box } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import HandicapIcon from '../../assets/images/handicap-icon.svg'
 import useTagDetail from './hooks/useTagDetail'
+import ModalImage from "react-modal-image";
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
@@ -30,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
   clickableFont: {
     fontSize: '0.8em',
     color: 'gray'
+  },
+  imageBox: {
+    weight: '80vw',
+    height: '100%',
+    background: 'red'
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   }
 }))
 
@@ -92,17 +102,46 @@ function TagDetailDialog(props) {
                 待解決
               </Button>
             </Box>
-            <div
-              style={{
-                width: '100vw',
-                margin: '4vw 0 0 0',
-                flexGrow: '1',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundImage:
-                  'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)'
-              }}
-            />
+            <div style={{
+              width: '100vw',
+              margin: '4vw 0 0 0',
+              height: '100%',
+              flexGrow: '1',
+              overflowX: 'scroll',
+              overflowY: 'hidden',
+              display: 'flex',
+              flexDirection: 'row'
+            }}>
+              <div style={{ width: '80vw', height: '100%', flexShrink: '0', overflowY: 'hidden',display: 'flex' }}>
+                <ModalImage
+                  small='https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg'
+                  large='https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg'
+                  className={classes.image}
+                  hideDownload
+                  hideZoom
+                />
+              </div>
+              <div style={{ width: '80vw', height: '100%', flexShrink: '0',overflowY: 'hidden', display: 'flex' }}>
+                <ModalImage
+                  small='https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg'
+                  large='https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg'
+                  className={classes.image}
+                  hideDownload
+                  hideZoom
+                />
+              </div>
+              {/* <div
+                style={{
+                  width: '80vw',
+                  height: '100%',
+                  flexShrink: '0',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundImage:
+                    'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)'
+                }}
+              /> */}
+            </div>
             <Box
               display='flex'
               alignItems='center'
