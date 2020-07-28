@@ -87,14 +87,13 @@ function TagDetailDialog(props) {
                   <Typography>{activeTag.missionName}</Typography>
                   <Typography>圖書館</Typography>
                 </Box>
-                <Button
-                  variant='contained'
-                  style={{ background: '#dce775', cursor: 'default' }}
-                  disableElevation
-                  disableRipple
+                
+                
+                <div
+                  style={{ cursor: 'default', width:'100px', height:'36px',borderTop:'18px solid #dce775', borderBottom:'18px solid #dce775', borderLeft:'18px solid transparent', textAlign:'center'}}
                 >
-                  待解決
-              </Button>
+                  <Typography style={{position:'relative', top:'-9px'}}>圖書館</Typography>
+              </div>
               </Box>
               <div style={{
                 width: '100vw',
@@ -118,7 +117,8 @@ function TagDetailDialog(props) {
                     backgroundPosition: 'center',
                     backgroundImage:
                       'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)'
-                  }} />
+                  }}
+                />
 
                 <div
                   onClick={()=>setLargeImg('https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600')}
