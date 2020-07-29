@@ -10,6 +10,7 @@ import { Box } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import { Lightbox } from 'react-modal-image'
 import HandicapIcon from '../../assets/images/handicap-icon.svg'
+import EditIcon from '../../assets/images/edit.svg'
 import useTagDetail from './hooks/useTagDetail'
 
 TagDetailDialog.propTypes = {
@@ -101,7 +102,7 @@ function TagDetailDialog(props) {
                     textAlign: 'center'
                   }}
                 >
-                  <Typography style={{ position: 'relative', top: '-9px' }}>
+                  <Typography style={{ position: 'relative', top: '-10px' }}>
                     圖書館
                   </Typography>
                 </div>
@@ -185,7 +186,12 @@ function TagDetailDialog(props) {
                     className={classes.clickableFont}
                     style={{ textDecoration: 'underline', cursor: 'pointer' }}
                     m={0.5}
+                    width='85px'
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='space-between'
                   >
+                    <img src={EditIcon} alt='' />
                     狀態編輯紀錄
                   </Box>
                   <Box className={classes.clickableFont} m={0.5}>
