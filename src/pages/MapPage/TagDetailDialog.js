@@ -8,9 +8,17 @@ import CloseIcon from '@material-ui/icons/Close'
 import Drawer from '@material-ui/core/Drawer'
 import { Box } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import Divider from '@material-ui/core/Divider'
+import DialogActions from '@material-ui/core/DialogActions'
 import { Lightbox } from 'react-modal-image'
 import HandicapIcon from '../../assets/images/handicap-icon.svg'
 import EditIcon from '../../assets/images/edit.svg'
+import WaitIcon from '../../assets/images/wait.svg'
+import SolvedIcon from '../../assets/images/solved.svg'
 import useTagDetail from './hooks/useTagDetail'
 
 TagDetailDialog.propTypes = {
@@ -41,7 +49,27 @@ function TagDetailDialog(props) {
   const { activeTag, onClose } = props
   const detail = useTagDetail(activeTag.id)
   const [largeImg, setLargeImg] = useState(null)
+  const [stateDrawer, setStateDrawer] = useState(false)
+  const [tagState, setTagState] = useState(1)
+  const [temporaryTagState, setTemporaryTagState] = useState(tagState)
+  const resetTemporaryTagState = () => {
+    setTemporaryTagState(tagState)
+  }
   const classes = useStyles()
+  const handleDrawerClose=()=>{
+    setStateDrawer(false)
+    resetTemporaryTagState()
+  }
+  const handleDrawerComplete = () => {
+    setStateDrawer(false)
+    setTagState(temporaryTagState)
+  }
+  const tagStateString = ['待處理', '已解決']
+  const bookmarksColor = ['#FFB59F','#dce775']
+  const changeDrawer = [
+    ['#FF8965', 'black'],
+    ['black', '#D3E430']
+  ]
   return (
     <>
       <Drawer
@@ -96,14 +124,14 @@ function TagDetailDialog(props) {
                     cursor: 'default',
                     width: '100px',
                     height: '36px',
-                    borderTop: '18px solid #dce775',
-                    borderBottom: '18px solid #dce775',
-                    borderLeft: '18px solid transparent',
+                    borderTop: `18px solid ${bookmarksColor[tagState]}`,
+                    borderBottom: `18px solid ${bookmarksColor[tagState]}`,
+                    borderLeft: '12px solid transparent',
                     textAlign: 'center'
                   }}
                 >
                   <Typography style={{ position: 'relative', top: '-10px' }}>
-                    圖書館
+                    {tagStateString[tagState]}
                   </Typography>
                 </div>
               </Box>
@@ -165,6 +193,9 @@ function TagDetailDialog(props) {
                 width='80vw'
               >
                 <Button
+                  onClick={() => {
+                    setStateDrawer(true)
+                  }}
                   style={{
                     background: '#FDCC4F',
                     /* Primary_light */
@@ -245,6 +276,58 @@ function TagDetailDialog(props) {
             <Typography>讀取中...</Typography>
           )}
         </div>
+      </Drawer>
+      <Drawer
+        anchor='bottom'
+        open={stateDrawer}
+        onclose={() => setStateDrawer(false)}
+      >
+        <DialogTitle disableTypography onClose={onClose}>
+          <Typography variant='h5'>選擇目前狀態</Typography>
+          <IconButton
+            aria-label='close'
+            className={classes.closeButton}
+            onClick={() => handleDrawerClose()}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <Box
+          display='flex'
+          width='100vw'
+          flexDirection='column'
+          justifyContent='space-around'
+        >
+          <List component='nav'>
+            <ListItem button onClick={() => setTemporaryTagState(0)}>
+              <ListItemIcon>
+                <img src={WaitIcon} alt='' />
+              </ListItemIcon>
+              <ListItemText
+                primary='待處理'
+                style={{ color: `${changeDrawer[0][temporaryTagState]}` }}
+              />
+            </ListItem>
+            <Divider />
+            <ListItem button onClick={() => setTemporaryTagState(1)}>
+              <ListItemIcon>
+                <img src={SolvedIcon} alt='' />
+              </ListItemIcon>
+              <ListItemText
+                primary='已解決'
+                style={{ color: `${changeDrawer[1][temporaryTagState]}` }}
+              />
+            </ListItem>
+          </List>
+          <DialogActions>
+            <Button
+              style={{ color: '#FDCC4F' }}
+              onClick={() => handleDrawerComplete()}
+            >
+              確定
+            </Button>
+          </DialogActions>
+        </Box>
       </Drawer>
       {largeImg && (
         <Lightbox
