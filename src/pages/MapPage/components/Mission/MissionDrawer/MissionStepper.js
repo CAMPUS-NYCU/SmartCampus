@@ -1,16 +1,13 @@
 import React from 'react'
 
+import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import CloseIcon from '@material-ui/icons/Close'
 import DoneIcon from '@material-ui/icons/Done'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   MISSION_MAX_STEP,
   MISSION_MIN_STEP,
-  MISSION_NUM_STEPS,
   useMissionValue
 } from '../../../contexts/MissionContext'
 
@@ -39,22 +36,23 @@ function MissionStepper(props) {
   return (
     <MobileStepper
       variant='dots'
-      steps={MISSION_NUM_STEPS}
+      steps={0}
       position='bottom'
-      activeStep={currentStep}
+      // activeStep={currentStep}
+      activeStep={-1}
       className={classes.stepper}
       backButton={
         currentStep <= MISSION_MIN_STEP ? (
           <Button
-            size='small'
+            size='medium'
             onClick={handleCloseMission}
             className={classes.button}
           >
-            <CloseIcon fontSize='small' /> 關閉
+            關閉
           </Button>
         ) : (
-          <Button size='small' onClick={handleBack} className={classes.button}>
-            <KeyboardArrowLeft /> 上一步
+          <Button size='medium' onClick={handleBack} className={classes.button}>
+            上一步
           </Button>
         )
       }
@@ -62,15 +60,15 @@ function MissionStepper(props) {
         currentStep >= MISSION_MAX_STEP ? (
           <Button
             color='primary'
-            size='small'
+            size='medium'
             onClick={handleCompleteMission}
             className={classes.button}
           >
-            完成 <DoneIcon fontSize='small' />
+            完成
           </Button>
         ) : (
-          <Button size='small' onClick={handleNext} className={classes.button}>
-            下一步 <KeyboardArrowRight />
+          <Button size='medium' onClick={handleNext} className={classes.button}>
+            下一步
           </Button>
         )
       }

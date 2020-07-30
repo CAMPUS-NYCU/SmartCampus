@@ -17,7 +17,7 @@ function MissionStep1() {
         justifyContent='space-between'
       >
         <Flag />
-        <Typography >將放置在要標注的位。</Typography>
+        <Typography>將放置在要標注的位。</Typography>
       </Box>
 
       <Box
@@ -29,7 +29,11 @@ function MissionStep1() {
       >
         {/* <inputIcon /> */}
         <img src={inputImg} alt='' />
-        <TextField id='standard-basic' style={{ width: '70vw' }} />
+        <TextField
+          id='standard-basic'
+          style={{ width: '70vw' }}
+          placeholder='輸入地點名稱'
+        />
       </Box>
     </>
   )
