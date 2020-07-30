@@ -54,6 +54,8 @@ const InitialMissionValue = {
 }
 
 export const MissionContext = React.createContext({
+  missionType: null,
+  setMissionType:()=>{},
   isInMission: false,
   handleBack: () => {},
   handleNext: () => {},
@@ -98,8 +100,9 @@ export const MissionContextProvider = ({ children }) => {
     // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
     handleNextStep()
   }
-
-  const handleStartMission = () => {
+  const [missionType, setMissionType] = useState(null)
+  const handleStartMission = (missionType) => {
+    setMissionType(missionType)
     setShowControl(true)
     const center = mapInstance.getCenter()
     setMarkerPosition({
@@ -114,10 +117,12 @@ export const MissionContextProvider = ({ children }) => {
   }
 
   const handleCloseMission = () => {
+    setMissionType(null)
     setStep(MissionStep.Init)
   }
 
   const handleCompleteMission = () => {
+    setMissionType(null)
     tagUpdate({
       variables: {
         input: {
@@ -270,6 +275,8 @@ export const MissionContextProvider = ({ children }) => {
   }
 
   const contextValues = {
+    missionType,
+    setMissionType,
     currentStep,
     isInMission,
     handleBack,

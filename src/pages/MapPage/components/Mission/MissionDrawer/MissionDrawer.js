@@ -13,6 +13,7 @@ import MissionStep1 from './MissionStep1'
 import MissionStep2 from './MissionStep2'
 import MissionStep3 from './MissionStep3'
 import { MissionStep, useMissionValue } from '../../../contexts/MissionContext'
+import { missionInfo } from '../../../constants/missionInfo'
 
 const useStyles = makeStyles({
   drawerContent: {
@@ -47,51 +48,61 @@ function MissionDrawer(props) {
   const { isInMission, handleCloseMission } = useMissionValue()
   const classes = useStyles()
 
-  const { currentStep } = useMissionValue()
-  console.log(props)
+  const { currentStep, missionType } = useMissionValue()
   return (
-    <Drawer
-      anchor='bottom'
-      variant='persistent'
-      open={isInMission}
-      onClose={handleCloseMission}
-      PaperProps={{
-        style: {
-          borderRadius: '20px 20px 0 0'
-        }
-      }}
-      {...props}
-    >
-      <div
-        className={classnames(
-          classes.drawerContent,
-          currentStep >= MissionStep.SelectMission && classes.drawerContentFull
-        )}
-      >
-        <Box
-          className={classes.titleBar}
-          display='flex'
-          alignItems='center'
-          justifyContent='space-between'
-          px={2}
+    <>
+      {isInMission ? (
+        <Drawer
+          anchor='bottom'
+          variant='persistent'
+          open={isInMission}
+          onClose={handleCloseMission}
+          PaperProps={{
+            style: {
+              borderRadius: '20px 20px 0 0'
+            }
+          }}
+          {...props}
         >
-          <Typography variant='h6'>標註</Typography>
-          <IconButton
-            aria-label='close'
-            onClick={handleCloseMission}
-            className={classes.closeButton}
+          <div
+            className={classnames(
+              classes.drawerContent,
+              currentStep >= MissionStep.SelectMission &&
+                classes.drawerContentFull
+            )}
           >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-        <Box px={2} py={1} className={classes.missionContent}>
-          {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-          {currentStep === MissionStep.PlaceFlagOnStreet && <MissionStep2 />}
-          {currentStep === MissionStep.SelectMission && <MissionStep3 />}
-        </Box>
-        <MissionStepper />
-      </div>
-    </Drawer>
+            <Box
+              className={classes.titleBar}
+              display='flex'
+              alignItems='center'
+              justifyContent='space-between'
+              px={2}
+            >
+              <Box fontSize='h6.fontSize' fontWeight="fontWeightBold">
+                標註{missionInfo[missionType].missionName}
+              </Box>
+              <IconButton
+                aria-label='close'
+                onClick={handleCloseMission}
+                className={classes.closeButton}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Box px={2} py={1} className={classes.missionContent}>
+              {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
+              {currentStep === MissionStep.PlaceFlagOnStreet && (
+                <MissionStep2 />
+              )}
+              {currentStep === MissionStep.SelectMission && <MissionStep3 />}
+            </Box>
+            <MissionStepper />
+          </div>
+        </Drawer>
+      ) : (
+        <></>
+      )}
+    </>
   )
 }
 

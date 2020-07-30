@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import flagImg from '../../../assets/images/red-flag.svg'
+import flagImg from '../../../assets/images/yellow-flag.svg'
 
 Flag.propTypes = {
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -18,7 +18,10 @@ function Flag({ size }) {
         height: size,
         width: size,
         objectFit: 'cover',
-        backgroundImage: `url(${flagImg})`
+        backgroundImage: `url(${flagImg})`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center'
       }}
     />
   )

@@ -11,7 +11,7 @@ import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues'
 import { useMissionValue, MissionStep } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
 import HandicapIcon from '../../../../assets/images/handicap-icon.svg'
-import flagImg from '../../../../assets/images/red-flag.svg'
+import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.png'
 import { DefaultCenter, DefaultZoom } from '../../constants/mapConstants'
 import PinTarget from '../PinTarget'
@@ -54,7 +54,7 @@ function Map() {
             fullscreenControl: false,
             mapTypeControl: false,
             streetViewControl: false,
-            disableDefaultUI:true
+            disableDefaultUI: true
           }}
           mapContainerStyle={{
             height: '100%',
@@ -74,18 +74,19 @@ function Map() {
               }}
             />
           )}
-          {tags.map((tag) => (
-            <Marker
-              key={tag.id}
-              position={tag.position}
-              icon={{
-                url: HandicapIcon,
-                scaledSize: { width: 20, height: 20 }
-              }}
-              clickable
-              onClick={() => setActiveTagId(tag.id)}
-            />
-          ))}
+          {!isInMission &&
+            tags.map((tag) => (
+              <Marker
+                key={tag.id}
+                position={tag.position}
+                icon={{
+                  url: HandicapIcon,
+                  scaledSize: { width: 20, height: 20 }
+                }}
+                clickable
+                onClick={() => setActiveTagId(tag.id)}
+              />
+            ))}
           {isInMission && (
             <Marker
               draggable

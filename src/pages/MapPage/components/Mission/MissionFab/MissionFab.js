@@ -42,7 +42,10 @@ const MissionFab = () => {
       justifyContent='space-between'
     >
       {missionInfo.map((mission, index) => (
-        <ListItem className={classes.missionList} onClick={handleStartMission}>
+        <ListItem
+          className={classes.missionList}
+          onClick={() => handleStartMission(index)}
+        >
           <ListItemIcon>
             <img
               src={missionImage[index]}
