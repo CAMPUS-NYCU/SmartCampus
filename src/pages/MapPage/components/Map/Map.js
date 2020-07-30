@@ -53,7 +53,8 @@ function Map() {
           options={{
             fullscreenControl: false,
             mapTypeControl: false,
-            streetViewControl: false
+            streetViewControl: false,
+            disableDefaultUI:true
           }}
           mapContainerStyle={{
             height: '100%',
