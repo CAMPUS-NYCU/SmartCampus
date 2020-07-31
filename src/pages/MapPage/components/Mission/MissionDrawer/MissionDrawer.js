@@ -67,7 +67,7 @@ function MissionDrawer(props) {
           <div
             className={classnames(
               classes.drawerContent,
-              currentStep >= MissionStep.SelectMission &&
+              currentStep === MissionStep.SelectMission &&
                 classes.drawerContentFull
             )}
           >
@@ -92,9 +92,9 @@ function MissionDrawer(props) {
             <Box px={2} py={1} className={classes.missionContent}>
               {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
               {currentStep === MissionStep.PlaceFlagOnStreet && (
-                <MissionStep2 />
+                <MissionStep3 />
               )}
-              {currentStep === MissionStep.SelectMission && <MissionStep3 />}
+              {currentStep === MissionStep.SelectMission && <MissionStep2 />}
             </Box>
             <MissionStepper />
           </div>

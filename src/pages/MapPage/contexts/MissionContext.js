@@ -27,8 +27,8 @@ export const SubOptionOther = Symbol('SubOptionOther')
 export const MissionStep = {
   Init: -1,
   PlaceFlagOnMap: 0,
-  PlaceFlagOnStreet: 1,
-  SelectMission: 2
+  PlaceFlagOnStreet: 2,
+  SelectMission: 1
 }
 
 const InitialMissionValue = {
