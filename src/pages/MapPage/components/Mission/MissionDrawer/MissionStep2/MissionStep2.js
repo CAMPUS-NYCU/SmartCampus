@@ -4,8 +4,10 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import Box from '@material-ui/core/Box'
+import IconButton from '@material-ui/core/IconButton'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
-
+import CreateIcon from '@material-ui/icons/Create'
 import {
   useMissionValue,
   MissionStep
@@ -15,6 +17,7 @@ import ImageUpload from '../../ImageUpload'
 
 function MissionStep3() {
   const {
+    missionType,
     selectedCategoryId,
     handleSetSelectedCategoryId,
     selectedMissionId,
@@ -23,56 +26,47 @@ function MissionStep3() {
     setSelectedSubOptionId,
     moreDescriptionText,
     handleChangeMoreDescriptionText,
-    handleSetStep
+    handleSetStep,
+    textLocation
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
   const { discoveries = [] } =
     missionList.find((mission) => mission.id === selectedMissionId) || {}
-
+  console.log(typeof textLocation)
   return (
     <Grid container spacing={2}>
       {/* * ==================== 1.經緯度標註 ==================== */}
-      <Grid item xs={12}>
-        <Typography>
-          1. <LocationOnIcon /> 已選擇：
-        </Typography>
-      </Grid>
-      <Grid item xs={4}>
-        <Button variant='contained' fullWidth size='small' color='primary'>
-          {/* TODO 串接google map 地點to文字 API */}
-          地點已選擇
-        </Button>
-      </Grid>
-      <Grid item xs={4}>
-        <Button
-          variant='contained'
-          fullWidth
-          size='small'
-          onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}
+      <Grid container item xs={12} justify='space-between' direction='row'>
+        <Box
+          display='flex'
+          flexDirection='row'
+          alignItems='center'
+          width='70vw'
+          justifyContent='flex-start'
         >
-          修改地點
-        </Button>
+          <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+          <Typography>將座標放在要標註的位置。</Typography>
+        </Box>
+        <IconButton onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}>
+          <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
+        </IconButton>
       </Grid>
 
-      {/* * ==================== 2.街景 ==================== */}
-      <Grid item xs={12}>
-        <Typography>2. 透過街景標記更精確的位置</Typography>
-      </Grid>
-      <Grid item xs={4}>
-        <Button variant='contained' fullWidth size='small' color='primary'>
-          {/* TODO 串接google map 地點to文字 API */}
-          精確位置已選擇
-        </Button>
-      </Grid>
-      <Grid item xs={4}>
-        <Button
-          variant='contained'
-          fullWidth
-          size='small'
-          onClick={() => handleSetStep(MissionStep.PlaceFlagOnStreet)}
+      {/* * ==================== 2.地點資訊 ==================== */}
+      <Grid container item xs={12} justify='space-between' direction='row'>
+        <Box
+          display='flex'
+          flexDirection='row'
+          alignItems='center'
+          width='70vw'
+          justifyContent='flex-start'
         >
-          修改
-        </Button>
+          <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+          <Typography>{textLocation}</Typography>
+        </Box>
+        <IconButton onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}>
+          <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
+        </IconButton>
       </Grid>
 
       {/* * ==================== 3.ABC三任務選擇 ==================== */}

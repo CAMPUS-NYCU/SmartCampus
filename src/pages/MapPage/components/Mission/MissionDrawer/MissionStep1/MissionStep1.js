@@ -5,8 +5,10 @@ import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import Flag from '../../../Flag'
 import inputImg from '../../../../../../assets/images/input-icon.svg'
+import { useMissionValue } from '../../../../contexts/MissionContext'
 
 function MissionStep1() {
+  const { textLocation, handleChangeTextLocation } = useMissionValue()
   return (
     <>
       <Box
@@ -33,6 +35,8 @@ function MissionStep1() {
           id='standard-basic'
           style={{ width: '70vw' }}
           placeholder='輸入地點名稱'
+          value={textLocation}
+          onChange={handleChangeTextLocation}
         />
       </Box>
     </>

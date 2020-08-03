@@ -50,12 +50,13 @@ const InitialMissionValue = {
   selectedSubOptionId: null,
   subOptionOtherText: '',
   moreDescriptionText: '',
+  textLocation: '',
   photos: []
 }
 
 export const MissionContext = React.createContext({
   missionType: null,
-  setMissionType:()=>{},
+  setMissionType: () => {},
   isInMission: false,
   handleBack: () => {},
   handleNext: () => {},
@@ -74,6 +75,7 @@ export const MissionContext = React.createContext({
   setSelectedSubOptionId: () => {},
   handleChangeSubOptionOtherText: () => {},
   handleChangeMoreDescriptionText: () => {},
+  handleChangeTextLocation: () => {},
   setPhotos: () => {},
   handleMapOnLoad: () => {},
   ...InitialMissionValue
@@ -117,6 +119,7 @@ export const MissionContextProvider = ({ children }) => {
   }
 
   const handleCloseMission = () => {
+    clearMissionData()
     setMissionType(null)
     setStep(MissionStep.Init)
   }
@@ -262,6 +265,14 @@ export const MissionContextProvider = ({ children }) => {
     setMoreDescriptionText(event.target.value)
   const [photos, setPhotos] = useState(InitialMissionValue.photos)
 
+  // --------------- Location Text ---------------
+  const [textLocation, setTextLocation] = useState(
+    InitialMissionValue.textLocation
+  )
+  const handleChangeTextLocation = (event) => {
+    setTextLocation(event.target.value)
+  }
+
   // ==================== Clear ====================
   const clearMissionData = () => {
     setStep(InitialMissionValue.currentStep)
@@ -272,6 +283,7 @@ export const MissionContextProvider = ({ children }) => {
     setSubOptionOtherText(InitialMissionValue.subOptionOtherText)
     setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
     setPhotos(InitialMissionValue.photos)
+    setTextLocation(InitialMissionValue.textLocation)
   }
 
   const contextValues = {
@@ -304,6 +316,8 @@ export const MissionContextProvider = ({ children }) => {
     handleChangeSubOptionOtherText,
     moreDescriptionText,
     handleChangeMoreDescriptionText,
+    textLocation,
+    handleChangeTextLocation,
     photos,
     setPhotos,
     handleMapOnLoad
