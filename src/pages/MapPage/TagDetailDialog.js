@@ -56,7 +56,7 @@ function TagDetailDialog(props) {
     setTemporaryTagState(tagState)
   }
   const classes = useStyles()
-  const handleDrawerClose=()=>{
+  const handleDrawerClose = () => {
     setStateDrawer(false)
     resetTemporaryTagState()
   }
@@ -65,11 +65,12 @@ function TagDetailDialog(props) {
     setTagState(temporaryTagState)
   }
   const tagStateString = ['待處理', '已解決']
-  const bookmarksColor = ['#FFB59F','#dce775']
+  const bookmarksColor = ['#FFB59F', '#dce775']
   const changeDrawer = [
     ['#FF8965', 'black'],
     ['black', '#D3E430']
   ]
+  console.log(activeTag)
   return (
     <>
       <Drawer
@@ -83,7 +84,7 @@ function TagDetailDialog(props) {
         >
           <DialogTitle disableTypography onClose={onClose}>
             <Typography variant='h5'>
-              {activeTag ? activeTag.discoveryName : '詳細資訊'}
+              {activeTag ? activeTag.category.targetName : '詳細資訊'}
             </Typography>
             <IconButton
               aria-label='close'
@@ -115,8 +116,8 @@ function TagDetailDialog(props) {
                   width='50%'
                 >
                   <img src={HandicapIcon} alt='' />
-                  <Typography>{activeTag.missionName}</Typography>
-                  <Typography>圖書館</Typography>
+                  <Typography>{activeTag.category.subTypeName}</Typography>
+                  <Typography>{activeTag.title}</Typography>
                 </Box>
 
                 <div

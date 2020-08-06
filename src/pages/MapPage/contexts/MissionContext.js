@@ -6,12 +6,12 @@ import { useMutation } from '@apollo/react-hooks'
 
 import debounce from 'utils/debounce'
 import useStep from '../../../utils/hooks/useStep'
+import { missionInfo } from '../constants/missionInfo'
 
 export const TAG_UPDATE_MUTATION = gql`
-  mutation TagUpdateMutation($input: TagUpdateInput!) {
-    tagUpdate(data: $input) {
-      success
-      message
+  mutation AddNewTagResponse($input: AddNewTagDataInput!) {
+    addNewTagData(data: $input) {
+      imageNumber
     }
   }
 `
@@ -125,40 +125,44 @@ export const MissionContextProvider = ({ children }) => {
   }
 
   const handleCompleteMission = () => {
-    setMissionType(null)
+    console.log(contextValues)
     tagUpdate({
       variables: {
         input: {
-          modify: false,
-          title: 'TEST',
-          missionID: selectedMissionId.toString(),
-          discoveryIDs: [selectedSubOptionId.toString()],
+          title: textLocation,
+          category: {
+            missionName: missionInfo[missionType].missionName.toString(),
+            subTypeName: selectedMissionId.toString(),
+            targetName: selectedSubOptionId.toString()
+          },
           accessibility: 0, // API目前accessibility必填，因此先保留
           coordinates: {
             latitude: markerPosition.latitude.toString(),
             longitude: markerPosition.longitude.toString()
           },
-          createUserID: 'NO_USER',
+          // createUserID: 'NO_USER',
           description: moreDescriptionText,
-          imageUrl: []
+          imageNumber: 0,
+          streetViewInfo: {
+            povHeading: 0,
+            povPitch: 0,
+            panoID: '',
+            latitude: 0,
+            longitude: 0
+          }
         }
       }
-    }).then(
-      ({
-        data: {
-          tagUpdate: { success, message }
-        }
-      }) => {
-        if (success) {
-          clearMissionData()
-          enqueueSnackbar('標注完成', { variant: 'success' })
-          // refetch取得最新tag list
-          // refetch()
-        } else {
-          enqueueSnackbar(message, { variant: 'error' })
-        }
+    }).then(({ data: { imageNumber } }) => {
+      if (true) {
+        clearMissionData()
+        setMissionType(null)
+        enqueueSnackbar('標注完成', { variant: 'success' })
+        // refetch取得最新tag list
+        // refetch()
+      } else {
+        enqueueSnackbar('error', { variant: 'error' })
       }
-    )
+    })
     // .catch()
     // .finally()
   }

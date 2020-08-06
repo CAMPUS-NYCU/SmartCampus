@@ -7,9 +7,6 @@ export const GET_TAG_DETAIL_QUERY = gql`
       tagID
       createTime
       lastUpdateTime
-      location {
-        geoInfo
-      }
       description
       imageUrl
     }
@@ -72,6 +69,7 @@ function useTagDetail(id) {
     }
   )
   if (!loading) {
+    console.log(id,tagDetail)
     const detail = {
       ...tagDetail,
       newCreateTime: generateTime(tagDetail.createTime),

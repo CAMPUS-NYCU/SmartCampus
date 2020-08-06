@@ -14,6 +14,7 @@ import {
 } from '../../../../contexts/MissionContext'
 import { useTagValue } from '../../../../contexts/TagContext'
 import ImageUpload from '../../ImageUpload'
+import { facilitySubType } from '../../../../constants/missionInfo'
 
 function MissionStep3() {
   const {
@@ -30,9 +31,10 @@ function MissionStep3() {
     textLocation
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
-  const { discoveries = [] } =
-    missionList.find((mission) => mission.id === selectedMissionId) || {}
-  console.log(typeof textLocation)
+  const { target = [] } =
+    facilitySubType.find(
+      (facility) => facility.subTypeName === selectedMissionId
+    ) || {}
   return (
     <Grid container spacing={2}>
       {/* * ==================== 1.經緯度標註 ==================== */}
@@ -62,32 +64,36 @@ function MissionStep3() {
           justifyContent='flex-start'
         >
           <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-          <Typography>{textLocation}</Typography>
+          <Typography>
+            {textLocation !== '' ? textLocation : '未輸入地點'}
+          </Typography>
         </Box>
         <IconButton onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}>
           <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
         </IconButton>
       </Grid>
 
-      {/* * ==================== 3.ABC三任務選擇 ==================== */}
+      {/* * ==================== 設施類型選擇 ==================== */}
       <Grid item xs={12}>
-        <Typography>3. 選擇回報任務類型</Typography>
+        <Typography>設施類型</Typography>
       </Grid>
-      {categoryList.map((category) => (
-        <Grid key={category.id} item xs={4}>
+      {facilitySubType.map((facility) => (
+        <Grid key={facility.subTypeName} item xs={4}>
           <Button
             variant='contained'
             fullWidth
             size='small'
-            color={selectedCategoryId === category.id ? 'primary' : 'default'}
-            onClick={() => handleSetSelectedCategoryId(category.id)}
+            color={
+              selectedMissionId === facility.subTypeName ? 'primary' : 'default'
+            }
+            onClick={() => handleSetSelectedMissionId(facility.subTypeName)}
           >
-            {category.name}
+            {facility.subTypeName}
           </Button>
         </Grid>
       ))}
 
-      {/* * ==================== 4.任務mission大類別 ==================== */}
+      {/* * ==================== 4.任務mission大類別 ====================
       <Grid item xs={12}>
         <Typography>4. 選擇任務</Typography>
       </Grid>
@@ -103,26 +109,28 @@ function MissionStep3() {
             {mission.name}
           </Button>
         </Grid>
-      ))}
+      ))} */}
 
-      {/* * ==================== 5.任務discovery子類別 ==================== */}
+      {/* * ==================== 具體設施子類別 ==================== */}
       <Grid item xs={12}>
         <Typography>5. 具體設施</Typography>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          {discoveries.map((discovery) => (
-            <Grid id={discovery.id} item xs={4}>
+          {target.map((discovery) => (
+            <Grid id={discovery.targetName} item xs={4}>
               <Button
                 variant='contained'
                 fullWidth
                 size='small'
                 color={
-                  selectedSubOptionId === discovery.id ? 'primary' : 'default'
+                  selectedSubOptionId === discovery.targetName
+                    ? 'primary'
+                    : 'default'
                 }
-                onClick={() => setSelectedSubOptionId(discovery.id)}
+                onClick={() => setSelectedSubOptionId(discovery.targetName)}
               >
-                {discovery.name}
+                {discovery.targetName}
               </Button>
             </Grid>
           ))}

@@ -6,18 +6,15 @@ export const GET_TAG_LIST_QUERY = gql`
     tagRenderList {
       id
       title
+      category {
+        missionName
+        subTypeName
+        targetName
+      }
       accessibility
       coordinates {
         latitude
         longitude
-      }
-      mission {
-        id
-        name
-      }
-      discoveries {
-        id
-        name
       }
     }
   }
@@ -25,33 +22,32 @@ export const GET_TAG_LIST_QUERY = gql`
 
 function useTagList() {
   const { data: { tagRenderList = [] } = {} } = useQuery(GET_TAG_LIST_QUERY)
-
+  console.log(tagRenderList)
   // Reformat tags
-  const tags = tagRenderList.map((tag) => {
+  const filteredTags = tagRenderList.filter((tag) => {
+    return tag.coordinates
+  })
+  console.log(filteredTags)
+  const tags = filteredTags.map((tag) => {
     const {
       id,
       title,
       accessibility,
-      coordinates: { latitude, longitude },
-      mission: { id: missionId, name: missionName },
-      discoveries = []
+      category: { missionName, subTypeName, targetName },
+      coordinates: { latitude, longitude }
     } = tag
-
     return {
       id,
       title,
       accessibility,
+      category: { missionName, subTypeName, targetName },
       position: {
         lat: parseFloat(latitude),
         lng: parseFloat(longitude)
-      },
-      missionId,
-      missionName,
-      discoveryId: discoveries.length ? discoveries[0].id : null,
-      discoveryName: discoveries.length ? discoveries[0].name : null
+      }
     }
   })
-
+  console.log(tags)
   return { tags }
 }
 
