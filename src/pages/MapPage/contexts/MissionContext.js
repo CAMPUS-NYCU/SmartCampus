@@ -12,6 +12,7 @@ export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {
     addNewTagData(data: $input) {
       imageNumber
+      imageUploadUrl
     }
   }
 `
@@ -142,7 +143,7 @@ export const MissionContextProvider = ({ children }) => {
           },
           // createUserID: 'NO_USER',
           description: moreDescriptionText,
-          imageNumber: 0,
+          imageNumber: 1,
           streetViewInfo: {
             povHeading: 0,
             povPitch: 0,
@@ -152,17 +153,24 @@ export const MissionContextProvider = ({ children }) => {
           }
         }
       }
-    }).then(({ data: { imageNumber } }) => {
-      if (true) {
-        clearMissionData()
-        setMissionType(null)
-        enqueueSnackbar('標注完成', { variant: 'success' })
-        // refetch取得最新tag list
-        // refetch()
-      } else {
-        enqueueSnackbar('error', { variant: 'error' })
+    }).then(
+      ({
+        data: {
+          addNewTagData: { imageNumber, imageUploadUrl }
+        }
+      }) => {
+        console.log(imageNumber, imageUploadUrl)
+        if (true) {
+          clearMissionData()
+          setMissionType(null)
+          enqueueSnackbar('標注完成', { variant: 'success' })
+          // refetch取得最新tag list
+          // refetch()
+        } else {
+          enqueueSnackbar('error', { variant: 'error' })
+        }
       }
-    })
+    )
     // .catch()
     // .finally()
   }
