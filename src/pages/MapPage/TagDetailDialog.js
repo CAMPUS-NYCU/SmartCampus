@@ -113,7 +113,7 @@ function TagDetailDialog(props) {
                   display='flex'
                   alignItems='center'
                   justifyContent='space-around'
-                  width='50%'
+                  width='70%'
                 >
                   <img src={HandicapIcon} alt='' />
                   <Typography>{activeTag.category.subTypeName}</Typography>
