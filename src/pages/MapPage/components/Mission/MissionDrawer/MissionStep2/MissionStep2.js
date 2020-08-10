@@ -113,7 +113,7 @@ function MissionStep3() {
 
       {/* * ==================== 具體設施子類別 ==================== */}
       <Grid item xs={12}>
-        <Typography>5. 具體設施</Typography>
+        <Typography>具體設施</Typography>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>

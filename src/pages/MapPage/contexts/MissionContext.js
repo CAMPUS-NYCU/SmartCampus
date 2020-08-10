@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
-
+import axios from 'axios'
 import debounce from 'utils/debounce'
 import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
@@ -47,8 +47,8 @@ const InitialMissionValue = {
     pitch: 0
   },
   selectedCategoryId: null,
-  selectedMissionId: null,
-  selectedSubOptionId: null,
+  selectedMissionId: '',
+  selectedSubOptionId: '',
   subOptionOtherText: '',
   moreDescriptionText: '',
   textLocation: '',
@@ -79,6 +79,8 @@ export const MissionContext = React.createContext({
   handleChangeTextLocation: () => {},
   setPhotos: () => {},
   handleMapOnLoad: () => {},
+  imageFiles: [],
+  setImageFiles: () => {},
   ...InitialMissionValue
 })
 
@@ -143,7 +145,7 @@ export const MissionContextProvider = ({ children }) => {
           },
           // createUserID: 'NO_USER',
           description: moreDescriptionText,
-          imageNumber: 1,
+          imageNumber: imageFiles.length,
           streetViewInfo: {
             povHeading: 0,
             povPitch: 0,
@@ -160,20 +162,36 @@ export const MissionContextProvider = ({ children }) => {
         }
       }) => {
         console.log(imageNumber, imageUploadUrl)
-        if (true) {
-          clearMissionData()
-          setMissionType(null)
-          enqueueSnackbar('標注完成', { variant: 'success' })
-          // refetch取得最新tag list
-          // refetch()
-        } else {
-          enqueueSnackbar('error', { variant: 'error' })
-        }
+        imageUploadUrl.forEach((url, index) => {
+          console.log(url)
+          const uploadFile = new FormData()
+          uploadFile.append('image', imageFiles[index], imageFiles[index].name)
+          axios.post(url, uploadFile)
+        })
+
+        clearMissionData()
+        setMissionType(null)
+        enqueueSnackbar('標注完成', { variant: 'success' })
+        // const uploadFile = new FormData()
+        // uploadFile.append('image', imageFiles[0], imageFiles[0].name)
+        // axios.post(imageUploadUrl[0],uploadFile).then()
+        // if (true) {
+        //   clearMissionData()
+        //   setMissionType(null)
+        //   enqueueSnackbar('標注完成', { variant: 'success' })
+        //   // refetch取得最新tag list
+        //   // refetch()
+        // } else {
+        //   enqueueSnackbar('error', { variant: 'error' })
+        // }
       }
     )
     // .catch()
     // .finally()
   }
+
+  // 照片
+  const [imageFiles, setImageFiles] = useState([])
 
   // ==================== UI toggle control ====================
   // 是否顯示各控制元件，點地圖來toggle
@@ -287,6 +305,7 @@ export const MissionContextProvider = ({ children }) => {
 
   // ==================== Clear ====================
   const clearMissionData = () => {
+    setImageFiles([])
     setStep(InitialMissionValue.currentStep)
     setMarkerPosition(InitialMissionValue.markerPosition)
     setSelectedCategoryId(InitialMissionValue.selectedCategoryId)
@@ -332,7 +351,9 @@ export const MissionContextProvider = ({ children }) => {
     handleChangeTextLocation,
     photos,
     setPhotos,
-    handleMapOnLoad
+    handleMapOnLoad,
+    imageFiles,
+    setImageFiles
   }
   return (
     <MissionContext.Provider value={contextValues}>
