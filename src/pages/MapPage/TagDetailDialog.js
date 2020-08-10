@@ -148,7 +148,7 @@ function TagDetailDialog(props) {
                   flexDirection: 'row'
                 }}
               >
-                <div
+                <Button
                   onClick={() =>
                     setLargeImg(
                       'https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600'
@@ -166,12 +166,11 @@ function TagDetailDialog(props) {
                       'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)'
                   }}
                 />
-                <div
+                <Button
                   onClick={() =>
                     setLargeImg(
                       'https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600'
-                    )
-                  }
+                    )}
                   style={{
                     width: '80vw',
                     height: '100%',
