@@ -117,7 +117,7 @@ function TagDetailDialog(props) {
                 >
                   <img src={HandicapIcon} alt='' />
                   <Typography>{activeTag.category.subTypeName}</Typography>
-                  <Typography>{activeTag.title}</Typography>
+                  <Typography>{activeTag.locationName}</Typography>
                 </Box>
 
                 <div

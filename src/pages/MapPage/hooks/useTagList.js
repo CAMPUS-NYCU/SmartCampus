@@ -5,7 +5,7 @@ export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
     tagRenderList {
       id
-      title
+      locationName
       category {
         missionName
         subTypeName
@@ -31,14 +31,14 @@ function useTagList() {
   const tags = filteredTags.map((tag) => {
     const {
       id,
-      title,
+      locationName,
       accessibility,
       category: { missionName, subTypeName, targetName },
       coordinates: { latitude, longitude }
     } = tag
     return {
       id,
-      title,
+      locationName,
       accessibility,
       category: { missionName, subTypeName, targetName },
       position: {

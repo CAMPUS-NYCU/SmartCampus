@@ -130,7 +130,7 @@ export const MissionContextProvider = ({ children }) => {
     tagUpdate({
       variables: {
         input: {
-          title: textLocation,
+          locationName: textLocation,
           category: {
             missionName: missionInfo[missionType].missionName.toString(),
             subTypeName: selectedMissionId.toString(),
