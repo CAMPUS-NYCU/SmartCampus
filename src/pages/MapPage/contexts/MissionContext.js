@@ -164,9 +164,25 @@ export const MissionContextProvider = ({ children }) => {
         console.log(imageNumber, imageUploadUrl)
         imageUploadUrl.forEach((url, index) => {
           console.log(url)
-          const uploadFile = new FormData()
-          uploadFile.append('image', imageFiles[index], imageFiles[index].name)
-          axios.post(url, uploadFile)
+          const contentType = imageFiles[index].type
+          const options = {
+            params: {
+              Key: imageFiles[index].name,
+              ContentType: contentType
+            },
+            headers: {
+              'Content-Type': contentType
+            }
+          }
+          axios
+            .put(
+              'https://cors-anywhere.herokuapp.com/' + url,
+              imageFiles[index],
+              imageFiles[index].name
+            )
+            .then((res) => {
+              console.log(res)
+            })
         })
 
         clearMissionData()
