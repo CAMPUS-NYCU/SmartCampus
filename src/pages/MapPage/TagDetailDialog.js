@@ -141,10 +141,10 @@ function TagDetailDialog(props) {
                   width: '100vw',
                   margin: '4vw 0 0 0',
                   height: '100%',
-                  flexGrow: '1',
+                  webkitFlexGrow: '1',
                   overflowX: 'scroll',
                   overflowY: 'hidden',
-                  display: 'flex',
+                  display: '-webkit-flex',
                   flexDirection: 'row'
                 }}
               >
@@ -156,10 +156,8 @@ function TagDetailDialog(props) {
                   }
                   style={{
                     width: '80vw',
-                    height: '100%',
                     flexShrink: '0',
                     overflow: 'hidden',
-                    display: 'flex',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundImage:
@@ -173,10 +171,8 @@ function TagDetailDialog(props) {
                     )}
                   style={{
                     width: '80vw',
-                    height: '100%',
                     flexShrink: '0',
                     overflowY: 'hidden',
-                    display: 'flex',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundImage:
