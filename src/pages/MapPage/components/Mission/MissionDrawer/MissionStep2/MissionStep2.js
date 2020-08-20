@@ -13,6 +13,7 @@ import BusinessIcon from '@material-ui/icons/Business'
 import ApartmentIcon from '@material-ui/icons/Apartment'
 import DescriptionIcon from '@material-ui/icons/Description'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
+import StreetviewIcon from '@material-ui/icons/Streetview'
 import {
   useMissionValue,
   MissionStep
@@ -33,7 +34,8 @@ function MissionStep3() {
     moreDescriptionText,
     handleChangeMoreDescriptionText,
     handleSetStep,
-    textLocation
+    textLocation,
+    setStep
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
   const { target = [] } =
@@ -147,6 +149,21 @@ function MissionStep3() {
       <Grid container item xs={12} direction='row' alignItems='center'>
         <AddAPhotoIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
         <ImageUpload />
+      </Grid>
+      <Grid container item xs={12} direction='row' alignItems='center'>
+        <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
+        <Button
+          variant='contained'
+          style={{
+            filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+            borderRadius: '20px'
+          }}
+          onClick={() => {
+            setStep(2)
+          }}
+        >
+          新增街景
+        </Button>
       </Grid>
     </Grid>
   )

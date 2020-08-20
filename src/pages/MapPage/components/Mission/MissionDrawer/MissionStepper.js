@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import {
   MISSION_MAX_STEP,
   MISSION_MIN_STEP,
-  useMissionValue
+  useMissionValue,
+  MissionStep
 } from '../../../contexts/MissionContext'
 
 const useStyles = makeStyles({
@@ -32,48 +33,88 @@ function MissionStepper(props) {
     handleCompleteMission,
     handleCloseMission
   } = useMissionValue()
-
+  const { PlaceFlagOnStreet } = MissionStep
   return (
-    <MobileStepper
-      variant='dots'
-      steps={0}
-      position='bottom'
-      // activeStep={currentStep}
-      activeStep={-1}
-      className={classes.stepper}
-      backButton={
-        currentStep <= MISSION_MIN_STEP ? (
-          <Button
-            size='medium'
-            onClick={handleCloseMission}
-            className={classes.button}
-          >
-            關閉
-          </Button>
-        ) : (
-          <Button size='medium' onClick={handleBack} className={classes.button}>
-            上一步
-          </Button>
-        )
-      }
-      nextButton={
-        currentStep >= MISSION_MAX_STEP ? (
-          <Button
-            color='primary'
-            size='medium'
-            onClick={handleCompleteMission}
-            className={classes.button}
-          >
-            完成
-          </Button>
-        ) : (
-          <Button size='medium' onClick={handleNext} className={classes.button}>
-            下一步
-          </Button>
-        )
-      }
-      {...props}
-    />
+    <>
+      {currentStep === PlaceFlagOnStreet ? (
+        <MobileStepper
+          variant='dots'
+          steps={0}
+          position='bottom'
+          // activeStep={currentStep}
+          activeStep={-1}
+          className={classes.stepper}
+          backButton={
+            <Button
+              size='medium'
+              onClick={handleBack}
+              className={classes.button}
+            >
+              上一步
+            </Button>
+          }
+          nextButton={
+            <Button
+              size='medium'
+              onClick={handleBack}
+              className={classes.button}
+            >
+              確定
+            </Button>
+          }
+          {...props}
+        />
+      ) : (
+        <MobileStepper
+          variant='dots'
+          steps={0}
+          position='bottom'
+          // activeStep={currentStep}
+          activeStep={-1}
+          className={classes.stepper}
+          backButton={
+            currentStep <= MISSION_MIN_STEP ? (
+              <Button
+                size='medium'
+                onClick={handleCloseMission}
+                className={classes.button}
+              >
+                關閉
+              </Button>
+            ) : (
+              <Button
+                size='medium'
+                onClick={handleBack}
+                className={classes.button}
+              >
+                上一步
+              </Button>
+            )
+          }
+          nextButton={
+            currentStep >= MISSION_MAX_STEP ? (
+              <Button
+                color='primary'
+                size='medium'
+                onClick={handleCompleteMission}
+                className={classes.button}
+              >
+                完成
+              </Button>
+            ) : (
+              <Button
+                size='medium'
+                onClick={handleNext}
+                className={classes.button}
+              >
+                下一步
+              </Button>
+            )
+          }
+          {...props}
+        />
+      )}
+    </>
   )
 }
 

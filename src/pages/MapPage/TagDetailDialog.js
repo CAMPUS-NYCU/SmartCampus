@@ -161,7 +161,7 @@ function TagDetailDialog(props) {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundImage:
-                      'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)'
+                      'url(https://storage.googleapis.com/download/storage/v1/b/smartcampus-1b31f.appspot.com/o/ZxKBRfiKJwwr4iFZI1yf%2Fc070551f-ea86-4d8a-a236-e3f4f1b1e3d4.jpg?generation=1597922696315195&alt=media)'
                   }}
                 />
                 <Button

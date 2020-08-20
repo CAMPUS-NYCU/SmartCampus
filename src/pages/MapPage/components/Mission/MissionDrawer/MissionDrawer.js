@@ -51,7 +51,7 @@ function MissionDrawer(props) {
   const { currentStep, missionType } = useMissionValue()
   return (
     <>
-      {isInMission ? (
+      {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (
         <Drawer
           anchor='bottom'
           variant='persistent'
@@ -79,7 +79,7 @@ function MissionDrawer(props) {
               justifyContent='space-between'
               px={2}
             >
-              <Box fontSize='h6.fontSize' fontWeight="fontWeightBold">
+              <Box fontSize='h6.fontSize' fontWeight='fontWeightBold'>
                 標註{missionInfo[missionType].missionName}
               </Box>
               <IconButton
@@ -92,16 +92,18 @@ function MissionDrawer(props) {
             </Box>
             <Box px={2} py={1} className={classes.missionContent}>
               {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-              {currentStep === MissionStep.PlaceFlagOnStreet && (
+              {/* {currentStep === MissionStep.PlaceFlagOnStreet && (
                 <MissionStep3 />
-              )}
+              )} */}
               {currentStep === MissionStep.SelectMission && <MissionStep2 />}
             </Box>
             <MissionStepper />
           </div>
         </Drawer>
       ) : (
-        <></>
+        <>
+          {currentStep === MissionStep.PlaceFlagOnStreet && <MissionStepper />}
+        </>
       )}
     </>
   )

@@ -111,6 +111,7 @@ function Map() {
                 onLoad={handleStreetViewOnLoad}
                 onPanoChanged={handleChangeStreetViewPosition}
                 onPovChanged={handleChangeStreetViewPOV}
+                streetViewPanoramaOptions={{ fullscreenControl: false }}
               />
             </>
           )}
