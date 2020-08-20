@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     width: '100%'
   },
   drawerContentFull: {
-    minHeight: 400,
+    minHeight: 450,
     height: 'calc(var(--vh, 1vh) * 100 - 100px)'
   },
   titleBar: {
@@ -59,7 +59,8 @@ function MissionDrawer(props) {
           onClose={handleCloseMission}
           PaperProps={{
             style: {
-              borderRadius: '20px 20px 0 0'
+              borderRadius: '20px 20px 0 0',
+              backgroundColor: '#FAFAFA'
             }
           }}
           {...props}

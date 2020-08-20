@@ -22,12 +22,10 @@ export const GET_TAG_LIST_QUERY = gql`
 
 function useTagList() {
   const { data: { tagRenderList = [] } = {} } = useQuery(GET_TAG_LIST_QUERY)
-  console.log(tagRenderList)
   // Reformat tags
   const filteredTags = tagRenderList.filter((tag) => {
     return tag.coordinates
   })
-  console.log(filteredTags)
   const tags = filteredTags.map((tag) => {
     const {
       id,
@@ -47,7 +45,6 @@ function useTagList() {
       }
     }
   })
-  console.log(tags)
   return { tags }
 }
 

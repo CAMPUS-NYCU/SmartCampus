@@ -8,6 +8,11 @@ import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import CreateIcon from '@material-ui/icons/Create'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import BusinessIcon from '@material-ui/icons/Business'
+import ApartmentIcon from '@material-ui/icons/Apartment'
+import DescriptionIcon from '@material-ui/icons/Description'
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import {
   useMissionValue,
   MissionStep
@@ -36,7 +41,7 @@ function MissionStep3() {
       (facility) => facility.subTypeName === selectedMissionId
     ) || {}
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       {/* * ==================== 1.經緯度標註 ==================== */}
       <Grid container item xs={12} justify='space-between' direction='row'>
         <Box
@@ -49,7 +54,10 @@ function MissionStep3() {
           <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
           <Typography>將座標放在要標註的位置。</Typography>
         </Box>
-        <IconButton onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}>
+        <IconButton
+          size='small'
+          onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}
+        >
           <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
         </IconButton>
       </Grid>
@@ -63,18 +71,22 @@ function MissionStep3() {
           width='70vw'
           justifyContent='flex-start'
         >
-          <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+          <StorefrontIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
           <Typography>
             {textLocation !== '' ? textLocation : '未輸入地點'}
           </Typography>
         </Box>
-        <IconButton onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}>
+        <IconButton
+          size='small'
+          onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}
+        >
           <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
         </IconButton>
       </Grid>
 
       {/* * ==================== 設施類型選擇 ==================== */}
-      <Grid item xs={12}>
+      <Grid container item xs={12} direction='row'>
+        <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
         <Typography>設施類型</Typography>
       </Grid>
       {facilitySubType.map((facility) => (
@@ -92,27 +104,9 @@ function MissionStep3() {
           </Button>
         </Grid>
       ))}
-
-      {/* * ==================== 4.任務mission大類別 ====================
-      <Grid item xs={12}>
-        <Typography>4. 選擇任務</Typography>
-      </Grid>
-      {missionList.map((mission) => (
-        <Grid key={mission.id} item xs={4}>
-          <Button
-            variant='contained'
-            fullWidth
-            size='small'
-            color={selectedMissionId === mission.id ? 'primary' : 'default'}
-            onClick={() => handleSetSelectedMissionId(mission.id)}
-          >
-            {mission.name}
-          </Button>
-        </Grid>
-      ))} */}
-
       {/* * ==================== 具體設施子類別 ==================== */}
-      <Grid item xs={12}>
+      <Grid container item xs={12} direction='row'>
+        <ApartmentIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
         <Typography>具體設施</Typography>
       </Grid>
       <Grid item xs={12}>
@@ -136,29 +130,22 @@ function MissionStep3() {
           ))}
         </Grid>
       </Grid>
-
-      {/* * ==================== 6.補充文字框 ==================== */}
-      <Grid item xs={12}>
-        <Typography>6. 現象描述</Typography>
-      </Grid>
-      <Grid item xs={12}>
+      <Grid container item xs={12} direction='row'>
+        <DescriptionIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
         <TextField
           name='moreDescriptionText'
           multiline
-          variant='outlined'
-          rows={5}
-          placeholder='描述...'
-          fullWidth
+          id='standard-basic'
+          style={{ width: '80vw' }}
+          placeholder='詳細說明'
           value={moreDescriptionText}
           onChange={handleChangeMoreDescriptionText}
         />
       </Grid>
 
       {/* * ==================== 7.上傳照片 ==================== */}
-      <Grid item xs={12}>
-        <Typography>7. 相關照片</Typography>
-      </Grid>
-      <Grid item xs={12}>
+      <Grid container item xs={12} direction='row' alignItems='center'>
+        <AddAPhotoIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
         <ImageUpload />
       </Grid>
     </Grid>
