@@ -141,8 +141,8 @@ export const MissionContextProvider = ({ children }) => {
           },
           accessibility: 0, // API目前accessibility必填，因此先保留
           coordinates: {
-            latitude: markerPosition.latitude.toString(),
-            longitude: markerPosition.longitude.toString()
+            latitude: streetViewPosition.latitude.toString(),
+            longitude: streetViewPosition.longitude.toString()
           },
           // createUserID: 'NO_USER',
           description: moreDescriptionText,
