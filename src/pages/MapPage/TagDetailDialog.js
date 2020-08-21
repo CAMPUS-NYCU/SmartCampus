@@ -20,6 +20,7 @@ import EditIcon from '../../assets/images/edit.svg'
 import WaitIcon from '../../assets/images/wait.svg'
 import SolvedIcon from '../../assets/images/solved.svg'
 import useTagDetail from './hooks/useTagDetail'
+import noImage from '../../assets/images/no-image.svg'
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
@@ -148,37 +149,46 @@ function TagDetailDialog(props) {
                   flexDirection: 'row'
                 }}
               >
-                <Button
-                  onClick={() =>
-                    setLargeImg(
-                      'https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600'
+                {detail.imageUrl.length === 0 ? (
+                  <div
+                    style={{
+                      width: '100vw',
+                      flexShrink: '0',
+                      overflow: 'hidden',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundImage: `url(${noImage})`
+                    }}
+                  />
+                ) : (
+                  detail.imageUrl.map((url) => {
+                    return (
+                      <Button
+                        onClick={() => setLargeImg(`${url}`)}
+                        style={{
+                          width: '80vw',
+                          flexShrink: '0',
+                          overflowY: 'hidden',
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          backgroundImage: `url(${url})`
+                        }}
+                      />
                     )
-                  }
-                  style={{
-                    width: '80vw',
-                    flexShrink: '0',
-                    overflow: 'hidden',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundImage:
-                      'url(https://storage.googleapis.com/download/storage/v1/b/smartcampus-1b31f.appspot.com/o/ZxKBRfiKJwwr4iFZI1yf%2Fc070551f-ea86-4d8a-a236-e3f4f1b1e3d4.jpg?generation=1597922696315195&alt=media)'
-                  }}
-                />
-                <Button
-                  onClick={() =>
-                    setLargeImg(
-                      'https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600'
-                    )}
-                  style={{
-                    width: '80vw',
-                    flexShrink: '0',
-                    overflowY: 'hidden',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundImage:
-                      'url(https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2019/09/18/1/6835002.jpg&x=0&y=0&sw=0&sh=0&exp=3600)'
-                  }}
-                />
+                  })
+                )}
+                {detail.imageUrl.length === 1 && (
+                  <div
+                    style={{
+                      width: '80vw',
+                      flexShrink: '0',
+                      overflow: 'hidden',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundImage: `url(${noImage})`
+                    }}
+                  />
+                )}
               </div>
               <Box
                 display='flex'

@@ -16,6 +16,9 @@ export const GET_TAG_LIST_QUERY = gql`
         latitude
         longitude
       }
+      status{
+        statusName
+      }
     }
   }
 `
