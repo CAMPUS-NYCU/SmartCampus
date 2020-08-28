@@ -15,12 +15,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import DialogActions from '@material-ui/core/DialogActions'
 import { Lightbox } from 'react-modal-image'
-import HandicapIcon from '../../assets/images/handicap-icon.svg'
-import EditIcon from '../../assets/images/edit.svg'
-import WaitIcon from '../../assets/images/wait.svg'
-import SolvedIcon from '../../assets/images/solved.svg'
-import useTagDetail from './hooks/useTagDetail'
-import noImage from '../../assets/images/no-image.svg'
+import HandicapIcon from '../../../assets/images/handicap-icon.svg'
+import EditIcon from '../../../assets/images/edit.svg'
+import WaitIcon from '../../../assets/images/wait.svg'
+import SolvedIcon from '../../../assets/images/solved.svg'
+import useTagDetail from '../hooks/useTagDetail'
+import noImage from '../../../assets/images/no-image.svg'
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,

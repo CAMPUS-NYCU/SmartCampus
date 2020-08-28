@@ -43,7 +43,6 @@ function Map() {
   const missionName = missionInfo.map((mission) => {
     return mission.missionName
   })
-  console.log(tags, missionName)
   return (
     <div
       style={{
