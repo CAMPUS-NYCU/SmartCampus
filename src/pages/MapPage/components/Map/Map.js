@@ -15,6 +15,10 @@ import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.png'
 import { DefaultCenter, DefaultZoom } from '../../constants/mapConstants'
 import PinTarget from '../PinTarget'
+import Mission2 from '../../../../assets/images/mission2circle.svg'
+import Mission1 from '../../../../assets/images/mission1circle.svg'
+import Mission3 from '../../../../assets/images/mission3circle.svg'
+import { missionInfo } from '../../constants/missionInfo'
 
 function Map() {
   const {
@@ -35,7 +39,11 @@ function Map() {
     longitude: positionLng,
     error: positionError
   } = usePosition(false, { enableHighAccuracy: true })
-
+  const missionImage = [Mission1, Mission2, Mission3]
+  const missionName = missionInfo.map((mission) => {
+    return mission.missionName
+  })
+  console.log(tags, missionName)
   return (
     <div
       style={{
@@ -80,7 +88,12 @@ function Map() {
                 key={tag.id}
                 position={tag.position}
                 icon={{
-                  url: HandicapIcon,
+                  url:
+                    missionImage[
+                      missionName.findIndex(
+                        (mission) => mission === tag.category.missionName
+                      )
+                    ],
                   scaledSize: { width: 20, height: 20 }
                 }}
                 clickable
