@@ -21,6 +21,10 @@ import WaitIcon from '../../../assets/images/wait.svg'
 import SolvedIcon from '../../../assets/images/solved.svg'
 import useTagDetail from '../hooks/useTagDetail'
 import noImage from '../../../assets/images/no-image.svg'
+import Mission2 from '../../../assets/images/mission2circle.svg'
+import Mission1 from '../../../assets/images/mission1circle.svg'
+import Mission3 from '../../../assets/images/mission3circle.svg'
+import { missionInfo } from '../constants/missionInfo'
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
@@ -71,6 +75,10 @@ function TagDetailDialog(props) {
     ['#FF8965', 'black'],
     ['black', '#D3E430']
   ]
+  const missionImage = [Mission1, Mission2, Mission3]
+  const missionName = missionInfo.map((mission) => {
+    return mission.missionName
+  })
   console.log(activeTag)
   return (
     <>
@@ -116,7 +124,17 @@ function TagDetailDialog(props) {
                   justifyContent='space-around'
                   width='70%'
                 >
-                  <img src={HandicapIcon} alt='' />
+                  <img
+                    src={
+                      missionImage[
+                        missionName.findIndex(
+                          (mission) =>
+                            mission === activeTag.category.missionName
+                        )
+                      ]
+                    }
+                    alt=''
+                  />
                   <Typography>{activeTag.category.subTypeName}</Typography>
                   <Typography>{activeTag.locationName}</Typography>
                 </Box>
@@ -240,7 +258,9 @@ function TagDetailDialog(props) {
                 style={{
                   width: '80vw',
                   borderTop: 'solid 0.5px lightgray',
-                  borderBottom: 'solid 0.5px lightgray',
+                  borderBottom:
+                    activeTag.category.missionName === missionName[1] &&
+                    'solid 0.5px lightgray',
                   paddingBottom: '2'
                 }}
               >
@@ -263,20 +283,22 @@ function TagDetailDialog(props) {
                   </Box>
                 </Box>
               </div>
-              <Box
-                display='flex'
-                justifyContent='flex-end'
-                alignItems='center'
-                width='80%'
-                m={2}
-              >
-                <Box className={classes.clickableFont} m={0.5}>
-                  86人贊同此問題待處理
+              {activeTag.category.missionName === missionName[1] && (
+                <Box
+                  display='flex'
+                  justifyContent='flex-end'
+                  alignItems='center'
+                  width='80%'
+                  m={2}
+                >
+                  <Box className={classes.clickableFont} m={0.5}>
+                    86人贊同此問題待處理
+                  </Box>
+                  <Button variant='contained' style={{ marginLeft: '8px' }}>
+                    贊同
+                  </Button>
                 </Box>
-                <Button variant='contained' style={{ marginLeft: '8px' }}>
-                  贊同
-                </Button>
-              </Box>
+              )}
             </Box>
           ) : (
             <Typography>讀取中...</Typography>
