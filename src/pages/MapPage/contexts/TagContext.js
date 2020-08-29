@@ -13,11 +13,12 @@ export const TagContext = React.createContext({
   resetActiveTag: () => {},
   missionList: [],
   categoryList: [],
+  updateTagList: () => {},
   refetch: () => {}
 })
 
 export const TagContextProvider = ({ children }) => {
-  const { tags, refetch } = useTagList()
+  const { tags, updateTagList, refetch } = useTagList()
   const { missionList } = useMissionList()
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = [
@@ -47,6 +48,7 @@ export const TagContextProvider = ({ children }) => {
     resetActiveTag,
     missionList,
     categoryList,
+    updateTagList,
     refetch
   }
 

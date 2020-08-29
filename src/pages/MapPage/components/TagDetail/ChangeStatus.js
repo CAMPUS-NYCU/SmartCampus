@@ -26,7 +26,7 @@ function ChangeStatus(props) {
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
-  const { refetch } = useTagValue()
+  const { updateTagList, refetch } = useTagValue()
   const [loading, setLoading] = useState(false)
   const resetTemporaryTagState = () => {
     setTemporaryTagState(activeTag.status.statusName)
@@ -35,13 +35,21 @@ function ChangeStatus(props) {
     setStateDrawer(false)
     resetTemporaryTagState()
   }
-  const { handleUpdateTagStatus } = useUpdateTagStatus()
+  const { updateStatus } = useUpdateTagStatus()
   const HandleDrawerComplete = () => {
     setLoading(true)
-    handleUpdateTagStatus(temporaryTagState, activeTag.id)
-    refetch().then(() => {
-      setLoading(false)
-      setStateDrawer(false)
+    updateStatus({
+      variables: {
+        tagId: activeTag.id,
+        statusName: temporaryTagState
+      }
+    }).then(() => {
+      refetch().then((data) => {
+        console.log(data)
+        updateTagList(data.data)
+        setLoading(false)
+        setStateDrawer(false)
+      })
     })
   }
   const images = [WaitIcon, SolvedIcon, SolvedIcon]

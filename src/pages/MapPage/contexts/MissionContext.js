@@ -129,7 +129,7 @@ export const MissionContextProvider = ({ children }) => {
     setMissionType(null)
     setStep(MissionStep.Init)
   }
-  const { refetch } = useTagValue()
+  const { refetch, updateTagList } = useTagValue()
   const handleCompleteMission = () => {
     console.log(contextValues)
     setLoading(true)
@@ -176,7 +176,8 @@ export const MissionContextProvider = ({ children }) => {
           }
           axios.put(url, imageFiles[index], options).then((res) => {
             console.log(res)
-            refetch().then(() => {
+            refetch().then((data) => {
+              updateTagList(data.data)
               setLoading(false)
               clearMissionData()
               setMissionType(null)
@@ -185,7 +186,8 @@ export const MissionContextProvider = ({ children }) => {
           })
         })
         if (imageUploadUrl.length === 0) {
-          refetch().then(() => {
+          refetch().then((data) => {
+            updateTagList(data.data)
             setLoading(false)
             clearMissionData()
             setMissionType(null)

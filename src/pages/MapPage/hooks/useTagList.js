@@ -24,49 +24,53 @@ export const GET_TAG_LIST_QUERY = gql`
   }
 `
 
+const reformatTagList = (data) => {
+  console.log('reformate', data)
+  const tagRenderList = data ? data.tagRenderList : []
+  const filteredTags = tagRenderList.filter((tag) => {
+    return tag.coordinates
+  })
+  const tagList = filteredTags.map((tag) => {
+    const {
+      id,
+      locationName,
+      accessibility,
+      category: { missionName, subTypeName, targetName },
+      coordinates: { latitude, longitude },
+      status: { statusName }
+    } = tag
+    return {
+      id,
+      locationName,
+      accessibility,
+      category: { missionName, subTypeName, targetName },
+      position: {
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude)
+      },
+      status: { statusName }
+    }
+  })
+  return tagList
+}
+
 function useTagList() {
   // console.log("tag list")
   // const [getTagList] = useQuery(GET_TAG_LIST_QUERY)
   // getTagList().then((res) => console.log('res', res))
-  const { data: { tagRenderList = [] } = {}, refetch } = useQuery(
-    GET_TAG_LIST_QUERY
-  )
-  // Reformat tags
-
-  const [tags, setTags] = useState(tagRenderList)
-  // if (tags != tagList) {
-  //   setTags(tagList)
-  // }
-  useEffect(() => {
-    if (tagRenderList) {
-      const filteredTags = tagRenderList.filter((tag) => {
-        return tag.coordinates
-      })
-      const tagList = filteredTags.map((tag) => {
-        const {
-          id,
-          locationName,
-          accessibility,
-          category: { missionName, subTypeName, targetName },
-          coordinates: { latitude, longitude },
-          status: { statusName }
-        } = tag
-        return {
-          id,
-          locationName,
-          accessibility,
-          category: { missionName, subTypeName, targetName },
-          position: {
-            lat: parseFloat(latitude),
-            lng: parseFloat(longitude)
-          },
-          status: { statusName }
-        }
-      })
+  const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {
+    onCompleted: () => {
       setTags(tagList)
     }
-  }, [tagRenderList])
-  return { tags, refetch }
+  })
+  // Reformat tags
+  const tagList = reformatTagList(data)
+  const [tags, setTags] = useState(tagList)
+  const updateTagList = (data) => {
+    setTags(reformatTagList(data))
+  }
+
+  return { tags, refetch, updateTagList }
 }
 
 export default useTagList

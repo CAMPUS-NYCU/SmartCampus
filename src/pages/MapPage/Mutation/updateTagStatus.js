@@ -20,5 +20,5 @@ export const useUpdateTagStatus = () => {
       }
     }).then((res) => console.log(res))
   }
-  return { handleUpdateTagStatus }
+  return { updateStatus }
 }
