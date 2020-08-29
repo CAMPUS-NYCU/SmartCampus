@@ -161,7 +161,12 @@ const DetailPart = (props) => {
           )}
         </>
       ) : (
-        <Box height='100%' display='flex' alignItems='center'>
+        <Box
+          height='100%'
+          display='flex'
+          alignItems='center'
+          style={{ webkitFlexGrow: '1', display: '-webkit-flex' }}
+        >
           <CircularProgress />
         </Box>
       )}
