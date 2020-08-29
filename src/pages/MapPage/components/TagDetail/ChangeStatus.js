@@ -11,7 +11,9 @@ import {
   Drawer,
   DialogTitle,
   Typography,
-  IconButton
+  IconButton,
+  Dialog,
+  CircularProgress
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import WaitIcon from '../../../../assets/images/wait.svg'
@@ -25,6 +27,7 @@ function ChangeStatus(props) {
     activeTag.status.statusName
   )
   const { refetch } = useTagValue()
+  const [loading, setLoading] = useState(false)
   const resetTemporaryTagState = () => {
     setTemporaryTagState(activeTag.status.statusName)
   }
@@ -34,67 +37,85 @@ function ChangeStatus(props) {
   }
   const { handleUpdateTagStatus } = useUpdateTagStatus()
   const HandleDrawerComplete = () => {
+    setLoading(true)
     handleUpdateTagStatus(temporaryTagState, activeTag.id)
-    refetch()
-    setStateDrawer(false)
+    refetch().then(() => {
+      setLoading(false)
+      setStateDrawer(false)
+    })
   }
   const images = [WaitIcon, SolvedIcon, SolvedIcon]
   return (
-    <Drawer
-      anchor='bottom'
-      open={stateDrawer}
-      onclose={() => setStateDrawer(false)}
-    >
-      <DialogTitle disableTypography>
-        <Typography variant='h5'>選擇目前狀態</Typography>
-        <IconButton
-          aria-label='close'
-          className={classes.closeButton}
-          onClick={() => handleDrawerClose()}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <Box
-        display='flex'
-        width='100vw'
-        flexDirection='column'
-        justifyContent='space-around'
+    <>
+      <Drawer
+        anchor='bottom'
+        open={stateDrawer}
+        onclose={() => setStateDrawer(false)}
       >
-        <List component='nav'>
-          {status.map((item, index) => (
-            <>
-              <ListItem
-                button
-                onClick={() => setTemporaryTagState(item.statusName)}
-              >
-                <ListItemIcon>
-                  <img src={images[index]} alt='' />
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.statusName}
-                  style={{
-                    color:
-                      item.statusName === temporaryTagState
-                        ? item.statusColor
-                        : `black`
-                  }}
-                />
-              </ListItem>
-              {index !== status.length - 1 && <Divider variant='middle' />}
-            </>
-          ))}
-        </List>
-        <DialogActions>
-          <Button
-            style={{ color: '#FDCC4F' }}
-            onClick={() => HandleDrawerComplete()}
+        <DialogTitle disableTypography>
+          <Typography variant='h5'>選擇目前狀態</Typography>
+          <IconButton
+            aria-label='close'
+            className={classes.closeButton}
+            onClick={() => handleDrawerClose()}
           >
-            確定
-          </Button>
-        </DialogActions>
-      </Box>
-    </Drawer>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <Box
+          display='flex'
+          width='100vw'
+          flexDirection='column'
+          justifyContent='space-around'
+        >
+          <List component='nav'>
+            {status.map((item, index) => (
+              <>
+                <ListItem
+                  button
+                  onClick={() => setTemporaryTagState(item.statusName)}
+                >
+                  <ListItemIcon>
+                    <img src={images[index]} alt='' />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.statusName}
+                    style={{
+                      color:
+                        item.statusName === temporaryTagState
+                          ? item.statusColor
+                          : `black`
+                    }}
+                  />
+                </ListItem>
+                {index !== status.length - 1 && <Divider variant='middle' />}
+              </>
+            ))}
+          </List>
+          <DialogActions>
+            <Button
+              style={{ color: '#FDCC4F' }}
+              onClick={() => HandleDrawerComplete()}
+            >
+              確定
+            </Button>
+          </DialogActions>
+        </Box>
+      </Drawer>
+      <Dialog
+        open={loading}
+        PaperProps={{
+          style: {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+            width: '50px',
+            height: '50px'
+          }
+        }}
+      >
+        <CircularProgress />
+      </Dialog>
+    </>
   )
 }
 

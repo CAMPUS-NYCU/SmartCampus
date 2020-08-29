@@ -2,6 +2,7 @@ import React from 'react'
 
 import Fade from '@material-ui/core/Fade'
 
+
 import HowToUseDialog from './components/HowToUseDialog'
 import SearchBar from './components/SearchBar'
 import Map from './components/Map'
@@ -33,7 +34,7 @@ const MapPageContent = () => {
   const profileDialogControl = useModal()
 
   const { showControl, isInMission } = useMissionValue()
-  const { activeTag, resetActiveTag} = useTagValue()
+  const { activeTag, resetActiveTag } = useTagValue()
 
   return (
     <div>
@@ -63,7 +64,7 @@ const MapPageContent = () => {
       <ProfileDialog control={profileDialogControl} />
       <HowToUseDialog control={howToUseDialogControl} />
       {activeTag && (
-        <TagDetailDialog activeTag={activeTag} onClose={resetActiveTag}/>
+        <TagDetailDialog activeTag={activeTag} onClose={resetActiveTag} />
       )}
     </div>
   )
