@@ -1,7 +1,6 @@
 import React from 'react'
 
-import Fade from '@material-ui/core/Fade'
-
+import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 
 import HowToUseDialog from './components/HowToUseDialog'
 import SearchBar from './components/SearchBar'
@@ -33,13 +32,12 @@ const MapPageContent = () => {
   const howToUseDialogControl = useModal()
   const profileDialogControl = useModal()
 
-  const { showControl, isInMission } = useMissionValue()
+  const { showControl, isInMission, loading } = useMissionValue()
   const { activeTag, resetActiveTag } = useTagValue()
-
+  console.log(loading)
   return (
     <div>
       <Map />
-
       <Fade in={showControl}>
         <div>
           {isInMission ? (
@@ -66,6 +64,19 @@ const MapPageContent = () => {
       {activeTag && (
         <TagDetailDialog activeTag={activeTag} onClose={resetActiveTag} />
       )}
+      <Dialog
+        open={loading}
+        PaperProps={{
+          style: {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+            width: '50px',
+            height: '50px'
+          }
+        }}
+      >
+        <CircularProgress />
+      </Dialog>
     </div>
   )
 }

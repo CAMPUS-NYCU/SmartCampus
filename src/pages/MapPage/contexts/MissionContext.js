@@ -7,6 +7,7 @@ import axios from 'axios'
 import debounce from 'utils/debounce'
 import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
+import { useTagValue } from './TagContext'
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {
@@ -82,6 +83,7 @@ export const MissionContext = React.createContext({
   imageFiles: [],
   setImageFiles: () => {},
   setStep: () => {},
+  loading: false,
   ...InitialMissionValue
 })
 
@@ -127,9 +129,10 @@ export const MissionContextProvider = ({ children }) => {
     setMissionType(null)
     setStep(MissionStep.Init)
   }
-
+  const { refetch } = useTagValue()
   const handleCompleteMission = () => {
     console.log(contextValues)
+    setLoading(true)
     tagUpdate({
       variables: {
         input: {
@@ -173,12 +176,23 @@ export const MissionContextProvider = ({ children }) => {
           }
           axios.put(url, imageFiles[index], options).then((res) => {
             console.log(res)
+            refetch().then(() => {
+              setLoading(false)
+              clearMissionData()
+              setMissionType(null)
+              enqueueSnackbar('標注完成', { variant: 'success' })
+            })
           })
         })
+        if (imageUploadUrl.length === 0) {
+          refetch().then(() => {
+            setLoading(false)
+            clearMissionData()
+            setMissionType(null)
+            enqueueSnackbar('標注完成', { variant: 'success' })
+          })
+        }
 
-        clearMissionData()
-        setMissionType(null)
-        enqueueSnackbar('標注完成', { variant: 'success' })
         // const uploadFile = new FormData()
         // uploadFile.append('image', imageFiles[0], imageFiles[0].name)
         // axios.post(imageUploadUrl[0],uploadFile).then()
@@ -324,6 +338,9 @@ export const MissionContextProvider = ({ children }) => {
     setTextLocation(InitialMissionValue.textLocation)
   }
 
+  // ===================== Loading =======================
+  const [loading, setLoading] = useState(false)
+
   const contextValues = {
     missionType,
     setMissionType,
@@ -361,7 +378,8 @@ export const MissionContextProvider = ({ children }) => {
     handleMapOnLoad,
     imageFiles,
     setImageFiles,
-    setStep
+    setStep,
+    loading
   }
   return (
     <MissionContext.Provider value={contextValues}>
