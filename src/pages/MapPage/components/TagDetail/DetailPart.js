@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, CircularProgress } from '@material-ui/core'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 
@@ -161,7 +161,9 @@ const DetailPart = (props) => {
           )}
         </>
       ) : (
-        <Typography>讀取中...</Typography>
+        <Box height='100%' display='flex' alignItems='center'>
+          <CircularProgress />
+        </Box>
       )}
     </>
   )

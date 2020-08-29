@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import Drawer from '@material-ui/core/Drawer'
-import { Box } from '@material-ui/core'
+import { Box, CircularProgress } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
 import useTagDetail from '../../hooks/useTagDetail'
 import Mission2 from '../../../../assets/images/mission2circle.svg'
@@ -134,7 +134,7 @@ function TagDetailDialog(props) {
               </Box>
             </>
           ) : (
-            <Typography>讀取中...</Typography>
+            <CircularProgress />
           )}
         </div>
       </Drawer>
