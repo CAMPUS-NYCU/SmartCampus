@@ -16,7 +16,7 @@ export const GET_TAG_LIST_QUERY = gql`
         latitude
         longitude
       }
-      status{
+      status {
         statusName
       }
     }
@@ -35,7 +35,8 @@ function useTagList() {
       locationName,
       accessibility,
       category: { missionName, subTypeName, targetName },
-      coordinates: { latitude, longitude }
+      coordinates: { latitude, longitude },
+      status: { statusName }
     } = tag
     return {
       id,
@@ -45,7 +46,8 @@ function useTagList() {
       position: {
         lat: parseFloat(latitude),
         lng: parseFloat(longitude)
-      }
+      },
+      status: { statusName }
     }
   })
   return { tags }

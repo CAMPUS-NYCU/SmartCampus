@@ -15,7 +15,7 @@ import {
 } from './contexts/MissionContext'
 import MissionBar from './components/Mission/MissionBar'
 import { TagContextProvider, useTagValue } from './contexts/TagContext'
-import TagDetailDialog from './components/TagDetailDialog'
+import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/FilterFab'
 
 export default function MapPage() {

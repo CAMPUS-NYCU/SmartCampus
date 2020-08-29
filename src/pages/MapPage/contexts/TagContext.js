@@ -11,7 +11,8 @@ export const TagContext = React.createContext({
   setActiveTagId: () => {},
   resetActiveTag: () => {},
   missionList: [],
-  categoryList: []
+  categoryList: [],
+  status: {}
 })
 
 export const TagContextProvider = ({ children }) => {
