@@ -69,7 +69,7 @@ function useTagDetail(id) {
     }
   )
   if (!loading) {
-    console.log(id,tagDetail)
+    console.log(id, tagDetail)
     const detail = {
       ...tagDetail,
       newCreateTime: generateTime(tagDetail.createTime),

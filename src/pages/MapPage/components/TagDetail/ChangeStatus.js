@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -16,12 +16,15 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 import WaitIcon from '../../../../assets/images/wait.svg'
 import SolvedIcon from '../../../../assets/images/solved.svg'
+import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
+import { useTagValue } from '../../contexts/TagContext'
 
 function ChangeStatus(props) {
   const { stateDrawer, activeTag, setStateDrawer, classes, status } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
+  const { refetch } = useTagValue()
   const resetTemporaryTagState = () => {
     setTemporaryTagState(activeTag.status.statusName)
   }
@@ -29,7 +32,10 @@ function ChangeStatus(props) {
     setStateDrawer(false)
     resetTemporaryTagState()
   }
-  const handleDrawerComplete = () => {
+  const { handleUpdateTagStatus } = useUpdateTagStatus()
+  const HandleDrawerComplete = () => {
+    handleUpdateTagStatus(temporaryTagState, activeTag.id)
+    refetch()
     setStateDrawer(false)
   }
   const images = [WaitIcon, SolvedIcon, SolvedIcon]
@@ -82,7 +88,7 @@ function ChangeStatus(props) {
         <DialogActions>
           <Button
             style={{ color: '#FDCC4F' }}
-            onClick={() => handleDrawerComplete()}
+            onClick={() => HandleDrawerComplete()}
           >
             確定
           </Button>
