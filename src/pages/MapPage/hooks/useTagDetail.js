@@ -14,7 +14,6 @@ export const GET_TAG_DETAIL_QUERY = gql`
 `
 
 export const generateTime = (time) => {
-  console.log(typeof time)
   const times = time.split(' ')
   var month = 0
   switch (times[1]) {
@@ -69,7 +68,6 @@ function useTagDetail(id) {
     }
   )
   if (!loading) {
-    console.log(id, tagDetail)
     const detail = {
       ...tagDetail,
       newCreateTime: generateTime(tagDetail.createTime),
