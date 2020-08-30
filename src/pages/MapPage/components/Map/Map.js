@@ -98,7 +98,7 @@ function Map() {
                 onClick={() => setActiveTagId(tag.id)}
               />
             ))}
-          {isInMission && (
+          {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
             <Marker
               draggable
               // draggable={currentStep === MissionStep.PlaceFlagOnMap}

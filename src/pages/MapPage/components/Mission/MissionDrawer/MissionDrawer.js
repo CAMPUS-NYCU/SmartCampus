@@ -6,12 +6,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
-import IconButton from '@material-ui/core/IconButton'
-
+import { Toolbar, IconButton } from '@material-ui/core'
 import MissionStepper from './MissionStepper'
 import MissionStep1 from './MissionStep1'
 import MissionStep2 from './MissionStep2'
-import MissionStep3 from './MissionStep3'
+import MissionStep0 from './MissionStep0'
 import { MissionStep, useMissionValue } from '../../../contexts/MissionContext'
 import { missionInfo } from '../../../constants/missionInfo'
 
@@ -67,34 +66,30 @@ function MissionDrawer(props) {
         >
           <div
             className={classnames(
-              classes.drawerContent,
               currentStep === MissionStep.SelectMission &&
                 classes.drawerContentFull
             )}
           >
-            <Box
-              className={classes.titleBar}
-              display='flex'
-              alignItems='center'
-              justifyContent='space-between'
-              px={2}
-            >
-              <Box fontSize='h6.fontSize' fontWeight='fontWeightBold'>
-                標註{missionInfo[missionType].missionName}
-              </Box>
+            <Toolbar>
+              <Typography variant='h6'>
+                {currentStep === MissionStep.selectMissionName
+                  ? `選擇要標注的任務`
+                  : `標註${missionInfo[missionType].missionName}`}
+              </Typography>
               <IconButton
+                style={{ position: 'absolute', right: '10px' }}
+                edge='start'
                 aria-label='close'
                 onClick={handleCloseMission}
-                className={classes.closeButton}
               >
                 <CloseIcon />
               </IconButton>
-            </Box>
+            </Toolbar>
             <Box px={2} py={1} className={classes.missionContent}>
               {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-              {/* {currentStep === MissionStep.PlaceFlagOnStreet && (
-                <MissionStep3 />
-              )} */}
+              {currentStep === MissionStep.selectMissionName && (
+                <MissionStep0 />
+              )}
               {currentStep === MissionStep.SelectMission && <MissionStep2 />}
             </Box>
             <MissionStepper />

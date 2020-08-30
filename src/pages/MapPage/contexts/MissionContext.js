@@ -18,9 +18,9 @@ export const TAG_UPDATE_MUTATION = gql`
   }
 `
 
-export const MISSION_MAX_STEP = 1
+export const MISSION_MAX_STEP = 2
 export const MISSION_MIN_STEP = 0
-export const MISSION_NUM_STEPS = 3
+export const MISSION_NUM_STEPS = 4
 
 // 特殊的 selectedSubOptionId 數值，
 // 當 user 要手動輸入 subOption 的文字框時，selectedSubOptionId 會是這個
@@ -28,9 +28,10 @@ export const SubOptionOther = Symbol('SubOptionOther')
 
 export const MissionStep = {
   Init: -1,
-  PlaceFlagOnMap: 0,
-  PlaceFlagOnStreet: 2,
-  SelectMission: 1
+  selectMissionName: 0,
+  PlaceFlagOnMap: 1,
+  PlaceFlagOnStreet: 3,
+  SelectMission: 2
 }
 
 const InitialMissionValue = {
@@ -102,15 +103,14 @@ export const MissionContextProvider = ({ children }) => {
     maxStep: MISSION_MAX_STEP,
     minStep: MISSION_MIN_STEP
   })
-  const isInMission = currentStep >= MissionStep.PlaceFlagOnMap
+  const isInMission = currentStep >= MissionStep.selectMissionName
 
   const handleNext = () => {
     // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
     handleNextStep()
   }
   const [missionType, setMissionType] = useState(null)
-  const handleStartMission = (missionType) => {
-    setMissionType(missionType)
+  const handleStartMission = () => {
     setShowControl(true)
     const center = mapInstance.getCenter()
     setMarkerPosition({
@@ -121,7 +121,7 @@ export const MissionContextProvider = ({ children }) => {
       longitude: center.lng(),
       latitude: center.lat()
     })
-    setStep(MissionStep.PlaceFlagOnMap)
+    setStep(MissionStep.selectMissionName)
   }
 
   const handleCloseMission = () => {
