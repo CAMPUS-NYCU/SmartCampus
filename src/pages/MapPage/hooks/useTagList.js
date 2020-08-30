@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { generateTime } from './useTagDetail'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
@@ -19,6 +20,10 @@ export const GET_TAG_LIST_QUERY = gql`
       }
       status {
         statusName
+      }
+      statusHistory {
+        statusName
+        createTime
       }
     }
   }
@@ -39,6 +44,12 @@ const reformatTagList = (data) => {
       coordinates: { latitude, longitude },
       status: { statusName }
     } = tag
+    const statusHistory = tag.statusHistory.map((history) => {
+      return {
+        statusName: history.statusName,
+        createTime: generateTime(history.createTime)
+      }
+    })
     return {
       id,
       locationName,
@@ -48,7 +59,8 @@ const reformatTagList = (data) => {
         lat: parseFloat(latitude),
         lng: parseFloat(longitude)
       },
-      status: { statusName }
+      status: { statusName },
+      statusHistory
     }
   })
   return tagList

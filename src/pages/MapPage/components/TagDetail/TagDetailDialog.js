@@ -130,6 +130,7 @@ function TagDetailDialog(props) {
                   missionName={missionName}
                   setLargeImg={setLargeImg}
                   setStateDrawer={setStateDrawer}
+                  tagMissionIndex={tagMissionIndex}
                 />
               </Box>
             </>

@@ -13,7 +13,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
   }
 `
 
-const generateTime = (time) => {
+export const generateTime = (time) => {
   console.log(typeof time)
   const times = time.split(' ')
   var month = 0

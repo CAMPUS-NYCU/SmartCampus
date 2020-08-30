@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, CircularProgress } from '@material-ui/core'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
+import EditHistory from './editHistory'
 
 const DetailPart = (props) => {
   const {
@@ -10,8 +11,13 @@ const DetailPart = (props) => {
     classes,
     missionName,
     setLargeImg,
-    setStateDrawer
+    setStateDrawer,
+    tagMissionIndex
   } = props
+  const [openHistory, setOpenHistory] = useState(false)
+  const handleHistoryClose = () => {
+    setOpenHistory(false)
+  }
   return (
     <>
       {detail ? (
@@ -105,6 +111,7 @@ const DetailPart = (props) => {
                 display='flex'
                 alignItems='center'
                 justifyContent='space-between'
+                onClick={() => setOpenHistory(true)}
               >
                 <img src={EditIcon} alt='' />
                 狀態編輯紀錄
@@ -170,6 +177,11 @@ const DetailPart = (props) => {
           <CircularProgress />
         </Box>
       )}
+      <EditHistory
+        open={openHistory}
+        handleHistoryClose={handleHistoryClose}
+        tagMissionIndex={tagMissionIndex}
+      />
     </>
   )
 }
