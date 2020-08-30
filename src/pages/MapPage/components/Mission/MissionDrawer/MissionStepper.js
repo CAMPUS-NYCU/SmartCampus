@@ -19,6 +19,12 @@ const useStyles = makeStyles({
     width: '100%'
     // backgroundColor: 'rgba(0,0,0,0)' // 不要預設的灰底
   },
+  streetStepper: {
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+    background: 'none'
+  },
   button: {
     minWidth: 80
   }
@@ -44,6 +50,9 @@ function MissionStepper(props) {
           // activeStep={currentStep}
           activeStep={-1}
           className={classes.stepper}
+          // style={{
+          //   background: 'none'
+          // }}
           backButton={
             <Button
               size='medium'

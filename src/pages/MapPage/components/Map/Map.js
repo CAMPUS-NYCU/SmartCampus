@@ -122,7 +122,15 @@ function Map() {
                 onLoad={handleStreetViewOnLoad}
                 onPanoChanged={handleChangeStreetViewPosition}
                 onPovChanged={handleChangeStreetViewPOV}
-                streetViewPanoramaOptions={{ fullscreenControl: false }}
+                options={{
+                  fullscreenControl: false,
+                  zoomControl: false,
+                  mapTypeControl: false,
+                  // disableDefaultUI: true,
+                  enableCloseButton: false,
+                  clickToGo: true,
+                  addressControl: false
+                }}
               />
             </>
           )}

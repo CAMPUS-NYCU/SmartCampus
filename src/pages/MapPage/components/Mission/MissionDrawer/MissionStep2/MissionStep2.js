@@ -159,7 +159,7 @@ function MissionStep3() {
             borderRadius: '20px'
           }}
           onClick={() => {
-            setStep(2)
+            setStep(MissionStep.PlaceFlagOnStreet)
           }}
         >
           新增街景
