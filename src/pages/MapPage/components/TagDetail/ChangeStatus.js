@@ -37,6 +37,7 @@ function ChangeStatus(props) {
   }
   const { updateStatus } = useUpdateTagStatus()
   const HandleDrawerComplete = () => {
+    if (temporaryTagState === activeTag.status.statusName) return
     setLoading(true)
     updateStatus({
       variables: {
@@ -102,8 +103,9 @@ function ChangeStatus(props) {
           </List>
           <DialogActions>
             <Button
-              style={{ color: '#FDCC4F' }}
+              color='primary'
               onClick={() => HandleDrawerComplete()}
+              disabled={temporaryTagState === activeTag.status.statusName}
             >
               確定
             </Button>

@@ -12,13 +12,5 @@ export const UPDATE_TAG_STATUS_MUTATION = gql`
 
 export const useUpdateTagStatus = () => {
   const [updateStatus] = useMutation(UPDATE_TAG_STATUS_MUTATION)
-  const handleUpdateTagStatus = (status, id) => {
-    updateStatus({
-      variables: {
-        tagId: id,
-        statusName: status
-      }
-    }).then((res) => console.log(res))
-  }
   return { updateStatus }
 }

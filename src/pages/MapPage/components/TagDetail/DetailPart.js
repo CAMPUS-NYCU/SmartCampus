@@ -81,7 +81,7 @@ const DetailPart = (props) => {
             flexDirection='row'
             justifyContent='space-between'
             m={2}
-            width='80vw'
+            width='90vw'
           >
             <Button
               onClick={() => {
@@ -123,7 +123,7 @@ const DetailPart = (props) => {
           </Box>
           <div
             style={{
-              width: '80vw',
+              width: '90vw',
               borderTop: 'solid 0.5px lightgray',
               borderBottom:
                 activeTag.category.missionName === missionName[1] &&
@@ -155,7 +155,7 @@ const DetailPart = (props) => {
               display='flex'
               justifyContent='flex-end'
               alignItems='center'
-              width='80%'
+              width='90%'
               m={2}
             >
               <Box className={classes.clickableFont} m={0.5}>
