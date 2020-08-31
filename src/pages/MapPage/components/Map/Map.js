@@ -31,7 +31,8 @@ function Map() {
     streetViewPosition,
     streetViewPOV,
     handleChangeStreetViewPosition,
-    handleChangeStreetViewPOV
+    handleChangeStreetViewPOV,
+    povChanged
   } = useMissionValue()
   const { tags, setActiveTagId } = useTagValue()
   const {
@@ -120,13 +121,13 @@ function Map() {
                   lng: streetViewPosition.longitude
                 }}
                 pov={{
-                  heading: streetViewPOV.heading,
-                  pitch: streetViewPOV.pitch
+                  heading: !povChanged && streetViewPOV.heading,
+                  pitch: !povChanged && streetViewPOV.pitch
                 }}
                 visible={currentStep === MissionStep.PlaceFlagOnStreet}
                 onLoad={handleStreetViewOnLoad}
-                // onPanoChanged={handleChangeStreetViewPosition}
-                // onPovChanged={handleChangeStreetViewPOV}
+                onPanoChanged={handleChangeStreetViewPosition}
+                onPovChanged={handleChangeStreetViewPOV}
                 options={{
                   fullscreenControl: false,
                   zoomControl: false,

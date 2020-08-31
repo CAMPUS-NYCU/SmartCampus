@@ -244,6 +244,7 @@ export const MissionContextProvider = ({ children }) => {
   // ==================== Street View control ====================
   const [streetViewUpload, setStreetViewUpload] = useState(false)
   const [streetViewInstance, setStreetViewInstance] = useState(null)
+  const [povChanged, setPovChanged] = useState(false)
   const handleStreetViewOnLoad = (panorama) => {
     console.log(panorama)
     setStreetViewInstance(panorama)
@@ -263,6 +264,7 @@ export const MissionContextProvider = ({ children }) => {
   )
   const handleChangeStreetViewPOVUndebounced = () => {
     if (!streetViewInstance) return
+    setPovChanged(true)
     setStreetViewPOV({
       heading: streetViewInstance.pov.heading,
       pitch: streetViewInstance.pov.pitch
@@ -277,9 +279,11 @@ export const MissionContextProvider = ({ children }) => {
   const handleCompleteStreetView = () => {
     if (!streetViewInstance) {
       setStreetViewUpload(true)
+      setPovChanged(false)
       handleBack()
       return
     }
+    setPovChanged(false)
     setStreetViewUpload(true)
     setStreetViewPOV({
       heading: streetViewInstance.pov.heading,
@@ -296,6 +300,7 @@ export const MissionContextProvider = ({ children }) => {
       longitude: markerPosition.longitude,
       latitude: markerPosition.latitude
     })
+    setPovChanged(false)
     setStreetViewPOV(InitialMissionValue.streetViewPOV)
     setStreetViewUpload(false)
     handleBack()
@@ -366,6 +371,7 @@ export const MissionContextProvider = ({ children }) => {
       latitude: markerPosition.latitude
     })
     setStreetViewPOV(InitialMissionValue.streetViewPOV)
+    setStreetViewUpload(false)
   }
 
   // ===================== Loading =======================
@@ -422,7 +428,8 @@ export const MissionContextProvider = ({ children }) => {
     ableToNextStep,
     handleCloseStreetView,
     handleCompleteStreetView,
-    streetViewUpload
+    streetViewUpload,
+    povChanged
   }
   return (
     <MissionContext.Provider value={contextValues}>
