@@ -26,7 +26,8 @@ const useStyles = makeStyles({
     background: 'none'
   },
   button: {
-    minWidth: 80
+    minWidth: 80,
+    color: '#FDCC4F'
   }
 })
 
@@ -37,9 +38,11 @@ function MissionStepper(props) {
     handleBack,
     handleNext,
     handleCompleteMission,
-    handleCloseMission
+    handleCloseMission,
+    ableToNextStep
   } = useMissionValue()
   const { PlaceFlagOnStreet } = MissionStep
+  console.log(ableToNextStep)
   return (
     <>
       {currentStep === PlaceFlagOnStreet ? (
@@ -59,7 +62,7 @@ function MissionStepper(props) {
               onClick={handleBack}
               className={classes.button}
             >
-              上一步
+              取消
             </Button>
           }
           nextButton={
@@ -83,13 +86,7 @@ function MissionStepper(props) {
           className={classes.stepper}
           backButton={
             currentStep <= MISSION_MIN_STEP ? (
-              <Button
-                size='medium'
-                onClick={handleCloseMission}
-                className={classes.button}
-              >
-                關閉
-              </Button>
+              <></>
             ) : (
               <Button
                 size='medium'
@@ -105,6 +102,7 @@ function MissionStepper(props) {
               <Button
                 color='primary'
                 size='medium'
+                disabled={!ableToNextStep}
                 onClick={handleCompleteMission}
                 className={classes.button}
               >
@@ -113,6 +111,7 @@ function MissionStepper(props) {
             ) : (
               <Button
                 size='medium'
+                disabled={!ableToNextStep}
                 onClick={handleNext}
                 className={classes.button}
               >

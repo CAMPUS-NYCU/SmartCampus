@@ -38,7 +38,7 @@ const EditHistory = (props) => {
   console.log(activeTag.statusHistory)
   return (
     <Dialog fullScreen open={open} onClose={handleHistoryClose}>
-      <AppBar className={classes.appBar}>
+      <AppBar>
         <Toolbar>
           <IconButton edge='start' onClick={handleHistoryClose}>
             <ArrowBackIcon style={{ color: 'ffffff' }} />

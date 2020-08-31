@@ -85,6 +85,7 @@ export const MissionContext = React.createContext({
   setImageFiles: () => {},
   setStep: () => {},
   loading: false,
+  ableToNextStep: true,
   ...InitialMissionValue
 })
 
@@ -110,6 +111,7 @@ export const MissionContextProvider = ({ children }) => {
     handleNextStep()
   }
   const [missionType, setMissionType] = useState(null)
+
   const handleStartMission = () => {
     setShowControl(true)
     const center = mapInstance.getCenter()
@@ -343,6 +345,15 @@ export const MissionContextProvider = ({ children }) => {
   // ===================== Loading =======================
   const [loading, setLoading] = useState(false)
 
+  const checkNextStep = () => {
+    if (currentStep === MissionStep.selectMissionName)
+      return missionType !== null
+    if (currentStep === MissionStep.SelectMission)
+      return selectedMissionId !== '' && selectedSubOptionId !== ''
+    return true
+  }
+  const ableToNextStep = checkNextStep()
+
   const contextValues = {
     missionType,
     setMissionType,
@@ -381,7 +392,8 @@ export const MissionContextProvider = ({ children }) => {
     imageFiles,
     setImageFiles,
     setStep,
-    loading
+    loading,
+    ableToNextStep
   }
   return (
     <MissionContext.Provider value={contextValues}>
