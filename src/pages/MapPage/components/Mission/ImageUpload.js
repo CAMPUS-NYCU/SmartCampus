@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import { useMissionValue } from '../../contexts/MissionContext'
 
 function ImageUpload() {
-  const { setImageFiles } = useMissionValue()
+  const { imageFiles, setImageFiles } = useMissionValue()
   const changeFiles = (event) => {
     console.log(event.target.files)
     setImageFiles(event.target.files)
@@ -26,6 +26,7 @@ function ImageUpload() {
       />
       <Button
         variant='contained'
+        color={imageFiles.length !== 0 ? 'primary' : ''}
         onClick={fileButtonClick}
         style={{
           filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',

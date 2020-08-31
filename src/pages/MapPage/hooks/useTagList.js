@@ -30,7 +30,6 @@ export const GET_TAG_LIST_QUERY = gql`
 `
 
 const reformatTagList = (data) => {
-  console.log('reformate', data)
   const tagRenderList = data ? data.tagRenderList : []
   const filteredTags = tagRenderList.filter((tag) => {
     return tag.coordinates

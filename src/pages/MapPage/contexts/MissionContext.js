@@ -86,6 +86,8 @@ export const MissionContext = React.createContext({
   setStep: () => {},
   loading: false,
   ableToNextStep: true,
+  handleCloseStreetView: () => {},
+  handleCompleteStreetView: () => {},
   ...InitialMissionValue
 })
 
@@ -146,18 +148,22 @@ export const MissionContextProvider = ({ children }) => {
           },
           accessibility: 0, // API目前accessibility必填，因此先保留
           coordinates: {
-            latitude: streetViewPosition.latitude.toString(),
-            longitude: streetViewPosition.longitude.toString()
+            latitude: streetViewUpload
+              ? streetViewPosition.latitude.toString()
+              : markerPosition.latitude.toString(),
+            longitude: streetViewUpload
+              ? streetViewPosition.longitude.toString()
+              : markerPosition.longitude.toString()
           },
           // createUserID: 'NO_USER',
           description: moreDescriptionText,
           imageNumber: imageFiles.length,
           streetViewInfo: {
-            povHeading: 0,
-            povPitch: 0,
+            povHeading: streetViewPOV.heading,
+            povPitch: streetViewPOV.pitch,
             panoID: '',
-            latitude: 0,
-            longitude: 0
+            latitude: streetViewPosition.latitude,
+            longitude: streetViewPosition.longitude
           }
         }
       }
@@ -196,19 +202,6 @@ export const MissionContextProvider = ({ children }) => {
             enqueueSnackbar('標注完成', { variant: 'success' })
           })
         }
-
-        // const uploadFile = new FormData()
-        // uploadFile.append('image', imageFiles[0], imageFiles[0].name)
-        // axios.post(imageUploadUrl[0],uploadFile).then()
-        // if (true) {
-        //   clearMissionData()
-        //   setMissionType(null)
-        //   enqueueSnackbar('標注完成', { variant: 'success' })
-        //   // refetch取得最新tag list
-        //   // refetch()
-        // } else {
-        //   enqueueSnackbar('error', { variant: 'error' })
-        // }
       }
     )
     // .catch()
@@ -249,8 +242,10 @@ export const MissionContextProvider = ({ children }) => {
   }
 
   // ==================== Street View control ====================
+  const [streetViewUpload, setStreetViewUpload] = useState(false)
   const [streetViewInstance, setStreetViewInstance] = useState(null)
   const handleStreetViewOnLoad = (panorama) => {
+    console.log(panorama)
     setStreetViewInstance(panorama)
   }
   const [streetViewPosition, setStreetViewPosition] = useState(
@@ -266,19 +261,45 @@ export const MissionContextProvider = ({ children }) => {
   const [streetViewPOV, setStreetViewPOV] = useState(
     InitialMissionValue.streetViewPOV
   )
-
   const handleChangeStreetViewPOVUndebounced = () => {
     if (!streetViewInstance) return
     setStreetViewPOV({
       heading: streetViewInstance.pov.heading,
       pitch: streetViewInstance.pov.pitch
     })
+    console.log(streetViewPOV, streetViewInstance)
   }
   // ! 因為不debounce的話，街景FPS會很低，所以加入debounce
   const handleChangeStreetViewPOV = debounce(
     handleChangeStreetViewPOVUndebounced,
     200
   )
+  const handleCompleteStreetView = () => {
+    if (!streetViewInstance) {
+      setStreetViewUpload(true)
+      handleBack()
+      return
+    }
+    setStreetViewUpload(true)
+    setStreetViewPOV({
+      heading: streetViewInstance.pov.heading,
+      pitch: streetViewInstance.pov.pitch
+    })
+    setStreetViewPosition({
+      longitude: streetViewInstance.position.lng(),
+      latitude: streetViewInstance.position.lat()
+    })
+    handleBack()
+  }
+  const handleCloseStreetView = () => {
+    setStreetViewPosition({
+      longitude: markerPosition.longitude,
+      latitude: markerPosition.latitude
+    })
+    setStreetViewPOV(InitialMissionValue.streetViewPOV)
+    setStreetViewUpload(false)
+    handleBack()
+  }
 
   // ==================== Option control ====================
   // TODO 使用 useReducer 優化這坨 useState？
@@ -340,6 +361,11 @@ export const MissionContextProvider = ({ children }) => {
     setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
     setPhotos(InitialMissionValue.photos)
     setTextLocation(InitialMissionValue.textLocation)
+    setStreetViewPosition({
+      longitude: markerPosition.longitude,
+      latitude: markerPosition.latitude
+    })
+    setStreetViewPOV(InitialMissionValue.streetViewPOV)
   }
 
   // ===================== Loading =======================
@@ -393,7 +419,10 @@ export const MissionContextProvider = ({ children }) => {
     setImageFiles,
     setStep,
     loading,
-    ableToNextStep
+    ableToNextStep,
+    handleCloseStreetView,
+    handleCompleteStreetView,
+    streetViewUpload
   }
   return (
     <MissionContext.Provider value={contextValues}>

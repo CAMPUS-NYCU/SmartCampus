@@ -34,7 +34,6 @@ const MapPageContent = () => {
 
   const { showControl, isInMission, loading } = useMissionValue()
   const { activeTag, resetActiveTag } = useTagValue()
-  console.log(loading)
   return (
     <div>
       <Map />

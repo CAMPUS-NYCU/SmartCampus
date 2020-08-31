@@ -35,7 +35,8 @@ function MissionStep3() {
     handleChangeMoreDescriptionText,
     handleSetStep,
     textLocation,
-    setStep
+    setStep,
+    streetViewUpload
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
   const { target = [] } =
@@ -161,6 +162,7 @@ function MissionStep3() {
           onClick={() => {
             setStep(MissionStep.PlaceFlagOnStreet)
           }}
+          color={streetViewUpload ? 'primary' : ''}
         >
           新增街景
         </Button>

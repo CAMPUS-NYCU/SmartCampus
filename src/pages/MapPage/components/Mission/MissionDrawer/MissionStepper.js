@@ -38,11 +38,11 @@ function MissionStepper(props) {
     handleBack,
     handleNext,
     handleCompleteMission,
-    handleCloseMission,
-    ableToNextStep
+    handleCloseStreetView,
+    ableToNextStep,
+    handleCompleteStreetView
   } = useMissionValue()
   const { PlaceFlagOnStreet } = MissionStep
-  console.log(ableToNextStep)
   return (
     <>
       {currentStep === PlaceFlagOnStreet ? (
@@ -59,7 +59,7 @@ function MissionStepper(props) {
           backButton={
             <Button
               size='medium'
-              onClick={handleBack}
+              onClick={handleCloseStreetView}
               className={classes.button}
             >
               取消
@@ -68,7 +68,7 @@ function MissionStepper(props) {
           nextButton={
             <Button
               size='medium'
-              onClick={handleBack}
+              onClick={handleCompleteStreetView}
               className={classes.button}
             >
               確定

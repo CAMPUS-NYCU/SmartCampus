@@ -29,6 +29,7 @@ function Map() {
     currentStep,
     handleStreetViewOnLoad,
     streetViewPosition,
+    streetViewPOV,
     handleChangeStreetViewPosition,
     handleChangeStreetViewPOV
   } = useMissionValue()
@@ -118,10 +119,14 @@ function Map() {
                   lat: streetViewPosition.latitude,
                   lng: streetViewPosition.longitude
                 }}
+                pov={{
+                  heading: streetViewPOV.heading,
+                  pitch: streetViewPOV.pitch
+                }}
                 visible={currentStep === MissionStep.PlaceFlagOnStreet}
                 onLoad={handleStreetViewOnLoad}
-                onPanoChanged={handleChangeStreetViewPosition}
-                onPovChanged={handleChangeStreetViewPOV}
+                // onPanoChanged={handleChangeStreetViewPosition}
+                // onPovChanged={handleChangeStreetViewPOV}
                 options={{
                   fullscreenControl: false,
                   zoomControl: false,
