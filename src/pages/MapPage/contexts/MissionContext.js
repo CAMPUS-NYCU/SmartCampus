@@ -210,7 +210,7 @@ export const MissionContextProvider = ({ children }) => {
 
   // 照片
   const [imageFiles, setImageFiles] = useState([])
-
+  const [previewImages, setPreviewImages] = useState([])
   // ==================== UI toggle control ====================
   // 是否顯示各控制元件，點地圖來toggle
   const [showControl, setShowControl] = useState(true)
@@ -372,6 +372,7 @@ export const MissionContextProvider = ({ children }) => {
     })
     setStreetViewPOV(InitialMissionValue.streetViewPOV)
     setStreetViewUpload(false)
+    setPreviewImages([])
   }
 
   // ===================== Loading =======================
@@ -429,7 +430,9 @@ export const MissionContextProvider = ({ children }) => {
     handleCloseStreetView,
     handleCompleteStreetView,
     streetViewUpload,
-    povChanged
+    povChanged,
+    previewImages,
+    setPreviewImages
   }
   return (
     <MissionContext.Provider value={contextValues}>

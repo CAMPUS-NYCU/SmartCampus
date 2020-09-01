@@ -8,7 +8,7 @@ function ImageUpload(props) {
   const { setPreviewImages, previewImages } = props
   const changeFiles = (event) => {
     console.log(event.target.files)
-    const images = previewImages
+    const images = []
     console.log('len', event.target.files.length)
     for (let i = 0; i < event.target.files.length; i += 1) {
       images.push(URL.createObjectURL(event.target.files[i]))

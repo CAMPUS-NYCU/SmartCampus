@@ -21,6 +21,7 @@ import {
 import { useTagValue } from '../../../../contexts/TagContext'
 import ImageUpload from '../../ImageUpload'
 import { facilitySubType } from '../../../../constants/missionInfo'
+import PicturePreview from './PicturePreview'
 
 function MissionStep3() {
   const {
@@ -36,11 +37,12 @@ function MissionStep3() {
     handleSetStep,
     textLocation,
     setStep,
-    streetViewUpload
+    streetViewUpload,
+    imageFiles,
+    setImageFiles,
+    previewImages, setPreviewImages
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
-
-  const [previewImages, setPreviewImages] = useState([])
   console.log('image', previewImages)
   const { target = [] } =
     facilitySubType.find(
@@ -160,31 +162,10 @@ function MissionStep3() {
       {/* <Grid container item xs={12} direction='row' alignItems='center'>
         <img src={previewImages} />
       </Grid> */}
-      <div
-        style={{
-          width: '100vw',
-          height: '200px',
-          overflowX: 'scroll',
-          overflowY: 'hidden',
-          display: '-webkit-flex',
-          flexDirection: 'row'
-        }}
-      >
-        {previewImages.map((url) => {
-          return (
-            <div
-              style={{
-                width: '150px',
-                flexShrink: '0',
-                overflow: 'hidden',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundImage: `url(${url})`
-              }}
-            />
-          )
-        })}
-      </div>
+      <PicturePreview
+        previewImages={previewImages}
+        setPreviewImages={setPreviewImages}
+      />
       <Grid container item xs={12} direction='row' alignItems='center'>
         <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
         <Button
