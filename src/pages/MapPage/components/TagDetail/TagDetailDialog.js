@@ -69,7 +69,12 @@ function TagDetailDialog(props) {
         onClose={onClose}
       >
         <div
-          style={{ height: '85vh', display: 'flex', flexDirection: 'column' }}
+          style={{
+            height: '85vh',
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: '10px'
+          }}
         >
           {activeTag ? (
             <>

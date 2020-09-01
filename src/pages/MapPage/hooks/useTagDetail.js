@@ -3,8 +3,8 @@ import { gql } from 'apollo-boost'
 
 export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
-    tagDetail(id: $id) {
-      tagID
+    tag(id: $id) {
+      id
       createTime
       lastUpdateTime
       description
@@ -61,17 +61,15 @@ export const generateTime = (time) => {
 }
 
 function useTagDetail(id) {
-  const { loading, data: { tagDetail = {} } = {} } = useQuery(
-    GET_TAG_DETAIL_QUERY,
-    {
-      variables: { id }
-    }
-  )
+  const { loading, data: { tag = {} } = {} } = useQuery(GET_TAG_DETAIL_QUERY, {
+    variables: { id }
+  })
   if (!loading) {
+    console.log(tag)
     const detail = {
-      ...tagDetail,
-      newCreateTime: generateTime(tagDetail.createTime),
-      newLastUpdateTime: generateTime(tagDetail.lastUpdateTime)
+      ...tag,
+      newCreateTime: generateTime(tag.createTime),
+      newLastUpdateTime: generateTime(tag.lastUpdateTime)
     }
     return detail
   }

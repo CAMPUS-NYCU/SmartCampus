@@ -13,6 +13,9 @@ import CloseIcon from '@material-ui/icons/Close'
 import PersonIcon from '@material-ui/icons/Person'
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
+import { AppBar, Toolbar } from '@material-ui/core'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import EditIcon from '@material-ui/icons/Edit'
 
 ProfileDialog.propTypes = {
   control: PropTypes.shape({
@@ -27,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
+  },
+  picture: {
+    width: theme.spacing(15),
+    height: theme.spacing(15)
   }
 }))
 
@@ -41,22 +48,45 @@ function ProfileDialog(props) {
       onClose={setClose}
       aria-labelledby='profile-dialog'
       open={open}
-      fullWidth
+      fullScreen
     >
-      <DialogTitle disableTypography onClose={setClose}>
-        <Typography variant='h6'>個人資料</Typography>
-        <IconButton
-          aria-label='close'
-          className={classes.closeButton}
-          onClick={setClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
+      <AppBar position='static'>
+        <Toolbar>
+          <IconButton edge='start' onClick={setClose}>
+            <ArrowBackIcon style={{ color: 'ffffff' }} />
+          </IconButton>
+          <Typography variant='h6'>個人資訊</Typography>
+        </Toolbar>
+      </AppBar>
+      <DialogContent>
+        <Box m={3} display='flex' flexDirection='column' alignItems='center'>
+          <>
+            <Avatar
+              className={classes.picture}
+              src='https://github.githubassets.com/images/modules/open_graph/github-mark.png'
+            >
+              <IconButton style={{ position: 'absolute', bottom: '0' }}>
+                <EditIcon style={{ color: 'C6C6C6' }} />
+              </IconButton>
+              <div
+                style={{
+                  height: '40px',
+                  width: '40px',
+                  background: 'rgba(0, 0, 0, 0.35)',
+                  position: 'absolute',
+                  bottom: '0'
+                }}
+              />
+            </Avatar>
+          </>
+          <Box m={4} display='flex' alignItems='center'>
+            <Typography variant='h5'>個人資訊</Typography>
+            <IconButton edge='end'>
+              <EditIcon style={{ color: 'C6C6C6' }} />
+            </IconButton>
+          </Box>
 
-      <DialogContent dividers>
-        <Box m={3}>
-          <Grid container spacing={2}>
+          {/* <Grid container spacing={2}>
             <Grid item xs={12}>
               <Grid container>
                 <Avatar>
@@ -75,7 +105,7 @@ function ProfileDialog(props) {
                 Sign Out
               </Button>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Box>
       </DialogContent>
     </Dialog>

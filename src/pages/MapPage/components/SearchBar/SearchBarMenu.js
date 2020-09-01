@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import PersonIcon from '@material-ui/icons/Person'
 import HistoryIcon from '@material-ui/icons/History'
+import DescriptionIcon from '@material-ui/icons/Description'
 import SettingsIcon from '@material-ui/icons/Settings'
 import HelpIcon from '@material-ui/icons/Help'
 import AssignmentIcon from '@material-ui/icons/Assignment'
@@ -53,32 +54,32 @@ function SearchBarMenu(props) {
       id: 1,
       text: '個人資料',
       action: handleOpenProfile,
-      icon: <PersonIcon />
+      icon: <PersonIcon color='primary' />
     },
     {
       id: 2,
-      text: '歷史回報',
+      text: '回報紀錄',
       action: handleOpenHistory,
-      icon: <HistoryIcon />
+      icon: <DescriptionIcon color='primary' />
     },
-    {
-      id: 3,
-      text: '通知設定',
-      action: handleOpenSetting,
-      icon: <SettingsIcon />
-    },
+    // {
+    //   id: 3,
+    //   text: '通知設定',
+    //   action: handleOpenSetting,
+    //   icon: <SettingsIcon />
+    // },
     {
       id: 4,
       text: '功能介紹',
       action: handleOpenHowToUse,
-      icon: <HelpIcon />
-    },
-    {
-      id: 5,
-      text: '條款事項',
-      action: handleOpenTerms,
-      icon: <AssignmentIcon />
+      icon: <HelpIcon color='primary' />
     }
+    // {
+    //   id: 5,
+    //   text: '條款事項',
+    //   action: handleOpenTerms,
+    //   icon: <AssignmentIcon />
+    // }
   ]
 
   return (
@@ -88,7 +89,7 @@ function SearchBarMenu(props) {
       onClose={setClose}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'center'
+        horizontal: 'right'
       }}
       transformOrigin={{
         vertical: 'top',
