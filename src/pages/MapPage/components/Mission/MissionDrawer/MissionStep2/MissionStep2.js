@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -39,6 +39,9 @@ function MissionStep3() {
     streetViewUpload
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
+
+  const [previewImages, setPreviewImages] = useState([])
+  console.log('image', previewImages)
   const { target = [] } =
     facilitySubType.find(
       (facility) => facility.subTypeName === selectedMissionId
@@ -149,8 +152,39 @@ function MissionStep3() {
       {/* * ==================== 7.上傳照片 ==================== */}
       <Grid container item xs={12} direction='row' alignItems='center'>
         <AddAPhotoIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
-        <ImageUpload />
+        <ImageUpload
+          setPreviewImages={setPreviewImages}
+          previewImages={previewImages}
+        />
       </Grid>
+      {/* <Grid container item xs={12} direction='row' alignItems='center'>
+        <img src={previewImages} />
+      </Grid> */}
+      <div
+        style={{
+          width: '100vw',
+          height: '200px',
+          overflowX: 'scroll',
+          overflowY: 'hidden',
+          display: '-webkit-flex',
+          flexDirection: 'row'
+        }}
+      >
+        {previewImages.map((url) => {
+          return (
+            <div
+              style={{
+                width: '150px',
+                flexShrink: '0',
+                overflow: 'hidden',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundImage: `url(${url})`
+              }}
+            />
+          )
+        })}
+      </div>
       <Grid container item xs={12} direction='row' alignItems='center'>
         <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
         <Button

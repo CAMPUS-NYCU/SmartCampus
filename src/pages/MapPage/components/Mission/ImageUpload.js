@@ -1,12 +1,19 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 
 import Button from '@material-ui/core/Button'
 import { useMissionValue } from '../../contexts/MissionContext'
 
-function ImageUpload() {
+function ImageUpload(props) {
   const { imageFiles, setImageFiles } = useMissionValue()
+  const { setPreviewImages, previewImages } = props
   const changeFiles = (event) => {
     console.log(event.target.files)
+    const images = previewImages
+    console.log('len', event.target.files.length)
+    for (let i = 0; i < event.target.files.length; i += 1) {
+      images.push(URL.createObjectURL(event.target.files[i]))
+    }
+    setPreviewImages(images)
     setImageFiles(event.target.files)
   }
   const selectFile = useRef(null)
