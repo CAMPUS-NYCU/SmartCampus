@@ -306,7 +306,7 @@ export const MissionContextProvider = ({ children }) => {
       longitude: streetViewInstance.position.lng(),
       latitude: streetViewInstance.position.lat()
     })
-    handleBack()
+    setStep(MissionStep.PlaceFlagOnMap)
   }
   const handleCloseStreetView = () => {
     setStreetViewPosition({
@@ -316,7 +316,7 @@ export const MissionContextProvider = ({ children }) => {
     setPovChanged(false)
     setStreetViewPOV(InitialMissionValue.streetViewPOV)
     setStreetViewUpload(false)
-    handleBack()
+    setStep(MissionStep.PlaceFlagOnMap)
   }
 
   // ==================== Option control ====================

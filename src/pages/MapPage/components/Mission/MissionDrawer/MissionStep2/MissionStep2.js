@@ -166,22 +166,6 @@ function MissionStep3() {
         previewImages={previewImages}
         setPreviewImages={setPreviewImages}
       />
-      <Grid container item xs={12} direction='row' alignItems='center'>
-        <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
-        <Button
-          variant='contained'
-          style={{
-            filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-            borderRadius: '20px'
-          }}
-          onClick={() => {
-            setStep(MissionStep.PlaceFlagOnStreet)
-          }}
-          color={streetViewUpload ? 'primary' : ''}
-        >
-          新增街景
-        </Button>
-      </Grid>
     </Grid>
   )
 }

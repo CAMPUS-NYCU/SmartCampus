@@ -22,6 +22,7 @@ function MissionStep1() {
   return (
     <>
       <Box
+        mb={2}
         display='flex'
         flexDirection='row'
         alignItems='center'
@@ -33,6 +34,7 @@ function MissionStep1() {
       </Box>
 
       <Box
+        mb={2}
         display='flex'
         flexDirection='row'
         justifyContent='space-between'
@@ -49,20 +51,22 @@ function MissionStep1() {
           onChange={handleChangeTextLocation}
         />
       </Box>
-      <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
-      <Button
-        variant='contained'
-        style={{
-          filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-          borderRadius: '20px'
-        }}
-        onClick={() => {
-          setStep(MissionStep.PlaceFlagOnStreet)
-        }}
-        color={streetViewUpload ? 'primary' : ''}
-      >
-        新增街景
-      </Button>
+      <Box display='flex' alignItems='center'>
+        <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
+        <Button
+          variant='contained'
+          style={{
+            filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+            borderRadius: '20px'
+          }}
+          onClick={() => {
+            setStep(MissionStep.PlaceFlagOnStreet)
+          }}
+          color={streetViewUpload ? 'primary' : ''}
+        >
+          新增街景
+        </Button>
+      </Box>
     </>
   )
 }
