@@ -3,12 +3,22 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
+import { Button } from '@material-ui/core'
+import StreetviewIcon from '@material-ui/icons/Streetview'
 import Flag from '../../../Flag'
 import inputImg from '../../../../../../assets/images/input-icon.svg'
-import { useMissionValue } from '../../../../contexts/MissionContext'
+import {
+  useMissionValue,
+  MissionStep
+} from '../../../../contexts/MissionContext'
 
 function MissionStep1() {
-  const { textLocation, handleChangeTextLocation } = useMissionValue()
+  const {
+    textLocation,
+    handleChangeTextLocation,
+    setStep,
+    streetViewUpload
+  } = useMissionValue()
   return (
     <>
       <Box
@@ -39,6 +49,20 @@ function MissionStep1() {
           onChange={handleChangeTextLocation}
         />
       </Box>
+      <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
+      <Button
+        variant='contained'
+        style={{
+          filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+          borderRadius: '20px'
+        }}
+        onClick={() => {
+          setStep(MissionStep.PlaceFlagOnStreet)
+        }}
+        color={streetViewUpload ? 'primary' : ''}
+      >
+        新增街景
+      </Button>
     </>
   )
 }

@@ -5,9 +5,11 @@ import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import axios from 'axios'
 import debounce from 'utils/debounce'
+import * as firebase from 'firebase/app'
 import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
+import useToken from '../../../utils/useToken'
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {
@@ -134,76 +136,87 @@ export const MissionContextProvider = ({ children }) => {
     setStep(MissionStep.Init)
   }
   const { refetch, updateTagList } = useTagValue()
+
   const handleCompleteMission = () => {
-    console.log(contextValues)
     setLoading(true)
-    tagUpdate({
-      variables: {
-        input: {
-          locationName: textLocation,
-          category: {
-            missionName: missionInfo[missionType].missionName.toString(),
-            subTypeName: selectedMissionId.toString(),
-            targetName: selectedSubOptionId.toString()
-          },
-          accessibility: 0, // API目前accessibility必填，因此先保留
-          coordinates: {
-            latitude: streetViewUpload
-              ? streetViewPosition.latitude.toString()
-              : markerPosition.latitude.toString(),
-            longitude: streetViewUpload
-              ? streetViewPosition.longitude.toString()
-              : markerPosition.longitude.toString()
-          },
-          // createUserID: 'NO_USER',
-          description: moreDescriptionText,
-          imageNumber: imageFiles.length,
-          streetViewInfo: {
-            povHeading: streetViewPOV.heading,
-            povPitch: streetViewPOV.pitch,
-            panoID: '',
-            latitude: streetViewPosition.latitude,
-            longitude: streetViewPosition.longitude
-          }
-        }
-      }
-    }).then(
-      ({
-        data: {
-          addNewTagData: { imageNumber, imageUploadUrl }
-        }
-      }) => {
-        console.log(imageNumber, imageUploadUrl)
-        imageUploadUrl.forEach((url, index) => {
-          console.log(url)
-          // const contentType = imageFiles[index].type
-          const options = {
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((token) => {
+        tagUpdate({
+          context: {
             headers: {
-              'Content-Type': 'application/octet-stream'
+              authorization: token ? `Bearer ${token}` : ''
+            }
+          },
+          variables: {
+            input: {
+              locationName: textLocation,
+              category: {
+                missionName: missionInfo[missionType].missionName.toString(),
+                subTypeName: selectedMissionId.toString(),
+                targetName: selectedSubOptionId.toString()
+              },
+              accessibility: 0, // API目前accessibility必填，因此先保留
+              coordinates: {
+                latitude: streetViewUpload
+                  ? streetViewPosition.latitude.toString()
+                  : markerPosition.latitude.toString(),
+                longitude: streetViewUpload
+                  ? streetViewPosition.longitude.toString()
+                  : markerPosition.longitude.toString()
+              },
+              // createUserID: 'NO_USER',
+              description: moreDescriptionText,
+              imageNumber: imageFiles.length,
+              streetViewInfo: {
+                povHeading: streetViewPOV.heading,
+                povPitch: streetViewPOV.pitch,
+                panoID: '',
+                latitude: streetViewPosition.latitude,
+                longitude: streetViewPosition.longitude
+              }
             }
           }
-          axios.put(url, imageFiles[index], options).then((res) => {
-            console.log(res)
-            refetch().then((data) => {
-              updateTagList(data.data)
-              setLoading(false)
-              clearMissionData()
-              setMissionType(null)
-              enqueueSnackbar('標注完成', { variant: 'success' })
+        }).then(
+          ({
+            data: {
+              addNewTagData: { imageNumber, imageUploadUrl }
+            }
+          }) => {
+            console.log(imageNumber, imageUploadUrl)
+            imageUploadUrl.forEach((url, index) => {
+              console.log(url)
+              // const contentType = imageFiles[index].type
+              const options = {
+                headers: {
+                  'Content-Type': 'application/octet-stream'
+                }
+              }
+              axios.put(url, imageFiles[index], options).then((res) => {
+                console.log(res)
+                refetch().then((data) => {
+                  updateTagList(data.data)
+                  setLoading(false)
+                  clearMissionData()
+                  setMissionType(null)
+                  enqueueSnackbar('標注完成', { variant: 'success' })
+                })
+              })
             })
-          })
-        })
-        if (imageUploadUrl.length === 0) {
-          refetch().then((data) => {
-            updateTagList(data.data)
-            setLoading(false)
-            clearMissionData()
-            setMissionType(null)
-            enqueueSnackbar('標注完成', { variant: 'success' })
-          })
-        }
-      }
-    )
+            if (imageUploadUrl.length === 0) {
+              refetch().then((data) => {
+                updateTagList(data.data)
+                setLoading(false)
+                clearMissionData()
+                setMissionType(null)
+                enqueueSnackbar('標注完成', { variant: 'success' })
+              })
+            }
+          }
+        )
+      })
+
     // .catch()
     // .finally()
   }
@@ -377,6 +390,8 @@ export const MissionContextProvider = ({ children }) => {
 
   // ===================== Loading =======================
   const [loading, setLoading] = useState(false)
+
+  // ========== Token ==========
 
   const checkNextStep = () => {
     if (currentStep === MissionStep.selectMissionName)

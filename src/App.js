@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 
 import withFirebaseAuth from 'react-with-firebase-auth'
@@ -20,6 +20,7 @@ import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
+import useToken from './utils/useToken'
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)
@@ -37,6 +38,16 @@ function App(props) {
     signOut,
     user
   } = props
+  const { setToken } = useToken()
+  if (user) {
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((idToken) => {
+        console.log('apptoken', idToken)
+        setToken(idToken)
+      })
+  }
 
   // add action to all snackbars
   const notistackRef = React.createRef()
@@ -71,18 +82,26 @@ function App(props) {
           <BrowserRouter>
             <Switch>
               <Route path={INDEX_PATH} exact>
-                <MapPage />
+                {user ? (
+                  <Redirect to={MAP_PATH} />
+                ) : (
+                  <Redirect to={LOGIN_PATH} />
+                )}
               </Route>
               <Route path={MAP_PATH} exact>
                 <MapPage />
               </Route>
               <Route path={LOGIN_PATH} exact>
-                <LoginPage
-                  signInWithGoogle={signInWithGoogle}
-                  signInWithFacebook={signInWithFacebook}
-                  signOut={signOut}
-                  user={user}
-                />
+                {user ? (
+                  <Redirect to={MAP_PATH} />
+                ) : (
+                  <LoginPage
+                    signInWithGoogle={signInWithGoogle}
+                    signInWithFacebook={signInWithFacebook}
+                    signOut={signOut}
+                    user={user}
+                  />
+                )}
               </Route>
             </Switch>
           </BrowserRouter>
