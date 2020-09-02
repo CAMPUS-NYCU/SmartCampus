@@ -9,7 +9,7 @@ import * as firebase from 'firebase/app'
 import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
-import useToken from '../../../utils/useToken'
+
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {

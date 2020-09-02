@@ -20,7 +20,7 @@ import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
-import useToken from './utils/useToken'
+
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)
@@ -38,16 +38,6 @@ function App(props) {
     signOut,
     user
   } = props
-  const { setToken } = useToken()
-  if (user) {
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((idToken) => {
-        console.log('apptoken', idToken)
-        setToken(idToken)
-      })
-  }
 
   // add action to all snackbars
   const notistackRef = React.createRef()
