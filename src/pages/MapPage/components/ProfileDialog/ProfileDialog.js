@@ -16,6 +16,10 @@ import Box from '@material-ui/core/Box'
 import { AppBar, Toolbar } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import EditIcon from '@material-ui/icons/Edit'
+import * as firebase from 'firebase/app'
+import EmailIcon from '@material-ui/icons/Email'
+import AssessmentIcon from '@material-ui/icons/Assessment'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 
 ProfileDialog.propTypes = {
   control: PropTypes.shape({
@@ -63,7 +67,11 @@ function ProfileDialog(props) {
           <>
             <Avatar
               className={classes.picture}
-              src='https://github.githubassets.com/images/modules/open_graph/github-mark.png'
+              src={
+                firebase.auth().currentUser
+                  ? firebase.auth().currentUser.photoURL
+                  : ''
+              }
             >
               <IconButton style={{ position: 'absolute', bottom: '0' }}>
                 <EditIcon style={{ color: 'C6C6C6' }} />
@@ -80,32 +88,32 @@ function ProfileDialog(props) {
             </Avatar>
           </>
           <Box m={4} display='flex' alignItems='center'>
-            <Typography variant='h5'>個人資訊</Typography>
+            <Typography variant='h5'>
+              {firebase.auth().currentUser
+                ? firebase.auth().currentUser.displayName
+                : '匿名'}
+            </Typography>
             <IconButton edge='end'>
               <EditIcon style={{ color: 'C6C6C6' }} />
             </IconButton>
           </Box>
 
-          {/* <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Grid container>
-                <Avatar>
-                  <PersonIcon />
-                </Avatar>
-                <Box ml={2}>
-                  <Typography variant='subtitle1'>
-                    <b>Eason Chang</b>
-                  </Typography>
-                  <Typography>eason@easonchang.com</Typography>
-                </Box>
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item container xs={12} alignItems='center'>
+              <EmailIcon style={{ marginRight: '8px' }} />
+              {firebase.auth().currentUser
+                ? firebase.auth().currentUser.email
+                : ''}
             </Grid>
-            <Grid item xs={12}>
-              <Button variant='outlined' size='small'>
-                Sign Out
-              </Button>
+            <Grid item container xs={12} alignItems='center'>
+              <AssessmentIcon style={{ marginRight: '8px' }} />
+              回報次數：
             </Grid>
-          </Grid> */}
+            <Grid item container xs={12} alignItems='center'>
+              <ThumbUpAltIcon style={{ marginRight: '8px' }} />
+              收到的讚：
+            </Grid>
+          </Grid>
         </Box>
       </DialogContent>
     </Dialog>

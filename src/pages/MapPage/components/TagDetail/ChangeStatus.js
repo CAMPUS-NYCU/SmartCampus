@@ -59,7 +59,7 @@ function ChangeStatus(props) {
       <Drawer
         anchor='bottom'
         open={stateDrawer}
-        onclose={() => setStateDrawer(false)}
+        onClose={() => setStateDrawer(false)}
       >
         <DialogTitle disableTypography>
           <Typography variant='h5'>選擇目前狀態</Typography>
