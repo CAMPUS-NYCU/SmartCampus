@@ -6,6 +6,7 @@ import MapIcon from '@material-ui/icons/Map'
 import IconButton from '@material-ui/core/IconButton'
 import AccessibleIcon from '@material-ui/icons/Accessible'
 import Box from '@material-ui/core/Box'
+import { Grid } from '@material-ui/core'
 import Popover from '@material-ui/core/Popover'
 import {
   usePopupState,
@@ -20,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 96,
     right: 24
+  },
+  grid: {
+    position: 'absolute',
+    top: 96,
+    left: '10%',
+    width: '80%'
   },
   missionButton: {
     border: 'solid 1px #707070',
@@ -48,7 +55,21 @@ function FilterFab() {
 
   return (
     <>
-      <Fab
+      <Grid container spacing={2} className={classes.grid}>
+        <Grid item xs={3}>
+          hi
+        </Grid>
+        <Grid item xs={3}>
+          hi
+        </Grid>
+        <Grid item xs={3}>
+          hi
+        </Grid>
+        <Grid item xs={3}>
+          hi
+        </Grid>
+      </Grid>
+      {/* <Fab
         color='primary'
         aria-label='filter'
         className={classes.fab}
@@ -91,7 +112,7 @@ function FilterFab() {
               </>
             ))}
         </Box>
-      </Popover>
+      </Popover> */}
     </>
   )
 }
