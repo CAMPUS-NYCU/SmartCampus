@@ -6,7 +6,7 @@ import MapIcon from '@material-ui/icons/Map'
 import IconButton from '@material-ui/core/IconButton'
 import AccessibleIcon from '@material-ui/icons/Accessible'
 import Box from '@material-ui/core/Box'
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import Popover from '@material-ui/core/Popover'
 import {
   usePopupState,
@@ -25,8 +25,12 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     position: 'absolute',
     top: 96,
-    left: '10%',
-    width: '80%'
+    left: '5%'
+  },
+  button: {
+    background: '#EEEEEE',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    borderRadius: '5px'
   },
   missionButton: {
     border: 'solid 1px #707070',
@@ -55,20 +59,17 @@ function FilterFab() {
 
   return (
     <>
-      <Grid container spacing={2} className={classes.grid}>
-        <Grid item xs={3}>
-          hi
-        </Grid>
-        <Grid item xs={3}>
-          hi
-        </Grid>
-        <Grid item xs={3}>
-          hi
-        </Grid>
-        <Grid item xs={3}>
-          hi
-        </Grid>
-      </Grid>
+      <Box
+        width='85%'
+        display='flex'
+        justifyContent='space-between'
+        className={classes.grid}
+      >
+        <Button className={classes.button}>無障礙設施</Button>
+        <Button className={classes.button}>路障</Button>
+        <Button className={classes.button}>排隊情況</Button>
+        <Button className={classes.button}>更多</Button>
+      </Box>
       {/* <Fab
         color='primary'
         aria-label='filter'
