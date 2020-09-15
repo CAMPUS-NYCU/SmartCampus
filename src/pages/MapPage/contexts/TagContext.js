@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import useTagList from '../hooks/useTagList'
@@ -39,7 +39,19 @@ export const TagContextProvider = ({ children }) => {
   const [activeTagId, setActiveTagId] = useState(null)
   const resetActiveTag = () => setActiveTagId(null)
   const activeTag = findTagById(activeTagId, tags)
-
+  const [filterTags, setFilterTags] = useState([])
+  const addFilterTags = (tag) => {
+    console.log(tag)
+    if (filterTags.indexOf(tag) !== -1) {
+      const newTags = [...filterTags]
+      console.log(newTags, 'new')
+      newTags.splice(newTags.indexOf(tag), 1)
+      setFilterTags(newTags)
+    } else {
+      setFilterTags([...filterTags, tag])
+      console.log(filterTags)
+    }
+  }
   const contextValues = {
     tags,
     activeTag,
@@ -49,7 +61,9 @@ export const TagContextProvider = ({ children }) => {
     missionList,
     categoryList,
     updateTagList,
-    refetch
+    refetch,
+    filterTags,
+    addFilterTags
   }
 
   return (

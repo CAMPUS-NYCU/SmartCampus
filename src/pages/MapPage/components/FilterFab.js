@@ -55,8 +55,9 @@ function FilterFab() {
     variant: 'popover',
     popupId: 'filterPopover'
   })
-  const { missionList } = useTagValue()
-
+  const { filterTags, addFilterTags } = useTagValue()
+  const filterInfo = ['無障礙設施', '路障', '排隊情況', '更多']
+  console.log(filterTags)
   return (
     <>
       <Box
@@ -65,10 +66,18 @@ function FilterFab() {
         justifyContent='space-between'
         className={classes.grid}
       >
-        <Button className={classes.button}>無障礙設施</Button>
-        <Button className={classes.button}>路障</Button>
-        <Button className={classes.button}>排隊情況</Button>
-        <Button className={classes.button}>更多</Button>
+        {filterInfo.map((item) => {
+          return (
+            <Button
+              variant='contained'
+              size='small'
+              color={filterTags.indexOf(item) === -1 ? '' : 'primary'}
+              onClick={() => addFilterTags(item)}
+            >
+              {item}
+            </Button>
+          )
+        })}
       </Box>
       {/* <Fab
         color='primary'
