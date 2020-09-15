@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Fab from '@material-ui/core/Fab'
 import { makeStyles } from '@material-ui/core/styles'
@@ -6,7 +6,7 @@ import MapIcon from '@material-ui/icons/Map'
 import IconButton from '@material-ui/core/IconButton'
 import AccessibleIcon from '@material-ui/icons/Accessible'
 import Box from '@material-ui/core/Box'
-import { Grid, Button } from '@material-ui/core'
+import { Grid, Button, Drawer } from '@material-ui/core'
 import Popover from '@material-ui/core/Popover'
 import {
   usePopupState,
@@ -14,7 +14,8 @@ import {
   bindPopover
 } from 'material-ui-popup-state/hooks'
 
-import { useTagValue } from '../contexts/TagContext'
+import { useTagValue } from '../../contexts/TagContext'
+import FilterDrawer from './FilterDrawer'
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -51,12 +52,16 @@ const useStyles = makeStyles((theme) => ({
 
 function FilterFab() {
   const classes = useStyles()
+  const [filterDrawer, setFilterDrawer] = useState(false)
+  const closeDrawer = () => {
+    setFilterDrawer(false)
+  }
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'filterPopover'
   })
   const { filterTags, addFilterTags } = useTagValue()
-  const filterInfo = ['無障礙設施', '路障', '排隊情況', '更多']
+  const filterInfo = ['無障礙設施', '路障', '排隊情況']
   console.log(filterTags)
   return (
     <>
@@ -78,51 +83,15 @@ function FilterFab() {
             </Button>
           )
         })}
+        <Button
+          variant='contained'
+          size='small'
+          onClick={() => setFilterDrawer(true)}
+        >
+          更多
+        </Button>
       </Box>
-      {/* <Fab
-        color='primary'
-        aria-label='filter'
-        className={classes.fab}
-        size='medium'
-        {...bindToggle(popupState)}
-      >
-        <MapIcon />
-      </Fab>
-      <Popover
-        {...bindPopover(popupState)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-      >
-        <Box display='flex' flexDirection='column' alignItems='center'>
-          {missionList &&
-            missionList.map((mission) => (
-              <>
-                <IconButton
-                  aria-label='mission'
-                  size='small'
-                  className={classes.missionButton}
-                >
-                  <AccessibleIcon />
-                </IconButton>
-                {mission.discoveries.map((discovery) => (
-                  <IconButton
-                    aria-label='mission'
-                    size='small'
-                    className={classes.discoveryButton}
-                  >
-                    <AccessibleIcon className={classes.discoveryIcon} />
-                  </IconButton>
-                ))}
-              </>
-            ))}
-        </Box>
-      </Popover> */}
+      <FilterDrawer open={filterDrawer} onClose={closeDrawer} />
     </>
   )
 }
