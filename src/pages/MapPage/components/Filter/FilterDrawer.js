@@ -7,11 +7,11 @@ import {
   IconButton,
   Grid,
   Button,
-  Box,
-  DialogTitle
+  Box
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { facilitySubType } from '../../constants/missionInfo'
+import { useTagValue } from '../../contexts/TagContext'
 
 const useStyles = makeStyles({
   drawerContent: {
@@ -30,6 +30,7 @@ const useStyles = makeStyles({
 const FilterDrawer = (props) => {
   const { open, onClose } = props
   const classes = useStyles()
+  const { filterTags, addFilterTags } = useTagValue()
   const { target = [] } =
     facilitySubType.find((facility) => facility.subTypeName === '無障礙設施') ||
     {}
@@ -55,7 +56,7 @@ const FilterDrawer = (props) => {
             edge='end'
             onClick={onClose}
           >
-            <CloseIcon fontSize='large' />
+            <CloseIcon fontSize='medium' />
           </IconButton>
         </Toolbar>
         <Box p={2} display='flex'>
@@ -65,7 +66,17 @@ const FilterDrawer = (props) => {
             </Grid>
             {facilitySubType.map((facility) => (
               <Grid key={facility.subTypeName} item xs={4}>
-                <Button variant='contained' fullWidth size='small'>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='small'
+                  color={
+                    filterTags.indexOf(facility.subTypeName) === -1
+                      ? ''
+                      : 'primary'
+                  }
+                  onClick={() => addFilterTags(facility.subTypeName)}
+                >
                   {facility.subTypeName}
                 </Button>
               </Grid>
@@ -77,7 +88,17 @@ const FilterDrawer = (props) => {
               <Grid container spacing={2}>
                 {target.map((discovery) => (
                   <Grid id={discovery.targetName} item xs={4}>
-                    <Button variant='contained' fullWidth size='small'>
+                    <Button
+                      variant='contained'
+                      fullWidth
+                      size='small'
+                      color={
+                        filterTags.indexOf(discovery.targetName) === -1
+                          ? ''
+                          : 'primary'
+                      }
+                      onClick={() => addFilterTags(discovery.targetName)}
+                    >
                       {discovery.targetName}
                     </Button>
                   </Grid>

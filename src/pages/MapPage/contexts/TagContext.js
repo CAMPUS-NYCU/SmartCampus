@@ -44,12 +44,10 @@ export const TagContextProvider = ({ children }) => {
     console.log(tag)
     if (filterTags.indexOf(tag) !== -1) {
       const newTags = [...filterTags]
-      console.log(newTags, 'new')
       newTags.splice(newTags.indexOf(tag), 1)
       setFilterTags(newTags)
     } else {
       setFilterTags([...filterTags, tag])
-      console.log(filterTags)
     }
   }
   const contextValues = {
