@@ -58,7 +58,6 @@ const PicturePreview = (props) => {
             width: '100vw',
             height: '150px',
             overflowX: 'scroll',
-            overflowY: 'hidden',
             display: '-webkit-flex',
             flexDirection: 'row'
           }}

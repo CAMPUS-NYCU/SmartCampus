@@ -98,19 +98,6 @@ function MissionStepper(props) {
           // activeStep={currentStep}
           activeStep={-1}
           className={classes.stepper}
-          backButton={
-            currentStep <= MISSION_MIN_STEP ? (
-              <></>
-            ) : (
-              <Button
-                size='medium'
-                onClick={handleBack}
-                className={classes.button}
-              >
-                上一步
-              </Button>
-            )
-          }
           nextButton={
             currentStep >= MISSION_MAX_STEP ? (
               <Button
