@@ -433,6 +433,7 @@ export const MissionContextProvider = ({ children }) => {
     moreDescriptionText,
     handleChangeMoreDescriptionText,
     textLocation,
+    setTextLocation,
     handleChangeTextLocation,
     photos,
     setPhotos,

@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
@@ -11,14 +10,31 @@ import {
   useMissionValue,
   MissionStep
 } from '../../../../contexts/MissionContext'
+import axios from 'axios'
+import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
 
 function MissionStep1() {
   const {
     textLocation,
     handleChangeTextLocation,
     setStep,
-    streetViewUpload
+    streetViewUpload,
+    markerPosition,
+    setTextLocation
   } = useMissionValue()
+  useEffect(() => {
+    axios
+      .get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${markerPosition.latitude},${markerPosition.longitude}&language=zh-TW&key=${REACT_APP_GOOGLE_MAP_API_KEY}`
+      )
+      .then(({ data }) => {
+        console.log(data)
+        console.log(data.results[1].address_components[0].long_name)
+        setTextLocation(data.results[1].address_components[0].long_name)
+      })
+    console.log('effect')
+  }, [markerPosition])
+  console.log(markerPosition)
   return (
     <>
       <Box
