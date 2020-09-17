@@ -67,6 +67,12 @@ function TagDetailDialog(props) {
         variant='persistent'
         open={activeTag}
         onClose={onClose}
+        PaperProps={{
+          style: {
+            borderRadius: '20px 20px 0 0',
+            backgroundColor: '#FAFAFA'
+          }
+        }}
       >
         <div
           style={{
