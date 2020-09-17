@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import { Input } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
@@ -36,14 +37,18 @@ function MissionStep3() {
     handleChangeMoreDescriptionText,
     handleSetStep,
     textLocation,
+    handleChangeTextLocation,
     setStep,
     streetViewUpload,
     imageFiles,
     setImageFiles,
-    previewImages, setPreviewImages
+    previewImages,
+    setPreviewImages
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
   console.log('image', previewImages)
+  const [locationFocus, setLocationFocus] = useState(true)
+  const focusInput = useRef(null)
   const { target = [] } =
     facilitySubType.find(
       (facility) => facility.subTypeName === selectedMissionId
@@ -80,13 +85,27 @@ function MissionStep3() {
           justifyContent='flex-start'
         >
           <StorefrontIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-          <Typography>
-            {textLocation !== '' ? textLocation : '未輸入地點'}
-          </Typography>
+          <Input
+            id='standard-basic'
+            ref={focusInput}
+            disableUnderline={locationFocus}
+            style={{ width: '70vw' }}
+            placeholder='輸入地點名稱'
+            value={textLocation}
+            onChange={handleChangeTextLocation}
+            onFocus={() => {
+              setLocationFocus(false)
+            }}
+            onBlur={() => {
+              setLocationFocus(true)
+            }}
+          />
         </Box>
         <IconButton
           size='small'
-          onClick={() => handleSetStep(MissionStep.PlaceFlagOnMap)}
+          onClick={() => {
+            focusInput.current.click()
+          }}
         >
           <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
         </IconButton>

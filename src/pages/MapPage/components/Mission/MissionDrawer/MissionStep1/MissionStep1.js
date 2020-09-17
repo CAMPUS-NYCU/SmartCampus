@@ -33,7 +33,7 @@ function MissionStep1() {
         setTextLocation(data.results[1].address_components[0].long_name)
       })
     console.log('effect')
-  }, [markerPosition])
+  }, [markerPosition, setTextLocation])
   console.log(markerPosition)
   return (
     <>
