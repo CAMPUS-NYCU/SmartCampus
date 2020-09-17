@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, CircularProgress } from '@material-ui/core'
+import { Box, Button, CircularProgress, IconButton } from '@material-ui/core'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
@@ -161,9 +161,17 @@ const DetailPart = (props) => {
               <Box className={classes.clickableFont} m={0.5}>
                 86人贊同此問題待處理
               </Box>
-              <Button variant='contained' style={{ marginLeft: '8px' }}>
-                贊同
-              </Button>
+              <IconButton
+                variant='contained'
+                style={{
+                  marginLeft: '8px',
+                  background: '#EEEEEE',
+                  border: '1px solid #BABABA',
+                  fontSize: '15px'
+                }}
+              >
+                +1
+              </IconButton>
             </Box>
           )}
         </>

@@ -9,9 +9,9 @@ export const tagStatus = [
   [
     {
       statusName: '已解決',
-      statusColor: '#dce77'
+      statusColor: '#dce775'
     },
-    { statusName: '待處理', statusColor: '5#FFB59F' }
+    { statusName: '待處理', statusColor: '#FFB59F' }
   ],
   [
     {
