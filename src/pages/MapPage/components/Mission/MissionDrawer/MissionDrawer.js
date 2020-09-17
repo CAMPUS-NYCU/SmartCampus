@@ -13,6 +13,7 @@ import MissionStep2 from './MissionStep2'
 import MissionStep0 from './MissionStep0'
 import { MissionStep, useMissionValue } from '../../../contexts/MissionContext'
 import { missionInfo } from '../../../constants/missionInfo'
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 
 const useStyles = makeStyles({
   drawerContent: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles({
 })
 
 function MissionDrawer(props) {
-  const { isInMission, handleCloseMission } = useMissionValue()
+  const { isInMission, handleCloseMission, handleBack } = useMissionValue()
   const classes = useStyles()
 
   const { currentStep, missionType } = useMissionValue()
@@ -70,20 +71,30 @@ function MissionDrawer(props) {
                 classes.drawerContentFull
             )}
           >
-            <Toolbar>
+            <Toolbar disableTypography>
+              {currentStep === MissionStep.selectMissionName ? (
+                <IconButton
+                  style={{ position: 'absolute', right: '10px' }}
+                  edge='start'
+                  aria-label='close'
+                  onClick={handleCloseMission}
+                >
+                  <CloseIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  edge='start'
+                  aria-label='close'
+                  onClick={handleBack}
+                >
+                  <KeyboardReturnIcon />
+                </IconButton>
+              )}
               <Typography variant='h6'>
                 {currentStep === MissionStep.selectMissionName
                   ? `選擇要標注的任務`
                   : `標註${missionInfo[missionType].missionName}`}
               </Typography>
-              <IconButton
-                style={{ position: 'absolute', right: '10px' }}
-                edge='start'
-                aria-label='close'
-                onClick={handleCloseMission}
-              >
-                <CloseIcon />
-              </IconButton>
             </Toolbar>
             <Box px={2} py={1} className={classes.missionContent}>
               {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
