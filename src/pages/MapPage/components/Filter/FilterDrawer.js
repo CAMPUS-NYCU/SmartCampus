@@ -48,7 +48,7 @@ const FilterDrawer = (props) => {
     >
       <div className={classes.drawerContent}>
         <Toolbar
-          style={{ position: 'sticky', top: '0', backgroundColor: '#FAFAFA' }}
+          style={{ position: 'sticky', top: '0', backgroundColor: '#FAFAFA',zIndex: 100 }}
         >
           <Typography variant='h5'>篩選</Typography>
           <IconButton
