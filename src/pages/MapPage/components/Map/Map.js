@@ -19,7 +19,8 @@ import Mission1 from '../../../../assets/images/mission1circle.svg'
 import Mission3 from '../../../../assets/images/mission3circle.svg'
 import { missionInfo } from '../../constants/missionInfo'
 
-function Map() {
+function Map(props) {
+  const { mapCenter } = props
   const {
     handleToggleShowControl,
     isInMission,
@@ -54,7 +55,7 @@ function Map() {
       <LoadScript googleMapsApiKey={REACT_APP_GOOGLE_MAP_API_KEY}>
         <GoogleMap
           clickableIcons={false}
-          center={DefaultCenter}
+          center={mapCenter}
           zoom={DefaultZoom}
           onClick={handleToggleShowControl}
           onLoad={handleMapOnLoad}

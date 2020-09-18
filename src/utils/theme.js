@@ -7,7 +7,7 @@ const ThemeSettings = {
       contrastText: '#ffffff'
     },
     secondary: {
-      main: '#4db3fd',
+      main: '#F4511F',
       contrastText: '#ffffff'
     },
     test:{
