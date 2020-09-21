@@ -14,6 +14,7 @@ import {
   useMissionValue
 } from './contexts/MissionContext'
 import MissionBar from './components/Mission/MissionBar'
+import ReportHistory from './components/ReportHistory'
 import { TagContextProvider, useTagValue } from './contexts/TagContext'
 import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
@@ -33,6 +34,7 @@ export default function MapPage() {
 const MapPageContent = () => {
   const howToUseDialogControl = useModal()
   const profileDialogControl = useModal()
+  const ReportHistoryControl = useModal()
   const [mapCenter, setMapCenter] = useState(DefaultCenter)
   const { showControl, isInMission, loading } = useMissionValue()
   const { activeTag, resetActiveTag } = useTagValue()
@@ -47,7 +49,7 @@ const MapPageContent = () => {
             <SearchBar
               menuControls={{
                 handleOpenProfile: profileDialogControl.setOpen,
-                handleOpenHistory: profileDialogControl.setOpen,
+                handleOpenHistory: ReportHistoryControl.setOpen,
                 handleOpenSetting: profileDialogControl.setOpen,
                 handleOpenHowToUse: howToUseDialogControl.setOpen,
                 handleOpenTerms: profileDialogControl.setOpen
@@ -61,6 +63,7 @@ const MapPageContent = () => {
       </Fade>
 
       <MissionDrawer />
+      <ReportHistory control={ReportHistoryControl} />
       <ProfileDialog control={profileDialogControl} />
       <HowToUseDialog control={howToUseDialogControl} />
       {activeTag && (
