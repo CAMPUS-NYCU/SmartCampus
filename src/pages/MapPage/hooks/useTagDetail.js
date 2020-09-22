@@ -65,7 +65,6 @@ function useTagDetail(id) {
     variables: { id }
   })
   if (!loading) {
-    console.log(tag)
     const detail = {
       ...tag,
       newCreateTime: generateTime(tag.createTime),
@@ -74,7 +73,6 @@ function useTagDetail(id) {
     return detail
   }
 
-  // console.log(typeof tagDetail.createTime)
   return null
 }
 

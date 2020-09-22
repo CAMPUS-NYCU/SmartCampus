@@ -35,7 +35,6 @@ const EditHistory = (props) => {
   const classes = useStyles()
   const { open, handleHistoryClose, tagMissionIndex } = props
   const { activeTag } = useTagValue()
-  console.log(activeTag.statusHistory)
   return (
     <Dialog fullScreen open={open} onClose={handleHistoryClose}>
       <AppBar position='sticky'>

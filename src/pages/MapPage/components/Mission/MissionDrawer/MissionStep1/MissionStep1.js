@@ -28,13 +28,9 @@ function MissionStep1() {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${markerPosition.latitude},${markerPosition.longitude}&language=zh-TW&key=${REACT_APP_GOOGLE_MAP_API_KEY}`
       )
       .then(({ data }) => {
-        console.log(data)
-        console.log(data.results[1].address_components[0].long_name)
         setTextLocation(data.results[1].address_components[0].long_name)
       })
-    console.log('effect')
   }, [markerPosition, setTextLocation])
-  console.log(markerPosition)
   return (
     <>
       <Box

@@ -46,7 +46,6 @@ function ChangeStatus(props) {
       }
     }).then(() => {
       refetch().then((data) => {
-        console.log(data)
         updateTagList(data.data)
         setLoading(false)
         setStateDrawer(false)

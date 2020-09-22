@@ -66,9 +66,6 @@ const reformatTagList = (data) => {
 }
 
 function useTagList() {
-  // console.log("tag list")
-  // const [getTagList] = useQuery(GET_TAG_LIST_QUERY)
-  // getTagList().then((res) => console.log('res', res))
   const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {
     onCompleted: () => {
       setTags(tagList)

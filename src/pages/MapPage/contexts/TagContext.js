@@ -41,7 +41,6 @@ export const TagContextProvider = ({ children }) => {
   const activeTag = findTagById(activeTagId, tags)
   const [filterTags, setFilterTags] = useState([])
   const addFilterTags = (tag) => {
-    console.log(tag)
     if (filterTags.indexOf(tag) !== -1) {
       const newTags = [...filterTags]
       newTags.splice(newTags.indexOf(tag), 1)

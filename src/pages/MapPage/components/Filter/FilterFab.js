@@ -62,7 +62,6 @@ function FilterFab() {
   })
   const { filterTags, addFilterTags } = useTagValue()
   const filterInfo = ['無障礙設施', '路障', '排隊情況']
-  console.log(filterTags)
   return (
     <>
       <Box

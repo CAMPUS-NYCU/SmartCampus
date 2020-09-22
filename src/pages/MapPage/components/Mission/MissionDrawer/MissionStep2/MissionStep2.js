@@ -46,7 +46,6 @@ function MissionStep3() {
     setPreviewImages
   } = useMissionValue()
   const { missionList, categoryList } = useTagValue()
-  console.log('image', previewImages)
   const [locationFocus, setLocationFocus] = useState(true)
   const focusInput = useRef(null)
   const { target = [] } =

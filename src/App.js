@@ -38,7 +38,6 @@ function App(props) {
     signOut,
     user
   } = props
-  console.log(firebase.auth())
   // add action to all snackbars
   const notistackRef = React.createRef()
   const onClickDismiss = (key) => () => {

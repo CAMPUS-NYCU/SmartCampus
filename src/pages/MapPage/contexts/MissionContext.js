@@ -184,9 +184,7 @@ export const MissionContextProvider = ({ children }) => {
               addNewTagData: { imageNumber, imageUploadUrl }
             }
           }) => {
-            console.log(imageNumber, imageUploadUrl)
             imageUploadUrl.forEach((url, index) => {
-              console.log(url)
               // const contentType = imageFiles[index].type
               const options = {
                 headers: {
@@ -194,7 +192,6 @@ export const MissionContextProvider = ({ children }) => {
                 }
               }
               axios.put(url, imageFiles[index], options).then((res) => {
-                console.log(res)
                 refetch().then((data) => {
                   updateTagList(data.data)
                   setLoading(false)
@@ -259,7 +256,6 @@ export const MissionContextProvider = ({ children }) => {
   const [streetViewInstance, setStreetViewInstance] = useState(null)
   const [povChanged, setPovChanged] = useState(false)
   const handleStreetViewOnLoad = (panorama) => {
-    console.log(panorama)
     setStreetViewInstance(panorama)
   }
   const [streetViewPosition, setStreetViewPosition] = useState(
@@ -282,7 +278,6 @@ export const MissionContextProvider = ({ children }) => {
       heading: streetViewInstance.pov.heading,
       pitch: streetViewInstance.pov.pitch
     })
-    console.log(streetViewPOV, streetViewInstance)
   }
   // ! 因為不debounce的話，街景FPS會很低，所以加入debounce
   const handleChangeStreetViewPOV = debounce(

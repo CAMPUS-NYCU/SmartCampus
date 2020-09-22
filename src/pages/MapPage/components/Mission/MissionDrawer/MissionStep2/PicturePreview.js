@@ -14,7 +14,6 @@ const PicturePreview = (props) => {
     selectFile.current.click()
   }
   const changeFiles = (event) => {
-    console.log(imageFiles)
     const images = new DataTransfer()
     const preview = []
     for (let i = 0; i < imageFiles.length; i += 1) {
@@ -28,7 +27,6 @@ const PicturePreview = (props) => {
     }
     setPreviewImages(preview)
     setImageFiles(images.files)
-    // console.log('hi')
   }
   const handleDeleteImage = (index) => {
     const images = new DataTransfer()

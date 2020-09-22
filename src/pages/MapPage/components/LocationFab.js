@@ -21,7 +21,6 @@ const LocationFab = (props) => {
   } = usePosition(false, { enableHighAccuracy: true })
   const goToLocation = () => {
     if (!positionError) {
-      console.log(positionLat)
       setMapCenter({ lat: positionLat, lng: positionLng })
     }
   }
