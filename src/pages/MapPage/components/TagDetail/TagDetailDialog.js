@@ -63,13 +63,13 @@ function TagDetailDialog(props) {
     <>
       <Drawer
         anchor='bottom'
-        variant='persistent'
         open={activeTag}
         onClose={onClose}
         PaperProps={{
           style: {
             borderRadius: '20px 20px 0 0',
-            backgroundColor: '#FAFAFA'
+            backgroundColor: '#FAFAFA',
+            zIndex: '10'
           }
         }}
       >

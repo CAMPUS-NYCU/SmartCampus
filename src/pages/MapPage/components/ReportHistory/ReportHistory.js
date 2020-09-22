@@ -7,9 +7,11 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   Divider,
-  Grid
+  Grid,
+  Box,
+  makeStyles,
+  Button
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTagValue } from '../../contexts/TagContext'
@@ -17,23 +19,33 @@ import Mission1 from '../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../assets/images/mission3.svg'
 
+const useStyle = makeStyles({
+  tag: {
+    background: '#FDCC4F',
+    border: '1.5px solid #FFEDC0',
+    boxSizing: 'border-box',
+    borderRadius: '5px'
+  }
+})
+
 const ReportHistory = (props) => {
   const {
     control: { open, setClose }
   } = props
-  const { tags } = useTagValue()
+  const { tags, setActiveTagId } = useTagValue()
   const missionImages = [Mission1, Mission2, Mission3]
+  const classes = useStyle()
   console.log(tags)
   return (
     <Drawer
       anchor='bottom'
-      variant='persistent'
       open={open}
       onClose={setClose}
       PaperProps={{
         style: {
           borderRadius: '20px 20px 0 0',
-          backgroundColor: '#FAFAFA'
+          backgroundColor: '#FAFAFA',
+          zIndex: '2'
         }
       }}
     >
@@ -79,27 +91,6 @@ const ReportHistory = (props) => {
                         {item.statusHistory[0].createTime}
                       </Typography>
                     </Grid>
-                    <Grid item>{item.locationName}</Grid>
-                  </Grid>
-                </ListItem>
-              </List>
-              <Divider variant='middle' />
-            </>
-          )
-        })}
-        {tags.map((item) => {
-          return (
-            <>
-              <List>
-                <ListItem>
-                  <ListItemIcon>
-                    <img
-                      src={missionImages[0]}
-                      alt='mission'
-                      style={{ height: '35px', width: '35px' }}
-                    />
-                  </ListItemIcon>
-                  <Grid container direction='column' space={1}>
                     <Grid
                       item
                       container
@@ -107,13 +98,23 @@ const ReportHistory = (props) => {
                       direction='row'
                       alignItems='center'
                     >
-                      <Typography variant='h6'>{item.locationName}</Typography>
-                      <Typography variant='body2' color='textSecondary'>
-                        {item.statusHistory[0].createTime}
-                      </Typography>
+                      <Box className={classes.tag} mr={1} p={0.5}>
+                        {item.category.subTypeName}
+                      </Box>
+                      <Box className={classes.tag} mr={1} p={0.5}>
+                        {item.category.targetName}
+                      </Box>
                     </Grid>
-                    <Grid item>{item.locationName}</Grid>
                   </Grid>
+                  <Button
+                    color='primary'
+                    variant='contained'
+                    size='small'
+                    onClick={() => setActiveTagId(item.id)}
+                    style={{ borderRadius: '20px', color: 'black' }}
+                  >
+                    檢視
+                  </Button>
                 </ListItem>
               </List>
               <Divider variant='middle' />
