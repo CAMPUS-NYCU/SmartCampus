@@ -8,7 +8,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider
+  Divider,
+  Grid
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTagValue } from '../../contexts/TagContext'
@@ -37,7 +38,14 @@ const ReportHistory = (props) => {
       }}
     >
       <div style={{ height: '50vh' }}>
-        <Toolbar>
+        <Toolbar
+          style={{
+            position: 'sticky',
+            top: '0',
+            zIndex: '100',
+            backgroundColor: '#FAFAFA'
+          }}
+        >
           <Typography variant='h5'>回報紀錄</Typography>
           <IconButton
             onClick={setClose}
@@ -58,7 +66,54 @@ const ReportHistory = (props) => {
                       style={{ height: '35px', width: '35px' }}
                     />
                   </ListItemIcon>
-                  {/* <ListItemText primary={}/> */}
+                  <Grid container direction='column' space={1}>
+                    <Grid
+                      item
+                      container
+                      space={2}
+                      direction='row'
+                      alignItems='center'
+                    >
+                      <Typography variant='h6'>{item.locationName}</Typography>
+                      <Typography variant='body2' color='textSecondary'>
+                        {item.statusHistory[0].createTime}
+                      </Typography>
+                    </Grid>
+                    <Grid item>{item.locationName}</Grid>
+                  </Grid>
+                </ListItem>
+              </List>
+              <Divider variant='middle' />
+            </>
+          )
+        })}
+        {tags.map((item) => {
+          return (
+            <>
+              <List>
+                <ListItem>
+                  <ListItemIcon>
+                    <img
+                      src={missionImages[0]}
+                      alt='mission'
+                      style={{ height: '35px', width: '35px' }}
+                    />
+                  </ListItemIcon>
+                  <Grid container direction='column' space={1}>
+                    <Grid
+                      item
+                      container
+                      space={2}
+                      direction='row'
+                      alignItems='center'
+                    >
+                      <Typography variant='h6'>{item.locationName}</Typography>
+                      <Typography variant='body2' color='textSecondary'>
+                        {item.statusHistory[0].createTime}
+                      </Typography>
+                    </Grid>
+                    <Grid item>{item.locationName}</Grid>
+                  </Grid>
                 </ListItem>
               </List>
               <Divider variant='middle' />
