@@ -37,7 +37,6 @@ const ReportHistory = (props) => {
   const { tags, setActiveTagId } = useTagValue()
   const missionImages = [Mission1, Mission2, Mission3]
   const classes = useStyle()
-  console.log(tags)
   return (
     <Drawer
       anchor='bottom'
