@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import Drawer from '@material-ui/core/Drawer'
+import { Button } from '@material-ui/core'
 import { Box, CircularProgress, Toolbar } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
@@ -17,6 +18,7 @@ import { missionInfo } from '../../constants/missionInfo'
 import { tagStatus } from '../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
+import { useMissionValue } from '../../contexts/MissionContext'
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
@@ -39,11 +41,20 @@ const useStyles = makeStyles((theme) => ({
   },
   changeButton: {
     borderRadius: '40%'
+  },
+  editButton: {
+    background: '#D8D8D8',
+    border: '1px solid #BABABA',
+    boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.12)',
+    borderRadius: '20px',
+    position: 'absolute',
+    right: '15px'
   }
 }))
 
 function TagDetailDialog(props) {
   const { activeTag, onClose } = props
+  const { handleStartMission } = useMissionValue()
   const detail = useTagDetail(activeTag.id)
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
@@ -90,6 +101,13 @@ function TagDetailDialog(props) {
                 <Typography variant='h5'>
                   {activeTag ? activeTag.category.targetName : '詳細資訊'}
                 </Typography>
+                <Button
+                  className={classes.editButton}
+                  size='small'
+                  onClick={handleStartMission}
+                >
+                  編輯
+                </Button>
               </Toolbar>
               <Box
                 display='flex'

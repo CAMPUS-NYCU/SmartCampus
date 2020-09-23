@@ -54,13 +54,13 @@ function MissionDrawer(props) {
       {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (
         <Drawer
           anchor='bottom'
-          variant='persistent'
           open={isInMission}
           onClose={handleCloseMission}
           PaperProps={{
             style: {
               borderRadius: '20px 20px 0 0',
-              backgroundColor: '#FAFAFA'
+              backgroundColor: '#FAFAFA',
+              zIndex: '20'
             }
           }}
           {...props}
