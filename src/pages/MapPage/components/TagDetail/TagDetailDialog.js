@@ -19,6 +19,7 @@ import { tagStatus } from '../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
+import { useTagValue } from '../../contexts/TagContext'
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
@@ -54,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
 
 function TagDetailDialog(props) {
   const { activeTag, onClose } = props
-  const { handleStartMission } = useMissionValue()
-  const detail = useTagDetail(activeTag.id)
+  const { handleStartMission, handleStartEdit } = useMissionValue()
+  const { tagDetail} = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const classes = useStyles()
@@ -104,7 +105,7 @@ function TagDetailDialog(props) {
                 <Button
                   className={classes.editButton}
                   size='small'
-                  onClick={handleStartMission}
+                  onClick={() => handleStartEdit(activeTag)}
                 >
                   編輯
                 </Button>
@@ -149,7 +150,7 @@ function TagDetailDialog(props) {
                   </div>
                 </Box>
                 <DetailPart
-                  detail={detail}
+                  detail={tagDetail}
                   activeTag={activeTag}
                   classes={classes}
                   missionName={missionName}

@@ -65,11 +65,15 @@ function useTagDetail(id) {
     variables: { id }
   })
   if (!loading) {
-    const detail = {
-      ...tag,
-      newCreateTime: generateTime(tag.createTime),
-      newLastUpdateTime: generateTime(tag.lastUpdateTime)
-    }
+    console.log(tag)
+    const detail =
+      tag !== {} && tag
+        ? {
+            ...tag,
+            newCreateTime: generateTime(tag.createTime),
+            newLastUpdateTime: generateTime(tag.lastUpdateTime)
+          }
+        : null
     return detail
   }
 

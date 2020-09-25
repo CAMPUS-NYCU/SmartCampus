@@ -130,9 +130,18 @@ export const MissionContextProvider = ({ children }) => {
     setStep(MissionStep.selectMissionName)
   }
   const handleStartEdit = (activeTag) => {
+    console.log(activeTag)
     setShowControl(true)
     setMarkerPosition(activeTag.position)
     setStreetViewPosition(activeTag.position)
+    setMissionType(
+      missionInfo.findIndex(
+        (element) => element.missionName === activeTag.category.missionName
+      )
+    )
+    console.log(missionType)
+    setSelectedMissionId(activeTag.category.subTypeName)
+    setSelectedSubOptionId(activeTag.category.targetName)
     setStep(MissionStep.selectMissionName)
     setIsInEdit(true)
   }

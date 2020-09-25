@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import useTagList from '../hooks/useTagList'
 import useMissionList from '../hooks/useMissionList'
 import { tagStatus } from '../constants/tagData'
+import useTagDetail from '../hooks/useTagDetail'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -40,6 +41,12 @@ export const TagContextProvider = ({ children }) => {
   const resetActiveTag = () => setActiveTagId(null)
   const activeTag = findTagById(activeTagId, tags)
   const [filterTags, setFilterTags] = useState([])
+  // const [tagDetail, setTagDetail] = useState(null)
+  // const useGetTagDetail = (id) => {
+  //   const detail = useTagDetail(id)
+  //   setTagDetail(detail)
+  // }
+  const tagDetail = useTagDetail(activeTag ? activeTag.id : '')
   const addFilterTags = (tag) => {
     if (filterTags.indexOf(tag) !== -1) {
       const newTags = [...filterTags]
@@ -60,7 +67,9 @@ export const TagContextProvider = ({ children }) => {
     updateTagList,
     refetch,
     filterTags,
-    addFilterTags
+    addFilterTags,
+    tagDetail
+    // useGetTagDetail
   }
 
   return (
