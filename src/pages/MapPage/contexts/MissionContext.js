@@ -143,6 +143,7 @@ export const MissionContextProvider = ({ children }) => {
     setSelectedMissionId(activeTag.category.subTypeName)
     setSelectedSubOptionId(activeTag.category.targetName)
     setStep(MissionStep.selectMissionName)
+    setMoreDescriptionText(tagDetail.description)
     setIsInEdit(true)
   }
 
@@ -158,7 +159,7 @@ export const MissionContextProvider = ({ children }) => {
     setIsInEdit(false)
   }
 
-  const { refetch, updateTagList } = useTagValue()
+  const { refetch, updateTagList, tagDetail } = useTagValue()
 
   const handleCompleteMission = () => {
     setLoading(true)

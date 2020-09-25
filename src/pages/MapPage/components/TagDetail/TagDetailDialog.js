@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
 
 function TagDetailDialog(props) {
   const { activeTag, onClose } = props
-  const { handleStartMission, handleStartEdit } = useMissionValue()
-  const { tagDetail} = useTagValue()
+  const { handleStartMission, handleStartEdit, isInMission } = useMissionValue()
+  const { tagDetail } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const classes = useStyles()
@@ -75,8 +75,9 @@ function TagDetailDialog(props) {
     <>
       <Drawer
         anchor='bottom'
-        open={activeTag}
+        open={activeTag && !isInMission}
         onClose={onClose}
+        variant='persistent'
         PaperProps={{
           style: {
             borderRadius: '20px 20px 0 0',
