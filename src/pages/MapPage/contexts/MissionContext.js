@@ -10,7 +10,6 @@ import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
 
-
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {
     addNewTagData(data: $input) {
@@ -109,6 +108,7 @@ export const MissionContextProvider = ({ children }) => {
     minStep: MISSION_MIN_STEP
   })
   const isInMission = currentStep >= MissionStep.selectMissionName
+  const [isInEdit, setIsInEdit] = useState(false)
 
   const handleNext = () => {
     // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
@@ -129,12 +129,26 @@ export const MissionContextProvider = ({ children }) => {
     })
     setStep(MissionStep.selectMissionName)
   }
+  const handleStartEdit = (activeTag) => {
+    setShowControl(true)
+    setMarkerPosition(activeTag.position)
+    setStreetViewPosition(activeTag.position)
+    setStep(MissionStep.selectMissionName)
+    setIsInEdit(true)
+  }
 
   const handleCloseMission = () => {
     clearMissionData()
     setMissionType(null)
     setStep(MissionStep.Init)
   }
+  const handleCloseEdit = () => {
+    clearMissionData()
+    setMissionType(null)
+    setStep(MissionStep.Init)
+    setIsInEdit(false)
+  }
+
   const { refetch, updateTagList } = useTagValue()
 
   const handleCompleteMission = () => {
@@ -443,7 +457,10 @@ export const MissionContextProvider = ({ children }) => {
     streetViewUpload,
     povChanged,
     previewImages,
-    setPreviewImages
+    setPreviewImages,
+    isInEdit,
+    handleStartEdit,
+    handleCloseEdit
   }
   return (
     <MissionContext.Provider value={contextValues}>
