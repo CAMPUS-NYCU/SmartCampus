@@ -45,7 +45,12 @@ const useStyles = makeStyles({
 })
 
 function MissionDrawer(props) {
-  const { isInMission, handleCloseMission, handleBack } = useMissionValue()
+  const {
+    isInMission,
+    handleCloseMission,
+    handleBack,
+    isInEdit
+  } = useMissionValue()
   const classes = useStyles()
 
   const { currentStep, missionType } = useMissionValue()
@@ -73,7 +78,7 @@ function MissionDrawer(props) {
             )}
           >
             <Toolbar disableTypography>
-              {currentStep === MissionStep.selectMissionName ? (
+              {!isInEdit && currentStep === MissionStep.selectMissionName ? (
                 <IconButton
                   style={{ position: 'absolute', right: '10px' }}
                   edge='start'
@@ -86,7 +91,7 @@ function MissionDrawer(props) {
                 <IconButton
                   edge='start'
                   aria-label='close'
-                  onClick={handleBack}
+                  onClick={isInEdit ? handleCloseMission : handleBack}
                 >
                   <KeyboardReturnIcon />
                 </IconButton>

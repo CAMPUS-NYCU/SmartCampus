@@ -144,6 +144,7 @@ export const MissionContextProvider = ({ children }) => {
     setSelectedSubOptionId(activeTag.category.targetName)
     setStep(MissionStep.selectMissionName)
     setMoreDescriptionText(tagDetail.description)
+    setTextLocation(activeTag.locationName)
     setIsInEdit(true)
   }
 
