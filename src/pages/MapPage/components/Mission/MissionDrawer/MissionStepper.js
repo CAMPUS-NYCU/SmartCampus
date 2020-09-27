@@ -53,7 +53,8 @@ function MissionStepper(props) {
     handleCompleteMission,
     handleCloseStreetView,
     ableToNextStep,
-    handleCompleteStreetView
+    handleCompleteStreetView,
+    isInEdit
   } = useMissionValue()
   const { PlaceFlagOnStreet } = MissionStep
   const [finishOpen, setFinishOpen] = useState(false)
@@ -116,7 +117,9 @@ function MissionStepper(props) {
                 onClick={handleNext}
                 className={classes.button}
               >
-                下一步
+                {isInEdit && currentStep === MissionStep.PlaceFlagOnMap
+                  ? ' 確定'
+                  : '下一步'}
               </Button>
             )
           }

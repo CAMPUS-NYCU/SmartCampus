@@ -10,6 +10,7 @@ import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../constants/mapConstants'
+import { escapeLeadingUnderscores } from 'typescript'
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {
@@ -122,6 +123,8 @@ export const MissionContextProvider = ({ children }) => {
   const handleBack = () => {
     if (isInEdit && currentStep === MissionStep.SelectMission) {
       handleBackStep(2)
+    } else if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
+      handleBackStep(-1)
     } else {
       handleBackStep(1)
     }
