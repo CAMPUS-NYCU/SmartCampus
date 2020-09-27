@@ -101,7 +101,11 @@ function MissionDrawer(props) {
                 </IconButton>
               )}
               <Typography variant='h6'>
-                {currentStep === MissionStep.selectMissionName
+                {isInEdit && currentStep === MissionStep.PlaceFlagOnMap
+                  ? '更改座標位置'
+                  : isInEdit
+                  ? '編輯回報紀錄'
+                  : currentStep === MissionStep.selectMissionName
                   ? `選擇要標注的任務`
                   : `標註${missionInfo[missionType].missionName}`}
               </Typography>

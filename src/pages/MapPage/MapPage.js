@@ -48,19 +48,15 @@ const MapPageContent = () => {
       <Map mapCenter={mapCenter} />
       <Fade in={showControl}>
         <div>
-          {isInMission ? (
-            <MissionBar />
-          ) : (
-            <SearchBar
-              menuControls={{
-                handleOpenProfile: profileDialogControl.setOpen,
-                handleOpenHistory: ReportHistoryControl.setOpen,
-                handleOpenSetting: profileDialogControl.setOpen,
-                handleOpenHowToUse: howToUseDialogControl.setOpen,
-                handleOpenTerms: profileDialogControl.setOpen
-              }}
-            />
-          )}
+          <SearchBar
+            menuControls={{
+              handleOpenProfile: profileDialogControl.setOpen,
+              handleOpenHistory: ReportHistoryControl.setOpen,
+              handleOpenSetting: profileDialogControl.setOpen,
+              handleOpenHowToUse: howToUseDialogControl.setOpen,
+              handleOpenTerms: profileDialogControl.setOpen
+            }}
+          />
           <MissionFab />
           <FilterFab />
           <LocationFab setMapCenter={setMapCenter} />
