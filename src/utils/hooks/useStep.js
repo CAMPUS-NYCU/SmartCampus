@@ -2,15 +2,15 @@ import { useState } from 'react'
 
 const useStep = ({ initialStep = 0, maxStep = null, minStep = 0 } = {}) => {
   const [step, setStep] = useState(initialStep)
-  const handleNext = () =>
+  const handleNext = (stepNum) =>
     setStep((prevStep) => {
       if (maxStep && prevStep >= maxStep) return prevStep
-      return prevStep + 1
+      return prevStep + stepNum
     })
-  const handleBack = () =>
+  const handleBack = (stepNum) =>
     setStep((prevStep) => {
       if (minStep && prevStep <= minStep) return prevStep
-      return prevStep - 1
+      return prevStep - stepNum
     })
   return {
     step,

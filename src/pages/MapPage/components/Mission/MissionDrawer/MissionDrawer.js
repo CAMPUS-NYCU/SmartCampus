@@ -91,7 +91,11 @@ function MissionDrawer(props) {
                 <IconButton
                   edge='start'
                   aria-label='close'
-                  onClick={isInEdit ? handleCloseMission : handleBack}
+                  onClick={
+                    isInEdit && currentStep === MissionStep.selectMissionName
+                      ? handleCloseMission
+                      : handleBack
+                  }
                 >
                   <KeyboardReturnIcon />
                 </IconButton>

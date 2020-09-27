@@ -106,6 +106,7 @@ function TagDetailDialog(props) {
                 <Button
                   className={classes.editButton}
                   size='small'
+                  disabled={!tagDetail}
                   onClick={() => handleStartEdit(activeTag)}
                 >
                   編輯

@@ -99,7 +99,7 @@ export const MissionContextProvider = ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
   const {
     step: currentStep,
-    handleBack,
+    handleBack: handleBackStep,
     handleNext: handleNextStep,
     setStep
   } = useStep({
@@ -112,8 +112,20 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleNext = () => {
     // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
-    handleNextStep()
+    if (isInEdit && currentStep === MissionStep.selectMissionName) {
+      handleNextStep(2)
+    } else {
+      handleNextStep(1)
+    }
   }
+  const handleBack = () => {
+    if (isInEdit && currentStep === MissionStep.SelectMission) {
+      handleBackStep(2)
+    } else {
+      handleBackStep(1)
+    }
+  }
+
   const [missionType, setMissionType] = useState(null)
 
   const handleStartMission = () => {
@@ -152,6 +164,7 @@ export const MissionContextProvider = ({ children }) => {
     clearMissionData()
     setMissionType(null)
     setStep(MissionStep.Init)
+    setIsInEdit(false)
   }
   const handleCloseEdit = () => {
     clearMissionData()
