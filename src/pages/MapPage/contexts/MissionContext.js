@@ -9,6 +9,7 @@ import * as firebase from 'firebase/app'
 import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
+import { DefaultCenter } from '../constants/mapConstants'
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {
@@ -127,7 +128,7 @@ export const MissionContextProvider = ({ children }) => {
   }
 
   const [missionType, setMissionType] = useState(null)
-
+  const [mapCenter, setMapCenter] = useState(DefaultCenter)
   const handleStartMission = () => {
     setShowControl(true)
     const center = mapInstance.getCenter()
@@ -144,8 +145,17 @@ export const MissionContextProvider = ({ children }) => {
   const handleStartEdit = (activeTag) => {
     console.log(activeTag)
     setShowControl(true)
-    setMarkerPosition(activeTag.position)
-    setStreetViewPosition(activeTag.position)
+    setMarkerPosition({
+      longitude: activeTag.position.lng,
+      latitude: activeTag.position.lat
+    })
+    setMapCenter(activeTag.position)
+    console.log(activeTag.position)
+    console.log(markerPosition)
+    setStreetViewPosition({
+      longitude: activeTag.position.lng,
+      latitude: activeTag.position.lat
+    })
     setMissionType(
       missionInfo.findIndex(
         (element) => element.missionName === activeTag.category.missionName
@@ -263,7 +273,7 @@ export const MissionContextProvider = ({ children }) => {
   // 是否顯示各控制元件，點地圖來toggle
   const [showControl, setShowControl] = useState(true)
   const handleToggleShowControl = () => {
-    if (isInMission) return // 正在標注中就不能調整
+    if (isInMission || isInEdit) return // 正在標注中就不能調整
     setShowControl(!showControl)
   }
 
@@ -484,7 +494,9 @@ export const MissionContextProvider = ({ children }) => {
     setPreviewImages,
     isInEdit,
     handleStartEdit,
-    handleCloseEdit
+    handleCloseEdit,
+    mapCenter,
+    setMapCenter
   }
   return (
     <MissionContext.Provider value={contextValues}>

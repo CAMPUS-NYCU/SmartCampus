@@ -35,8 +35,13 @@ const MapPageContent = () => {
   const howToUseDialogControl = useModal()
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
-  const [mapCenter, setMapCenter] = useState(DefaultCenter)
-  const { showControl, isInMission, loading } = useMissionValue()
+  const {
+    showControl,
+    isInMission,
+    loading,
+    mapCenter,
+    setMapCenter
+  } = useMissionValue()
   const { activeTag, resetActiveTag } = useTagValue()
   return (
     <div>
