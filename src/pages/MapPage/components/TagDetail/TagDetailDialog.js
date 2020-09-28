@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import Drawer from '@material-ui/core/Drawer'
+import { Button } from '@material-ui/core'
 import { Box, CircularProgress, Toolbar } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
@@ -17,6 +18,8 @@ import { missionInfo } from '../../constants/missionInfo'
 import { tagStatus } from '../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
+import { useMissionValue } from '../../contexts/MissionContext'
+import { useTagValue } from '../../contexts/TagContext'
 
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
@@ -39,12 +42,21 @@ const useStyles = makeStyles((theme) => ({
   },
   changeButton: {
     borderRadius: '40%'
+  },
+  editButton: {
+    background: '#D8D8D8',
+    border: '1px solid #BABABA',
+    boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.12)',
+    borderRadius: '20px',
+    position: 'absolute',
+    right: '15px'
   }
 }))
 
 function TagDetailDialog(props) {
   const { activeTag, onClose } = props
-  const detail = useTagDetail(activeTag.id)
+  const { handleStartMission, handleStartEdit, isInMission } = useMissionValue()
+  const { tagDetail } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const classes = useStyles()
@@ -63,8 +75,9 @@ function TagDetailDialog(props) {
     <>
       <Drawer
         anchor='bottom'
-        open={activeTag}
+        open={activeTag && !isInMission}
         onClose={onClose}
+        variant='persistent'
         PaperProps={{
           style: {
             borderRadius: '20px 20px 0 0',
@@ -90,6 +103,14 @@ function TagDetailDialog(props) {
                 <Typography variant='h5'>
                   {activeTag ? activeTag.category.targetName : '詳細資訊'}
                 </Typography>
+                <Button
+                  className={classes.editButton}
+                  size='small'
+                  disabled={!tagDetail}
+                  onClick={() => handleStartEdit(activeTag)}
+                >
+                  編輯
+                </Button>
               </Toolbar>
               <Box
                 display='flex'
@@ -131,7 +152,7 @@ function TagDetailDialog(props) {
                   </div>
                 </Box>
                 <DetailPart
-                  detail={detail}
+                  detail={tagDetail}
                   activeTag={activeTag}
                   classes={classes}
                   missionName={missionName}

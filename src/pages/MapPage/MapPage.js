@@ -35,27 +35,28 @@ const MapPageContent = () => {
   const howToUseDialogControl = useModal()
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
-  const [mapCenter, setMapCenter] = useState(DefaultCenter)
-  const { showControl, isInMission, loading } = useMissionValue()
+  const {
+    showControl,
+    isInMission,
+    loading,
+    mapCenter,
+    setMapCenter
+  } = useMissionValue()
   const { activeTag, resetActiveTag } = useTagValue()
   return (
     <div>
       <Map mapCenter={mapCenter} />
       <Fade in={showControl}>
         <div>
-          {isInMission ? (
-            <MissionBar />
-          ) : (
-            <SearchBar
-              menuControls={{
-                handleOpenProfile: profileDialogControl.setOpen,
-                handleOpenHistory: ReportHistoryControl.setOpen,
-                handleOpenSetting: profileDialogControl.setOpen,
-                handleOpenHowToUse: howToUseDialogControl.setOpen,
-                handleOpenTerms: profileDialogControl.setOpen
-              }}
-            />
-          )}
+          <SearchBar
+            menuControls={{
+              handleOpenProfile: profileDialogControl.setOpen,
+              handleOpenHistory: ReportHistoryControl.setOpen,
+              handleOpenSetting: profileDialogControl.setOpen,
+              handleOpenHowToUse: howToUseDialogControl.setOpen,
+              handleOpenTerms: profileDialogControl.setOpen
+            }}
+          />
           <MissionFab />
           <FilterFab />
           <LocationFab setMapCenter={setMapCenter} />

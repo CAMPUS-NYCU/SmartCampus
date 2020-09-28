@@ -61,15 +61,21 @@ export const generateTime = (time) => {
 }
 
 function useTagDetail(id) {
-  const { loading, data: { tag = {} } = {} } = useQuery(GET_TAG_DETAIL_QUERY, {
-    variables: { id }
-  })
-  if (!loading) {
-    const detail = {
-      ...tag,
-      newCreateTime: generateTime(tag.createTime),
-      newLastUpdateTime: generateTime(tag.lastUpdateTime)
+  const { loading, data: { tag = null } = {} } = useQuery(
+    GET_TAG_DETAIL_QUERY,
+    {
+      variables: { id }
     }
+  )
+  if (!loading) {
+    console.log(tag)
+    const detail = tag
+      ? {
+          ...tag,
+          newCreateTime: generateTime(tag.createTime),
+          newLastUpdateTime: generateTime(tag.lastUpdateTime)
+        }
+      : null
     return detail
   }
 

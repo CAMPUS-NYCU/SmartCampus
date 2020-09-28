@@ -9,7 +9,8 @@ import * as firebase from 'firebase/app'
 import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
-
+import { DefaultCenter } from '../constants/mapConstants'
+import { escapeLeadingUnderscores } from 'typescript'
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {
@@ -100,7 +101,7 @@ export const MissionContextProvider = ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
   const {
     step: currentStep,
-    handleBack,
+    handleBack: handleBackStep,
     handleNext: handleNextStep,
     setStep
   } = useStep({
@@ -109,13 +110,28 @@ export const MissionContextProvider = ({ children }) => {
     minStep: MISSION_MIN_STEP
   })
   const isInMission = currentStep >= MissionStep.selectMissionName
+  const [isInEdit, setIsInEdit] = useState(false)
 
   const handleNext = () => {
     // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
-    handleNextStep()
+    if (isInEdit && currentStep === MissionStep.selectMissionName) {
+      handleNextStep(2)
+    } else {
+      handleNextStep(1)
+    }
   }
-  const [missionType, setMissionType] = useState(null)
+  const handleBack = () => {
+    if (isInEdit && currentStep === MissionStep.SelectMission) {
+      handleBackStep(2)
+    } else if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
+      handleBackStep(-1)
+    } else {
+      handleBackStep(1)
+    }
+  }
 
+  const [missionType, setMissionType] = useState(null)
+  const [mapCenter, setMapCenter] = useState(DefaultCenter)
   const handleStartMission = () => {
     setShowControl(true)
     const center = mapInstance.getCenter()
@@ -129,13 +145,48 @@ export const MissionContextProvider = ({ children }) => {
     })
     setStep(MissionStep.selectMissionName)
   }
+  const handleStartEdit = (activeTag) => {
+    console.log(activeTag)
+    setShowControl(true)
+    setMarkerPosition({
+      longitude: activeTag.position.lng,
+      latitude: activeTag.position.lat
+    })
+    setMapCenter(activeTag.position)
+    console.log(activeTag.position)
+    console.log(markerPosition)
+    setStreetViewPosition({
+      longitude: activeTag.position.lng,
+      latitude: activeTag.position.lat
+    })
+    setMissionType(
+      missionInfo.findIndex(
+        (element) => element.missionName === activeTag.category.missionName
+      )
+    )
+    console.log(missionType)
+    setSelectedMissionId(activeTag.category.subTypeName)
+    setSelectedSubOptionId(activeTag.category.targetName)
+    setStep(MissionStep.selectMissionName)
+    setMoreDescriptionText(tagDetail.description)
+    setTextLocation(activeTag.locationName)
+    setIsInEdit(true)
+  }
 
   const handleCloseMission = () => {
     clearMissionData()
     setMissionType(null)
     setStep(MissionStep.Init)
+    setIsInEdit(false)
   }
-  const { refetch, updateTagList } = useTagValue()
+  const handleCloseEdit = () => {
+    clearMissionData()
+    setMissionType(null)
+    setStep(MissionStep.Init)
+    setIsInEdit(false)
+  }
+
+  const { refetch, updateTagList, tagDetail } = useTagValue()
 
   const handleCompleteMission = () => {
     setLoading(true)
@@ -225,7 +276,7 @@ export const MissionContextProvider = ({ children }) => {
   // 是否顯示各控制元件，點地圖來toggle
   const [showControl, setShowControl] = useState(true)
   const handleToggleShowControl = () => {
-    if (isInMission) return // 正在標注中就不能調整
+    if (isInMission || isInEdit) return // 正在標注中就不能調整
     setShowControl(!showControl)
   }
 
@@ -443,7 +494,12 @@ export const MissionContextProvider = ({ children }) => {
     streetViewUpload,
     povChanged,
     previewImages,
-    setPreviewImages
+    setPreviewImages,
+    isInEdit,
+    handleStartEdit,
+    handleCloseEdit,
+    mapCenter,
+    setMapCenter
   }
   return (
     <MissionContext.Provider value={contextValues}>

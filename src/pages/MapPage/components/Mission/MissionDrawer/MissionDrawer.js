@@ -45,7 +45,12 @@ const useStyles = makeStyles({
 })
 
 function MissionDrawer(props) {
-  const { isInMission, handleCloseMission, handleBack } = useMissionValue()
+  const {
+    isInMission,
+    handleCloseMission,
+    handleBack,
+    isInEdit
+  } = useMissionValue()
   const classes = useStyles()
 
   const { currentStep, missionType } = useMissionValue()
@@ -54,13 +59,14 @@ function MissionDrawer(props) {
       {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (
         <Drawer
           anchor='bottom'
-          variant='persistent'
           open={isInMission}
           onClose={handleCloseMission}
+          variant='persistent'
           PaperProps={{
             style: {
               borderRadius: '20px 20px 0 0',
-              backgroundColor: '#FAFAFA'
+              backgroundColor: '#FAFAFA',
+              zIndex: '20'
             }
           }}
           {...props}
@@ -72,7 +78,7 @@ function MissionDrawer(props) {
             )}
           >
             <Toolbar disableTypography>
-              {currentStep === MissionStep.selectMissionName ? (
+              {!isInEdit && currentStep === MissionStep.selectMissionName ? (
                 <IconButton
                   style={{ position: 'absolute', right: '10px' }}
                   edge='start'
@@ -85,13 +91,21 @@ function MissionDrawer(props) {
                 <IconButton
                   edge='start'
                   aria-label='close'
-                  onClick={handleBack}
+                  onClick={
+                    isInEdit && currentStep === MissionStep.selectMissionName
+                      ? handleCloseMission
+                      : handleBack
+                  }
                 >
                   <KeyboardReturnIcon />
                 </IconButton>
               )}
               <Typography variant='h6'>
-                {currentStep === MissionStep.selectMissionName
+                {isInEdit && currentStep === MissionStep.PlaceFlagOnMap
+                  ? '更改座標位置'
+                  : isInEdit
+                  ? '編輯回報紀錄'
+                  : currentStep === MissionStep.selectMissionName
                   ? `選擇要標注的任務`
                   : `標註${missionInfo[missionType].missionName}`}
               </Typography>

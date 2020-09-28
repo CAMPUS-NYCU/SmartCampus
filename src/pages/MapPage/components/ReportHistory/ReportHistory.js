@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTagValue } from '../../contexts/TagContext'
+import { useMissionValue } from '../../contexts/MissionContext'
 import Mission1 from '../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../assets/images/mission3.svg'
@@ -34,13 +35,14 @@ const ReportHistory = (props) => {
   const {
     control: { open, setClose }
   } = props
-  const { tags, setActiveTagId } = useTagValue()
+  const { tags, setActiveTagId, activeTag } = useTagValue()
+  const { isInMission } = useMissionValue()
   const missionImages = [Mission1, Mission2, Mission3]
   const classes = useStyle()
   return (
     <Drawer
       anchor='bottom'
-      open={open}
+      open={open && !isInMission && !activeTag}
       onClose={setClose}
       PaperProps={{
         style: {
