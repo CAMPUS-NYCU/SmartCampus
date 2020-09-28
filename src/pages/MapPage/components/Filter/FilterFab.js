@@ -1,19 +1,8 @@
 import React, { useState } from 'react'
 
-import Fab from '@material-ui/core/Fab'
 import { makeStyles } from '@material-ui/core/styles'
-import MapIcon from '@material-ui/icons/Map'
-import IconButton from '@material-ui/core/IconButton'
-import AccessibleIcon from '@material-ui/icons/Accessible'
 import Box from '@material-ui/core/Box'
-import { Grid, Button, Drawer } from '@material-ui/core'
-import Popover from '@material-ui/core/Popover'
-import {
-  usePopupState,
-  bindToggle,
-  bindPopover
-} from 'material-ui-popup-state/hooks'
-
+import { Button } from '@material-ui/core'
 import { useTagValue } from '../../contexts/TagContext'
 import FilterDrawer from './FilterDrawer'
 
@@ -61,10 +50,6 @@ function FilterFab() {
   const closeDrawer = () => {
     setFilterDrawer(false)
   }
-  const popupState = usePopupState({
-    variant: 'popover',
-    popupId: 'filterPopover'
-  })
   const { filterTags, addFilterTags } = useTagValue()
   const filterInfo = ['無障礙設施', '路障', '排隊情況']
   return (

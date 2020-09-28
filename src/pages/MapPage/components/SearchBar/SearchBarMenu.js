@@ -7,27 +7,9 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import PersonIcon from '@material-ui/icons/Person'
-import HistoryIcon from '@material-ui/icons/History'
 import DescriptionIcon from '@material-ui/icons/Description'
-import SettingsIcon from '@material-ui/icons/Settings'
 import HelpIcon from '@material-ui/icons/Help'
-import AssignmentIcon from '@material-ui/icons/Assignment'
 import { makeStyles } from '@material-ui/core/styles'
-
-SearchBarMenu.propTypes = {
-  control: PropTypes.shape({
-    open: PropTypes.bool.isRequired,
-    anchorEl: PropTypes.element,
-    setClose: PropTypes.func.isRequired
-  }).isRequired,
-  menuControls: PropTypes.shape({
-    handleOpenProfile: PropTypes.func.isRequired,
-    handleOpenHistory: PropTypes.func.isRequired,
-    handleOpenSetting: PropTypes.func.isRequired,
-    handleOpenHowToUse: PropTypes.func.isRequired,
-    handleOpenTerms: PropTypes.func.isRequired
-  }).isRequired
-}
 
 const useStyles = makeStyles((theme) => ({
   listIcon: {
@@ -39,13 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function SearchBarMenu(props) {
   const {
     control: { open, anchorEl, setClose },
-    menuControls: {
-      handleOpenProfile,
-      handleOpenHistory,
-      handleOpenSetting,
-      handleOpenHowToUse,
-      handleOpenTerms
-    }
+    menuControls: { handleOpenProfile, handleOpenHistory, handleOpenHowToUse }
   } = props
   const classes = useStyles()
 
@@ -117,6 +93,21 @@ function SearchBarMenu(props) {
       </List>
     </Popover>
   )
+}
+
+SearchBarMenu.propTypes = {
+  control: PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    anchorEl: PropTypes.element,
+    setClose: PropTypes.func.isRequired
+  }).isRequired,
+  menuControls: PropTypes.shape({
+    handleOpenProfile: PropTypes.func.isRequired,
+    handleOpenHistory: PropTypes.func.isRequired,
+    handleOpenSetting: PropTypes.func.isRequired,
+    handleOpenHowToUse: PropTypes.func.isRequired,
+    handleOpenTerms: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default SearchBarMenu

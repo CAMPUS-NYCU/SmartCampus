@@ -10,7 +10,6 @@ import useStep from '../../../utils/hooks/useStep'
 import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../constants/mapConstants'
-import { escapeLeadingUnderscores } from 'typescript'
 
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: AddNewTagDataInput!) {

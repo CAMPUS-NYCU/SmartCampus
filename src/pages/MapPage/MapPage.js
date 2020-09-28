@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 
@@ -13,13 +13,11 @@ import {
   MissionContextProvider,
   useMissionValue
 } from './contexts/MissionContext'
-import MissionBar from './components/Mission/MissionBar'
 import ReportHistory from './components/ReportHistory'
 import { TagContextProvider, useTagValue } from './contexts/TagContext'
 import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
-import { DefaultCenter } from './constants/mapConstants'
 
 export default function MapPage() {
   return (
@@ -35,13 +33,7 @@ const MapPageContent = () => {
   const howToUseDialogControl = useModal()
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
-  const {
-    showControl,
-    isInMission,
-    loading,
-    mapCenter,
-    setMapCenter
-  } = useMissionValue()
+  const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
   const { activeTag, resetActiveTag } = useTagValue()
   return (
     <div>

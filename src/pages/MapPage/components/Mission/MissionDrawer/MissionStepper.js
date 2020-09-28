@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import DoneIcon from '@material-ui/icons/Done'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { makeStyles } from '@material-ui/core/styles'
 import { Dialog, DialogTitle } from '@material-ui/core'
 import {
   MISSION_MAX_STEP,
-  MISSION_MIN_STEP,
   useMissionValue,
   MissionStep
 } from '../../../contexts/MissionContext'
@@ -48,7 +46,6 @@ function MissionStepper(props) {
   const classes = useStyles()
   const {
     currentStep,
-    handleBack,
     handleNext,
     handleCompleteMission,
     handleCloseStreetView,

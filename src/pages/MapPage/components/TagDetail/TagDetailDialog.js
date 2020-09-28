@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close'
 import Drawer from '@material-ui/core/Drawer'
-import { Button } from '@material-ui/core'
-import { Box, CircularProgress, Toolbar } from '@material-ui/core'
+import { Button, Box, CircularProgress, Toolbar } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
-import useTagDetail from '../../hooks/useTagDetail'
 import Mission2 from '../../../../assets/images/mission2circle.svg'
 import Mission1 from '../../../../assets/images/mission1circle.svg'
 import Mission3 from '../../../../assets/images/mission3circle.svg'
@@ -55,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TagDetailDialog(props) {
   const { activeTag, onClose } = props
-  const { handleStartMission, handleStartEdit, isInMission } = useMissionValue()
+  const {  handleStartEdit, isInMission } = useMissionValue()
   const { tagDetail } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)

@@ -14,21 +14,16 @@ import BusinessIcon from '@material-ui/icons/Business'
 import ApartmentIcon from '@material-ui/icons/Apartment'
 import DescriptionIcon from '@material-ui/icons/Description'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
-import StreetviewIcon from '@material-ui/icons/Streetview'
 import {
   useMissionValue,
   MissionStep
 } from '../../../../contexts/MissionContext'
-import { useTagValue } from '../../../../contexts/TagContext'
 import ImageUpload from '../../ImageUpload'
 import { facilitySubType } from '../../../../constants/missionInfo'
 import PicturePreview from './PicturePreview'
 
 function MissionStep3() {
   const {
-    missionType,
-    selectedCategoryId,
-    handleSetSelectedCategoryId,
     selectedMissionId,
     handleSetSelectedMissionId,
     selectedSubOptionId,
@@ -38,14 +33,9 @@ function MissionStep3() {
     handleSetStep,
     textLocation,
     handleChangeTextLocation,
-    setStep,
-    streetViewUpload,
-    imageFiles,
-    setImageFiles,
     previewImages,
     setPreviewImages
   } = useMissionValue()
-  const { missionList, categoryList } = useTagValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const focusInput = useRef(null)
   const { target = [] } =

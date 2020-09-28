@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useTagList from '../hooks/useTagList'
 import useMissionList from '../hooks/useMissionList'
-import { tagStatus } from '../constants/tagData'
 import useTagDetail from '../hooks/useTagDetail'
 
 export const TagContext = React.createContext({

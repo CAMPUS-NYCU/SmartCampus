@@ -12,8 +12,7 @@ import {
   Box,
   makeStyles,
   Button,
-  CircularProgress,
-  Backdrop
+  CircularProgress
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTagValue } from '../../contexts/TagContext'
