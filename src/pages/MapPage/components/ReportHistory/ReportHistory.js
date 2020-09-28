@@ -52,7 +52,7 @@ const ReportHistory = (props) => {
         }
       }}
     >
-      <div style={{ height: '50vh' }}>
+      <div style={{ height: '50vh', overflow: 'scroll' }}>
         {tags.length !== 0 ? (
           <>
             <Toolbar
