@@ -62,12 +62,8 @@ function MissionStepper(props) {
           variant='dots'
           steps={0}
           position='bottom'
-          // activeStep={currentStep}
           activeStep={-1}
           className={classes.stepper}
-          // style={{
-          //   background: 'none'
-          // }}
           backButton={
             <Button
               size='medium'

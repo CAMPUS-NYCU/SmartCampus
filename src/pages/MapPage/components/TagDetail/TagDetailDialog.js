@@ -17,14 +17,6 @@ import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
 
-TagDetailDialog.propTypes = {
-  activeTag: PropTypes.object,
-  onClose: PropTypes.func.isRequired
-}
-TagDetailDialog.defaultProps = {
-  activeTag: null
-}
-
 const useStyles = makeStyles((theme) => ({
   closeButton: {
     position: 'absolute',
@@ -51,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TagDetailDialog(props) {
   const { activeTag, onClose } = props
-  const {  handleStartEdit, isInMission } = useMissionValue()
+  const { handleStartEdit, isInMission } = useMissionValue()
   const { tagDetail } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
@@ -180,6 +172,14 @@ function TagDetailDialog(props) {
       )}
     </>
   )
+}
+
+TagDetailDialog.propTypes = {
+  activeTag: PropTypes.object,
+  onClose: PropTypes.func.isRequired
+}
+TagDetailDialog.defaultProps = {
+  activeTag: null
 }
 
 export default TagDetailDialog
