@@ -223,8 +223,8 @@ export const MissionContextProvider = ({ children }) => {
                 povHeading: streetViewPOV.heading,
                 povPitch: streetViewPOV.pitch,
                 panoID: '',
-                latitude: streetViewPosition.latitude,
-                longitude: streetViewPosition.longitude
+                cameraLatitude: streetViewPosition.latitude,
+                cameraLongitude: streetViewPosition.longitude
               }
             }
           }
