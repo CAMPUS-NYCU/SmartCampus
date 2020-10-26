@@ -34,12 +34,13 @@ function MissionStep3() {
     textLocation,
     handleChangeTextLocation,
     previewImages,
-    setPreviewImages
+    setPreviewImages,
+    missionType
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const focusInput = useRef(null)
   const { target = [] } =
-    facilitySubType.find(
+    facilitySubType[missionType].find(
       (facility) => facility.subTypeName === selectedMissionId
     ) || {}
   return (
@@ -105,7 +106,7 @@ function MissionStep3() {
         <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
         <Typography>設施類型</Typography>
       </Grid>
-      {facilitySubType.map((facility) => (
+      {facilitySubType[missionType].map((facility) => (
         <Grid key={facility.subTypeName} item xs={4}>
           <Button
             variant='contained'

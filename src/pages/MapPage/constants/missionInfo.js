@@ -14,36 +14,82 @@ export const missionInfo = [
 ]
 
 export const facilitySubType = [
-  {
-    subTypeName: '無障礙設施',
-    target: [
-      {
-        targetName: '無障礙坡道'
-      },
-      {
-        targetName: '扶手'
-      },
-      {
-        targetName: '升降梯'
-      },
-      {
-        targetName: '樓梯'
-      },
-      {
-        targetName: '廁所'
-      },
-      {
-        targetName: '避難層坡道'
-      },
-      {
-        targetName: '其他'
-      }
-    ]
-  },
-  {
-    subTypeName: '交通站牌'
-  },
-  {
-    subTypeName: '無線網路'
-  }
+  [
+    {
+      subTypeName: '無障礙設施',
+      target: [
+        {
+          targetName: '無障礙坡道'
+        },
+        {
+          targetName: '無障礙電梯'
+        },
+        {
+          targetName: '扶手'
+        },
+        {
+          targetName: '升降梯'
+        },
+        {
+          targetName: '廁所'
+        },
+        {
+          targetName: '樓梯'
+        },
+        {
+          targetName: '避難層坡道'
+        },
+        {
+          targetName: '其他'
+        }
+      ]
+    },
+    {
+      subTypeName: 'Wi-Fi',
+      target: [
+        {
+          targetName: 'NCTU'
+        }
+      ]
+    }
+  ],
+  [
+    {
+      subTypeName: '道路不通',
+      target: [
+        {
+          targetName: '地面損毀'
+        },
+        {
+          targetName: '地面積水'
+        },
+        {
+          targetName: '垃圾堆積'
+        },
+        {
+          targetName: '樹木倒塌'
+        },
+        {
+          targetName: '工程施工'
+        }
+      ]
+    },
+    {
+      subTypeName: '道路/設施維修',
+      target: [
+        {
+          targetName: '路燈沒亮'
+        }
+      ]
+    },
+    {
+      subTypeName: '環境衛生',
+      target: [
+        {
+          targetName: '垃圾桶已滿'
+        }
+      ]
+    }
+  ],
+  []
 ]
