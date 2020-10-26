@@ -45,6 +45,7 @@ function Map(props) {
   const missionName = missionInfo.map((mission) => {
     return mission.missionName
   })
+
   return (
     <div
       style={{
@@ -63,7 +64,27 @@ function Map(props) {
             fullscreenControl: false,
             mapTypeControl: false,
             streetViewControl: false,
-            disableDefaultUI: true
+            disableDefaultUI: true,
+            styles: [
+              // {
+              //   featureType: 'all',
+              //   elementType: 'labels.text',
+              //   stylers: [
+              //     {
+              //       visibility: 'off'
+              //     }
+              //   ]
+              // },
+              {
+                featureType: 'poi',
+                elementType: 'labels.icon',
+                stylers: [
+                  {
+                    visibility: 'off'
+                  }
+                ]
+              }
+            ]
           }}
           mapContainerStyle={{
             height: '100%',
