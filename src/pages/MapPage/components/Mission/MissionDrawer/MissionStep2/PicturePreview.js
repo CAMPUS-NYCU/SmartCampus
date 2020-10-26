@@ -3,6 +3,7 @@ import { Box, IconButton } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { useMissionValue } from '../../../../contexts/MissionContext'
+import { array } from 'prop-types'
 
 const PicturePreview = (props) => {
   const { previewImages, setPreviewImages } = props
@@ -14,32 +15,34 @@ const PicturePreview = (props) => {
     selectFile.current.click()
   }
   const changeFiles = (event) => {
-    const images = new DataTransfer()
+    const images = []
     const preview = []
     for (let i = 0; i < imageFiles.length; i += 1) {
       if (i === selectedImage) {
-        images.items.add(event.target.files[0])
+        images.push(event.target.files[0])
         preview.push(URL.createObjectURL(event.target.files[0]))
       } else {
-        images.items.add(imageFiles[i])
+        images.push(imageFiles[i])
         preview.push(previewImages[i])
       }
     }
     setPreviewImages(preview)
-    setImageFiles(images.files)
+    setImageFiles(images)
   }
   const handleDeleteImage = (index) => {
-    const images = new DataTransfer()
+    const images = []
     const preview = []
     for (let i = 0; i < imageFiles.length; i += 1) {
       if (i !== index) {
-        images.items.add(imageFiles[i])
+        images.push(imageFiles[i])
         preview.push(previewImages[i])
       }
     }
     setPreviewImages(preview)
-    setImageFiles(images.files)
+    setImageFiles(images)
   }
+  console.log('type', typeof imageFiles)
+  console.log(imageFiles)
   return (
     <>
       <input
@@ -78,6 +81,7 @@ const PicturePreview = (props) => {
                   display='flex'
                   flexDirection='row'
                   justifyContent='space-around'
+                  alignItems='center'
                   style={{
                     position: 'absolute',
                     bottom: '0',
