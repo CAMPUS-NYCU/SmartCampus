@@ -46,84 +46,81 @@ const ReportHistory = (props) => {
       PaperProps={{
         style: {
           borderRadius: '20px 20px 0 0',
-          backgroundColor: '#FAFAFA',
-          zIndex: '2'
+          backgroundColor: '#FAFAFA'
         }
       }}
     >
-      <div style={{ height: '50vh', overflow: 'scroll' }}>
+      <div style={{ height: '50vh'}}>
+        <Toolbar
+          style={{
+            position: 'sticky',
+            top: '0',
+            zIndex: '100',
+            backgroundColor: '#FAFAFA'
+          }}
+        >
+          <Typography variant='h5'>回報紀錄</Typography>
+          <IconButton
+            onClick={setClose}
+            style={{ position: 'absolute', right: '10px' }}
+          >
+            <CloseIcon fontSize='large' />
+          </IconButton>
+        </Toolbar>
         {tags.length !== 0 ? (
           <>
-            <Toolbar
-              style={{
-                position: 'sticky',
-                top: '0',
-                zIndex: '100',
-                backgroundColor: '#FAFAFA'
-              }}
-            >
-              <Typography variant='h5'>回報紀錄</Typography>
-              <IconButton
-                onClick={setClose}
-                style={{ position: 'absolute', right: '10px' }}
-              >
-                <CloseIcon fontSize='large' />
-              </IconButton>
-            </Toolbar>
             {tags.map((item) => {
               return (
                 <>
-                  <List>
-                    <ListItem>
-                      <ListItemIcon>
-                        <img
-                          src={missionImages[0]}
-                          alt='mission'
-                          style={{ height: '35px', width: '35px' }}
-                        />
-                      </ListItemIcon>
-                      <Grid container direction='column' space={1}>
-                        <Grid
-                          item
-                          container
-                          space={2}
-                          direction='row'
-                          alignItems='center'
-                        >
-                          <Typography variant='h6'>
-                            {item.locationName}
-                          </Typography>
-                          <Typography variant='body2' color='textSecondary'>
-                            {item.statusHistory[0].createTime}
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          container
-                          space={2}
-                          direction='row'
-                          alignItems='center'
-                        >
-                          <Box className={classes.tag} mr={1} p={0.5}>
-                            {item.category.subTypeName}
-                          </Box>
-                          <Box className={classes.tag} mr={1} p={0.5}>
-                            {item.category.targetName}
-                          </Box>
-                        </Grid>
-                      </Grid>
-                      <Button
-                        color='primary'
-                        variant='contained'
-                        size='small'
-                        onClick={() => setActiveTagId(item.id)}
-                        style={{ borderRadius: '20px', color: 'black' }}
+                  <ListItem>
+                    <ListItemIcon>
+                      <img
+                        src={missionImages[0]}
+                        alt='mission'
+                        style={{ height: '35px', width: '35px' }}
+                      />
+                    </ListItemIcon>
+                    <Grid container direction='column' space={1}>
+                      <Grid
+                        item
+                        container
+                        space={2}
+                        direction='row'
+                        alignItems='center'
                       >
-                        檢視
-                      </Button>
-                    </ListItem>
-                  </List>
-                  <Divider variant='middle' />
+                        <Typography variant='h6'>
+                          {item.locationName}
+                        </Typography>
+                        <Typography variant='body2' color='textSecondary'>
+                          {item.statusHistory[0].createTime}
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        item
+                        container
+                        space={2}
+                        direction='row'
+                        alignItems='center'
+                      >
+                        <Box className={classes.tag} mr={1} p={0.5}>
+                          {item.category.subTypeName}
+                        </Box>
+                        <Box className={classes.tag} mr={1} p={0.5}>
+                          {item.category.targetName}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <Button
+                      color='primary'
+                      variant='contained'
+                      size='small'
+                      onClick={() => setActiveTagId(item.id)}
+                      style={{ borderRadius: '20px', color: 'black' }}
+                    >
+                      檢視
+                    </Button>
+                  </ListItem>
+                  {/* <Divider variant='middle' /> */}
                 </>
               )
             })}
