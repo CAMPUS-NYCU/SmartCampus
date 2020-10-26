@@ -77,7 +77,15 @@ function MissionDrawer(props) {
                 classes.drawerContentFull
             )}
           >
-            <Toolbar disableTypography>
+            <Toolbar
+              disableTypography
+              style={{
+                position: 'sticky',
+                top: '0',
+                background: '#FAFAFA',
+                zIndex: '100'
+              }}
+            >
               {!isInEdit && currentStep === MissionStep.selectMissionName ? (
                 <IconButton
                   style={{ position: 'absolute', right: '10px' }}
