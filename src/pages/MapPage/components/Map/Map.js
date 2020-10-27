@@ -35,7 +35,16 @@ function Map(props) {
     handleChangeStreetViewPOV,
     povChanged
   } = useMissionValue()
-  const { tags, setActiveTagId } = useTagValue()
+  const { tags, setActiveTagId, filterTags } = useTagValue()
+  const showTags =
+    filterTags.length === 0
+      ? tags
+      : tags.filter(
+          (tag) =>
+            filterTags.includes(tag.category.missionName) ||
+            filterTags.includes(tag.category.subTypeName) ||
+            filterTags.includes(tag.category.targetName)
+        )
   const {
     latitude: positionLat,
     longitude: positionLng,
@@ -105,7 +114,7 @@ function Map(props) {
             />
           )}
           {!isInMission &&
-            tags.map((tag) => (
+            showTags.map((tag) => (
               <Marker
                 key={tag.id}
                 position={tag.position}
