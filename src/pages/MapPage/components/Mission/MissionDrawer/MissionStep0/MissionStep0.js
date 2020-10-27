@@ -27,7 +27,11 @@ const MissionStep0 = () => {
   return (
     <List>
       {missionInfo.map((item, index) => (
-        <ListItem onClick={() => setMissionType(index)}>
+        <ListItem
+          onClick={() => setMissionType(index)}
+          button
+          disabled={index === 2}
+        >
           <ListItemIcon>
             <img
               src={missionImage[index]}
