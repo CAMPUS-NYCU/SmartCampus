@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Drawer,
   makeStyles,
@@ -10,7 +10,7 @@ import {
   Box
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import { facilitySubType } from '../../constants/missionInfo'
+import { facilitySubType, missionInfo } from '../../constants/missionInfo'
 import { useTagValue } from '../../contexts/TagContext'
 
 const useStyles = makeStyles({
@@ -34,6 +34,32 @@ const FilterDrawer = (props) => {
   const { target = [] } =
     facilitySubType.find((facility) => facility.subTypeName === '無障礙設施') ||
     {}
+  const [currentMission, setCurrentMission] = useState('')
+  const [currentSubmission, setCurrentSubmission] = useState([])
+  const changeCurrentMission = (mission) => {
+    if (currentMission !== mission) {
+      console.log(mission)
+      if (currentMission !== '') {
+        console.log(currentMission)
+        console.log(filterTags)
+        addFilterTags(currentMission)
+      }
+      setCurrentMission(mission)
+      currentSubmission.forEach((submission) => {
+        addFilterTags(submission)
+      })
+      addFilterTags(mission)
+      setCurrentSubmission([])
+    } else {
+      setCurrentMission('')
+      addFilterTags(mission)
+      currentSubmission.forEach((submission) => {
+        addFilterTags(submission)
+      })
+    }
+  }
+  console.log(currentMission)
+  console.log('filter', filterTags)
   return (
     <Drawer
       anchor='bottom'
@@ -69,25 +95,27 @@ const FilterDrawer = (props) => {
             <Grid container item xs={12} direction='row'>
               <Typography variant='h6'>標註類型</Typography>
             </Grid>
-            {facilitySubType.map((facility) => (
-              <Grid key={facility.subTypeName} item xs={4}>
+            {missionInfo.map((mission) => (
+              <Grid key={mission.missionName} item xs={4}>
                 <Button
                   variant='contained'
                   fullWidth
                   size='small'
                   color={
-                    filterTags.indexOf(facility.subTypeName) === -1
+                    filterTags.indexOf(mission.missionName) === -1
                       ? ''
                       : 'primary'
                   }
-                  onClick={() => addFilterTags(facility.subTypeName)}
+                  onClick={() => {
+                    changeCurrentMission(mission.missionName)
+                  }}
                 >
-                  {facility.subTypeName}
+                  {mission.missionName}
                 </Button>
               </Grid>
             ))}
             <Grid container item xs={12} direction='row'>
-              <Typography variant='h6'>具體設施</Typography>
+              <Typography variant='h6'>設施類型</Typography>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
@@ -112,6 +140,27 @@ const FilterDrawer = (props) => {
             </Grid>
             <Grid container item xs={12} direction='row'>
               <Typography variant='h6'>具體設施</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                {target.map((discovery) => (
+                  <Grid id={discovery.targetName} item xs={4}>
+                    <Button
+                      variant='contained'
+                      fullWidth
+                      size='small'
+                      color={
+                        filterTags.indexOf(discovery.targetName) === -1
+                          ? ''
+                          : 'primary'
+                      }
+                      onClick={() => addFilterTags(discovery.targetName)}
+                    >
+                      {discovery.targetName}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
         </Box>
