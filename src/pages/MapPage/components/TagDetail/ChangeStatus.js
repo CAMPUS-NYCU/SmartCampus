@@ -16,6 +16,7 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
+import * as firebase from 'firebase/app'
 import WaitIcon from '../../../../assets/images/wait.svg'
 import SolvedIcon from '../../../../assets/images/solved.svg'
 import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
@@ -39,18 +40,28 @@ function ChangeStatus(props) {
   const HandleDrawerComplete = () => {
     if (temporaryTagState === activeTag.status.statusName) return
     setLoading(true)
-    updateStatus({
-      variables: {
-        tagId: activeTag.id,
-        statusName: temporaryTagState
-      }
-    }).then(() => {
-      refetch().then((data) => {
-        updateTagList(data.data)
-        setLoading(false)
-        setStateDrawer(false)
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((token) => {
+        updateStatus({
+          context: {
+            headers: {
+              authorization: token ? `Bearer ${token}` : ''
+            }
+          },
+          variables: {
+            tagId: activeTag.id,
+            statusName: temporaryTagState
+          }
+        }).then(() => {
+          refetch().then((data) => {
+            updateTagList(data.data)
+            setLoading(false)
+            setStateDrawer(false)
+          })
+        })
       })
-    })
   }
   const images = [WaitIcon, SolvedIcon, SolvedIcon]
   return (
