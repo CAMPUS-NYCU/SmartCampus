@@ -19,17 +19,19 @@ import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 
-export default function MapPage() {
+export default function MapPage(props) {
+  const { signOut } = props
   return (
     <TagContextProvider>
       <MissionContextProvider>
-        <MapPageContent />
+        <MapPageContent signOut={signOut} />
       </MissionContextProvider>
     </TagContextProvider>
   )
 }
 
-const MapPageContent = () => {
+const MapPageContent = (props) => {
+  const { signOut } = props
   const howToUseDialogControl = useModal()
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
@@ -48,6 +50,7 @@ const MapPageContent = () => {
               handleOpenHowToUse: howToUseDialogControl.setOpen,
               handleOpenTerms: profileDialogControl.setOpen
             }}
+            signOut={signOut}
           />
           <MissionFab />
           <FilterFab />

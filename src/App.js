@@ -21,7 +21,6 @@ import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
 
-
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 const firebaseAppAuth = firebaseApp.auth()
@@ -78,7 +77,11 @@ function App(props) {
                 )}
               </Route>
               <Route path={MAP_PATH} exact>
-                <MapPage />
+                {user ? (
+                  <MapPage signOut={signOut} />
+                ) : (
+                  <Redirect to={LOGIN_PATH} />
+                )}
               </Route>
               <Route path={LOGIN_PATH} exact>
                 {user ? (

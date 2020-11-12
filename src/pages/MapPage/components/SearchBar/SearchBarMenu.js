@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import PersonIcon from '@material-ui/icons/Person'
 import DescriptionIcon from '@material-ui/icons/Description'
 import HelpIcon from '@material-ui/icons/Help'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
 function SearchBarMenu(props) {
   const {
     control: { open, anchorEl, setClose },
-    menuControls: { handleOpenProfile, handleOpenHistory, handleOpenHowToUse }
+    menuControls: { handleOpenProfile, handleOpenHistory, handleOpenHowToUse },
+    signOut
   } = props
   const classes = useStyles()
 
@@ -45,10 +47,16 @@ function SearchBarMenu(props) {
     //   icon: <SettingsIcon />
     // },
     {
-      id: 4,
+      id: 3,
       text: '功能介紹',
       action: handleOpenHowToUse,
       icon: <HelpIcon color='primary' />
+    },
+    {
+      id: 4,
+      text: '登出',
+      action: signOut,
+      icon: <ExitToAppIcon color='primary' />
     }
     // {
     //   id: 5,
