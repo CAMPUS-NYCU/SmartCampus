@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import useTagList from '../hooks/useTagList'
 import useMissionList from '../hooks/useMissionList'
 import useTagDetail from '../hooks/useTagDetail'
+import useUserTags from '../hooks/useUserTags'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -20,6 +21,7 @@ export const TagContext = React.createContext({
 export const TagContextProvider = ({ children }) => {
   const { tags, updateTagList, refetch } = useTagList()
   const { missionList } = useMissionList()
+  const { data } = useUserTags()
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = [
     {

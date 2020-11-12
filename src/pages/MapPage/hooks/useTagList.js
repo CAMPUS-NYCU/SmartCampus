@@ -74,8 +74,8 @@ function useTagList() {
   // Reformat tags
   const tagList = reformatTagList(data)
   const [tags, setTags] = useState(tagList)
-  const updateTagList = (data) => {
-    setTags(reformatTagList(data))
+  const updateTagList = (dataIn) => {
+    setTags(reformatTagList(dataIn))
   }
 
   return { tags, refetch, updateTagList }
