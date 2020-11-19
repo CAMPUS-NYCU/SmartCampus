@@ -69,6 +69,7 @@ function FilterFab() {
               classes={{ root: classes.filterButton }}
               color={filterTags.indexOf(item) === -1 ? '' : 'primary'}
               onClick={() => addFilterTags(item)}
+              disabled
             >
               {item}
             </Button>
@@ -78,6 +79,7 @@ function FilterFab() {
           variant='contained'
           size='small'
           onClick={() => setFilterDrawer(true)}
+          disabled
         >
           更多
         </Button>

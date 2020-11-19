@@ -8,7 +8,8 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-
+import { useSnackbar } from 'notistack'
+// import MuiAlert from '@material-ui/lab/Alert'
 import useMenu from '../../../../utils/hooks/useMenu'
 import SearchBarMenu from './SearchBarMenu'
 
@@ -39,17 +40,27 @@ const SearchBar = React.forwardRef((props, ref) => {
   const { menuControls, signOut, ...otherProps } = props
   const classes = useStyles()
   const menuControl = useMenu()
-
+  const { enqueueSnackbar } = useSnackbar()
   return (
     <div ref={ref} {...otherProps}>
       <Paper className={classes.root}>
-        <IconButton className={classes.iconButton} aria-label='search'>
+        <IconButton
+          className={classes.iconButton}
+          aria-label='search'
+          onClick={() => {
+            enqueueSnackbar('尚未開放', { variant: 'error' })
+          }}
+        >
           <SearchIcon />
         </IconButton>
         <InputBase
           className={classes.input}
           placeholder='Search'
           inputProps={{ 'aria-label': 'search' }}
+          disabled
+          onClick={() => {
+            enqueueSnackbar('尚未開放', { variant: 'error' })
+          }}
         />
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
