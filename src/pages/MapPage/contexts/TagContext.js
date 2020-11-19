@@ -14,7 +14,8 @@ export const TagContext = React.createContext({
   missionList: [],
   categoryList: [],
   updateTagList: () => {},
-  refetch: () => {}
+  refetch: () => {},
+  upVote: () => {}
 })
 
 export const TagContextProvider = ({ children }) => {

@@ -3,6 +3,7 @@ import { Box, Button, CircularProgress, IconButton } from '@material-ui/core'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
+import { useUpdateVote } from '../../Mutation/voteTag'
 
 const DetailPart = (props) => {
   const {
@@ -18,6 +19,8 @@ const DetailPart = (props) => {
   const handleHistoryClose = () => {
     setOpenHistory(false)
   }
+  const { upVote } = useUpdateVote()
+  console.log(useUpdateVote)
   return (
     <>
       {detail ? (
@@ -159,7 +162,8 @@ const DetailPart = (props) => {
               m={2}
             >
               <Box className={classes.clickableFont} m={0.5}>
-                86人贊同此問題待處理
+                {detail.numberOfUpVote ? detail.numberOfUpVote : '0'}
+                人贊同此問題待處理
               </Box>
               <IconButton
                 variant='contained'
@@ -169,6 +173,7 @@ const DetailPart = (props) => {
                   border: '1px solid #BABABA',
                   fontSize: '15px'
                 }}
+                onClick={() => upVote(detail.id, true)}
               >
                 +1
               </IconButton>
