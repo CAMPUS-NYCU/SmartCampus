@@ -15,7 +15,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
 
 export const generateTime = (time) => {
   const times = time.split(' ')
-  var month = 0
+  let month = 0
   switch (times[1]) {
     case 'Jan':
       month = 1
