@@ -5,8 +5,8 @@ import * as firebase from 'firebase/app'
 import { generateTime } from './useTagDetail'
 
 const GET_USER_TAGS_QUERY = gql`
-  query getUserTags {
-    userAddTagHistory {
+  query getUserTags($uid: ID!) {
+    userAddTagHistory(uid: $uid) {
       id
       locationName
       category {
@@ -30,10 +30,44 @@ const GET_USER_TAGS_QUERY = gql`
   }
 `
 
+const reformatTagList = (data) => {
+  const tagRenderList = data ? data.userAddTagHistory : []
+  const filteredTags = tagRenderList.filter((tag) => {
+    return tag.coordinates
+  })
+  const tagList = filteredTags.map((tag) => {
+    const {
+      id,
+      locationName,
+      accessibility,
+      category: { missionName, subTypeName, targetName },
+      coordinates: { latitude, longitude },
+      status: { statusName }
+    } = tag
+    const statusHistory = tag.statusHistory.map((history) => {
+      return {
+        statusName: history.statusName,
+        createTime: generateTime(history.createTime)
+      }
+    })
+    return {
+      id,
+      locationName,
+      accessibility,
+      category: { missionName, subTypeName, targetName },
+      position: {
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude)
+      },
+      status: { statusName },
+      statusHistory
+    }
+  })
+  return tagList
+}
+
 const useUserTags = () => {
-  const userID = firebase.auth().currentUser
-    ? firebase.auth().currentUser.uid
-    : ''
+  const uid = firebase.auth().currentUser ? firebase.auth().currentUser.uid : ''
   const [token, setToken] = useState('')
   if (firebase.auth().currentUser) {
     firebase
@@ -43,24 +77,25 @@ const useUserTags = () => {
         setToken(t)
       })
   }
-  console.log('uid', userID)
+  console.log('uid', uid)
   console.log('token', token)
-  const { data, error } = useQuery(GET_USER_TAGS_QUERY, {
-    context: {
-      headers: {
-        authorization: token ? `Bearer ${token}` : ''
-      }
-    },
+  const [userAddTags, setUserAddTags] = useState(null)
+  const { data } = useQuery(GET_USER_TAGS_QUERY, {
+    // context: {
+    //   headers: {
+    //     authorization: token ? `Bearer ${token}` : ''
+    //   }
+    // },
     variables: {
-      userID
+      uid
     },
     onCompleted: () => {
-      console.log('data')
+      console.log('data', data)
+      setUserAddTags(reformatTagList(data))
     }
   })
-  console.log('error', error)
-  console.log('data', data)
-  return { data }
+  console.log('list', userAddTags)
+  return { userAddTags }
 }
 
 export default useUserTags
