@@ -68,7 +68,7 @@ export default function LoginPage(props) {
                   variant='contained'
                   color='primary'
                   onClick={signInWithFacebook}
-                  disable
+                  disabled
                 >
                   Sign in with Facebook
                 </Button>
