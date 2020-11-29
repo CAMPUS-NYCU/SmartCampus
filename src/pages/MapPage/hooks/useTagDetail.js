@@ -9,6 +9,9 @@ export const GET_TAG_DETAIL_QUERY = gql`
       lastUpdateTime
       description
       imageUrl
+      createUser{
+        displayName
+      }
     }
   }
 `

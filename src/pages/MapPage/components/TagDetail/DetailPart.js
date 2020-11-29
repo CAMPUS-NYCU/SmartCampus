@@ -117,6 +117,7 @@ const DetailPart = (props) => {
                 狀態編輯紀錄
               </Box>
               <Box className={classes.clickableFont} m={0.5}>
+                {detail.createUser.displayName} 編輯於{' '}
                 {detail.newLastUpdateTime}
               </Box>
             </Box>
