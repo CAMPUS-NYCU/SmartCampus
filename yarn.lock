@@ -12976,6 +12976,13 @@ react-map-gl@^5.0.12:
     react-virtualized-auto-sizer "^1.0.2"
     viewport-mercator-project "^6.2.3 || ^7.0.1"
 
+react-mobile-picker-scroll@^0.2.14:
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/react-mobile-picker-scroll/-/react-mobile-picker-scroll-0.2.14.tgz#dbe82a4ea8417faac475680226de52dca119f864"
+  integrity sha1-2+gqTqhBf6rEdWgCJt5S3KEZ+GQ=
+  dependencies:
+    prop-types "^15.6.0"
+
 react-modal-image@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-modal-image/-/react-modal-image-2.5.0.tgz#c9f047ae2a1b8ca54c35dbdad3bbca846cf21632"
