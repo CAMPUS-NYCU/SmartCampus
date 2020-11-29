@@ -64,7 +64,7 @@ const EditHistory = (props) => {
                   flexDirection='column'
                   alignItems='flex-end'
                 >
-                  <Box className={classes.clickableFont}>xxx編輯</Box>
+                  <Box className={classes.clickableFont}>{history.createUser.displayName}編輯</Box>
                   <Box className={classes.clickableFont}>
                     {history.createTime}
                   </Box>

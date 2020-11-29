@@ -24,6 +24,9 @@ export const GET_TAG_LIST_QUERY = gql`
       statusHistory {
         statusName
         createTime
+        createUser{
+          displayName
+        }
       }
     }
   }
@@ -46,7 +49,8 @@ const reformatTagList = (data) => {
     const statusHistory = tag.statusHistory.map((history) => {
       return {
         statusName: history.statusName,
-        createTime: generateTime(history.createTime)
+        createTime: generateTime(history.createTime),
+        createUser: history.createUser
       }
     })
     return {
