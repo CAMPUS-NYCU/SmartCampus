@@ -75,7 +75,7 @@ const EditHistory = (props) => {
                   </Box>
                 </ListItemSecondaryAction>
               </ListItem>
-              <Box width='100%' m={2.5}>
+              <Box  m={2.5}>
                 {history.description}
               </Box>
               <Divider variant='middle' />
