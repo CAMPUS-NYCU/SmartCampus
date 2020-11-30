@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box'
 import wave1 from '../../assets/images/main-wave1.svg'
 import wave2 from '../../assets/images/main-wave2.svg'
 import googleIcon from '../../assets/images/google_icon.png'
+import title from '../../assets/images/title.svg'
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -37,13 +38,24 @@ export default function LoginPage(props) {
     <Box
       style={{ height: '100vh-150px', width: '100vw' }}
       display='flex'
-      justifyContent='center'
+      flexDirection='column'
+      alignItems='center'
     >
+      <div
+        style={{
+          backgroundImage: `url(${title})`,
+          width: '300px',
+          height: '40px',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          marginTop: '100px'
+        }}
+      />
       <Button
         style={{
           width: '220px',
           height: '50px',
-          marginTop: '75%',
+          marginTop: '40%',
           background: '#4385F4'
         }}
         onClick={signInWithGoogle}
@@ -70,7 +82,9 @@ export default function LoginPage(props) {
             }}
           />
         </Box>
-        <Typography variant='6h' style={{color:'white', marginLeft:'50px'}}>使用Google登入</Typography>
+        <Typography variant='6h' style={{ color: 'white', marginLeft: '50px' }}>
+          使用Google登入
+        </Typography>
       </Button>
       <div
         style={{
