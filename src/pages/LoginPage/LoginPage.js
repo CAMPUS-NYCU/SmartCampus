@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 
 import wave1 from '../../assets/images/main-wave1.svg'
 import wave2 from '../../assets/images/main-wave2.svg'
+import googleIcon from '../../assets/images/google_icon.png'
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -41,13 +41,36 @@ export default function LoginPage(props) {
     >
       <Button
         style={{
-          width: '100px',
-          height: '100px',
-          marginTop: '50%'
+          width: '220px',
+          height: '50px',
+          marginTop: '75%',
+          background: '#4385F4'
         }}
         onClick={signInWithGoogle}
       >
-        登入
+        <Box
+          style={{
+            width: '45px',
+            height: '45px',
+            background: 'white',
+            position: 'absolute',
+            left: '2.5px'
+          }}
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+        >
+          <div
+            style={{
+              backgroundImage: `url(${googleIcon})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              width: '60%',
+              height: '60%'
+            }}
+          />
+        </Box>
+        <Typography variant='6h' style={{color:'white', marginLeft:'50px'}}>使用Google登入</Typography>
       </Button>
       <div
         style={{
