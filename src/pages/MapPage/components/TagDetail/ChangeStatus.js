@@ -24,7 +24,14 @@ import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
 import { useTagValue } from '../../contexts/TagContext'
 
 function ChangeStatus(props) {
-  const { stateDrawer, activeTag, setStateDrawer, classes, status, detail } = props
+  const {
+    stateDrawer,
+    activeTag,
+    setStateDrawer,
+    classes,
+    status,
+    detail
+  } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
@@ -32,6 +39,10 @@ function ChangeStatus(props) {
   const [loading, setLoading] = useState(false)
   const resetTemporaryTagState = () => {
     setTemporaryTagState(activeTag.status.statusName)
+  }
+  const [newDescription, setNewDescription] = useState(detail.description)
+  const handleChangeDescription = (e) => {
+    setNewDescription(e.target.value)
   }
   const handleDrawerClose = () => {
     setStateDrawer(false)
@@ -53,7 +64,8 @@ function ChangeStatus(props) {
           },
           variables: {
             tagId: activeTag.id,
-            statusName: temporaryTagState
+            statusName: temporaryTagState,
+            description: newDescription
           }
         }).then(() => {
           refetch().then((data) => {
@@ -65,6 +77,7 @@ function ChangeStatus(props) {
       })
   }
   const images = [WaitIcon, SolvedIcon, SolvedIcon]
+  console.log(newDescription, detail)
   return (
     <>
       <Drawer
@@ -115,6 +128,8 @@ function ChangeStatus(props) {
                       rows={2}
                       variant='outlined'
                       placeholder={detail.description}
+                      onChange={handleChangeDescription}
+                      value={newDescription}
                       style={{
                         width: '90%',
                         marginLeft: '5%',
