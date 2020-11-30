@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -10,29 +9,8 @@ import wave2 from '../../assets/images/main-wave2.svg'
 import googleIcon from '../../assets/images/google_icon.png'
 import title from '../../assets/images/title.svg'
 
-const useStyles = makeStyles((theme) => ({
-  page: {
-    height: window.innerHeight,
-    width: '100vw',
-    // 白色透明 overlay
-    background: 'white',
-    // backgroundImage: `url(${mapBackgroundImage})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: 'rgba(255,255,255,0.5)',
-    padding: theme.spacing(4),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  card: {
-    minWidth: 275
-  }
-}))
-
 export default function LoginPage(props) {
-  const { signInWithGoogle, signInWithFacebook, signOut, user } = props
-  const classes = useStyles()
+  const { signInWithGoogle, guestLogin } = props
 
   return (
     <Box
@@ -85,6 +63,17 @@ export default function LoginPage(props) {
         <Typography variant='6h' style={{ color: 'white', marginLeft: '50px' }}>
           使用Google登入
         </Typography>
+      </Button>
+      <Button
+        style={{
+          marginTop: '30px',
+          color: '#BABABA',
+          borderBottom: 'solid 0.5px',
+          padding: '0'
+        }}
+        onClick={guestLogin}
+      >
+        以訪客身分進入
       </Button>
       <div
         style={{

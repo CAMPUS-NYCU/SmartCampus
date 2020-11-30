@@ -20,18 +20,18 @@ import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 
 export default function MapPage(props) {
-  const { signOut } = props
+  const { signOut, deny, guest } = props
   return (
     <TagContextProvider>
       <MissionContextProvider>
-        <MapPageContent signOut={signOut} />
+        <MapPageContent signOut={signOut} deny={deny} guest={guest}/>
       </MissionContextProvider>
     </TagContextProvider>
   )
 }
 
 const MapPageContent = (props) => {
-  const { signOut } = props
+  const { signOut, deny, guest } = props
   const howToUseDialogControl = useModal()
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
