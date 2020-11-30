@@ -6,14 +6,15 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 
-import mapBackgroundImage from '../../assets/images/map-bg-image.png'
+import wave1 from '../../assets/images/main-wave1.svg'
+import wave2 from '../../assets/images/main-wave2.svg'
 
 const useStyles = makeStyles((theme) => ({
   page: {
     height: window.innerHeight,
     width: '100vw',
     // 白色透明 overlay
-    background: `linear-gradient(0deg,rgba(255,255,255,0.7),rgba(255,255,255,0.7)),url(${mapBackgroundImage})`,
+    background: 'white',
     // backgroundImage: `url(${mapBackgroundImage})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -33,55 +34,44 @@ export default function LoginPage(props) {
   const classes = useStyles()
 
   return (
-    <div className={classes.page}>
-      <Card className={classes.card}>
-        <CardContent>
-          <Box m={2}>
-            {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
-          </Box>
-          {user ? (
-            <Box m={2}>
-              <Button
-                fullWidth
-                variant='contained'
-                color='primary'
-                onClick={signOut}
-              >
-                Sign Out
-              </Button>
-            </Box>
-          ) : (
-            <>
-              <Box m={2}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                  onClick={signInWithGoogle}
-                >
-                  Sign in with Google
-                </Button>
-              </Box>
-              <Box m={2}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                  onClick={signInWithFacebook}
-                  disabled
-                >
-                  Sign in with Facebook
-                </Button>
-              </Box>
-              <Box m={2}>
-                <Button fullWidth variant='contained' color='primary' disabled>
-                  Sign in with NCTU Portal
-                </Button>
-              </Box>
-            </>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+    <Box
+      style={{ height: '100vh-150px', width: '100vw' }}
+      display='flex'
+      justifyContent='center'
+    >
+      <Button
+        style={{
+          width: '100px',
+          height: '100px',
+          marginTop: '50%'
+        }}
+        onClick={signInWithGoogle}
+      >
+        登入
+      </Button>
+      <div
+        style={{
+          backgroundImage: `url(${wave1})`,
+          position: 'absolute',
+          bottom: '0',
+          height: '150px',
+          width: '100%',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      <div
+        style={{
+          backgroundImage: `url(${wave2})`,
+          position: 'absolute',
+          bottom: '0',
+          height: '150px',
+          width: '100%',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          zIndex: '-100'
+        }}
+      />
+    </Box>
   )
 }
