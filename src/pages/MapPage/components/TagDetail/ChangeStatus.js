@@ -41,8 +41,8 @@ function ChangeStatus(props) {
     setTemporaryTagState(activeTag.status.statusName)
   }
   const [newDescription, setNewDescription] = useState(detail.description)
-  const handleChangeDescription = (e) => {
-    setNewDescription(e.target.value)
+  const handleChangeDescription = (event) => {
+    setNewDescription(event.target.value)
   }
   const handleDrawerClose = () => {
     setStateDrawer(false)
@@ -52,6 +52,7 @@ function ChangeStatus(props) {
   const HandleDrawerComplete = () => {
     if (temporaryTagState === activeTag.status.statusName) return
     setLoading(true)
+    console.log(newDescription)
     firebase
       .auth()
       .currentUser.getIdToken()
@@ -129,7 +130,6 @@ function ChangeStatus(props) {
                       variant='outlined'
                       placeholder={detail.description}
                       onChange={handleChangeDescription}
-                      value={newDescription}
                       style={{
                         width: '90%',
                         marginLeft: '5%',
