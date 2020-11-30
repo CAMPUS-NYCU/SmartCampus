@@ -162,6 +162,7 @@ function TagDetailDialog(props) {
         setStateDrawer={setStateDrawer}
         classes={classes}
         status={tagStatus[tagMissionIndex]}
+        detail={tagDetail}
       />
       {largeImg && (
         <Lightbox

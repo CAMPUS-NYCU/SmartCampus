@@ -13,7 +13,8 @@ import {
   Typography,
   IconButton,
   Dialog,
-  CircularProgress
+  CircularProgress,
+  TextField
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import * as firebase from 'firebase/app'
@@ -23,7 +24,7 @@ import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
 import { useTagValue } from '../../contexts/TagContext'
 
 function ChangeStatus(props) {
-  const { stateDrawer, activeTag, setStateDrawer, classes, status } = props
+  const { stateDrawer, activeTag, setStateDrawer, classes, status, detail } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
@@ -107,6 +108,20 @@ function ChangeStatus(props) {
                     }}
                   />
                 </ListItem>
+                {temporaryTagState !== activeTag.status.statusName &&
+                  item.statusName === temporaryTagState && (
+                    <TextField
+                      multiline
+                      rows={2}
+                      variant='outlined'
+                      placeholder={detail.description}
+                      style={{
+                        width: '90%',
+                        marginLeft: '5%',
+                        marginBottom: '20px'
+                      }}
+                    />
+                  )}
                 {index !== status.length - 1 && <Divider variant='middle' />}
               </>
             ))}
