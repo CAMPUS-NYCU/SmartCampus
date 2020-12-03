@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Button, CircularProgress, IconButton } from '@material-ui/core'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
@@ -20,6 +20,19 @@ const DetailPart = (props) => {
     setOpenHistory(false)
   }
   const { upVote } = useUpdateVote()
+  const [numberOfVote, setNumberOfVote] = useState(0)
+  const [hasUpVote, setHasUpVote] = useState(false)
+  useEffect(() => {
+    setNumberOfVote(detail ? detail.status.numberOfUpVote : 0)
+    setHasUpVote(detail ? detail.status.hasUpVote : false)
+  }, [detail])
+  const handleUopVote = () => {
+    setNumberOfVote((prevNumberOfVote) =>
+      hasUpVote ? prevNumberOfVote - 1 : prevNumberOfVote + 1
+    )
+    upVote(detail.id, !hasUpVote)
+    setHasUpVote((prevHasUpVote) => !prevHasUpVote)
+  }
   return (
     <>
       {detail ? (
@@ -162,18 +175,18 @@ const DetailPart = (props) => {
               m={2}
             >
               <Box className={classes.clickableFont} m={0.5}>
-                {detail.status.numberOfUpVote ? detail.status.numberOfUpVote : '0'}
+                {numberOfVote}
                 人贊同此問題待處理
               </Box>
               <IconButton
                 variant='contained'
                 style={{
                   marginLeft: '8px',
-                  background: '#EEEEEE',
+                  background: hasUpVote ? '#FDCC4F' : '#EEEEEE',
                   border: '1px solid #BABABA',
                   fontSize: '15px'
                 }}
-                onClick={() => upVote(detail.id, true)}
+                onClick={handleUopVote}
               >
                 +1
               </IconButton>
