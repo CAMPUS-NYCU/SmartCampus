@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
@@ -15,6 +15,7 @@ import * as firebase from 'firebase/app'
 import EmailIcon from '@material-ui/icons/Email'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import { useTagValue } from '../../contexts/TagContext'
 
 ProfileDialog.propTypes = {
   control: PropTypes.shape({
@@ -41,6 +42,18 @@ function ProfileDialog(props) {
     control: { open, setClose }
   } = props
   const classes = useStyles()
+  const { userAddTags } = useTagValue()
+  const [likeNum, setLikeNum] = useState(0)
+  useEffect(() => {
+    if (userAddTags) {
+      userAddTags.forEach((t) => {
+        console.log(t)
+        if (t.status.numberOfUpVote) {
+          setLikeNum((prevLikeNum) => prevLikeNum + t.status.numberOfUpVote)
+        }
+      })
+    }
+  }, [userAddTags])
 
   return (
     <Dialog
@@ -102,11 +115,11 @@ function ProfileDialog(props) {
             </Grid>
             <Grid item container xs={12} alignItems='center'>
               <AssessmentIcon style={{ marginRight: '8px' }} />
-              回報次數：
+              回報次數：{userAddTags ? userAddTags.length : 0}
             </Grid>
             <Grid item container xs={12} alignItems='center'>
               <ThumbUpAltIcon style={{ marginRight: '8px' }} />
-              收到的讚：
+              收到的讚：{likeNum}
             </Grid>
           </Grid>
         </Box>

@@ -14,13 +14,9 @@ const GET_USER_TAGS_QUERY = gql`
         subTypeName
         targetName
       }
-      accessibility
-      coordinates {
-        latitude
-        longitude
-      }
       status {
         statusName
+        numberOfUpVote
       }
       statusHistory {
         statusName
@@ -32,17 +28,12 @@ const GET_USER_TAGS_QUERY = gql`
 
 const reformatTagList = (data) => {
   const tagRenderList = data ? data.userAddTagHistory : []
-  const filteredTags = tagRenderList.filter((tag) => {
-    return tag.coordinates
-  })
-  const tagList = filteredTags.map((tag) => {
+  const tagList = tagRenderList.map((tag) => {
     const {
       id,
       locationName,
-      accessibility,
       category: { missionName, subTypeName, targetName },
-      coordinates: { latitude, longitude },
-      status: { statusName }
+      status: { statusName, numberOfUpVote }
     } = tag
     const statusHistory = tag.statusHistory.map((history) => {
       return {
@@ -53,13 +44,8 @@ const reformatTagList = (data) => {
     return {
       id,
       locationName,
-      accessibility,
       category: { missionName, subTypeName, targetName },
-      position: {
-        lat: parseFloat(latitude),
-        lng: parseFloat(longitude)
-      },
-      status: { statusName },
+      status: { statusName, numberOfUpVote },
       statusHistory
     }
   })
@@ -70,11 +56,6 @@ const useUserTags = () => {
   const uid = firebase.auth().currentUser ? firebase.auth().currentUser.uid : ''
   const [userAddTags, setUserAddTags] = useState(null)
   const { data, refetch } = useQuery(GET_USER_TAGS_QUERY, {
-    // context: {
-    //   headers: {
-    //     authorization: token ? `Bearer ${token}` : ''
-    //   }
-    // },
     fetchPolicy: "no-cache",
     variables: {
       uid
