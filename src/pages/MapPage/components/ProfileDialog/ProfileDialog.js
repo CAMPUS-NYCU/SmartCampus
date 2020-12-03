@@ -68,7 +68,7 @@ function ProfileDialog(props) {
                   : ''
               }
             >
-              <IconButton style={{ position: 'absolute', bottom: '0' }}>
+              {/* <IconButton style={{ position: 'absolute', bottom: '0' }}>
                 <EditIcon style={{ color: 'C6C6C6' }} />
               </IconButton>
               <div
@@ -79,7 +79,7 @@ function ProfileDialog(props) {
                   position: 'absolute',
                   bottom: '0'
                 }}
-              />
+              /> */}
             </Avatar>
           </>
           <Box m={4} display='flex' alignItems='center'>
@@ -88,9 +88,9 @@ function ProfileDialog(props) {
                 ? firebase.auth().currentUser.displayName
                 : '匿名'}
             </Typography>
-            <IconButton edge='end'>
+            {/* <IconButton edge='end'>
               <EditIcon style={{ color: 'C6C6C6' }} />
-            </IconButton>
+            </IconButton> */}
           </Box>
 
           <Grid container spacing={2}>
