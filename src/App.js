@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 
 import WindowHeightProvider from 'components/WindowHeightProvider'
+import MainPage from 'components/MainPage'
 import firebaseConfig from './constants/firebaseConfig'
 import { INDEX_PATH, MAP_PATH, LOGIN_PATH } from './constants/pageUrls'
 import MapPage from './pages/MapPage'
@@ -43,6 +44,11 @@ function App(props) {
     notistackRef.current.closeSnackbar(key)
   }
   const [guest, setGuest] = useState(false)
+  const [timeOut, setTimeOut] = useState(true)
+  let a = setInterval(() => {
+    setTimeOut(false)
+    clearInterval(a)
+  }, 2000)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -67,41 +73,45 @@ function App(props) {
             </IconButton>
           )}
         >
-          <BrowserRouter>
-            <Switch>
-              <Route path={INDEX_PATH} exact>
-                {user || guest ? (
-                  <Redirect to={MAP_PATH} />
-                ) : (
-                  <Redirect to={LOGIN_PATH} />
-                )}
-              </Route>
-              <Route path={MAP_PATH} exact>
-                {user || guest ? (
-                  <MapPage
-                    signOut={signOut}
-                    deny={() => setGuest(false)}
-                    guest={guest}
-                  />
-                ) : (
-                  <Redirect to={LOGIN_PATH} />
-                )}
-              </Route>
-              <Route path={LOGIN_PATH} exact>
-                {user || guest ? (
-                  <Redirect to={MAP_PATH} />
-                ) : (
-                  <LoginPage
-                    signInWithGoogle={signInWithGoogle}
-                    signInWithFacebook={signInWithFacebook}
-                    signOut={signOut}
-                    user={user}
-                    guestLogin={() => setGuest(true)}
-                  />
-                )}
-              </Route>
-            </Switch>
-          </BrowserRouter>
+          {timeOut && !user ? (
+            <MainPage />
+          ) : (
+            <BrowserRouter>
+              <Switch>
+                <Route path={INDEX_PATH} exact>
+                  {user || guest ? (
+                    <Redirect to={MAP_PATH} />
+                  ) : (
+                    <Redirect to={LOGIN_PATH} />
+                  )}
+                </Route>
+                <Route path={MAP_PATH} exact>
+                  {user || guest ? (
+                    <MapPage
+                      signOut={signOut}
+                      deny={() => setGuest(false)}
+                      guest={guest}
+                    />
+                  ) : (
+                    <Redirect to={LOGIN_PATH} />
+                  )}
+                </Route>
+                <Route path={LOGIN_PATH} exact>
+                  {user || guest ? (
+                    <Redirect to={MAP_PATH} />
+                  ) : (
+                    <LoginPage
+                      signInWithGoogle={signInWithGoogle}
+                      signInWithFacebook={signInWithFacebook}
+                      signOut={signOut}
+                      user={user}
+                      guestLogin={() => setGuest(true)}
+                    />
+                  )}
+                </Route>
+              </Switch>
+            </BrowserRouter>
+          )}
         </SnackbarProvider>
       </ApolloProvider>
     </ThemeProvider>

@@ -99,8 +99,8 @@ function useTagDetail(id) {
       }
     }
   )
-  console.log(tagDetail)
   return {tagDetail, setTagDetail}
 }
 
 export default useTagDetail
+ 

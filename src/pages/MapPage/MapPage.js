@@ -18,6 +18,7 @@ import { TagContextProvider, useTagValue } from './contexts/TagContext'
 import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
+import MainPage from '../../components/MainPage'
 
 export default function MapPage(props) {
   const { signOut, deny, guest } = props
@@ -36,53 +37,59 @@ const MapPageContent = (props) => {
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
-  const { activeTag, resetActiveTag } = useTagValue()
+  const { activeTag, resetActiveTag, tags } = useTagValue()
+  console.log(tags)
   return (
-    <div>
-      <Map mapCenter={mapCenter} />
-      <Fade in={showControl}>
+    <>
+      {tags === [] || tags === null? (
+        <MainPage />
+      ) : (
         <div>
-          <SearchBar
-            menuControls={{
-              handleOpenProfile: profileDialogControl.setOpen,
-              handleOpenHistory: ReportHistoryControl.setOpen,
-              handleOpenSetting: profileDialogControl.setOpen,
-              handleOpenHowToUse: howToUseDialogControl.setOpen,
-              handleOpenTerms: profileDialogControl.setOpen
+          <Map mapCenter={mapCenter} />
+          <Fade in={showControl}>
+            <div>
+              <SearchBar
+                menuControls={{
+                  handleOpenProfile: profileDialogControl.setOpen,
+                  handleOpenHistory: ReportHistoryControl.setOpen,
+                  handleOpenSetting: profileDialogControl.setOpen,
+                  handleOpenHowToUse: howToUseDialogControl.setOpen,
+                  handleOpenTerms: profileDialogControl.setOpen
+                }}
+                signOut={guest ? deny : signOut}
+              />
+              <MissionFab deny={deny} guest={guest} />
+              <FilterFab />
+              <LocationFab setMapCenter={setMapCenter} />
+            </div>
+          </Fade>
+          <MissionDrawer />
+          <ReportHistory control={ReportHistoryControl} />
+          <ProfileDialog control={profileDialogControl} />
+          <HowToUseDialog control={howToUseDialogControl} />
+          {activeTag && (
+            <TagDetailDialog
+              activeTag={activeTag}
+              onClose={resetActiveTag}
+              deny={deny}
+              guest={guest}
+            />
+          )}
+          <Dialog
+            open={loading}
+            PaperProps={{
+              style: {
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
+                width: '50px',
+                height: '50px'
+              }
             }}
-            signOut={guest ? deny : signOut}
-          />
-          <MissionFab deny={deny} guest={guest} />
-          <FilterFab />
-          <LocationFab setMapCenter={setMapCenter} />
+          >
+            <CircularProgress />
+          </Dialog>
         </div>
-      </Fade>
-
-      <MissionDrawer />
-      <ReportHistory control={ReportHistoryControl} />
-      <ProfileDialog control={profileDialogControl} />
-      <HowToUseDialog control={howToUseDialogControl} />
-      {activeTag && (
-        <TagDetailDialog
-          activeTag={activeTag}
-          onClose={resetActiveTag}
-          deny={deny}
-          guest={guest}
-        />
       )}
-      <Dialog
-        open={loading}
-        PaperProps={{
-          style: {
-            backgroundColor: 'transparent',
-            boxShadow: 'none',
-            width: '50px',
-            height: '50px'
-          }
-        }}
-      >
-        <CircularProgress />
-      </Dialog>
-    </div>
+    </>
   )
 }
