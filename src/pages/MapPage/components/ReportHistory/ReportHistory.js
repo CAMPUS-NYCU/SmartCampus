@@ -34,7 +34,7 @@ const ReportHistory = (props) => {
   const {
     control: { open, setClose }
   } = props
-  const { tags, setActiveTagId, activeTag } = useTagValue()
+  const { setActiveTagId, activeTag, userAddTags } = useTagValue()
   const { isInMission } = useMissionValue()
   const missionImages = [Mission1, Mission2, Mission3]
   const classes = useStyle()
@@ -67,9 +67,9 @@ const ReportHistory = (props) => {
           <CloseIcon fontSize='large' />
         </IconButton>
       </Toolbar>
-      {tags.length !== 0 ? (
+      {userAddTags ? (
         <List component='nav'>
-          {tags.map((item) => {
+          {userAddTags.map((item) => {
             return (
               <>
                 <ListItem>

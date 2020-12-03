@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 
@@ -42,7 +42,7 @@ function App(props) {
   const onClickDismiss = (key) => () => {
     notistackRef.current.closeSnackbar(key)
   }
-
+  const [guest, setGuest] = useState(false)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -70,21 +70,25 @@ function App(props) {
           <BrowserRouter>
             <Switch>
               <Route path={INDEX_PATH} exact>
-                {user ? (
+                {user || guest ? (
                   <Redirect to={MAP_PATH} />
                 ) : (
                   <Redirect to={LOGIN_PATH} />
                 )}
               </Route>
               <Route path={MAP_PATH} exact>
-                {user ? (
-                  <MapPage signOut={signOut} />
+                {user || guest ? (
+                  <MapPage
+                    signOut={signOut}
+                    deny={() => setGuest(false)}
+                    guest={guest}
+                  />
                 ) : (
                   <Redirect to={LOGIN_PATH} />
                 )}
               </Route>
               <Route path={LOGIN_PATH} exact>
-                {user ? (
+                {user || guest ? (
                   <Redirect to={MAP_PATH} />
                 ) : (
                   <LoginPage
@@ -92,6 +96,7 @@ function App(props) {
                     signInWithFacebook={signInWithFacebook}
                     signOut={signOut}
                     user={user}
+                    guestLogin={() => setGuest(true)}
                   />
                 )}
               </Route>

@@ -13,7 +13,8 @@ import {
   Typography,
   IconButton,
   Dialog,
-  CircularProgress
+  CircularProgress,
+  TextField
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import * as firebase from 'firebase/app'
@@ -23,7 +24,14 @@ import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
 import { useTagValue } from '../../contexts/TagContext'
 
 function ChangeStatus(props) {
-  const { stateDrawer, activeTag, setStateDrawer, classes, status } = props
+  const {
+    stateDrawer,
+    activeTag,
+    setStateDrawer,
+    classes,
+    status,
+    detail
+  } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
@@ -31,6 +39,10 @@ function ChangeStatus(props) {
   const [loading, setLoading] = useState(false)
   const resetTemporaryTagState = () => {
     setTemporaryTagState(activeTag.status.statusName)
+  }
+  const [newDescription, setNewDescription] = useState(detail.description)
+  const handleChangeDescription = (event) => {
+    setNewDescription(event.target.value)
   }
   const handleDrawerClose = () => {
     setStateDrawer(false)
@@ -40,6 +52,7 @@ function ChangeStatus(props) {
   const HandleDrawerComplete = () => {
     if (temporaryTagState === activeTag.status.statusName) return
     setLoading(true)
+    console.log(newDescription)
     firebase
       .auth()
       .currentUser.getIdToken()
@@ -52,7 +65,8 @@ function ChangeStatus(props) {
           },
           variables: {
             tagId: activeTag.id,
-            statusName: temporaryTagState
+            statusName: temporaryTagState,
+            description: newDescription
           }
         }).then(() => {
           refetch().then((data) => {
@@ -64,6 +78,7 @@ function ChangeStatus(props) {
       })
   }
   const images = [WaitIcon, SolvedIcon, SolvedIcon]
+  console.log(newDescription, detail)
   return (
     <>
       <Drawer
@@ -107,6 +122,21 @@ function ChangeStatus(props) {
                     }}
                   />
                 </ListItem>
+                {temporaryTagState !== activeTag.status.statusName &&
+                  item.statusName === temporaryTagState && (
+                    <TextField
+                      multiline
+                      rows={2}
+                      variant='outlined'
+                      placeholder={detail.description}
+                      onChange={handleChangeDescription}
+                      style={{
+                        width: '90%',
+                        marginLeft: '5%',
+                        marginBottom: '20px'
+                      }}
+                    />
+                  )}
                 {index !== status.length - 1 && <Divider variant='middle' />}
               </>
             ))}

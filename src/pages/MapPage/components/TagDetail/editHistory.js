@@ -11,7 +11,8 @@ import {
   ListItemIcon,
   Button,
   Box,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  Divider
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { useTagValue } from '../../contexts/TagContext'
@@ -52,25 +53,33 @@ const EditHistory = (props) => {
           )
           const color = tagStatus[tagMissionIndex][tagStatusIndex].statusColor
           return (
-            <ListItem>
-              <ListItemIcon>
-                <Button style={{ backgroundColor: `${color}` }}>
-                  {history.statusName}
-                </Button>
-              </ListItemIcon>
-              <ListItemSecondaryAction>
-                <Box
-                  display='flex'
-                  flexDirection='column'
-                  alignItems='flex-end'
-                >
-                  <Box className={classes.clickableFont}>xxx編輯</Box>
-                  <Box className={classes.clickableFont}>
-                    {history.createTime}
+            <>
+              <ListItem style={{ marginTop: '10px' }}>
+                <ListItemIcon>
+                  <Button style={{ backgroundColor: `${color}` }}>
+                    {history.statusName}
+                  </Button>
+                </ListItemIcon>
+                <ListItemSecondaryAction>
+                  <Box
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='flex-end'
+                  >
+                    <Box className={classes.clickableFont}>
+                      {history.createUser.displayName}編輯
+                    </Box>
+                    <Box className={classes.clickableFont}>
+                      {history.createTime}
+                    </Box>
                   </Box>
-                </Box>
-              </ListItemSecondaryAction>
-            </ListItem>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Box  m={2.5}>
+                {history.description}
+              </Box>
+              <Divider variant='middle' />
+            </>
           )
         })}
       </List>

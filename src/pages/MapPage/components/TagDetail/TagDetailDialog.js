@@ -157,13 +157,16 @@ function TagDetailDialog(props) {
           )}
         </div>
       </Drawer>
-      <ChangeStatus
-        stateDrawer={stateDrawer}
-        activeTag={activeTag}
-        setStateDrawer={setStateDrawer}
-        classes={classes}
-        status={tagStatus[tagMissionIndex]}
-      />
+      {tagDetail && (
+        <ChangeStatus
+          stateDrawer={stateDrawer}
+          activeTag={activeTag}
+          setStateDrawer={setStateDrawer}
+          classes={classes}
+          status={tagStatus[tagMissionIndex]}
+          detail={tagDetail}
+        />
+      )}
       {largeImg && (
         <Lightbox
           large={largeImg}

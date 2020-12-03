@@ -1,87 +1,103 @@
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 
-import mapBackgroundImage from '../../assets/images/map-bg-image.png'
-
-const useStyles = makeStyles((theme) => ({
-  page: {
-    height: window.innerHeight,
-    width: '100vw',
-    // 白色透明 overlay
-    background: `linear-gradient(0deg,rgba(255,255,255,0.7),rgba(255,255,255,0.7)),url(${mapBackgroundImage})`,
-    // backgroundImage: `url(${mapBackgroundImage})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: 'rgba(255,255,255,0.5)',
-    padding: theme.spacing(4),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  card: {
-    minWidth: 275
-  }
-}))
+import wave1 from '../../assets/images/main-wave1.svg'
+import wave2 from '../../assets/images/main-wave2.svg'
+import googleIcon from '../../assets/images/google_icon.png'
+import title from '../../assets/images/title.svg'
 
 export default function LoginPage(props) {
-  const { signInWithGoogle, signInWithFacebook, signOut, user } = props
-  const classes = useStyles()
+  const { signInWithGoogle, guestLogin } = props
 
   return (
-    <div className={classes.page}>
-      <Card className={classes.card}>
-        <CardContent>
-          <Box m={2}>
-            {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
-          </Box>
-          {user ? (
-            <Box m={2}>
-              <Button
-                fullWidth
-                variant='contained'
-                color='primary'
-                onClick={signOut}
-              >
-                Sign Out
-              </Button>
-            </Box>
-          ) : (
-            <>
-              <Box m={2}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                  onClick={signInWithGoogle}
-                >
-                  Sign in with Google
-                </Button>
-              </Box>
-              <Box m={2}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                  onClick={signInWithFacebook}
-                  disable
-                >
-                  Sign in with Facebook
-                </Button>
-              </Box>
-              <Box m={2}>
-                <Button fullWidth variant='contained' color='primary' disabled>
-                  Sign in with NCTU Portal
-                </Button>
-              </Box>
-            </>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+    <Box
+      style={{ height: '100vh-150px', width: '100vw' }}
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
+    >
+      <div
+        style={{
+          backgroundImage: `url(${title})`,
+          width: '300px',
+          height: '40px',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          marginTop: '100px'
+        }}
+      />
+      <Button
+        style={{
+          width: '220px',
+          height: '50px',
+          marginTop: '40%',
+          background: '#4385F4'
+        }}
+        onClick={signInWithGoogle}
+      >
+        <Box
+          style={{
+            width: '45px',
+            height: '45px',
+            background: 'white',
+            position: 'absolute',
+            left: '2.5px'
+          }}
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+        >
+          <div
+            style={{
+              backgroundImage: `url(${googleIcon})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              width: '60%',
+              height: '60%'
+            }}
+          />
+        </Box>
+        <Typography variant='6h' style={{ color: 'white', marginLeft: '50px' }}>
+          使用Google登入
+        </Typography>
+      </Button>
+      <Button
+        style={{
+          marginTop: '30px',
+          color: '#BABABA',
+          borderBottom: 'solid 0.5px',
+          padding: '0'
+        }}
+        onClick={guestLogin}
+      >
+        以訪客身分進入
+      </Button>
+      <div
+        style={{
+          backgroundImage: `url(${wave1})`,
+          position: 'absolute',
+          bottom: '0',
+          height: '150px',
+          width: '100%',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      <div
+        style={{
+          backgroundImage: `url(${wave2})`,
+          position: 'absolute',
+          bottom: '0',
+          height: '150px',
+          width: '100%',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          zIndex: '-100'
+        }}
+      />
+    </Box>
   )
 }

@@ -185,8 +185,7 @@ export const MissionContextProvider = ({ children }) => {
     setIsInEdit(false)
   }
 
-  const { refetch, updateTagList, tagDetail } = useTagValue()
-
+  const { refetch, updateTagList, tagDetail, refetchUserAddTags } = useTagValue()
   const handleCompleteMission = () => {
     setLoading(true)
     firebase
@@ -248,6 +247,7 @@ export const MissionContextProvider = ({ children }) => {
                   clearMissionData()
                   setMissionType(null)
                   enqueueSnackbar('標注完成', { variant: 'success' })
+                  
                 })
               })
             })
@@ -260,6 +260,7 @@ export const MissionContextProvider = ({ children }) => {
                 enqueueSnackbar('標注完成', { variant: 'success' })
               })
             }
+            refetchUserAddTags(d=>{console.log(d)})
           }
         )
       })
@@ -411,6 +412,7 @@ export const MissionContextProvider = ({ children }) => {
   const handleChangeTextLocation = (event) => {
     setTextLocation(event.target.value)
   }
+  const [floor, setFloor] = useState('無')
 
   // ==================== Clear ====================
   const clearMissionData = () => {
@@ -431,6 +433,7 @@ export const MissionContextProvider = ({ children }) => {
     setStreetViewPOV(InitialMissionValue.streetViewPOV)
     setStreetViewUpload(false)
     setPreviewImages([])
+    setFloor('無')
   }
 
   // ===================== Loading =======================
@@ -498,7 +501,9 @@ export const MissionContextProvider = ({ children }) => {
     handleStartEdit,
     handleCloseEdit,
     mapCenter,
-    setMapCenter
+    setMapCenter,
+    floor,
+    setFloor
   }
   return (
     <MissionContext.Provider value={contextValues}>

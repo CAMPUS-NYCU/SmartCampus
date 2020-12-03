@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import useTagList from '../hooks/useTagList'
 import useMissionList from '../hooks/useMissionList'
 import useTagDetail from '../hooks/useTagDetail'
+import useUserTags from '../hooks/useUserTags'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -15,11 +16,14 @@ export const TagContext = React.createContext({
   categoryList: [],
   updateTagList: () => {},
   refetch: () => {},
-  upVote: () => {}
+  upVote: () => {},
+  userAddTags: null,
+  refetchUserAddTags:()=>{}
 })
 
 export const TagContextProvider = ({ children }) => {
   const { tags, updateTagList, refetch } = useTagList()
+  const {userAddTags, refetchUserAddTags} = useUserTags()
   const { missionList } = useMissionList()
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = [
@@ -68,7 +72,9 @@ export const TagContextProvider = ({ children }) => {
     refetch,
     filterTags,
     addFilterTags,
-    tagDetail
+    tagDetail,
+    userAddTags,
+    refetchUserAddTags
     // useGetTagDetail
   }
 

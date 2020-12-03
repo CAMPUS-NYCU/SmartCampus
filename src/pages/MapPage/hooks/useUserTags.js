@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import { useState } from 'react'
+import * as firebase from 'firebase/app'
 import { generateTime } from './useTagDetail'
 
-export const GET_TAG_LIST_QUERY = gql`
-  query getTagList {
-    tagRenderList {
+const GET_USER_TAGS_QUERY = gql`
+  query getUserTags($uid: ID!) {
+    userAddTagHistory(uid: $uid) {
       id
       locationName
       category {
@@ -24,17 +25,13 @@ export const GET_TAG_LIST_QUERY = gql`
       statusHistory {
         statusName
         createTime
-        createUser{
-          displayName
-        }
-        description
       }
     }
   }
 `
 
 const reformatTagList = (data) => {
-  const tagRenderList = data ? data.tagRenderList : []
+  const tagRenderList = data ? data.userAddTagHistory : []
   const filteredTags = tagRenderList.filter((tag) => {
     return tag.coordinates
   })
@@ -50,9 +47,7 @@ const reformatTagList = (data) => {
     const statusHistory = tag.statusHistory.map((history) => {
       return {
         statusName: history.statusName,
-        createTime: generateTime(history.createTime),
-        createUser: history.createUser,
-        description: history.description
+        createTime: generateTime(history.createTime)
       }
     })
     return {
@@ -71,20 +66,43 @@ const reformatTagList = (data) => {
   return tagList
 }
 
-function useTagList() {
-  const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {
+const useUserTags = () => {
+  const uid = firebase.auth().currentUser ? firebase.auth().currentUser.uid : ''
+  const [token, setToken] = useState('')
+  if (firebase.auth().currentUser) {
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((t) => {
+        setToken(t)
+      })
+  }
+  console.log('uid', uid)
+  console.log('token', token)
+  const [userAddTags, setUserAddTags] = useState(null)
+  const { data, refetch } = useQuery(GET_USER_TAGS_QUERY, {
+    // context: {
+    //   headers: {
+    //     authorization: token ? `Bearer ${token}` : ''
+    //   }
+    // },
+    fetchPolicy: "no-cache",
+    variables: {
+      uid
+    },
     onCompleted: () => {
-      setTags(tagList)
+      setUserAddTags(reformatTagList(data))
     }
   })
-  // Reformat tags
-  const tagList = reformatTagList(data)
-  const [tags, setTags] = useState(tagList)
-  const updateTagList = (dataIn) => {
-    setTags(reformatTagList(dataIn))
+  
+  const refetchUserAddTags = () => {
+    //refetch
+    refetch({fetchPolicy: "no-cache"}).then((d) => {
+      setUserAddTags(reformatTagList(d.data))
+    })
   }
 
-  return { tags, refetch, updateTagList }
+  return { userAddTags, setUserAddTags, refetchUserAddTags}
 }
 
-export default useTagList
+export default useUserTags
