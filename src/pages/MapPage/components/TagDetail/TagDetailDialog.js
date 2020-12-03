@@ -16,7 +16,7 @@ import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
-import {useUpdateVote} from '../../Mutation/voteTag'
+import {useUpdateVote} from '../../Mutation/useVoteTag'
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {

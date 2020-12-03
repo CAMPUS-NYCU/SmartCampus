@@ -42,15 +42,11 @@ export const TagContextProvider = ({ children }) => {
   ]
 
   const [activeTagId, setActiveTagId] = useState(null)
-  const resetActiveTag = () => setActiveTagId(null)
   const activeTag = findTagById(activeTagId, tags)
+  const {tagDetail, setTagDetail} = useTagDetail(activeTag ? activeTag.id : '')
+  const resetActiveTag = () => {setActiveTagId(null);setTagDetail(null)}
   const [filterTags, setFilterTags] = useState([])
-  // const [tagDetail, setTagDetail] = useState(null)
-  // const useGetTagDetail = (id) => {
-  //   const detail = useTagDetail(id)
-  //   setTagDetail(detail)
-  // }
-  const tagDetail = useTagDetail(activeTag ? activeTag.id : '')
+  
   const addFilterTags = (tag) => {
     if (filterTags.indexOf(tag) !== -1) {
       const newTags = [...filterTags]
@@ -75,7 +71,6 @@ export const TagContextProvider = ({ children }) => {
     tagDetail,
     userAddTags,
     refetchUserAddTags
-    // useGetTagDetail
   }
 
   return (

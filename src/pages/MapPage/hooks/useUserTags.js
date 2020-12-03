@@ -68,15 +68,6 @@ const reformatTagList = (data) => {
 
 const useUserTags = () => {
   const uid = firebase.auth().currentUser ? firebase.auth().currentUser.uid : ''
-  const [token, setToken] = useState('')
-  if (firebase.auth().currentUser) {
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((t) => {
-        setToken(t)
-      })
-  }
   const [userAddTags, setUserAddTags] = useState(null)
   const { data, refetch } = useQuery(GET_USER_TAGS_QUERY, {
     // context: {

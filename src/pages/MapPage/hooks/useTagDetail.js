@@ -1,5 +1,7 @@
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import { useState } from 'react'
+import * as firebase from 'firebase/app'
 
 export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
@@ -9,8 +11,11 @@ export const GET_TAG_DETAIL_QUERY = gql`
       lastUpdateTime
       description
       imageUrl
-      numberOfUpVote
-      createUser{
+      status {
+        numberOfUpVote
+        hasUpVote
+      }
+      createUser {
         displayName
       }
     }
@@ -65,24 +70,37 @@ export const generateTime = (time) => {
 }
 
 function useTagDetail(id) {
-  const { loading, data: { tag = null } = {} } = useQuery(
+  const [token, setToken] = useState('')
+  const [tagDetail, setTagDetail] = useState(null)
+  if (firebase.auth().currentUser) {
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((t) => {
+        setToken(t)
+      })
+  }
+  const { data: { tag = null } = {} } = useQuery(
     GET_TAG_DETAIL_QUERY,
     {
-      variables: { id }
-    }
-  )
-  if (!loading) {
-    const detail = tag
-      ? {
+      context: {
+      headers: {
+        authorization: token ? `Bearer ${token}` : ''
+      }
+      },
+      fetchPolicy: "no-cache",
+      variables: { id },
+      onCompleted:()=>{
+        setTagDetail({
           ...tag,
           newCreateTime: generateTime(tag.createTime),
           newLastUpdateTime: generateTime(tag.lastUpdateTime)
-        }
-      : null
-    return detail
-  }
-
-  return null
+        })
+      }
+    }
+  )
+  console.log(tagDetail)
+  return {tagDetail, setTagDetail}
 }
 
 export default useTagDetail
