@@ -37,10 +37,6 @@ const useStyles = makeStyles((theme) => ({
   discoveryIcon: {
     width: 16,
     height: 16
-  },
-  filterButton: {
-    marginRight: '5%',
-    flexShrink: '1'
   }
 }))
 
@@ -56,9 +52,8 @@ function FilterFab() {
     <>
       <Box
         width='85%'
-        maxWidth='800px'
         display='flex'
-        justifyContent='left'
+        justifyContent='space-between'
         className={classes.grid}
       >
         {filterInfo.map((item) => {
@@ -66,7 +61,6 @@ function FilterFab() {
             <Button
               variant='contained'
               size='small'
-              classes={{ root: classes.filterButton }}
               color={filterTags.indexOf(item) === -1 ? '' : 'primary'}
               onClick={() => addFilterTags(item)}
               disabled
