@@ -71,7 +71,6 @@ function useTagDetail(id) {
     }
   )
   if (!loading) {
-    console.log(tag)
     const detail = tag
       ? {
           ...tag,

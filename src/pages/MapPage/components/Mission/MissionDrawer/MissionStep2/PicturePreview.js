@@ -40,8 +40,6 @@ const PicturePreview = (props) => {
     setPreviewImages(preview)
     setImageFiles(images)
   }
-  console.log('type', typeof imageFiles)
-  console.log(imageFiles)
   return (
     <>
       <input

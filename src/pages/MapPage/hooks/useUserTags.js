@@ -77,8 +77,6 @@ const useUserTags = () => {
         setToken(t)
       })
   }
-  console.log('uid', uid)
-  console.log('token', token)
   const [userAddTags, setUserAddTags] = useState(null)
   const { data, refetch } = useQuery(GET_USER_TAGS_QUERY, {
     // context: {

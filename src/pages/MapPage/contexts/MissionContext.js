@@ -145,15 +145,12 @@ export const MissionContextProvider = ({ children }) => {
     setStep(MissionStep.selectMissionName)
   }
   const handleStartEdit = (activeTag) => {
-    console.log(activeTag)
     setShowControl(true)
     setMarkerPosition({
       longitude: activeTag.position.lng,
       latitude: activeTag.position.lat
     })
     setMapCenter(activeTag.position)
-    console.log(activeTag.position)
-    console.log(markerPosition)
     setStreetViewPosition({
       longitude: activeTag.position.lng,
       latitude: activeTag.position.lat
@@ -163,7 +160,6 @@ export const MissionContextProvider = ({ children }) => {
         (element) => element.missionName === activeTag.category.missionName
       )
     )
-    console.log(missionType)
     setSelectedMissionId(activeTag.category.subTypeName)
     setSelectedSubOptionId(activeTag.category.targetName)
     setStep(MissionStep.selectMissionName)
@@ -260,7 +256,7 @@ export const MissionContextProvider = ({ children }) => {
                 enqueueSnackbar('標注完成', { variant: 'success' })
               })
             }
-            refetchUserAddTags(d=>{console.log(d)})
+            refetchUserAddTags()
           }
         )
       })

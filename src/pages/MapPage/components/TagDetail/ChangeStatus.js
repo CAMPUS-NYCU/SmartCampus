@@ -52,7 +52,6 @@ function ChangeStatus(props) {
   const HandleDrawerComplete = () => {
     if (temporaryTagState === activeTag.status.statusName) return
     setLoading(true)
-    console.log(newDescription)
     firebase
       .auth()
       .currentUser.getIdToken()
@@ -78,7 +77,6 @@ function ChangeStatus(props) {
       })
   }
   const images = [WaitIcon, SolvedIcon, SolvedIcon]
-  console.log(newDescription, detail)
   return (
     <>
       <Drawer

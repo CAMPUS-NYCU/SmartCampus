@@ -38,10 +38,7 @@ const FilterDrawer = (props) => {
   const [currentSubmission, setCurrentSubmission] = useState([])
   const changeCurrentMission = (mission) => {
     if (currentMission !== mission) {
-      console.log(mission)
       if (currentMission !== '') {
-        console.log(currentMission)
-        console.log(filterTags)
         addFilterTags(currentMission)
       }
       setCurrentMission(mission)
@@ -58,8 +55,6 @@ const FilterDrawer = (props) => {
       })
     }
   }
-  console.log(currentMission)
-  console.log('filter', filterTags)
   return (
     <Drawer
       anchor='bottom'
