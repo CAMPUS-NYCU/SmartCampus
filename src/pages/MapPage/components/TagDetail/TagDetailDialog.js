@@ -16,7 +16,6 @@ import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
-import {useUpdateVote} from '../../Mutation/useVoteTag'
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function TagDetailDialog(props) {
-  const { activeTag, onClose } = props
+  const { activeTag, onClose, deny, guest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
   const { tagDetail } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
@@ -149,6 +148,8 @@ function TagDetailDialog(props) {
                   setLargeImg={setLargeImg}
                   setStateDrawer={setStateDrawer}
                   tagMissionIndex={tagMissionIndex}
+                  deny={deny}
+                  guest={guest}
                 />
               </Box>
             </>

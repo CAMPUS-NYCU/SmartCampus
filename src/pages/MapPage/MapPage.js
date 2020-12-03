@@ -24,7 +24,7 @@ export default function MapPage(props) {
   return (
     <TagContextProvider>
       <MissionContextProvider>
-        <MapPageContent signOut={signOut} deny={deny} guest={guest}/>
+        <MapPageContent signOut={signOut} deny={deny} guest={guest} />
       </MissionContextProvider>
     </TagContextProvider>
   )
@@ -50,9 +50,9 @@ const MapPageContent = (props) => {
               handleOpenHowToUse: howToUseDialogControl.setOpen,
               handleOpenTerms: profileDialogControl.setOpen
             }}
-            signOut={signOut}
+            signOut={guest ? deny : signOut}
           />
-          <MissionFab />
+          <MissionFab deny={deny} guest={guest} />
           <FilterFab />
           <LocationFab setMapCenter={setMapCenter} />
         </div>
@@ -63,7 +63,12 @@ const MapPageContent = (props) => {
       <ProfileDialog control={profileDialogControl} />
       <HowToUseDialog control={howToUseDialogControl} />
       {activeTag && (
-        <TagDetailDialog activeTag={activeTag} onClose={resetActiveTag} />
+        <TagDetailDialog
+          activeTag={activeTag}
+          onClose={resetActiveTag}
+          deny={deny}
+          guest={guest}
+        />
       )}
       <Dialog
         open={loading}

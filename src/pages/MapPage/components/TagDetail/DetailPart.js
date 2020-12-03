@@ -13,7 +13,9 @@ const DetailPart = (props) => {
     missionName,
     setLargeImg,
     setStateDrawer,
-    tagMissionIndex
+    tagMissionIndex,
+    deny,
+    guest
   } = props
   const [openHistory, setOpenHistory] = useState(false)
   const handleHistoryClose = () => {
@@ -27,6 +29,10 @@ const DetailPart = (props) => {
     setHasUpVote(detail ? detail.status.hasUpVote : false)
   }, [detail])
   const handleUopVote = () => {
+    if (guest) {
+      deny()
+      return
+    }
     setNumberOfVote((prevNumberOfVote) =>
       hasUpVote ? prevNumberOfVote - 1 : prevNumberOfVote + 1
     )
@@ -100,7 +106,7 @@ const DetailPart = (props) => {
           >
             <Button
               onClick={() => {
-                setStateDrawer(true)
+                guest ? deny() : setStateDrawer(true)
               }}
               style={{
                 background: '#FDCC4F',

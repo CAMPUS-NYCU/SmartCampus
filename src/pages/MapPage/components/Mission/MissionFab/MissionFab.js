@@ -12,9 +12,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const MissionFab = () => {
+const MissionFab = (props) => {
   const { handleStartMission } = useMissionValue()
   const classes = useStyles()
+  const { deny, guest } = props
   return (
     <Fab
       className={classes.missionFab}
@@ -22,7 +23,7 @@ const MissionFab = () => {
       flexDirection='column'
       justifyContent='space-between'
       color='primary'
-      onClick={handleStartMission}
+      onClick={guest ? deny : handleStartMission}
     >
       <AddSharpIcon fontSize='large' />
     </Fab>
