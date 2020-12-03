@@ -185,8 +185,7 @@ export const MissionContextProvider = ({ children }) => {
     setIsInEdit(false)
   }
 
-  const { refetch, updateTagList, tagDetail } = useTagValue()
-
+  const { refetch, updateTagList, tagDetail, refetchUserAddTags } = useTagValue()
   const handleCompleteMission = () => {
     setLoading(true)
     firebase
@@ -248,6 +247,7 @@ export const MissionContextProvider = ({ children }) => {
                   clearMissionData()
                   setMissionType(null)
                   enqueueSnackbar('標注完成', { variant: 'success' })
+                  
                 })
               })
             })
@@ -260,6 +260,7 @@ export const MissionContextProvider = ({ children }) => {
                 enqueueSnackbar('標注完成', { variant: 'success' })
               })
             }
+            refetchUserAddTags(d=>{console.log(d)})
           }
         )
       })

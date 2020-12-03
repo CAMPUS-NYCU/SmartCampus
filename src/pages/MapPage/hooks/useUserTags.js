@@ -80,22 +80,29 @@ const useUserTags = () => {
   console.log('uid', uid)
   console.log('token', token)
   const [userAddTags, setUserAddTags] = useState(null)
-  const { data } = useQuery(GET_USER_TAGS_QUERY, {
+  const { data, refetch } = useQuery(GET_USER_TAGS_QUERY, {
     // context: {
     //   headers: {
     //     authorization: token ? `Bearer ${token}` : ''
     //   }
     // },
+    fetchPolicy: "no-cache",
     variables: {
       uid
     },
     onCompleted: () => {
-      console.log('data', data)
       setUserAddTags(reformatTagList(data))
     }
   })
-  console.log('list', userAddTags)
-  return { userAddTags }
+  
+  const refetchUserAddTags = () => {
+    //refetch
+    refetch({fetchPolicy: "no-cache"}).then((d) => {
+      setUserAddTags(reformatTagList(d.data))
+    })
+  }
+
+  return { userAddTags, setUserAddTags, refetchUserAddTags}
 }
 
 export default useUserTags
