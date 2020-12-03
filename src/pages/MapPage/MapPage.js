@@ -14,20 +14,19 @@ import {
   useMissionValue
 } from './contexts/MissionContext'
 import ReportHistory from './components/ReportHistory'
-import { TagContextProvider, useTagValue } from './contexts/TagContext'
+import { useTagValue } from './contexts/TagContext'
 import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
-import MainPage from '../../components/MainPage'
 
 export default function MapPage(props) {
   const { signOut, deny, guest } = props
   return (
-    <TagContextProvider>
+    // <TagContextProvider>
       <MissionContextProvider>
         <MapPageContent signOut={signOut} deny={deny} guest={guest} />
       </MissionContextProvider>
-    </TagContextProvider>
+    // </TagContextProvider>
   )
 }
 
@@ -37,13 +36,8 @@ const MapPageContent = (props) => {
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
-  const { activeTag, resetActiveTag, tags } = useTagValue()
-  console.log(tags)
+  const { activeTag, resetActiveTag } = useTagValue()
   return (
-    <>
-      {tags === [] || tags === null? (
-        <MainPage />
-      ) : (
         <div>
           <Map mapCenter={mapCenter} />
           <Fade in={showControl}>
@@ -89,7 +83,5 @@ const MapPageContent = (props) => {
             <CircularProgress />
           </Dialog>
         </div>
-      )}
-    </>
   )
 }

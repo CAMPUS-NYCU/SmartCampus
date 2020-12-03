@@ -21,6 +21,10 @@ import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
+import {
+  TagContextProvider,
+  useTagValue
+} from './pages/MapPage/contexts/TagContext'
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)
@@ -28,6 +32,62 @@ const firebaseAppAuth = firebaseApp.auth()
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
   facebookProvider: new firebase.auth.FacebookAuthProvider()
+}
+
+const Pages = (props) => {
+  const {
+    user,
+    guest,
+    signOut,
+    signInWithFacebook,
+    signInWithGoogle,
+    setGuest
+  } = props
+  const { tags } = useTagValue()
+  console.log(tags)
+  return (
+    <>
+      { !tags ? (
+        <MainPage />
+      ) : (
+        <BrowserRouter>
+          <Switch>
+            <Route path={INDEX_PATH} exact>
+              {user || guest ? (
+                <Redirect to={MAP_PATH} />
+              ) : (
+                <Redirect to={LOGIN_PATH} />
+              )}
+            </Route>
+            <Route path={MAP_PATH} exact>
+              {user || guest ? (
+                <MapPage
+                  signOut={signOut}
+                  deny={() => setGuest(false)}
+                  guest={guest}
+                />
+              ) : (
+                <Redirect to={LOGIN_PATH} />
+              )}
+            </Route>
+            <Route path={LOGIN_PATH} exact>
+              {user || guest ? (
+                <Redirect to={MAP_PATH} />
+              ) : (
+                <LoginPage
+                  signInWithGoogle={signInWithGoogle}
+                  signInWithFacebook={signInWithFacebook}
+                  signOut={signOut}
+                  user={user}
+                  guestLogin={() => setGuest(true)}
+                />
+              )}
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      )}
+    </>
+  )
 }
 
 function App(props) {
@@ -44,11 +104,6 @@ function App(props) {
     notistackRef.current.closeSnackbar(key)
   }
   const [guest, setGuest] = useState(false)
-  const [timeOut, setTimeOut] = useState(true)
-  let a = setInterval(() => {
-    setTimeOut(false)
-    clearInterval(a)
-  }, 2000)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -73,45 +128,16 @@ function App(props) {
             </IconButton>
           )}
         >
-          {timeOut && !user ? (
-            <MainPage />
-          ) : (
-            <BrowserRouter>
-              <Switch>
-                <Route path={INDEX_PATH} exact>
-                  {user || guest ? (
-                    <Redirect to={MAP_PATH} />
-                  ) : (
-                    <Redirect to={LOGIN_PATH} />
-                  )}
-                </Route>
-                <Route path={MAP_PATH} exact>
-                  {user || guest ? (
-                    <MapPage
-                      signOut={signOut}
-                      deny={() => setGuest(false)}
-                      guest={guest}
-                    />
-                  ) : (
-                    <Redirect to={LOGIN_PATH} />
-                  )}
-                </Route>
-                <Route path={LOGIN_PATH} exact>
-                  {user || guest ? (
-                    <Redirect to={MAP_PATH} />
-                  ) : (
-                    <LoginPage
-                      signInWithGoogle={signInWithGoogle}
-                      signInWithFacebook={signInWithFacebook}
-                      signOut={signOut}
-                      user={user}
-                      guestLogin={() => setGuest(true)}
-                    />
-                  )}
-                </Route>
-              </Switch>
-            </BrowserRouter>
-          )}
+          <TagContextProvider>
+            <Pages
+              user={user}
+              setGuest={setGuest}
+              signOut={signOut}
+              signInWithGoogle={signInWithGoogle}
+              signInWithFacebook={signInWithFacebook}
+              guest={guest}
+            />
+          </TagContextProvider>
         </SnackbarProvider>
       </ApolloProvider>
     </ThemeProvider>
