@@ -18,12 +18,12 @@ export const TagContext = React.createContext({
   refetch: () => {},
   upVote: () => {},
   userAddTags: null,
-  refetchUserAddTags:()=>{}
+  refetchUserAddTags: () => {}
 })
 
 export const TagContextProvider = ({ children }) => {
   const { tags, updateTagList, refetch } = useTagList()
-  const {userAddTags, refetchUserAddTags} = useUserTags()
+  const { userAddTags, refetchUserAddTags } = useUserTags()
   const { missionList } = useMissionList()
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = [
@@ -43,17 +43,24 @@ export const TagContextProvider = ({ children }) => {
 
   const [activeTagId, setActiveTagId] = useState(null)
   const activeTag = findTagById(activeTagId, tags)
-  const {tagDetail, setTagDetail} = useTagDetail(activeTag ? activeTag.id : '')
-  const resetActiveTag = () => {setActiveTagId(null);setTagDetail(null)}
+  const { tagDetail, setTagDetail } = useTagDetail(
+    activeTag ? activeTag.id : ''
+  )
+  const resetActiveTag = () => {
+    setActiveTagId(null)
+    setTagDetail(null)
+  }
   const [filterTags, setFilterTags] = useState([])
-  
+
   const addFilterTags = (tag) => {
     if (filterTags.indexOf(tag) !== -1) {
-      const newTags = [...filterTags]
-      newTags.splice(newTags.indexOf(tag), 1)
-      setFilterTags(newTags)
+      setFilterTags((prevFilterTags) =>
+        prevFilterTags.filter((t) => {
+          return t !== tag
+        })
+      )
     } else {
-      setFilterTags([...filterTags, tag])
+      setFilterTags((prevFilterTags) => [...prevFilterTags, tag])
     }
   }
   const contextValues = {

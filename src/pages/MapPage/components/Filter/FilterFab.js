@@ -47,6 +47,7 @@ function FilterFab() {
     setFilterDrawer(false)
   }
   const { filterTags, addFilterTags } = useTagValue()
+  console.log(filterTags)
   const filterInfo = ['無障礙設施', '路障', '排隊情況']
   return (
     <>
@@ -63,7 +64,7 @@ function FilterFab() {
               size='small'
               color={filterTags.indexOf(item) === -1 ? '' : 'primary'}
               onClick={() => addFilterTags(item)}
-              disabled
+              //disabled
             >
               {item}
             </Button>
@@ -73,7 +74,7 @@ function FilterFab() {
           variant='contained'
           size='small'
           onClick={() => setFilterDrawer(true)}
-          disabled
+          //disabled
         >
           更多
         </Button>
