@@ -4,6 +4,7 @@ import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
 import { useUpdateVote } from '../../Mutation/useVoteTag'
+import { useSnackbar } from 'notistack'
 
 const DetailPart = (props) => {
   const {
@@ -24,10 +25,16 @@ const DetailPart = (props) => {
   const { upVote } = useUpdateVote()
   const [numberOfVote, setNumberOfVote] = useState(0)
   const [hasUpVote, setHasUpVote] = useState(false)
+  const { enqueueSnackbar } = useSnackbar()
   useEffect(() => {
     setNumberOfVote(detail ? detail.status.numberOfUpVote : 0)
     setHasUpVote(detail ? detail.status.hasUpVote : false)
-  }, [detail])
+    console.log(activeTag)
+
+    activeTag.category.missionName === '問題任務' &&
+      detail &&
+      enqueueSnackbar('再1人投票即可刪除回報', { variant: 'warning' })
+  }, [detail, enqueueSnackbar,  activeTag])
   const handleUopVote = () => {
     if (guest) {
       deny()
@@ -39,6 +46,7 @@ const DetailPart = (props) => {
     upVote(detail.id, !hasUpVote)
     setHasUpVote((prevHasUpVote) => !prevHasUpVote)
   }
+
   return (
     <>
       {detail ? (
