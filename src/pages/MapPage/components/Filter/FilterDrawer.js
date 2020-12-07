@@ -28,33 +28,41 @@ const useStyles = makeStyles({
 })
 
 const FilterDrawer = (props) => {
+  console.log(facilitySubType)
   const { open, onClose } = props
   const classes = useStyles()
   const { filterTags, addFilterTags } = useTagValue()
-  const { target = [] } =
-    facilitySubType.find((facility) => facility.subTypeName === '無障礙設施') ||
-    {}
-  const [currentMission, setCurrentMission] = useState('')
-  const [currentSubmission, setCurrentSubmission] = useState([])
+  const [currentMission, setCurrentMission] = useState(null)
+  const [currentSubmission, setCurrentSubmission] = useState(null)
+
   const changeCurrentMission = (mission) => {
-    if (currentMission !== mission) {
-      if (currentMission !== '') {
-        addFilterTags(currentMission)
-      }
-      setCurrentMission(mission)
-      currentSubmission.forEach((submission) => {
-        addFilterTags(submission)
-      })
-      addFilterTags(mission)
-      setCurrentSubmission([])
+    if (currentMission === mission) {
+      setCurrentMission(null)
     } else {
-      setCurrentMission('')
-      addFilterTags(mission)
-      currentSubmission.forEach((submission) => {
-        addFilterTags(submission)
-      })
+      setCurrentMission(mission)
     }
+    missionInfo.forEach((m) => {
+      if (filterTags.indexOf(m.missionName) !== -1 && m !== mission) {
+        addFilterTags(m.missionName)
+      }
+    })
+    addFilterTags(mission.missionName)
   }
+
+  const changeCurrentSubmission = (mission) => {
+    if (currentMission === mission) {
+      setCurrentSubmission(null)
+    } else {
+      setCurrentSubmission(mission)
+    }
+    addFilterTags(mission.subTypeName)
+  }
+
+  const subMission = currentMission
+    ? facilitySubType[missionInfo.indexOf(currentMission)]
+    : []
+  const target = currentSubmission ? currentSubmission.target : []
+  console.log(currentSubmission)
   return (
     <Drawer
       anchor='bottom'
@@ -96,13 +104,9 @@ const FilterDrawer = (props) => {
                   variant='contained'
                   fullWidth
                   size='small'
-                  color={
-                    filterTags.indexOf(mission.missionName) === -1
-                      ? ''
-                      : 'primary'
-                  }
+                  color={currentMission !== mission ? '' : 'primary'}
                   onClick={() => {
-                    changeCurrentMission(mission.missionName)
+                    changeCurrentMission(mission)
                   }}
                 >
                   {mission.missionName}
@@ -114,20 +118,20 @@ const FilterDrawer = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                {target.map((discovery) => (
-                  <Grid id={discovery.targetName} item xs={4}>
+                {subMission.map((discovery) => (
+                  <Grid id={discovery.subTypeName} item xs={4}>
                     <Button
                       variant='contained'
                       fullWidth
                       size='small'
                       color={
-                        filterTags.indexOf(discovery.targetName) === -1
+                        filterTags.indexOf(discovery.subTypeName) === -1
                           ? ''
                           : 'primary'
                       }
-                      onClick={() => addFilterTags(discovery.targetName)}
+                      onClick={() => changeCurrentSubmission(discovery)}
                     >
-                      {discovery.targetName}
+                      {discovery.subTypeName}
                     </Button>
                   </Grid>
                 ))}
