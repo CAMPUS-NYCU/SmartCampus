@@ -66,6 +66,7 @@ const FilterDrawer = (props) => {
   return (
     <Drawer
       anchor='bottom'
+      variant='persistent'
       open={open}
       onClose={onClose}
       PaperProps={{
