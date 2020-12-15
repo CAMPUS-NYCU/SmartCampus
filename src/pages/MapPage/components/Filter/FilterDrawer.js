@@ -15,7 +15,7 @@ import { useTagValue } from '../../contexts/TagContext'
 
 const useStyles = makeStyles({
   drawerContent: {
-    height: '40vh',
+    height: '80vh',
     overflow: 'scroll'
   },
   closeButton: {
@@ -24,45 +24,74 @@ const useStyles = makeStyles({
   },
   content: {
     overflowY: 'scroll'
+  },
+  button: {
+    position:'absolute',
+    bottom:'10px',
+    left:'10%',
+    width: '80%',
+    borderRadius: '20px'
   }
 })
 
 const FilterDrawer = (props) => {
-  console.log(facilitySubType)
   const { open, onClose } = props
   const classes = useStyles()
   const { filterTags, addFilterTags } = useTagValue()
   const [currentMission, setCurrentMission] = useState(null)
   const [currentSubmission, setCurrentSubmission] = useState(null)
-
-  const changeCurrentMission = (mission) => {
-    if (currentMission === mission) {
-      setCurrentMission(null)
-    } else {
-      setCurrentMission(mission)
-    }
-    missionInfo.forEach((m) => {
-      if (filterTags.indexOf(m.missionName) !== -1 && m !== mission) {
-        addFilterTags(m.missionName)
-      }
-    })
-    addFilterTags(mission.missionName)
-  }
-
-  const changeCurrentSubmission = (mission) => {
-    if (currentMission === mission) {
-      setCurrentSubmission(null)
-    } else {
-      setCurrentSubmission(mission)
-    }
-    addFilterTags(mission.subTypeName)
-  }
+  const [currentTarget, setCurrentTarget] = useState(null)
 
   const subMission = currentMission
     ? facilitySubType[missionInfo.indexOf(currentMission)]
     : []
   const target = currentSubmission ? currentSubmission.target : []
-  console.log(currentSubmission)
+  const final = currentMission
+    ? currentSubmission
+      ? currentTarget
+        ? currentTarget
+        : currentSubmission.subTypeName
+      : currentMission.missionName
+    : null
+
+  const handleFinishFilter = () => {
+    addFilterTags(final)
+    setCurrentMission(null)
+    setCurrentSubmission(null)
+    setCurrentTarget(null)
+    onClose()
+  }
+
+  const changeCurrentMission = (mission) => {
+    if (currentMission === mission) {
+      setCurrentMission(null)
+      setCurrentSubmission(null)
+      setCurrentTarget(null)
+    } else {
+      setCurrentMission(mission)
+      setCurrentSubmission(null)
+      setCurrentTarget(null)
+    }
+  }
+
+  const changeCurrentSubmission = (mission) => {
+    if (currentSubmission === mission) {
+      setCurrentSubmission(null)
+      setCurrentTarget(null)
+    } else {
+      setCurrentSubmission(mission)
+      setCurrentTarget(null)
+    }
+  }
+
+  const changeCurrentTarget = (target) => {
+    if (currentTarget === target) {
+      setCurrentTarget(null)
+    } else {
+      setCurrentTarget(target)
+    }
+  }
+
   return (
     <Drawer
       anchor='bottom'
@@ -125,11 +154,7 @@ const FilterDrawer = (props) => {
                       variant='contained'
                       fullWidth
                       size='small'
-                      color={
-                        filterTags.indexOf(discovery.subTypeName) === -1
-                          ? ''
-                          : 'primary'
-                      }
+                      color={currentSubmission !== discovery ? '' : 'primary'}
                       onClick={() => changeCurrentSubmission(discovery)}
                     >
                       {discovery.subTypeName}
@@ -150,11 +175,9 @@ const FilterDrawer = (props) => {
                       fullWidth
                       size='small'
                       color={
-                        filterTags.indexOf(discovery.targetName) === -1
-                          ? ''
-                          : 'primary'
+                        currentTarget !== discovery.targetName ? '' : 'primary'
                       }
-                      onClick={() => addFilterTags(discovery.targetName)}
+                      onClick={() => changeCurrentTarget(discovery.targetName)}
                     >
                       {discovery.targetName}
                     </Button>
@@ -164,6 +187,15 @@ const FilterDrawer = (props) => {
             </Grid>
           </Grid>
         </Box>
+        <Button
+          className={classes.button}
+          onClick={handleFinishFilter}
+          color={final ? 'primary' : ''}
+          disabled={!final}
+          variant='contained'
+        >
+          套用
+        </Button>
       </div>
     </Drawer>
   )

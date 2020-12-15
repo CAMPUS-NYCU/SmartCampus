@@ -64,7 +64,6 @@ function FilterFab() {
     setFilterDrawer(false)
   }
   const { filterTags, addFilterTags } = useTagValue()
-  console.log(filterTags)
   const filterInfo = ['設施任務', '排隊情況']
   return (
     <>
