@@ -5,6 +5,8 @@ import Box from '@material-ui/core/Box'
 import { Button } from '@material-ui/core'
 import { useTagValue } from '../../contexts/TagContext'
 import FilterDrawer from './FilterDrawer'
+import AddIcon from '@material-ui/icons/Add'
+import CloseIcon from '@material-ui/icons/Close'
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -15,13 +17,28 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     position: 'absolute',
     top: 96,
-    left: '50%',
-    transform: 'translate(-50%, 0)'
+    width: '100vw',
+    height:'35px',
+    webkitFlexGrow: '1',
+    overflowX: 'scroll',
+    overflowY: 'hidden',
+    display: '-webkit-flex',
+    flexDirection: 'row',
+    paddingLeft:'5vw'
   },
   button: {
-    background: '#EEEEEE',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    borderRadius: '5px'
+    border: '1px solid #BABABA',
+    flexShrink: '0',
+    boxSizing: 'border-box',
+    borderRadius: '40px',
+    // width: '20vw',
+    height:'30px',
+    fontSize: '2.7vw',
+    marginRight: '7px'
+  },
+  addIcon: {
+    fontSize: '3vw',
+    marginLeft: '2px'
   },
   missionButton: {
     border: 'solid 1px #707070',
@@ -47,37 +64,52 @@ function FilterFab() {
     setFilterDrawer(false)
   }
   const { filterTags, addFilterTags } = useTagValue()
-  const filterInfo = ['無障礙設施', '路障', '排隊情況']
+  const filterInfo = ['設施任務', '排隊情況']
   return (
     <>
-      <Box
-        width='85%'
-        display='flex'
-        justifyContent='space-between'
-        className={classes.grid}
-      >
-        {filterInfo.map((item) => {
+      <div className={classes.grid}>
+        <Button
+          className={classes.button}
+          variant='contained'
+          size='small'
+          color={filterDrawer ? 'primary' : ''}
+          onClick={() => setFilterDrawer(true)}
+          //disabled
+        >
+          加入其他
+          <AddIcon className={classes.addIcon} />
+        </Button>
+        {filterTags.map((item) => {
           return (
             <Button
+              className={classes.button}
               variant='contained'
               size='small'
-              color={filterTags.indexOf(item) === -1 ? '' : 'primary'}
               onClick={() => addFilterTags(item)}
-              disabled
+              color='primary'
+              //disabled
             >
               {item}
+              <CloseIcon className={classes.addIcon} />
             </Button>
           )
         })}
-        <Button
-          variant='contained'
-          size='small'
-          onClick={() => setFilterDrawer(true)}
-          disabled
-        >
-          更多
-        </Button>
-      </Box>
+        {filterTags.length === 0 &&
+          filterInfo.map((item) => {
+            return (
+              <Button
+                className={classes.button}
+                variant='contained'
+                size='small'
+                onClick={() => addFilterTags(item)}
+                //disabled
+              >
+                {item}
+                <AddIcon className={classes.addIcon} />
+              </Button>
+            )
+          })}
+      </div>
       <FilterDrawer open={filterDrawer} onClose={closeDrawer} />
     </>
   )
