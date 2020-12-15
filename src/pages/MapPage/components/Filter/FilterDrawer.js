@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
   button: {
     position:'absolute',
-    bottom:'10px',
+    bottom:'20px',
     left:'10%',
     width: '80%',
     borderRadius: '20px'
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 const FilterDrawer = (props) => {
   const { open, onClose } = props
   const classes = useStyles()
-  const { filterTags, addFilterTags } = useTagValue()
+  const { addFilterTags } = useTagValue()
   const [currentMission, setCurrentMission] = useState(null)
   const [currentSubmission, setCurrentSubmission] = useState(null)
   const [currentTarget, setCurrentTarget] = useState(null)
