@@ -194,7 +194,7 @@ const FilterDrawer = (props) => {
           disabled={!final}
           variant='contained'
         >
-          套用
+          加入
         </Button>
       </div>
     </Drawer>
