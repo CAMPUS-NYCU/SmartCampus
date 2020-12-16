@@ -1,12 +1,12 @@
 import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
-import ReactRough, { Circle, LinearPath, Curve } from 'react-rough'
+import { Typography } from '@material-ui/core'
+import ReactRough, { Circle, LinearPath, Curve, Line } from 'react-rough'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
-    background: 'gray',
-    opacity: 0.6,
+    backgroundColor: 'rgba(0.5,0.5,0.5, 0.5)',
     width: '100vw',
     height: '100vh',
     position: 'absolute',
@@ -21,6 +21,16 @@ const useStyles = makeStyles((theme) => ({
     width: '100vw',
     display: 'flex',
     justifyContent: 'center'
+  },
+  mapFab: {
+    position: 'absolute',
+    top: '30vh',
+    left: '10vw',
+    height: '40vh',
+    width: '80vw',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }))
 
@@ -29,6 +39,17 @@ const GuidePage = () => {
   return (
     <div className={classes.container}>
       <div className={classes.missionFab}>
+        <Typography
+          variant='body1'
+          style={{
+            position: 'absolute',
+            top: '75px',
+            left: '23px',
+            color: 'white'
+          }}
+        >
+          添加回報
+        </Typography>
         <ReactRough>
           <Circle
             style={{ zIndex: '200000' }}
@@ -56,6 +77,53 @@ const GuidePage = () => {
             stroke='white'
           />
         </ReactRough>
+      </div>
+      <div className={classes.mapFab}>
+        <Typography variant='h5' style={{ color: 'white' }}>
+          自由查看校園地圖
+        </Typography>
+        <div style={{ position: 'absolute', top: 0, left: 0 }}>
+          <ReactRough width={50} height={40}>
+            <Line
+              x1={10}
+              x2={50}
+              y1={10}
+              y2={40}
+              style={{ zIndex: '200000' }}
+              stroke='white'
+            />
+            <LinearPath
+              style={{ zIndex: '200000' }}
+              points={[
+                [12, 25],
+                [5, 7],
+                [20, 2]
+              ]}
+              stroke='white'
+            />
+          </ReactRough>
+        </div>
+        <div style={{ position: 'absolute', bottom: 0, right: 0 }}>
+          <ReactRough width={50} height={40}>
+            <Line
+              stroke='white'
+              x1={0}
+              x2={40}
+              y1={0}
+              y2={30}
+              style={{ zIndex: '200000' }}
+            />
+            <LinearPath
+              style={{ zIndex: '200000' }}
+              points={[
+                [38, 15],
+                [45, 37],
+                [30, 38]
+              ]}
+              stroke='white'
+            />
+          </ReactRough>
+        </div>
       </div>
     </div>
   )
