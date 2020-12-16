@@ -31,6 +31,13 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  locationFab: {
+    position: 'absolute',
+    top: 130,
+    right: 0,
+    height: '120px',
+    width: '100px'
   }
 }))
 
@@ -119,6 +126,41 @@ const GuidePage = () => {
                 [38, 15],
                 [45, 37],
                 [30, 38]
+              ]}
+              stroke='white'
+            />
+          </ReactRough>
+        </div>
+      </div>
+      <div className={classes.locationFab}>
+      <Typography
+          variant='body2'
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: '10px',
+            color: 'white'
+          }}
+        >
+          定位你的位置
+        </Typography>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <ReactRough width={80} height={90}>
+            <Circle stroke='white' style={{ zIndex: 200000 }} x={40} y={40} diameter={50} />
+            <Line
+              stroke='white'
+              x1={40}
+              x2={37}
+              y1={70}
+              y2={85}
+              style={{ zIndex: '200000' }}
+            />
+             <LinearPath
+              style={{ zIndex: '200000' }}
+              points={[
+                [30, 75],
+                [40, 70],
+                [50, 75]
               ]}
               stroke='white'
             />
