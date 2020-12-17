@@ -38,6 +38,13 @@ const useStyles = makeStyles(() => ({
     right: 0,
     height: '120px',
     width: '100px'
+  },
+  hamburgerFab: {
+    position: 'absolute',
+    top: 0,
+    right: '5px',
+    height: '140px',
+    width: '210px'
   }
 }))
 
@@ -45,6 +52,12 @@ const GuidePage = () => {
   const classes = useStyles()
   return (
     <div className={classes.container}>
+      <Typography
+        variant='h6'
+        style={{ position: 'absolute', left: 30, top: 30, color:'white' }}
+      >
+        功能說明
+      </Typography>
       <div className={classes.missionFab}>
         <Typography
           variant='body1'
@@ -133,7 +146,7 @@ const GuidePage = () => {
         </div>
       </div>
       <div className={classes.locationFab}>
-      <Typography
+        <Typography
           variant='body2'
           style={{
             position: 'absolute',
@@ -146,7 +159,13 @@ const GuidePage = () => {
         </Typography>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <ReactRough width={80} height={90}>
-            <Circle stroke='white' style={{ zIndex: 200000 }} x={40} y={40} diameter={50} />
+            <Circle
+              stroke='white'
+              style={{ zIndex: 200000 }}
+              x={40}
+              y={40}
+              diameter={50}
+            />
             <Line
               stroke='white'
               x1={40}
@@ -155,12 +174,92 @@ const GuidePage = () => {
               y2={85}
               style={{ zIndex: '200000' }}
             />
-             <LinearPath
+            <LinearPath
               style={{ zIndex: '200000' }}
               points={[
                 [30, 75],
                 [40, 70],
                 [50, 75]
+              ]}
+              stroke='white'
+            />
+          </ReactRough>
+        </div>
+      </div>
+      <div className={classes.hamburgerFab}>
+        <Typography
+          variant='body2'
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: '20px',
+            color: 'white'
+          }}
+        >
+          查看更多功能
+        </Typography>
+        <Typography
+          variant='body2'
+          style={{
+            position: 'absolute',
+            left: 0,
+            bottom: 0,
+            color: 'white'
+          }}
+        >
+          選擇你想看的地標
+        </Typography>
+        <div style={{ position: 'absolute', right: 0, top: 0 }}>
+          <ReactRough height={140} width={120}>
+            <Circle
+              style={{ zIndex: '200000' }}
+              x={80}
+              y={55}
+              diameter={46}
+              stroke='white'
+            />
+            
+            <Curve
+              style={{ zIndex: '200000' }}
+              points={[
+                [5, 25],
+                [20, 15],
+                [50, 25]
+              ]}
+              stroke='white'
+            />
+            
+            <LinearPath
+              style={{ zIndex: '200000' }}
+              points={[
+                [40, 10],
+                [51, 26],
+                [43, 38]
+              ]}
+              stroke='white'
+            />
+            <Circle
+              style={{ zIndex: '200000' }}
+              x={35}
+              y={55}
+              diameter={46}
+              stroke='white'
+            />
+            <Curve
+              style={{ zIndex: '200000' }}
+              points={[
+                [35, 80],
+                [25, 110],
+                [15, 120]
+              ]}
+              stroke='white'
+            />
+            <LinearPath
+              style={{ zIndex: '200000' }}
+              points={[
+                [15, 100],
+                [35, 80],
+                [50, 100]
               ]}
               stroke='white'
             />
