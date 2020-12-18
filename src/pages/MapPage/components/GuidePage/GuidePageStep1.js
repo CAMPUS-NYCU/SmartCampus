@@ -48,13 +48,13 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const GuidePageStep1 = () => {
+export default function GuidePageStep1() {
   const classes = useStyles()
   return (
     <div className={classes.container}>
       <Typography
         variant='h6'
-        style={{ position: 'absolute', left: 30, top: 30, color:'white' }}
+        style={{ position: 'absolute', left: 30, top: 30, color: 'white' }}
       >
         功能說明
       </Typography>
@@ -218,7 +218,7 @@ const GuidePageStep1 = () => {
               diameter={46}
               stroke='white'
             />
-            
+
             <Curve
               style={{ zIndex: 2 }}
               points={[
@@ -228,7 +228,7 @@ const GuidePageStep1 = () => {
               ]}
               stroke='white'
             />
-            
+
             <LinearPath
               style={{ zIndex: 2 }}
               points={[
@@ -269,5 +269,3 @@ const GuidePageStep1 = () => {
     </div>
   )
 }
-
-export default GuidePageStep1

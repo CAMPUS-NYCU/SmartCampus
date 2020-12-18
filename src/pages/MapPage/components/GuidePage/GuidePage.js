@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { MobileStepper, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import GuidePageStep1 from './GuidePageStep1'
+import GuidePageStep2 from './GuidePageStep2'
 
 const useStyles = makeStyles({
   streetStepper: {
@@ -33,6 +34,7 @@ const GuidePage = () => {
   return step <= 2 ? (
     <>
       {step === 0 && <GuidePageStep1 />}
+      {step === 1 && <GuidePageStep2 />}
       <MobileStepper
         position='bottom'
         steps={0}
