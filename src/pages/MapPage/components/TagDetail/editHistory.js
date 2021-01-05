@@ -15,7 +15,6 @@ import {
   Divider
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import { useTagValue } from '../../contexts/TagContext'
 import { tagStatus } from '../../constants/tagData'
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditHistory = (props) => {
   const classes = useStyles()
-  const { open, handleHistoryClose, tagMissionIndex } = props
-  const { activeTag } = useTagValue()
+  const { open, handleHistoryClose, tagMissionIndex, activeTag } = props
   return (
     <Dialog fullScreen open={open} onClose={handleHistoryClose}>
       <AppBar position='sticky'>

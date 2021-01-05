@@ -221,6 +221,7 @@ const DetailPart = (props) => {
         open={openHistory}
         handleHistoryClose={handleHistoryClose}
         tagMissionIndex={tagMissionIndex}
+        activeTag={activeTag}
       />
     </>
   )

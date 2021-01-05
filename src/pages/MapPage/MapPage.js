@@ -38,7 +38,7 @@ const MapPageContent = (props) => {
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
-  const { activeTag, resetActiveTag } = useTagValue()
+  const { activeTag, resetActiveTag, tagDetail } = useTagValue()
   return (
     <div>
       <Map mapCenter={mapCenter} />
@@ -66,6 +66,7 @@ const MapPageContent = (props) => {
       {activeTag && (
         <TagDetailDialog
           activeTag={activeTag}
+          tagDetail={tagDetail}
           onClose={resetActiveTag}
           deny={deny}
           guest={guest}

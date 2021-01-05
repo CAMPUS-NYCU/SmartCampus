@@ -15,7 +15,6 @@ import { tagStatus } from '../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
-import { useTagValue } from '../../contexts/TagContext'
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -42,9 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function TagDetailDialog(props) {
-  const { activeTag, onClose, deny, guest } = props
+  const { activeTag, onClose, deny, guest, tagDetail } = props
   const { handleStartEdit, isInMission } = useMissionValue()
-  const { tagDetail } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const classes = useStyles()
@@ -59,6 +57,7 @@ function TagDetailDialog(props) {
     (status) => status.statusName === activeTag.status.statusName
   )
   const status = tagStatus[tagMissionIndex][tagStatusIndex]
+  console.log(activeTag)
   return (
     <>
       <Drawer
