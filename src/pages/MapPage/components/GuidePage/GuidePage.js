@@ -54,9 +54,23 @@ const GuidePage = () => {
           )
         }
         nextButton={
-          <Button className={classes.button} size='large' onClick={handleNext}>
-            下一頁
-          </Button>
+          step === 2 ? (
+            <Button
+              className={classes.button}
+              size='large'
+              onClick={handleNext}
+            >
+              完成
+            </Button>
+          ) : (
+            <Button
+              className={classes.button}
+              size='large'
+              onClick={handleNext}
+            >
+              下一頁
+            </Button>
+          )
         }
       />
     </>
