@@ -113,6 +113,7 @@ const DetailPart = (props) => {
             width='90vw'
           >
             <Button
+              id='changeStatusButton'
               onClick={() => {
                 guest ? deny() : setStateDrawer(true)
               }}
