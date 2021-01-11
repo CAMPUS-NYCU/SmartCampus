@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   container: {
     backgroundColor: 'rgba(0.5,0.5,0.5, 0.5)',
     width: '100vw',
-    height: '100vh',
+    height: 'calc(var(--vh, 1vh)*100)',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -20,10 +20,10 @@ const useStyles = makeStyles({
     width: '160px',
     position: 'absolute',
     right: '5px',
-    bottom: '80vh'
+    bottom: 'calc(var(--vh, 1vh)*80)'
   },
   changeIcon: {
-    height: '22vh',
+    height: 'calc(var(--vh, 1vh)*22)',
     width: '120px',
     position: 'absolute',
     left: '5px'
@@ -177,7 +177,7 @@ export default function GuidePageStep3() {
             position: 'absolute',
             top: changeStatusButton ? changeStatusButton.offsetTop : 0,
             right: '15px',
-            height: '22vh',
+            height: 'calc(var(--vh, 1vh)*22)',
             width: '120px'
           }}
         >

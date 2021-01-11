@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: 'rgba(0.5,0.5,0.5, 0.5)',
     width: '100vw',
-    height: '100vh',
+    height: 'calc(var(--vh, 1vh)*100)',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -24,9 +24,9 @@ const useStyles = makeStyles(() => ({
   },
   mapFab: {
     position: 'absolute',
-    top: '30vh',
+    top: 'calc(var(--vh, 1vh)*30)',
     left: '10vw',
-    height: '40vh',
+    height: 'calc(var(--vh, 1vh)*40)',
     width: '80vw',
     display: 'flex',
     justifyContent: 'center',
