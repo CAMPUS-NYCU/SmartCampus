@@ -12,7 +12,7 @@ import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../constants/mapConstants'
 
 export const TAG_UPDATE_MUTATION = gql`
-  mutation AddNewTagResponse($input: AddNewTagDataInput!) {
+  mutation AddNewTagResponse($input: addTagDataInput!) {
     addNewTagData(data: $input) {
       imageNumber
       imageUploadUrl
@@ -181,7 +181,12 @@ export const MissionContextProvider = ({ children }) => {
     setIsInEdit(false)
   }
 
-  const { refetch, updateTagList, tagDetail, refetchUserAddTags } = useTagValue()
+  const {
+    refetch,
+    updateTagList,
+    tagDetail,
+    refetchUserAddTags
+  } = useTagValue()
   const handleCompleteMission = () => {
     setLoading(true)
     firebase
@@ -202,7 +207,6 @@ export const MissionContextProvider = ({ children }) => {
                 subTypeName: selectedMissionId.toString(),
                 targetName: selectedSubOptionId.toString()
               },
-              accessibility: 0, // API目前accessibility必填，因此先保留
               coordinates: {
                 latitude: streetViewUpload
                   ? streetViewPosition.latitude.toString()
@@ -213,6 +217,7 @@ export const MissionContextProvider = ({ children }) => {
               },
               // createUserID: 'NO_USER',
               description: moreDescriptionText,
+              floor: floor,
               imageNumber: imageFiles.length,
               streetViewInfo: {
                 povHeading: streetViewPOV.heading,
@@ -243,7 +248,6 @@ export const MissionContextProvider = ({ children }) => {
                   clearMissionData()
                   setMissionType(null)
                   enqueueSnackbar('標注完成', { variant: 'success' })
-                  
                 })
               })
             })
@@ -408,7 +412,7 @@ export const MissionContextProvider = ({ children }) => {
   const handleChangeTextLocation = (event) => {
     setTextLocation(event.target.value)
   }
-  const [floor, setFloor] = useState('無')
+  const [floor, setFloor] = useState(0)
 
   // ==================== Clear ====================
   const clearMissionData = () => {
@@ -429,7 +433,7 @@ export const MissionContextProvider = ({ children }) => {
     setStreetViewPOV(InitialMissionValue.streetViewPOV)
     setStreetViewUpload(false)
     setPreviewImages([])
-    setFloor('無')
+    setFloor(0)
   }
 
   // ===================== Loading =======================

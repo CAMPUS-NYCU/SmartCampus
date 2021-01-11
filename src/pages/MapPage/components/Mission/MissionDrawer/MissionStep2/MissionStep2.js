@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import { Input, Drawer, Toolbar} from '@material-ui/core'
+import { Input, Drawer, Toolbar } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
@@ -126,10 +126,16 @@ function MissionStep3() {
                 borderBottom: floorChoose ? '' : 'solid 1px',
                 borderRadius: '0',
                 marginLeft: '10px',
-                color:'black'
+                color: 'black'
               }}
             >
-              {floor}
+              {floor === 0
+                ? '無'
+                : floor === -1
+                ? 'B1'
+                : floor === -2
+                ? 'B2'
+                : floor}
               <UnfoldMoreIcon size='small' />
             </Button>
           </Box>
@@ -252,10 +258,18 @@ function MissionStep3() {
             floor: floor
           }}
           optionGroups={{
-            floor: ['無', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            floor: ['無', 'B2', 'B1', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
           }}
           onChange={(name, value) => {
-            setFloor(value)
+            if (value === '無') {
+              setFloor(0)
+            } else if (value === 'B2') {
+              setFloor(-2)
+            } else if (value === 'B1') {
+              setFloor(-1)
+            } else {
+              setFloor(value)
+            }
           }}
         ></Picker>
       </Drawer>
