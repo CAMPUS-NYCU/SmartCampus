@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import TagDetailDialog from '../TagDetail/TagDetailDialog'
@@ -23,10 +23,11 @@ const useStyles = makeStyles({
     bottom: 'calc(var(--vh, 1vh)*80)'
   },
   changeIcon: {
-    height: 'calc(var(--vh, 1vh)*22)',
+    height: '120px',
     width: '120px',
     position: 'absolute',
-    left: '5px'
+    left: '5px',
+    bottom: '115px'
   }
 })
 
@@ -63,12 +64,6 @@ const demoDetail = {
 
 export default function GuidePageStep3() {
   const classes = useStyles()
-  const [changeStatusButton, setChangeStatusButton] = useState(null)
-  useEffect(() => {
-    let t = document.getElementById('changeStatusButton')
-    setChangeStatusButton(t)
-  }, [])
-  console.log(changeStatusButton ? changeStatusButton.offsetTop : 0)
   return (
     <>
       <TagDetailDialog
@@ -127,15 +122,12 @@ export default function GuidePageStep3() {
             </ReactRough>
           </div>
         </div>
-        <div
-          className={classes.changeIcon}
-          style={{ top: changeStatusButton ? changeStatusButton.offsetTop : 0 }}
-        >
+        <div className={classes.changeIcon}>
           <Typography
             variant='body2'
             style={{
               position: 'absolute',
-              top: '25%',
+              top: '0',
               left: '15px',
               color: 'white',
               zIndex: 102
@@ -143,7 +135,7 @@ export default function GuidePageStep3() {
           >
             更新地標狀態
           </Typography>
-          <div style={{ position: 'absolute', bottom: 0, left: '15px' }}>
+          <div style={{ position: 'absolute', bottom: '0', left: '15px' }}>
             <ReactRough width={80} height={100}>
               <Circle
                 style={{ zIndex: 102 }}
@@ -175,9 +167,9 @@ export default function GuidePageStep3() {
         <div
           style={{
             position: 'absolute',
-            top: changeStatusButton ? changeStatusButton.offsetTop : 0,
+            bottom: '130px',
             right: '15px',
-            height: 'calc(var(--vh, 1vh)*22)',
+            height: '120px',
             width: '120px'
           }}
         >
@@ -185,7 +177,7 @@ export default function GuidePageStep3() {
             variant='body2'
             style={{
               position: 'absolute',
-              top: '25%',
+              top: 0,
               right: '5px',
               color: 'white',
               zIndex: 102

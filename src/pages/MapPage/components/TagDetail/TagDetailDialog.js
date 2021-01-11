@@ -75,7 +75,7 @@ function TagDetailDialog(props) {
       >
         <div
           style={{
-            height: '85vh',
+            height: 'calc(var(--vh, 1vh)*85)',
             display: 'flex',
             flexDirection: 'column',
             borderRadius: '10px'
