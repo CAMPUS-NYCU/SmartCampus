@@ -11,7 +11,7 @@ import { missionInfo } from '../constants/missionInfo'
 import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../constants/mapConstants'
 
-export const TAG_UPDATE_MUTATION = gql`
+export const TAG_ADD_MUTATION = gql`
   mutation AddNewTagResponse($input: addTagDataInput!) {
     addNewTagData(data: $input) {
       imageNumber
@@ -94,7 +94,7 @@ export const MissionContext = React.createContext({
 })
 
 export const MissionContextProvider = ({ children }) => {
-  const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION)
+  const [tagAdd] = useMutation(TAG_ADD_MUTATION)
 
   // ==================== Step control ====================
   const { enqueueSnackbar } = useSnackbar()
@@ -193,7 +193,7 @@ export const MissionContextProvider = ({ children }) => {
       .auth()
       .currentUser.getIdToken()
       .then((token) => {
-        tagUpdate({
+        tagAdd({
           context: {
             headers: {
               authorization: token ? `Bearer ${token}` : ''

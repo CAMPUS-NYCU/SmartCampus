@@ -15,6 +15,7 @@ import { tagStatus } from '../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
+import { useTagValue } from '../../contexts/TagContext'
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 function TagDetailDialog(props) {
   const { activeTag, onClose, deny, guest, tagDetail } = props
   const { handleStartEdit, isInMission } = useMissionValue()
+  const { userAddTags } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const classes = useStyles()
@@ -90,15 +92,21 @@ function TagDetailDialog(props) {
                 <Typography variant='h5'>
                   {activeTag ? activeTag.category.targetName : '詳細資訊'}
                 </Typography>
-                <Button
-                  className={classes.editButton}
-                  size='small'
-                  // disabled={!tagDetail}
-                  onClick={() => handleStartEdit(activeTag)}
-                  disabled
-                >
-                  編輯
-                </Button>
+                {userAddTags &&
+                  userAddTags.map((tag) => {
+                    if (tag.id === activeTag.id) {
+                      return (
+                        <Button
+                          className={classes.editButton}
+                          size='small'
+                          disabled={!tagDetail}
+                          onClick={() => handleStartEdit(activeTag)}
+                        >
+                          編輯
+                        </Button>
+                      )
+                    }
+                  })}
               </Toolbar>
               <Box
                 display='flex'
