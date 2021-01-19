@@ -34,7 +34,7 @@ const DetailPart = (props) => {
     activeTag.category.missionName === '問題任務' &&
       detail &&
       enqueueSnackbar('再1人投票即可刪除回報', { variant: 'warning' })
-  }, [detail, enqueueSnackbar,  activeTag])
+  }, [detail, enqueueSnackbar, activeTag])
   const handleUopVote = () => {
     if (guest) {
       deny()
@@ -190,7 +190,7 @@ const DetailPart = (props) => {
               m={2}
             >
               <Box className={classes.clickableFont} m={0.5}>
-                {numberOfVote}
+                {numberOfVote ? numberOfVote : 0}
                 人贊同此問題待處理
               </Box>
               <IconButton
