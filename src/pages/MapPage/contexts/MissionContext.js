@@ -14,8 +14,8 @@ import { DefaultCenter } from '../constants/mapConstants'
 export const TAG_UPDATE_MUTATION = gql`
   mutation AddNewTagResponse($input: addTagDataInput!) {
     addNewTagData(data: $input) {
-      imageNumber
-      imageUploadUrl
+      imageUploadNumber
+      imageUploadUrls
     }
   }
 `
@@ -218,7 +218,7 @@ export const MissionContextProvider = ({ children }) => {
               // createUserID: 'NO_USER',
               description: moreDescriptionText,
               floor: floor,
-              imageNumber: imageFiles.length,
+              imageUploadNumber: imageFiles.length,
               streetViewInfo: {
                 povHeading: streetViewPOV.heading,
                 povPitch: streetViewPOV.pitch,
@@ -231,10 +231,10 @@ export const MissionContextProvider = ({ children }) => {
         }).then(
           ({
             data: {
-              addNewTagData: { imageNumber, imageUploadUrl }
+              addNewTagData: { imageUploadNumber, imageUploadUrls }
             }
           }) => {
-            imageUploadUrl.forEach((url, index) => {
+            imageUploadUrls.forEach((url, index) => {
               // const contentType = imageFiles[index].type
               const options = {
                 headers: {
@@ -251,7 +251,7 @@ export const MissionContextProvider = ({ children }) => {
                 })
               })
             })
-            if (imageUploadUrl.length === 0) {
+            if (imageUploadUrls.length === 0) {
               refetch().then((data) => {
                 updateTagList(data.data)
                 setLoading(false)
