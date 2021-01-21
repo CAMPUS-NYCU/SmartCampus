@@ -122,8 +122,8 @@ const DetailPart = (props) => {
                 /* Primary_light */
                 border: '1px solid #FFEDC0',
                 borderRadius: '20px',
-                boxShadow: 'inset 0px 2px 4px rgba(0, 0, 0, 0.14)',
-                filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))'
+                boxShadow:
+                  'inset 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 4px 4px rgba(0, 0, 0, 0.25)'
               }}
               variant='contained'
             >
