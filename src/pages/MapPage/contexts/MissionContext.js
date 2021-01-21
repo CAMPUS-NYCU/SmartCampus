@@ -313,10 +313,10 @@ export const MissionContextProvider = ({ children }) => {
           }).then(
             ({
               data: {
-                addNewTagData: { imageNumber, imageUploadUrl }
+                addNewTagData: { imageNumber, imageUploadUrls }
               }
             }) => {
-              imageUploadUrl.forEach((url, index) => {
+              imageUploadUrls.forEach((url, index) => {
                 // const contentType = imageFiles[index].type
                 const options = {
                   headers: {
@@ -333,7 +333,7 @@ export const MissionContextProvider = ({ children }) => {
                   })
                 })
               })
-              if (imageUploadUrl.length === 0) {
+              if (imageUploadUrls.length === 0) {
                 refetch().then((data) => {
                   updateTagList(data.data)
                   setLoading(false)
