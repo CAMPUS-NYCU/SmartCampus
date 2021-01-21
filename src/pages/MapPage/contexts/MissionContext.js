@@ -14,8 +14,8 @@ import { DefaultCenter } from '../constants/mapConstants'
 export const TAG_ADD_MUTATION = gql`
   mutation AddNewTagResponse($input: addTagDataInput!) {
     addNewTagData(data: $input) {
-      imageNumber
-      imageUploadUrl
+      imageUploadNumber
+      imageUploadUrls
     }
   }
 `
@@ -300,7 +300,7 @@ export const MissionContextProvider = ({ children }) => {
                 // createUserID: 'NO_USER',
                 description: moreDescriptionText,
                 floor: floor,
-                imageNumber: imageFiles.length,
+                imageUploadNumber: imageFiles.length,
                 streetViewInfo: {
                   povHeading: streetViewPOV.heading,
                   povPitch: streetViewPOV.pitch,
