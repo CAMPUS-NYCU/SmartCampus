@@ -5,14 +5,20 @@ import { useMissionValue } from '../../contexts/MissionContext'
 
 function ImageUpload(props) {
   const { imageFiles, setImageFiles } = useMissionValue()
-  const { setPreviewImages } = props
+  const { setPreviewImages, previewImages } = props
   const changeFiles = (event) => {
     const images = []
-    for (let i = 0; i < event.target.files.length; i += 1) {
-      images.push(URL.createObjectURL(event.target.files[i]))
+    const preview = []
+    for (let i = 0; i < imageFiles.length; i += 1) {
+      images.push(imageFiles[i])
+      preview.push(previewImages[i])
     }
-    setPreviewImages(images)
-    setImageFiles(event.target.files)
+    for (let i = 0; i < event.target.files.length; i += 1) {
+      images.push(event.target.files[i])
+      preview.push(URL.createObjectURL(event.target.files[i]))
+    }
+    setPreviewImages(preview)
+    setImageFiles(images)
   }
   const selectFile = useRef(null)
   const fileButtonClick = () => {
