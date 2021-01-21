@@ -8,7 +8,12 @@ const PicturePreview = (props) => {
   const { previewImages, setPreviewImages } = props
   const selectFile = useRef(null)
   const [selectedImage, setSelectedImage] = useState(null)
-  const { imageFiles, setImageFiles } = useMissionValue()
+  const {
+    imageFiles,
+    setImageFiles,
+    setImageDeleteUrls,
+    isInEdit
+  } = useMissionValue()
   const handleChangeImage = (index) => {
     setSelectedImage(index)
     selectFile.current.click()
@@ -30,15 +35,28 @@ const PicturePreview = (props) => {
   }
   const handleDeleteImage = (index) => {
     const images = []
+    const deleteImages = []
     const preview = []
-    for (let i = 0; i < imageFiles.length; i += 1) {
-      if (i !== index) {
-        images.push(imageFiles[i])
-        preview.push(previewImages[i])
+    if (isInEdit) {
+      for (let i = 0; i < imageFiles.length; i += 1) {
+        if (i !== index) {
+          images.push(imageFiles[i])
+          preview.push(previewImages[i])
+        }
+      }
+    }
+    else{
+      for (let i = 0; i < imageFiles.length; i += 1) {
+        if (i !== index) {
+          preview.push(previewImages[i])
+        }
+        else{
+          deleteImages.push(previewImages[i])
+        }
       }
     }
     setPreviewImages(preview)
-    setImageFiles(images)
+    setImageDeleteUrls(deleteImages)
   }
   return (
     <>

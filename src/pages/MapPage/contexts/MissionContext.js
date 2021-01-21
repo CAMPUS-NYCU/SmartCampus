@@ -19,6 +19,13 @@ export const TAG_ADD_MUTATION = gql`
     }
   }
 `
+export const TAG_UPDATE_MUTATION = gql`
+  mutation AddOrUpdateTagResponse($tagID: ID!, $data: updateTagDataInput!) {
+    updateTagData(tagId: $tagId, data: $data) {
+      imageUploadUrls
+    }
+  }
+`
 
 export const MISSION_MAX_STEP = 2
 export const MISSION_MIN_STEP = 0
@@ -95,6 +102,7 @@ export const MissionContext = React.createContext({
 
 export const MissionContextProvider = ({ children }) => {
   const [tagAdd] = useMutation(TAG_ADD_MUTATION)
+  const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION)
 
   // ==================== Step control ====================
   const { enqueueSnackbar } = useSnackbar()
@@ -164,6 +172,7 @@ export const MissionContextProvider = ({ children }) => {
     setSelectedSubOptionId(activeTag.category.targetName)
     setStep(MissionStep.selectMissionName)
     setMoreDescriptionText(tagDetail.description)
+    setPreviewImages(tagDetail.imageUrl)
     setTextLocation(activeTag.locationName)
     setIsInEdit(true)
   }
@@ -182,6 +191,7 @@ export const MissionContextProvider = ({ children }) => {
   }
 
   const {
+    activeTag,
     refetch,
     updateTagList,
     tagDetail,
@@ -193,55 +203,66 @@ export const MissionContextProvider = ({ children }) => {
       .auth()
       .currentUser.getIdToken()
       .then((token) => {
-        tagAdd({
-          context: {
-            headers: {
-              authorization: token ? `Bearer ${token}` : ''
-            }
-          },
-          variables: {
-            input: {
-              locationName: textLocation,
-              category: {
-                missionName: missionInfo[missionType].missionName.toString(),
-                subTypeName: selectedMissionId.toString(),
-                targetName: selectedSubOptionId.toString()
-              },
-              coordinates: {
-                latitude: streetViewUpload
-                  ? streetViewPosition.latitude.toString()
-                  : markerPosition.latitude.toString(),
-                longitude: streetViewUpload
-                  ? streetViewPosition.longitude.toString()
-                  : markerPosition.longitude.toString()
-              },
-              // createUserID: 'NO_USER',
-              description: moreDescriptionText,
-              floor: floor,
-              imageNumber: imageFiles.length,
-              streetViewInfo: {
-                povHeading: streetViewPOV.heading,
-                povPitch: streetViewPOV.pitch,
-                panoID: '',
-                cameraLatitude: streetViewPosition.latitude,
-                cameraLongitude: streetViewPosition.longitude
+        if (isInEdit) {
+          tagUpdate({
+            context: {
+              headers: {
+                authorization: token ? `Bearer ${token}` : ''
               }
-            }
-          }
-        }).then(
-          ({
-            data: {
-              addNewTagData: { imageNumber, imageUploadUrl }
-            }
-          }) => {
-            imageUploadUrl.forEach((url, index) => {
-              // const contentType = imageFiles[index].type
-              const options = {
-                headers: {
-                  'Content-Type': 'application/octet-stream'
+            },
+            variables: {
+              tagId: activeTag.id,
+              data: {
+                category: {
+                  missionName: missionInfo[missionType].missionName.toString(),
+                  subTypeName: selectedMissionId.toString(),
+                  targetName: selectedSubOptionId.toString()
+                },
+                coordinates: {
+                  latitude: streetViewUpload
+                    ? streetViewPosition.latitude.toString()
+                    : markerPosition.latitude.toString(),
+                  longitude: streetViewUpload
+                    ? streetViewPosition.longitude.toString()
+                    : markerPosition.longitude.toString()
+                },
+                description: moreDescriptionText,
+                floor: floor,
+                imageDeleteUrls: imageDeleteUrls,
+                imageUploadNumber: imageFiles.length,
+                streetViewInfo: {
+                  povHeading: streetViewPOV.heading,
+                  povPitch: streetViewPOV.pitch,
+                  panoID: '',
+                  cameraLatitude: streetViewPosition.latitude,
+                  cameraLongitude: streetViewPosition.longitude
                 }
               }
-              axios.put(url, imageFiles[index], options).then((res) => {
+            }
+          }).then(
+            ({
+              data: {
+                updateTagData: { imageUploadUrl }
+              }
+            }) => {
+              imageUploadUrl.forEach((url, index) => {
+                // const contentType = imageFiles[index].type
+                const options = {
+                  headers: {
+                    'Content-Type': 'application/octet-stream'
+                  }
+                }
+                axios.put(url, imageFiles[index], options).then((res) => {
+                  refetch().then((data) => {
+                    updateTagList(data.data)
+                    setLoading(false)
+                    clearMissionData()
+                    setMissionType(null)
+                    enqueueSnackbar('標注完成', { variant: 'success' })
+                  })
+                })
+              })
+              if (imageUploadUrl.length === 0) {
                 refetch().then((data) => {
                   updateTagList(data.data)
                   setLoading(false)
@@ -249,20 +270,82 @@ export const MissionContextProvider = ({ children }) => {
                   setMissionType(null)
                   enqueueSnackbar('標注完成', { variant: 'success' })
                 })
-              })
-            })
-            if (imageUploadUrl.length === 0) {
-              refetch().then((data) => {
-                updateTagList(data.data)
-                setLoading(false)
-                clearMissionData()
-                setMissionType(null)
-                enqueueSnackbar('標注完成', { variant: 'success' })
-              })
+              }
+              refetchUserAddTags()
             }
-            refetchUserAddTags()
-          }
-        )
+          )
+        } else {
+          tagAdd({
+            context: {
+              headers: {
+                authorization: token ? `Bearer ${token}` : ''
+              }
+            },
+            variables: {
+              input: {
+                locationName: textLocation,
+                category: {
+                  missionName: missionInfo[missionType].missionName.toString(),
+                  subTypeName: selectedMissionId.toString(),
+                  targetName: selectedSubOptionId.toString()
+                },
+                coordinates: {
+                  latitude: streetViewUpload
+                    ? streetViewPosition.latitude.toString()
+                    : markerPosition.latitude.toString(),
+                  longitude: streetViewUpload
+                    ? streetViewPosition.longitude.toString()
+                    : markerPosition.longitude.toString()
+                },
+                // createUserID: 'NO_USER',
+                description: moreDescriptionText,
+                floor: floor,
+                imageNumber: imageFiles.length,
+                streetViewInfo: {
+                  povHeading: streetViewPOV.heading,
+                  povPitch: streetViewPOV.pitch,
+                  panoID: '',
+                  cameraLatitude: streetViewPosition.latitude,
+                  cameraLongitude: streetViewPosition.longitude
+                }
+              }
+            }
+          }).then(
+            ({
+              data: {
+                addNewTagData: { imageNumber, imageUploadUrl }
+              }
+            }) => {
+              imageUploadUrl.forEach((url, index) => {
+                // const contentType = imageFiles[index].type
+                const options = {
+                  headers: {
+                    'Content-Type': 'application/octet-stream'
+                  }
+                }
+                axios.put(url, imageFiles[index], options).then((res) => {
+                  refetch().then((data) => {
+                    updateTagList(data.data)
+                    setLoading(false)
+                    clearMissionData()
+                    setMissionType(null)
+                    enqueueSnackbar('標注完成', { variant: 'success' })
+                  })
+                })
+              })
+              if (imageUploadUrl.length === 0) {
+                refetch().then((data) => {
+                  updateTagList(data.data)
+                  setLoading(false)
+                  clearMissionData()
+                  setMissionType(null)
+                  enqueueSnackbar('標注完成', { variant: 'success' })
+                })
+              }
+              refetchUserAddTags()
+            }
+          )
+        }
       })
 
     // .catch()
@@ -272,6 +355,7 @@ export const MissionContextProvider = ({ children }) => {
   // 照片
   const [imageFiles, setImageFiles] = useState([])
   const [previewImages, setPreviewImages] = useState([])
+  const [imageDeleteUrls, setImageDeleteUrls] = useState([])
   // ==================== UI toggle control ====================
   // 是否顯示各控制元件，點地圖來toggle
   const [showControl, setShowControl] = useState(true)
@@ -433,6 +517,7 @@ export const MissionContextProvider = ({ children }) => {
     setStreetViewPOV(InitialMissionValue.streetViewPOV)
     setStreetViewUpload(false)
     setPreviewImages([])
+    setImageDeleteUrls([])
     setFloor(0)
   }
 
