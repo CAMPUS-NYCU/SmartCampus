@@ -198,7 +198,8 @@ export const MissionContextProvider = ({ children }) => {
     refetch,
     updateTagList,
     tagDetail,
-    refetchUserAddTags
+    refetchUserAddTags,
+    refetchTagDetail
   } = useTagValue()
   const handleCompleteMission = () => {
     setLoading(true)
@@ -259,6 +260,8 @@ export const MissionContextProvider = ({ children }) => {
                   }
                 }
                 axios.put(url, imageFiles[index], options).then((res) => {
+                  refetchUserAddTags()
+                  refetchTagDetail()
                   refetch().then((data) => {
                     updateTagList(data.data)
                     setLoading(false)
@@ -278,6 +281,7 @@ export const MissionContextProvider = ({ children }) => {
                 })
               }
               refetchUserAddTags()
+              refetchTagDetail()
             }
           )
         } else {

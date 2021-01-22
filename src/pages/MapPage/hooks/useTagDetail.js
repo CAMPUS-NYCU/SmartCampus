@@ -80,17 +80,17 @@ function useTagDetail(id) {
         setToken(t)
       })
   }
-  const { data: { tag = null } = {} } = useQuery(
+  const { data: { tag = null } = {}, refetch } = useQuery(
     GET_TAG_DETAIL_QUERY,
     {
       context: {
-      headers: {
-        authorization: token ? `Bearer ${token}` : ''
-      }
+        headers: {
+          authorization: token ? `Bearer ${token}` : ''
+        }
       },
-      fetchPolicy: "no-cache",
+      fetchPolicy: 'no-cache',
       variables: { id },
-      onCompleted:()=>{
+      onCompleted: () => {
         setTagDetail({
           ...tag,
           newCreateTime: generateTime(tag.createTime),
@@ -99,8 +99,10 @@ function useTagDetail(id) {
       }
     }
   )
-  return {tagDetail, setTagDetail}
+  const refetchTagDetail = () => {
+    refetch({ fetchPolicy: 'no-cache' })
+  }
+  return { tagDetail, setTagDetail, refetchTagDetail }
 }
 
 export default useTagDetail
- 

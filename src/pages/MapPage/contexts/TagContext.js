@@ -43,7 +43,7 @@ export const TagContextProvider = ({ children }) => {
 
   const [activeTagId, setActiveTagId] = useState(null)
   const activeTag = findTagById(activeTagId, tags)
-  const { tagDetail, setTagDetail } = useTagDetail(
+  const { tagDetail, setTagDetail, refetchTagDetail } = useTagDetail(
     activeTag ? activeTag.id : ''
   )
   const resetActiveTag = () => {
@@ -77,7 +77,8 @@ export const TagContextProvider = ({ children }) => {
     addFilterTags,
     tagDetail,
     userAddTags,
-    refetchUserAddTags
+    refetchUserAddTags,
+    refetchTagDetail
   }
 
   return (
