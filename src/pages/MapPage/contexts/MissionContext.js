@@ -20,9 +20,10 @@ export const TAG_ADD_MUTATION = gql`
   }
 `
 export const TAG_UPDATE_MUTATION = gql`
-  mutation AddOrUpdateTagResponse($tagID: ID!, $data: updateTagDataInput!) {
+  mutation AddOrUpdateTagResponse($tagId: ID!, $data: updateTagDataInput!) {
     updateTagData(tagId: $tagId, data: $data) {
       imageUploadUrls
+      imageDeleteStatus
     }
   }
 `
@@ -173,6 +174,8 @@ export const MissionContextProvider = ({ children }) => {
     setStep(MissionStep.selectMissionName)
     setMoreDescriptionText(tagDetail.description)
     setPreviewImages(tagDetail.imageUrl)
+    setImageFiles([])
+    setImageDeleteUrls([])
     setTextLocation(activeTag.locationName)
     setIsInEdit(true)
   }
@@ -204,6 +207,7 @@ export const MissionContextProvider = ({ children }) => {
       .currentUser.getIdToken()
       .then((token) => {
         if (isInEdit) {
+          console.log(imageFiles.length, imageFiles, imageDeleteUrls)
           tagUpdate({
             context: {
               headers: {
@@ -213,6 +217,7 @@ export const MissionContextProvider = ({ children }) => {
             variables: {
               tagId: activeTag.id,
               data: {
+                locationName: textLocation,
                 category: {
                   missionName: missionInfo[missionType].missionName.toString(),
                   subTypeName: selectedMissionId.toString(),
@@ -242,10 +247,11 @@ export const MissionContextProvider = ({ children }) => {
           }).then(
             ({
               data: {
-                updateTagData: { imageUploadUrl }
+                updateTagData: { imageUploadUrls, imageDeleteStatus }
               }
             }) => {
-              imageUploadUrl.forEach((url, index) => {
+              console.log(imageDeleteStatus)
+              imageUploadUrls.forEach((url, index) => {
                 // const contentType = imageFiles[index].type
                 const options = {
                   headers: {
@@ -258,17 +264,17 @@ export const MissionContextProvider = ({ children }) => {
                     setLoading(false)
                     clearMissionData()
                     setMissionType(null)
-                    enqueueSnackbar('標注完成', { variant: 'success' })
+                    enqueueSnackbar('更改完成', { variant: 'success' })
                   })
                 })
               })
-              if (imageUploadUrl.length === 0) {
+              if (imageUploadUrls.length === 0) {
                 refetch().then((data) => {
                   updateTagList(data.data)
                   setLoading(false)
                   clearMissionData()
                   setMissionType(null)
-                  enqueueSnackbar('標注完成', { variant: 'success' })
+                  enqueueSnackbar('更改完成', { variant: 'success' })
                 })
               }
               refetchUserAddTags()
@@ -588,7 +594,9 @@ export const MissionContextProvider = ({ children }) => {
     mapCenter,
     setMapCenter,
     floor,
-    setFloor
+    setFloor,
+    setImageDeleteUrls,
+    imageDeleteUrls
   }
   return (
     <MissionContext.Provider value={contextValues}>

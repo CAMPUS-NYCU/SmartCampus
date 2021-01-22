@@ -44,7 +44,6 @@ const Pages = (props) => {
     setGuest
   } = props
   const { tags } = useTagValue()
-  console.log(tags)
   return (
     <>
       { !tags ? (

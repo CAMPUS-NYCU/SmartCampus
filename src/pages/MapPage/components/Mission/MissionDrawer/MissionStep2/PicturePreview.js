@@ -9,11 +9,12 @@ const PicturePreview = (props) => {
     imageFiles,
     setImageFiles,
     setImageDeleteUrls,
+    imageDeleteUrls,
     isInEdit
   } = useMissionValue()
   const handleDeleteImage = (index) => {
     const images = []
-    const deleteImages = []
+    const deleteImages = [...imageDeleteUrls]
     const preview = []
     if (!isInEdit) {
       for (let i = 0; i < imageFiles.length; i += 1) {
@@ -22,17 +23,27 @@ const PicturePreview = (props) => {
           preview.push(previewImages[i])
         }
       }
-      setImageFiles(images)
     } else {
-      for (let i = 0; i < imageFiles.length; i += 1) {
+      for (let i = 0; i < previewImages.length - imageFiles.length; i += 1) {
         if (i !== index) {
           preview.push(previewImages[i])
         } else {
           deleteImages.push(previewImages[i])
         }
       }
+      for (
+        let i = previewImages.length - imageFiles.length;
+        i < previewImages.length;
+        i++
+      ) {
+        if (i !== index) {
+          images.push(imageFiles[i])
+          preview.push(previewImages[i])
+        }
+      }
       setImageDeleteUrls(deleteImages)
     }
+    setImageFiles(images)
     setPreviewImages(preview)
   }
   return (

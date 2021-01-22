@@ -47,7 +47,6 @@ function ProfileDialog(props) {
   useEffect(() => {
     if (userAddTags) {
       userAddTags.forEach((t) => {
-        console.log(t)
         if (t.status.numberOfUpVote) {
           setLikeNum((prevLikeNum) => prevLikeNum + t.status.numberOfUpVote)
         }

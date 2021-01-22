@@ -29,8 +29,6 @@ const DetailPart = (props) => {
   useEffect(() => {
     setNumberOfVote(detail ? detail.status.numberOfUpVote : 0)
     setHasUpVote(detail ? detail.status.hasUpVote : false)
-    console.log(activeTag)
-
     activeTag.category.missionName === '問題任務' &&
       detail &&
       enqueueSnackbar('再1人投票即可刪除回報', { variant: 'warning' })

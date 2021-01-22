@@ -46,9 +46,15 @@ const EditHistory = (props) => {
       </AppBar>
       <List component='nav'>
         {activeTag.statusHistory.map((history) => {
-          const tagStatusIndex = tagStatus[tagMissionIndex].findIndex(
-            (status) => status.statusName === history.statusName
-          )
+          let tagStatusIndex 
+          tagStatus.forEach((s) => {
+            const f = s.findIndex(
+              (status) => status.statusName === history.statusName
+            )
+            if (f !== -1) {
+              tagStatusIndex = f
+            }
+          })
           const color = tagStatus[tagMissionIndex][tagStatusIndex].statusColor
           return (
             <>
@@ -73,9 +79,7 @@ const EditHistory = (props) => {
                   </Box>
                 </ListItemSecondaryAction>
               </ListItem>
-              <Box  m={2.5}>
-                {history.description}
-              </Box>
+              <Box m={2.5}>{history.description}</Box>
               <Divider variant='middle' />
             </>
           )

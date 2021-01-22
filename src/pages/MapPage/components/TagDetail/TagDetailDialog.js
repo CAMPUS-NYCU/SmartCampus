@@ -59,7 +59,6 @@ function TagDetailDialog(props) {
     (status) => status.statusName === activeTag.status.statusName
   )
   const status = tagStatus[tagMissionIndex][tagStatusIndex]
-  console.log(activeTag)
   return (
     <>
       <Drawer
