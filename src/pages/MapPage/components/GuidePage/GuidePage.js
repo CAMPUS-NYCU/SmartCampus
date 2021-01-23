@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { MobileStepper, Button } from '@material-ui/core'
+import { MobileStepper, Button, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import GuidePageStep1 from './GuidePageStep1'
 import GuidePageStep2 from './GuidePageStep2'
 import GuidePageStep3 from './GuidePageStep3'
+import * as firebase from 'firebase/app'
+import { gql } from 'apollo-boost'
+import { useQuery } from '@apollo/react-hooks'
+import MainPage from '../../../../components/MainPage'
 
 const useStyles = makeStyles({
   streetStepper: {
@@ -19,10 +23,93 @@ const useStyles = makeStyles({
   }
 })
 
+const GET_READ_GUIDE_QUERY = gql`
+  query {
+    hasReadGuide
+  }
+`
+
 const GuidePage = (props) => {
+  const { step, handleNext, handleBack } = props
+  const [token, setToken] = useState('')
+  const [hasReadGuide, setHasReadGuide] = useState(null)
+
+  const { data, refetch } = useQuery(GET_READ_GUIDE_QUERY, {
+    context: {
+      headers: {
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    },
+    onCompleted: () => {
+      setHasReadGuide(data.hasReadGuide)
+    }
+  })
+  if (firebase.auth().currentUser && hasReadGuide === null) {
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((t) => {
+        setToken(t)
+        refetch().then((data) => {
+          if (data.data) {
+            setHasReadGuide(data.data.hasReadGuide)
+            if (!data.data.hasReadGuide){
+              
+            }
+          }
+        })
+      })
+  }
+  return hasReadGuide === null ? (
+    <LoadingPage />
+  ) : (
+    <GuidePageContent
+      step={step}
+      handleNext={handleNext}
+      handleBack={handleBack}
+    />
+  )
+}
+
+const LoadingPage = () => {
+  return (
+    <>
+      <div
+        style={{
+          background: 'rgba(0.5,0.5,0.5, 0.5)',
+          height: 'calc(var(--vh, 1vh)*100)',
+          width: '100vw',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 2,
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center'
+        }}
+      >
+        <CircularProgress />
+      </div>
+      <div
+        style={{
+          background: 'white',
+          height: 'calc(var(--vh, 1vh)*100)',
+          width: '100vw',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 1
+        }}
+      >
+        <MainPage />
+      </div>
+    </>
+  )
+}
+
+const GuidePageContent = (props) => {
   const classes = useStyles()
-  const {step, handleNext, handleBack} = props
-  console.log(step)
+  const { step, handleNext, handleBack } = props
   return step <= 2 ? (
     <>
       {step === 0 && <GuidePageStep1 />}
