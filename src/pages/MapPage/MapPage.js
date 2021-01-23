@@ -35,6 +35,7 @@ export default function MapPage(props) {
         setStep={setStep}
         handleNext={() => handleNext(1)}
         handleBack={() => handleBack(1)}
+        guest={guest}
       />
       <MapPageContent
         signOut={signOut}

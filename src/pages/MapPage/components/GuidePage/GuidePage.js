@@ -7,7 +7,7 @@ import GuidePageStep2 from './GuidePageStep2'
 import GuidePageStep3 from './GuidePageStep3'
 import * as firebase from 'firebase/app'
 import { gql } from 'apollo-boost'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import MainPage from '../../../../components/MainPage'
 
 const useStyles = makeStyles({
@@ -29,9 +29,16 @@ const GET_READ_GUIDE_QUERY = gql`
   }
 `
 
+const SET_HAS_READ_GUIDE_MUTATION = gql`
+  mutation {
+    setHasReadGuide
+  }
+`
+
 const GuidePage = (props) => {
-  const { step, handleNext, handleBack } = props
+  const { step, setStep, handleNext, handleBack, guest } = props
   const [token, setToken] = useState('')
+  const [setHasReadGuideMutation] = useMutation(SET_HAS_READ_GUIDE_MUTATION)
   const [hasReadGuide, setHasReadGuide] = useState(null)
 
   const { data, refetch } = useQuery(GET_READ_GUIDE_QUERY, {
@@ -40,6 +47,7 @@ const GuidePage = (props) => {
         authorization: token ? `Bearer ${token}` : ''
       }
     },
+    fetchPolicy:'no-cache',
     onCompleted: () => {
       setHasReadGuide(data.hasReadGuide)
     }
@@ -53,14 +61,23 @@ const GuidePage = (props) => {
         refetch().then((data) => {
           if (data.data) {
             setHasReadGuide(data.data.hasReadGuide)
-            if (!data.data.hasReadGuide){
-              
+            if (!data.data.hasReadGuide) {
+              setHasReadGuideMutation({
+                context: {
+                  headers: {
+                    authorization: token ? `Bearer ${token}` : ''
+                  }
+                }
+              })
+            }
+            else{
+              setStep(3)
             }
           }
         })
       })
   }
-  return hasReadGuide === null ? (
+  return hasReadGuide === null && !guest ? (
     <LoadingPage />
   ) : (
     <GuidePageContent
@@ -83,9 +100,9 @@ const LoadingPage = () => {
           top: 0,
           left: 0,
           zIndex: 2,
-          display:'flex',
-          justifyContent:'center',
-          alignItems:'center'
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
         }}
       >
         <CircularProgress />
