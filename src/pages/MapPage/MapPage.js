@@ -2,7 +2,6 @@ import React from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 
-import HowToUseDialog from './components/HowToUseDialog'
 import SearchBar from './components/SearchBar'
 import Map from './components/Map'
 import useModal from '../../utils/hooks/useModal'
@@ -16,25 +15,40 @@ import {
 import ReportHistory from './components/ReportHistory'
 import GuidePage from './components/GuidePage'
 import { useTagValue } from './contexts/TagContext'
+import useStep from '../../utils/hooks/useStep'
 import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 
 export default function MapPage(props) {
   const { signOut, deny, guest } = props
+  const { step: guideStep, setStep, handleNext, handleBack } = useStep({
+    initialStep: 0,
+    maxStep: 3,
+    minStep: 0
+  })
   return (
     // <TagContextProvider>
     <MissionContextProvider>
-      <GuidePage />
-      <MapPageContent signOut={signOut} deny={deny} guest={guest} />
+      <GuidePage
+        step={guideStep}
+        setStep={setStep}
+        handleNext={() => handleNext(1)}
+        handleBack={() => handleBack(1)}
+      />
+      <MapPageContent
+        signOut={signOut}
+        deny={deny}
+        guest={guest}
+        setGuideStep={setStep}
+      />
     </MissionContextProvider>
     // </TagContextProvider>
   )
 }
 
 const MapPageContent = (props) => {
-  const { signOut, deny, guest } = props
-  const howToUseDialogControl = useModal()
+  const { signOut, deny, guest, setGuideStep } = props
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
@@ -49,7 +63,9 @@ const MapPageContent = (props) => {
               handleOpenProfile: profileDialogControl.setOpen,
               handleOpenHistory: ReportHistoryControl.setOpen,
               handleOpenSetting: profileDialogControl.setOpen,
-              handleOpenHowToUse: howToUseDialogControl.setOpen,
+              handleOpenHowToUse: () => {
+                setGuideStep(0)
+              },
               handleOpenTerms: profileDialogControl.setOpen
             }}
             signOut={guest ? deny : signOut}
@@ -62,7 +78,6 @@ const MapPageContent = (props) => {
       <MissionDrawer />
       <ReportHistory control={ReportHistoryControl} />
       <ProfileDialog control={profileDialogControl} />
-      <HowToUseDialog control={howToUseDialogControl} />
       {activeTag && (
         <TagDetailDialog
           activeTag={activeTag}

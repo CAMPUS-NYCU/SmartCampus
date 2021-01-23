@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { MobileStepper, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -19,19 +19,10 @@ const useStyles = makeStyles({
   }
 })
 
-const GuidePage = () => {
+const GuidePage = (props) => {
   const classes = useStyles()
-  const [step, setStep] = useState(0)
-  const handleNext = () => {
-    setStep((prevStep) => {
-      return prevStep + 1
-    })
-  }
-  const handleBack = () => {
-    setStep((prevStep) => {
-      return prevStep - 1
-    })
-  }
+  const {step, handleNext, handleBack} = props
+  console.log(step)
   return step <= 2 ? (
     <>
       {step === 0 && <GuidePageStep1 />}
