@@ -28,6 +28,7 @@ export default function MapPage(props) {
     maxStep: 3,
     minStep: 0
   })
+
   return (
     // <TagContextProvider>
     <MissionContextProvider>
@@ -56,6 +57,9 @@ const MapPageContent = (props) => {
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
   const { activeTag, resetActiveTag, tagDetail } = useTagValue()
+  
+
+  
   return (
     <div>
       <Map mapCenter={mapCenter} />
