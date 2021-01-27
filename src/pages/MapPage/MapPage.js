@@ -19,6 +19,7 @@ import useStep from '../../utils/hooks/useStep'
 import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
+import WindowBackProvider from '../../components/WindowBackProvider'
 
 export default function MapPage(props) {
   const { signOut, deny, guest } = props
@@ -30,6 +31,7 @@ export default function MapPage(props) {
   return (
     // <TagContextProvider>
     <MissionContextProvider>
+      <WindowBackProvider />
       <GuidePage
         step={guideStep}
         setStep={setStep}
