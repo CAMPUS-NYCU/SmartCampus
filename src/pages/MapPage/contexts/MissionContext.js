@@ -232,7 +232,6 @@ export const MissionContextProvider = ({ children }) => {
                     ? streetViewPosition.longitude.toString()
                     : markerPosition.longitude.toString()
                 },
-                description: moreDescriptionText,
                 floor: floor,
                 imageDeleteUrls: imageDeleteUrls,
                 imageUploadNumber: imageFiles.length,
