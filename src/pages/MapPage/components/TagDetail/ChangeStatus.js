@@ -24,14 +24,7 @@ import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
 import { useTagValue } from '../../contexts/TagContext'
 
 function ChangeStatus(props) {
-  const {
-    stateDrawer,
-    activeTag,
-    setStateDrawer,
-    classes,
-    status,
-    detail
-  } = props
+  const { stateDrawer, activeTag, setStateDrawer, classes, status } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
@@ -40,7 +33,9 @@ function ChangeStatus(props) {
   const resetTemporaryTagState = () => {
     setTemporaryTagState(activeTag.status.statusName)
   }
-  const [newDescription, setNewDescription] = useState(detail.description)
+  const [newDescription, setNewDescription] = useState(
+    activeTag.statusHistory[0].description
+  )
   const handleChangeDescription = (event) => {
     setNewDescription(event.target.value)
   }
@@ -50,7 +45,6 @@ function ChangeStatus(props) {
   }
   const { updateStatus } = useUpdateTagStatus()
   const HandleDrawerComplete = () => {
-    if (temporaryTagState === activeTag.status.statusName) return
     setLoading(true)
     firebase
       .auth()
@@ -120,31 +114,26 @@ function ChangeStatus(props) {
                     }}
                   />
                 </ListItem>
-                {temporaryTagState !== activeTag.status.statusName &&
-                  item.statusName === temporaryTagState && (
-                    <TextField
-                      multiline
-                      rows={2}
-                      variant='outlined'
-                      placeholder={detail.description}
-                      onChange={handleChangeDescription}
-                      style={{
-                        width: '90%',
-                        marginLeft: '5%',
-                        marginBottom: '20px'
-                      }}
-                    />
-                  )}
+                {item.statusName === temporaryTagState && (
+                  <TextField
+                    multiline
+                    rows={2}
+                    variant='outlined'
+                    placeholder={activeTag.statusHistory[0].description}
+                    onChange={handleChangeDescription}
+                    style={{
+                      width: '90%',
+                      marginLeft: '5%',
+                      marginBottom: '20px'
+                    }}
+                  />
+                )}
                 {index !== status.length - 1 && <Divider variant='middle' />}
               </>
             ))}
           </List>
           <DialogActions>
-            <Button
-              color='primary'
-              onClick={() => HandleDrawerComplete()}
-              disabled={temporaryTagState === activeTag.status.statusName}
-            >
+            <Button color='primary' onClick={() => HandleDrawerComplete()}>
               確定
             </Button>
           </DialogActions>
