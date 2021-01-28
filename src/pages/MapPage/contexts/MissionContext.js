@@ -140,6 +140,11 @@ export const MissionContextProvider = ({ children }) => {
 
   const [missionType, setMissionType] = useState(null)
   const [mapCenter, setMapCenter] = useState(DefaultCenter)
+  const handleChangeMissionType = (target) => {
+    setMissionType(target)
+    setSelectedMissionId('')
+    setSelectedSubOptionId('')
+  }
   const handleStartMission = () => {
     setShowControl(true)
     const center = mapInstance.getCenter()
@@ -599,7 +604,8 @@ export const MissionContextProvider = ({ children }) => {
     floor,
     setFloor,
     setImageDeleteUrls,
-    imageDeleteUrls
+    imageDeleteUrls,
+    handleChangeMissionType
   }
   return (
     <MissionContext.Provider value={contextValues}>
