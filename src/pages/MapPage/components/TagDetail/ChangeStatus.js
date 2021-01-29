@@ -34,7 +34,7 @@ function ChangeStatus(props) {
     setTemporaryTagState(activeTag.status.statusName)
   }
   const [newDescription, setNewDescription] = useState(
-    activeTag.statusHistory[0].description
+    activeTag.status.description
   )
   const handleChangeDescription = (event) => {
     setNewDescription(event.target.value)
@@ -119,7 +119,7 @@ function ChangeStatus(props) {
                     multiline
                     rows={2}
                     variant='outlined'
-                    placeholder={activeTag.statusHistory[0].description}
+                    placeholder={activeTag.status.description}
                     onChange={handleChangeDescription}
                     style={{
                       width: '90%',

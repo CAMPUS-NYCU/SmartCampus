@@ -20,11 +20,12 @@ export const GET_TAG_LIST_QUERY = gql`
       }
       status {
         statusName
+        description
       }
       statusHistory {
         statusName
         createTime
-        createUser{
+        createUser {
           displayName
         }
         description
@@ -45,7 +46,7 @@ const reformatTagList = (data) => {
       accessibility,
       category: { missionName, subTypeName, targetName },
       coordinates: { latitude, longitude },
-      status: { statusName }
+      status: { statusName, description }
     } = tag
     const statusHistory = tag.statusHistory.map((history) => {
       return {
@@ -64,7 +65,7 @@ const reformatTagList = (data) => {
         lat: parseFloat(latitude),
         lng: parseFloat(longitude)
       },
-      status: { statusName },
+      status: { statusName, description },
       statusHistory
     }
   })
@@ -79,7 +80,7 @@ function useTagList() {
     }
   })
   // Reformat tags
-  
+
   const updateTagList = (dataIn) => {
     setTags(reformatTagList(dataIn))
   }

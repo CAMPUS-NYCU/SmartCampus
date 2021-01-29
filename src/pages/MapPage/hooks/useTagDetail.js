@@ -9,7 +9,6 @@ export const GET_TAG_DETAIL_QUERY = gql`
       id
       createTime
       lastUpdateTime
-      description
       imageUrl
       status {
         numberOfUpVote

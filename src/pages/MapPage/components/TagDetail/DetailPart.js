@@ -160,7 +160,7 @@ const DetailPart = (props) => {
               paddingBottom: '2'
             }}
           >
-            {activeTag.statusHistory[0].description ? (
+            {activeTag.status.description ? (
               <Box
                 my={2}
                 textOverflow='ellipsis'
@@ -168,7 +168,7 @@ const DetailPart = (props) => {
                 overflow='hidden'
                 height='4.5em'
               >
-                {activeTag.statusHistory[0].description}
+                {activeTag.status.description}
               </Box>
             ) : (
               <p>無描述</p>
