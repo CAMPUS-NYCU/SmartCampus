@@ -22,13 +22,13 @@ const useStyles = makeStyles(() => ({
 
 const MissionStep0 = () => {
   const missionImage = [Mission1, Mission2, Mission3]
-  const { missionType, setMissionType } = useMissionValue()
+  const { missionType, handleChangeMissionType } = useMissionValue()
   const classes = useStyles()
   return (
     <List>
       {missionInfo.map((item, index) => (
         <ListItem
-          onClick={() => setMissionType(index)}
+          onClick={() => handleChangeMissionType(index)}
           button
           disabled={index === 2}
         >

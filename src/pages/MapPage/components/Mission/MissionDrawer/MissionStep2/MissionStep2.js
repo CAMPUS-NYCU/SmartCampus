@@ -39,7 +39,8 @@ function MissionStep3() {
     setPreviewImages,
     missionType,
     floor,
-    setFloor
+    setFloor,
+    isInEdit
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const [floorDrawer, setFloorDrawer] = useState(false)
@@ -189,18 +190,20 @@ function MissionStep3() {
             ))}
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction='row'>
-          <DescriptionIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-          <TextField
-            name='moreDescriptionText'
-            multiline
-            id='standard-basic'
-            style={{ width: '80vw' }}
-            placeholder='詳細說明'
-            value={moreDescriptionText}
-            onChange={handleChangeMoreDescriptionText}
-          />
-        </Grid>
+        {!isInEdit && (
+          <Grid container item xs={12} direction='row'>
+            <DescriptionIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+            <TextField
+              name='moreDescriptionText'
+              multiline
+              id='standard-basic'
+              style={{ width: '80vw' }}
+              placeholder='詳細說明'
+              value={moreDescriptionText}
+              onChange={handleChangeMoreDescriptionText}
+            />
+          </Grid>
+        )}
 
         {/* * ==================== 7.上傳照片 ==================== */}
         <Grid container item xs={12} direction='row' alignItems='center'>
