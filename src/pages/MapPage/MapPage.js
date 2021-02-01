@@ -19,6 +19,7 @@ import useStep from '../../utils/hooks/useStep'
 import TagDetailDialog from './components/TagDetail/TagDetailDialog'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
+import WindowBackProvider from '../../components/WindowBackProvider'
 
 export default function MapPage(props) {
   const { signOut, deny, guest } = props
@@ -27,9 +28,11 @@ export default function MapPage(props) {
     maxStep: 3,
     minStep: 0
   })
+
   return (
     // <TagContextProvider>
     <MissionContextProvider>
+      <WindowBackProvider />
       <GuidePage
         step={guideStep}
         setStep={setStep}
@@ -54,6 +57,9 @@ const MapPageContent = (props) => {
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
   const { activeTag, resetActiveTag, tagDetail } = useTagValue()
+  
+
+  
   return (
     <div>
       <Map mapCenter={mapCenter} />
