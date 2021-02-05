@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -12,7 +12,9 @@ import { useSnackbar } from 'notistack'
 // import MuiAlert from '@material-ui/lab/Alert'
 import useMenu from '../../../../utils/hooks/useMenu'
 import SearchBarMenu from './SearchBarMenu'
-
+import Fillter from '../Filter/FilterFab'
+import yellowfilter from 'assets/images/yellow-filter.svg'
+import grayfilter from 'assets/images/gray-filter.svg'
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
@@ -35,12 +37,14 @@ const useStyles = makeStyles((theme) => ({
     height: 28
   }
 }))
-
 const SearchBar = React.forwardRef((props, ref) => {
-  const { menuControls, signOut, ...otherProps } = props
+  const {menuControls, signOut, ...otherProps } = props
   const classes = useStyles()
   const menuControl = useMenu()
+  const [open, changeOpen] = useState(false)
+  const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
+  
   return (
     <div ref={ref} {...otherProps}>
       <Paper className={classes.root}>
@@ -62,6 +66,15 @@ const SearchBar = React.forwardRef((props, ref) => {
             enqueueSnackbar('尚未開放', { variant: 'error' })
           }}
         />
+
+        <Divider className={classes.divider} orientation='vertical' />
+        <IconButton
+          className = {classes.iconButton}
+          aria-label = 'filter'
+          onClick = {() => toggle(open)}
+        >
+          {open === true ?(<img src={yellowfilter} alt = ""/>):(<img src = {grayfilter} alt = ""/>)}
+        </IconButton>
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
           className={classes.iconButton}
@@ -71,7 +84,9 @@ const SearchBar = React.forwardRef((props, ref) => {
           <MenuIcon />
         </IconButton>
       </Paper>
-
+      <Fillter
+        open={open}    
+      />
       <SearchBarMenu
         control={menuControl}
         menuControls={menuControls}
