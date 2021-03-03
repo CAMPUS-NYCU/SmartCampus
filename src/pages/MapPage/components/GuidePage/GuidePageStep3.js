@@ -39,22 +39,22 @@ const demoTag = {
     targetName: '無障礙電梯'
   },
   status: {
-    statusName: '存在'
+    statusName: '存在',
+    description:
+      '水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。'
   },
-  statusHistory: [],
-  description:
-    '水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。'
+  statusHistory: []
 }
 
 const demoDetail = {
   createTime: '2020-02-10 14:50',
   lastUpdateTime: '2020-02-10 14:50',
-  description:
-    '水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。',
   imageUrl: [elevator, elevator],
   status: {
     numberOfUpVote: 0,
-    hasUpVote: false
+    hasUpVote: false,
+    description:
+      '水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。'
   },
   createUser: {
     displayName: 'ilovenctu'
