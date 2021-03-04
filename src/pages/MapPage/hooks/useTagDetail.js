@@ -5,7 +5,7 @@ import * as firebase from 'firebase/app'
 
 export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
-    tag(id: $id) {
+    tag(tagId: $id) {
       id
       createTime
       lastUpdateTime
