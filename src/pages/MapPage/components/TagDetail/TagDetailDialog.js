@@ -17,6 +17,7 @@ import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
+import { BreakingChangeType } from 'graphql'
 
 const useStyles = makeStyles(theme => ({
   DrawerPaperStyle: {
@@ -68,6 +69,8 @@ function TagDetailDialog (props) {
     status => status.statusName === activeTag.status.statusName
   )
   const status = tagStatus[tagMissionIndex][tagStatusIndex]
+  let check = false
+  let key = false
   return (
     <>
       <Drawer
@@ -134,6 +137,10 @@ function TagDetailDialog (props) {
                     <img src={missionImage[tagMissionIndex]} alt='' />
                     <Typography>{activeTag.category.subTypeName}</Typography>
                     <Typography>{activeTag.locationName}</Typography>
+                    {activeTag.floor < 0 ? (key = true,activeTag.floor = !activeTag.floor):("")}
+                    {activeTag.floor === 0 ? ("") : check = true }
+                    {check === true && key === true ? (<Typography>{activeTag.floor}樓</Typography>):("")}
+                    {check === true && key === false ? (<Typography>{activeTag.floor}樓</Typography>):("")}
                   </Box>
                   <div
                     style={{
