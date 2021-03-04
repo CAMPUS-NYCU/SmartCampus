@@ -8,6 +8,7 @@ export const GET_TAG_LIST_QUERY = gql`
     unarchivedTagList {
       id
       locationName
+      floor
       category {
         missionName
         subTypeName
@@ -44,6 +45,7 @@ const reformatTagList = data => {
       id,
       locationName,
       accessibility,
+      floor,
       category: { missionName, subTypeName, targetName },
       coordinates: { latitude, longitude },
       status: { statusName, description }
@@ -60,6 +62,7 @@ const reformatTagList = data => {
       id,
       locationName,
       accessibility,
+      floor,
       category: { missionName, subTypeName, targetName },
       position: {
         lat: parseFloat(latitude),
