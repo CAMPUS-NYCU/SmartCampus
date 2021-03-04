@@ -24,7 +24,7 @@ import PicturePreview from './PicturePreview'
 import Picker from 'react-mobile-picker-scroll'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 
-function MissionStep3() {
+function MissionStep3 () {
   const {
     selectedMissionId,
     handleSetSelectedMissionId,
@@ -48,7 +48,7 @@ function MissionStep3() {
   const focusInput = useRef(null)
   const { target = [] } =
     facilitySubType[missionType].find(
-      (facility) => facility.subTypeName === selectedMissionId
+      facility => facility.subTypeName === selectedMissionId
     ) || {}
   return (
     <>
@@ -130,13 +130,7 @@ function MissionStep3() {
                 color: 'black'
               }}
             >
-              {floor === 0
-                ? '無'
-                : floor === -1
-                ? 'B1'
-                : floor === -2
-                ? 'B2'
-                : floor}
+              {floor}
               <UnfoldMoreIcon size='small' />
             </Button>
           </Box>
@@ -147,7 +141,7 @@ function MissionStep3() {
           <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
           <Typography>設施類型</Typography>
         </Grid>
-        {facilitySubType[missionType].map((facility) => (
+        {facilitySubType[missionType].map(facility => (
           <Grid key={facility.subTypeName} item xs={4}>
             <Button
               variant='contained'
@@ -171,7 +165,7 @@ function MissionStep3() {
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            {target.map((discovery) => (
+            {target.map(discovery => (
               <Grid id={discovery.targetName} item xs={4}>
                 <Button
                   variant='contained'
@@ -258,23 +252,16 @@ function MissionStep3() {
         </Toolbar>
         <Picker
           valueGroups={{
-            floor: floor
+            floor
           }}
           optionGroups={{
             floor: ['無', 'B2', 'B1', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
           }}
           onChange={(name, value) => {
-            if (value === '無') {
-              setFloor(0)
-            } else if (value === 'B2') {
-              setFloor(-2)
-            } else if (value === 'B1') {
-              setFloor(-1)
-            } else {
-              setFloor(value)
-            }
+            console.log(name, value)
+            setFloor(value)
           }}
-        ></Picker>
+        />
       </Drawer>
     </>
   )
