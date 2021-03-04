@@ -63,6 +63,13 @@ export const TagContextProvider = ({ children }) => {
       setFilterTags((prevFilterTags) => [...prevFilterTags, tag])
     }
   }
+  const resetFilterTags = (tag) => {
+      setFilterTags((prevFilterTags) =>
+        prevFilterTags.filter((t) => {
+          return t !== tag
+        })
+      )
+  }
   const contextValues = {
     tags,
     activeTag,
@@ -75,6 +82,7 @@ export const TagContextProvider = ({ children }) => {
     refetch,
     filterTags,
     addFilterTags,
+    resetFilterTags,
     tagDetail,
     userAddTags,
     refetchUserAddTags,

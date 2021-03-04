@@ -56,62 +56,75 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function FilterFab() {
+function FilterFab(props) {
   const classes = useStyles()
   const [filterDrawer, setFilterDrawer] = useState(false)
   const closeDrawer = () => {
     setFilterDrawer(false)
   }
-  const { filterTags, addFilterTags } = useTagValue()
+  const { filterTags, addFilterTags,resetFilterTags} = useTagValue()
   const filterInfo = ['設施任務', '排隊情況']
-  return (
-    <>
-      <div className={classes.grid}>
-        <Button
-          className={classes.button}
-          variant='contained'
-          size='small'
-          color={filterDrawer ? 'primary' : ''}
-          onClick={() => setFilterDrawer(true)}
-          //disabled
-        >
-          加入其他
-          <AddIcon className={classes.addIcon} />
-        </Button>
-        {filterTags.map((item) => {
-          return (
-            <Button
-              className={classes.button}
-              variant='contained'
-              size='small'
-              onClick={() => addFilterTags(item)}
-              color='primary'
-              //disabled
-            >
-              {item}
-              <CloseIcon className={classes.addIcon} />
-            </Button>
-          )
-        })}
-        {filterTags.length === 0 &&
-          filterInfo.map((item) => {
-            return (
+  const { open} = props
+    return (
+      <>
+        {open === true ?
+          (
+            <div className = {classes.grid}>          
               <Button
                 className={classes.button}
                 variant='contained'
                 size='small'
-                onClick={() => addFilterTags(item)}
+                color={filterDrawer ? 'primary' : ''}
+                onClick={() => setFilterDrawer(true)}
                 //disabled
               >
-                {item}
+                加入其他
                 <AddIcon className={classes.addIcon} />
               </Button>
-            )
-          })}
-      </div>
-      <FilterDrawer open={filterDrawer} onClose={closeDrawer} />
-    </>
-  )
+              {filterTags.map((item) => {
+                return (
+                  <Button
+                    className={classes.button}
+                    variant='contained'
+                    size='small'
+                    onClick={() => addFilterTags(item)}
+                    color='primary'
+                    //disabled
+                  >
+                    {item}
+                    <CloseIcon className={classes.addIcon} />
+                  </Button>
+                )
+              })}
+              {filterTags.length === 0 &&
+                filterInfo.map((item) => {
+                  return (
+                    <Button
+                      className={classes.button}
+                      variant='contained'
+                      size='small'
+                      onClick={() => addFilterTags(item)}
+                      //disabled
+                    >
+                      {item}
+                      <AddIcon className={classes.addIcon} />
+                    </Button>
+                  )
+                })}
+          </div>
+        ):(
+          <>
+          {filterTags.length > 0 && open === false &&
+            filterTags.map((item)=>{
+              return(resetFilterTags(item));
+            })
+           }
+          </>
+        )
+        }
+        <FilterDrawer open={filterDrawer} onClose={closeDrawer} />
+      </>
+    )
 }
 
 export default FilterFab
