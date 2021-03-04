@@ -140,7 +140,7 @@ export const MissionContextProvider = ({ children }) => {
 
   const [missionType, setMissionType] = useState(null)
   const [mapCenter, setMapCenter] = useState(DefaultCenter)
-  const handleChangeMissionType = (target) => {
+  const handleChangeMissionType = target => {
     setMissionType(target)
     setSelectedMissionId('')
     setSelectedSubOptionId('')
@@ -158,7 +158,7 @@ export const MissionContextProvider = ({ children }) => {
     })
     setStep(MissionStep.selectMissionName)
   }
-  const handleStartEdit = (activeTag) => {
+  const handleStartEdit = activeTag => {
     setShowControl(true)
     setMarkerPosition({
       longitude: activeTag.position.lng,
@@ -171,7 +171,7 @@ export const MissionContextProvider = ({ children }) => {
     })
     setMissionType(
       missionInfo.findIndex(
-        (element) => element.missionName === activeTag.category.missionName
+        element => element.missionName === activeTag.category.missionName
       )
     )
     setSelectedMissionId(activeTag.category.subTypeName)
@@ -208,12 +208,23 @@ export const MissionContextProvider = ({ children }) => {
   } = useTagValue()
   const handleCompleteMission = () => {
     setLoading(true)
+    let floorNumber = 0
+    if (floor === '無') {
+      floorNumber = 0
+    } else if (floor === 'B1') {
+      floorNumber = -1
+    } else if (floor === 'B2') {
+      floorNumber = -2
+    } else {
+      floorNumber = floor
+    }
     firebase
       .auth()
       .currentUser.getIdToken()
-      .then((token) => {
+      .then(token => {
         if (isInEdit) {
           console.log(imageFiles.length, imageFiles, imageDeleteUrls)
+
           tagUpdate({
             context: {
               headers: {
@@ -237,7 +248,7 @@ export const MissionContextProvider = ({ children }) => {
                     ? streetViewPosition.longitude.toString()
                     : markerPosition.longitude.toString()
                 },
-                floor: floor,
+                floor: floorNumber,
                 imageDeleteUrls: imageDeleteUrls,
                 imageUploadNumber: imageFiles.length,
                 streetViewInfo: {
@@ -263,10 +274,10 @@ export const MissionContextProvider = ({ children }) => {
                     'Content-Type': 'application/octet-stream'
                   }
                 }
-                axios.put(url, imageFiles[index], options).then((res) => {
+                axios.put(url, imageFiles[index], options).then(res => {
                   refetchUserAddTags()
                   refetchTagDetail()
-                  refetch().then((data) => {
+                  refetch().then(data => {
                     updateTagList(data.data)
                     setLoading(false)
                     clearMissionData()
@@ -276,7 +287,7 @@ export const MissionContextProvider = ({ children }) => {
                 })
               })
               if (imageUploadUrls.length === 0) {
-                refetch().then((data) => {
+                refetch().then(data => {
                   updateTagList(data.data)
                   setLoading(false)
                   clearMissionData()
@@ -313,7 +324,7 @@ export const MissionContextProvider = ({ children }) => {
                 },
                 // createUserID: 'NO_USER',
                 description: moreDescriptionText,
-                floor: floor,
+                floor: floorNumber,
                 imageUploadNumber: imageFiles.length,
                 streetViewInfo: {
                   povHeading: streetViewPOV.heading,
@@ -337,8 +348,8 @@ export const MissionContextProvider = ({ children }) => {
                     'Content-Type': 'application/octet-stream'
                   }
                 }
-                axios.put(url, imageFiles[index], options).then((res) => {
-                  refetch().then((data) => {
+                axios.put(url, imageFiles[index], options).then(res => {
+                  refetch().then(data => {
                     updateTagList(data.data)
                     setLoading(false)
                     clearMissionData()
@@ -348,7 +359,7 @@ export const MissionContextProvider = ({ children }) => {
                 })
               })
               if (imageUploadUrls.length === 0) {
-                refetch().then((data) => {
+                refetch().then(data => {
                   updateTagList(data.data)
                   setLoading(false)
                   clearMissionData()
@@ -380,7 +391,7 @@ export const MissionContextProvider = ({ children }) => {
 
   // ==================== Map viewport control ====================
   const [mapInstance, setMapInstance] = React.useState(null)
-  const handleMapOnLoad = (map) => {
+  const handleMapOnLoad = map => {
     setMapInstance(map)
   }
 
@@ -388,7 +399,7 @@ export const MissionContextProvider = ({ children }) => {
   const [markerPosition, setMarkerPosition] = useState(
     InitialMissionValue.markerPosition
   )
-  const handleSetMarkerPosition = (event) => {
+  const handleSetMarkerPosition = event => {
     setMarkerPosition({
       longitude: event.latLng.lng(),
       latitude: event.latLng.lat()
@@ -404,7 +415,7 @@ export const MissionContextProvider = ({ children }) => {
   const [streetViewUpload, setStreetViewUpload] = useState(false)
   const [streetViewInstance, setStreetViewInstance] = useState(null)
   const [povChanged, setPovChanged] = useState(false)
-  const handleStreetViewOnLoad = (panorama) => {
+  const handleStreetViewOnLoad = panorama => {
     setStreetViewInstance(panorama)
   }
   const [streetViewPosition, setStreetViewPosition] = useState(
@@ -470,7 +481,7 @@ export const MissionContextProvider = ({ children }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(
     InitialMissionValue.selectedCategoryId
   )
-  const handleSetSelectedCategoryId = (newCategoryId) => {
+  const handleSetSelectedCategoryId = newCategoryId => {
     setSelectedCategoryId(newCategoryId)
   }
 
@@ -478,7 +489,7 @@ export const MissionContextProvider = ({ children }) => {
   const [selectedMissionId, setSelectedMissionId] = useState(
     InitialMissionValue.selectedMissionId
   )
-  const handleSetSelectedMissionId = (newMissionId) => {
+  const handleSetSelectedMissionId = newMissionId => {
     setSelectedMissionId(newMissionId)
     // mission和subOption有從屬關係，
     // 修改mission的話，subOption也要被重設
@@ -492,14 +503,14 @@ export const MissionContextProvider = ({ children }) => {
   const [subOptionOtherText, setSubOptionOtherText] = useState(
     InitialMissionValue.subOptionOtherText
   )
-  const handleChangeSubOptionOtherText = (event) =>
+  const handleChangeSubOptionOtherText = event =>
     setSubOptionOtherText(event.target.value)
 
   // --------------- Description ---------------
   const [moreDescriptionText, setMoreDescriptionText] = useState(
     InitialMissionValue.moreDescriptionText
   )
-  const handleChangeMoreDescriptionText = (event) =>
+  const handleChangeMoreDescriptionText = event =>
     setMoreDescriptionText(event.target.value)
   const [photos, setPhotos] = useState(InitialMissionValue.photos)
 
@@ -507,10 +518,10 @@ export const MissionContextProvider = ({ children }) => {
   const [textLocation, setTextLocation] = useState(
     InitialMissionValue.textLocation
   )
-  const handleChangeTextLocation = (event) => {
+  const handleChangeTextLocation = event => {
     setTextLocation(event.target.value)
   }
-  const [floor, setFloor] = useState(0)
+  const [floor, setFloor] = useState('無')
 
   // ==================== Clear ====================
   const clearMissionData = () => {
