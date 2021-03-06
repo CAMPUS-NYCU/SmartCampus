@@ -9,12 +9,12 @@ import wave2 from '../../assets/images/main-wave2.svg'
 import googleIcon from '../../assets/images/google_icon.png'
 import title from '../../assets/images/title.svg'
 
-export default function LoginPage(props) {
+export default function LoginPage (props) {
   const { signInWithGoogle, guestLogin } = props
 
   return (
     <Box
-      style={{ height: '100vh-150px', width: '100vw' }}
+      style={{ height: 'calc(var(--vh, 1vh)*100)', width: '100vw' }}
       display='flex'
       flexDirection='column'
       alignItems='center'
@@ -29,52 +29,63 @@ export default function LoginPage(props) {
           marginTop: '100px'
         }}
       />
-      <Button
-        style={{
-          width: '220px',
-          height: '50px',
-          marginTop: '40%',
-          background: '#4385F4'
-        }}
-        onClick={signInWithGoogle}
+      <Box
+        flexGrow={1}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
       >
-        <Box
+        <Button
           style={{
-            width: '45px',
-            height: '45px',
-            background: 'white',
-            position: 'absolute',
-            left: '2.5px'
+            width: '220px',
+            height: '50px',
+            // marginTop: '150px',
+            background: '#4385F4'
           }}
-          display='flex'
-          justifyContent='center'
-          alignItems='center'
+          onClick={signInWithGoogle}
         >
-          <div
+          <Box
             style={{
-              backgroundImage: `url(${googleIcon})`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              width: '60%',
-              height: '60%'
+              width: '45px',
+              height: '45px',
+              background: 'white',
+              position: 'absolute',
+              left: '2.5px'
             }}
-          />
-        </Box>
-        <Typography variant='6h' style={{ color: 'white', marginLeft: '50px' }}>
-          使用Google登入
-        </Typography>
-      </Button>
-      <Button
-        style={{
-          marginTop: '30px',
-          color: '#BABABA',
-          borderBottom: 'solid 0.5px',
-          padding: '0'
-        }}
-        onClick={guestLogin}
-      >
-        以訪客身分進入
-      </Button>
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+          >
+            <div
+              style={{
+                backgroundImage: `url(${googleIcon})`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                width: '60%',
+                height: '60%'
+              }}
+            />
+          </Box>
+          <Typography
+            variant='6h'
+            style={{ color: 'white', marginLeft: '50px' }}
+          >
+            使用Google登入
+          </Typography>
+        </Button>
+        <Button
+          style={{
+            marginTop: '30px',
+            color: '#BABABA',
+            borderBottom: 'solid 0.5px',
+            padding: '0'
+          }}
+          onClick={guestLogin}
+        >
+          以訪客身分進入
+        </Button>
+      </Box>
       <div
         style={{
           backgroundImage: `url(${wave1})`,
