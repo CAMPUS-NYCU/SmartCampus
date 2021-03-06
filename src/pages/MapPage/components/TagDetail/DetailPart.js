@@ -6,7 +6,7 @@ import EditHistory from './editHistory'
 import { useUpdateVote } from '../../Mutation/useVoteTag'
 import { useSnackbar } from 'notistack'
 
-const DetailPart = (props) => {
+const DetailPart = props => {
   const {
     detail,
     activeTag,
@@ -31,18 +31,25 @@ const DetailPart = (props) => {
     setHasUpVote(detail ? detail.status.hasUpVote : false)
     activeTag.category.missionName === '問題任務' &&
       detail &&
-      enqueueSnackbar('再1人投票即可刪除回報', { variant: 'warning' })
+      enqueueSnackbar(
+        `${
+          detail ? 10 - detail.status.numberOfUpVote : 10
+        }再人投票即可刪除回報`,
+        {
+          variant: 'warning'
+        }
+      )
   }, [detail, enqueueSnackbar, activeTag])
   const handleUopVote = () => {
     if (guest) {
       deny()
       return
     }
-    setNumberOfVote((prevNumberOfVote) =>
+    setNumberOfVote(prevNumberOfVote =>
       hasUpVote ? prevNumberOfVote - 1 : prevNumberOfVote + 1
     )
     upVote(detail.id, !hasUpVote)
-    setHasUpVote((prevHasUpVote) => !prevHasUpVote)
+    setHasUpVote(prevHasUpVote => !prevHasUpVote)
   }
 
   return (
@@ -51,7 +58,7 @@ const DetailPart = (props) => {
         <>
           <div
             style={{
-              width: '100vw',
+              width: '100%',
               margin: '4vw 0 0 0',
               height: '100%',
               webkitFlexGrow: '1',
@@ -64,7 +71,7 @@ const DetailPart = (props) => {
             {detail.imageUrl.length === 0 ? (
               <div
                 style={{
-                  width: '100vw',
+                  width: '100%',
                   flexShrink: '0',
                   overflow: 'hidden',
                   backgroundSize: 'cover',
@@ -73,12 +80,12 @@ const DetailPart = (props) => {
                 }}
               />
             ) : (
-              detail.imageUrl.map((url) => {
+              detail.imageUrl.map(url => {
                 return (
                   <Button
                     onClick={() => setLargeImg(`${url}`)}
                     style={{
-                      width: '80vw',
+                      width: '80%',
                       flexShrink: '0',
                       overflowY: 'hidden',
                       backgroundSize: 'cover',
@@ -92,7 +99,7 @@ const DetailPart = (props) => {
             {detail.imageUrl.length === 1 && (
               <div
                 style={{
-                  width: '80vw',
+                  width: '80%',
                   flexShrink: '0',
                   overflow: 'hidden',
                   backgroundSize: 'cover',
@@ -108,7 +115,7 @@ const DetailPart = (props) => {
             flexDirection='row'
             justifyContent='space-between'
             m={2}
-            width='90vw'
+            width='90%'
           >
             <Button
               id='changeStatusButton'
@@ -152,7 +159,7 @@ const DetailPart = (props) => {
           </Box>
           <div
             style={{
-              width: '90vw',
+              width: '90%',
               borderTop: 'solid 0.5px lightgray',
               borderBottom:
                 activeTag.category.missionName === missionName[1] &&
@@ -187,9 +194,27 @@ const DetailPart = (props) => {
               width='90%'
               m={2}
             >
+              <div
+                style={{
+                  width: '40%',
+                  height: '6px',
+                  marginRight: '30px',
+                  border: 'solid 0.5px',
+                  borderColor: 'lightgray'
+                }}
+              >
+                <div
+                  style={{
+                    width: `${(numberOfVote / 10) * 100}%`,
+                    height: '100%',
+                    backgroundColor: '#FDCC4F'
+                  }}
+                />
+              </div>
               <Box className={classes.clickableFont} m={0.5}>
                 {numberOfVote ? numberOfVote : 0}
                 人贊同此問題待處理
+                <br />再{numberOfVote ? 10 - numberOfVote : 10}即可刪除此回報
               </Box>
               <IconButton
                 variant='contained'

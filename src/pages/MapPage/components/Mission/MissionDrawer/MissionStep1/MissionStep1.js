@@ -13,7 +13,7 @@ import {
 import axios from 'axios'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
 
-function MissionStep1() {
+function MissionStep1 () {
   const {
     textLocation,
     handleChangeTextLocation,
@@ -49,15 +49,15 @@ function MissionStep1() {
         mb={2}
         display='flex'
         flexDirection='row'
-        justifyContent='space-between'
-        width='80vw'
+        // justifyContent='space-between'
+        width='80%'
         alignItems='center'
       >
         {/* <inputIcon /> */}
         <img src={inputImg} alt='' />
         <TextField
           id='standard-basic'
-          style={{ width: '70vw' }}
+          style={{ width: '70%', marginLeft: '10px' }}
           placeholder='輸入地點名稱'
           value={textLocation}
           onChange={handleChangeTextLocation}

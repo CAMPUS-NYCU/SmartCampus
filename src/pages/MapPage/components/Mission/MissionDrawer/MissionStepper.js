@@ -11,11 +11,14 @@ import {
   MissionStep
 } from '../../../contexts/MissionContext'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   stepper: {
     position: 'fixed',
     bottom: 0,
-    width: '100%'
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: '400px'
+    }
     // backgroundColor: 'rgba(0,0,0,0)' // 不要預設的灰底
   },
   streetStepper: {
@@ -40,9 +43,9 @@ const useStyles = makeStyles({
     boxShadow: `0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2)`,
     borderRadius: `10px`
   }
-})
+}))
 
-function MissionStepper(props) {
+function MissionStepper (props) {
   const classes = useStyles()
   const {
     currentStep,
