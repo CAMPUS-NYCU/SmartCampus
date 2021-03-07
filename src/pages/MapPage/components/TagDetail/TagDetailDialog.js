@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
@@ -17,7 +18,15 @@ import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
+  DrawerPaperStyle: {
+    borderRadius: '20px 20px 0 0',
+    backgroundColor: '#FAFAFA',
+    zIndex: '10',
+    [theme.breakpoints.up('sm')]: {
+      width: '500px'
+    }
+  },
   closeButton: {
     position: 'absolute',
     right: theme.spacing(1),
@@ -41,38 +50,32 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function TagDetailDialog(props) {
-  const { activeTag, onClose, deny, guest, tagDetail } = props
+function TagDetailDialog (props) {
+  const { activeTag, onClose, deny, guest, tagDetail, width } = props
   const { handleStartEdit, isInMission } = useMissionValue()
   const { userAddTags } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const classes = useStyles()
   const missionImage = [Mission1, Mission2, Mission3]
-  const missionName = missionInfo.map((mission) => {
+  const missionName = missionInfo.map(mission => {
     return mission.missionName
   })
   const tagMissionIndex = missionName.findIndex(
-    (mission) => mission === activeTag.category.missionName
+    mission => mission === activeTag.category.missionName
   )
   const tagStatusIndex = tagStatus[tagMissionIndex].findIndex(
-    (status) => status.statusName === activeTag.status.statusName
+    status => status.statusName === activeTag.status.statusName
   )
   const status = tagStatus[tagMissionIndex][tagStatusIndex]
   return (
     <>
       <Drawer
-        anchor='bottom'
+        anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
         open={activeTag && !isInMission}
         onClose={onClose}
         variant='persistent'
-        PaperProps={{
-          style: {
-            borderRadius: '20px 20px 0 0',
-            backgroundColor: '#FAFAFA',
-            zIndex: '10'
-          }
-        }}
+        classes={{ paper: classes.DrawerPaperStyle }}
       >
         <div
           style={{
@@ -92,7 +95,7 @@ function TagDetailDialog(props) {
                   {activeTag ? activeTag.category.targetName : '詳細資訊'}
                 </Typography>
                 {userAddTags &&
-                  userAddTags.map((tag) => {
+                  userAddTags.map(tag => {
                     if (tag.id === activeTag.id) {
                       return (
                         <Button
@@ -196,4 +199,4 @@ TagDetailDialog.defaultProps = {
   activeTag: null
 }
 
-export default TagDetailDialog
+export default withWidth()(TagDetailDialog)

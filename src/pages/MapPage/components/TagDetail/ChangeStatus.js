@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import {
   Box,
   Button,
@@ -23,8 +24,15 @@ import SolvedIcon from '../../../../assets/images/solved.svg'
 import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
 import { useTagValue } from '../../contexts/TagContext'
 
-function ChangeStatus(props) {
-  const { stateDrawer, activeTag, setStateDrawer, classes, status } = props
+function ChangeStatus (props) {
+  const {
+    stateDrawer,
+    activeTag,
+    setStateDrawer,
+    classes,
+    status,
+    width
+  } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
@@ -36,7 +44,7 @@ function ChangeStatus(props) {
   const [newDescription, setNewDescription] = useState(
     activeTag.status.description
   )
-  const handleChangeDescription = (event) => {
+  const handleChangeDescription = event => {
     setNewDescription(event.target.value)
   }
   const handleDrawerClose = () => {
@@ -49,7 +57,7 @@ function ChangeStatus(props) {
     firebase
       .auth()
       .currentUser.getIdToken()
-      .then((token) => {
+      .then(token => {
         updateStatus({
           context: {
             headers: {
@@ -62,7 +70,7 @@ function ChangeStatus(props) {
             description: newDescription
           }
         }).then(() => {
-          refetch().then((data) => {
+          refetch().then(data => {
             updateTagList(data.data)
             setLoading(false)
             setStateDrawer(false)
@@ -74,9 +82,10 @@ function ChangeStatus(props) {
   return (
     <>
       <Drawer
-        anchor='bottom'
+        anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
         open={stateDrawer}
         onClose={() => setStateDrawer(false)}
+        PaperProps={isWidthUp('sm', width) && { style: { width: '500px' } }}
       >
         <DialogTitle disableTypography>
           <Typography variant='h5'>選擇目前狀態</Typography>
@@ -90,7 +99,7 @@ function ChangeStatus(props) {
         </DialogTitle>
         <Box
           display='flex'
-          width='100vw'
+          width='100%'
           flexDirection='column'
           justifyContent='space-around'
         >
@@ -156,4 +165,4 @@ function ChangeStatus(props) {
   )
 }
 
-export default ChangeStatus
+export default withWidth()(ChangeStatus)

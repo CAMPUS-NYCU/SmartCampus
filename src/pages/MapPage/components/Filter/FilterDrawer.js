@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import {
   Drawer,
   makeStyles,
@@ -26,16 +27,16 @@ const useStyles = makeStyles({
     overflowY: 'scroll'
   },
   button: {
-    position:'absolute',
-    bottom:'20px',
-    left:'10%',
+    position: 'absolute',
+    bottom: '20px',
+    left: '10%',
     width: '80%',
     borderRadius: '20px'
   }
 })
 
-const FilterDrawer = (props) => {
-  const { open, onClose } = props
+const FilterDrawer = props => {
+  const { open, onClose, width } = props
   const classes = useStyles()
   const { addFilterTags } = useTagValue()
   const [currentMission, setCurrentMission] = useState(null)
@@ -62,7 +63,7 @@ const FilterDrawer = (props) => {
     onClose()
   }
 
-  const changeCurrentMission = (mission) => {
+  const changeCurrentMission = mission => {
     if (currentMission === mission) {
       setCurrentMission(null)
       setCurrentSubmission(null)
@@ -74,7 +75,7 @@ const FilterDrawer = (props) => {
     }
   }
 
-  const changeCurrentSubmission = (mission) => {
+  const changeCurrentSubmission = mission => {
     if (currentSubmission === mission) {
       setCurrentSubmission(null)
       setCurrentTarget(null)
@@ -84,7 +85,7 @@ const FilterDrawer = (props) => {
     }
   }
 
-  const changeCurrentTarget = (target) => {
+  const changeCurrentTarget = target => {
     if (currentTarget === target) {
       setCurrentTarget(null)
     } else {
@@ -94,7 +95,7 @@ const FilterDrawer = (props) => {
 
   return (
     <Drawer
-      anchor='bottom'
+      anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
       variant='persistent'
       open={open}
       onClose={onClose}
@@ -128,7 +129,7 @@ const FilterDrawer = (props) => {
             <Grid container item xs={12} direction='row'>
               <Typography variant='h6'>標註類型</Typography>
             </Grid>
-            {missionInfo.map((mission) => (
+            {missionInfo.map(mission => (
               <Grid key={mission.missionName} item xs={4}>
                 <Button
                   variant='contained'
@@ -148,7 +149,7 @@ const FilterDrawer = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                {subMission.map((discovery) => (
+                {subMission.map(discovery => (
                   <Grid id={discovery.subTypeName} item xs={4}>
                     <Button
                       variant='contained'
@@ -168,7 +169,7 @@ const FilterDrawer = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                {target.map((discovery) => (
+                {target.map(discovery => (
                   <Grid id={discovery.targetName} item xs={4}>
                     <Button
                       variant='contained'
@@ -201,4 +202,4 @@ const FilterDrawer = (props) => {
   )
 }
 
-export default FilterDrawer
+export default withWidth()(FilterDrawer)

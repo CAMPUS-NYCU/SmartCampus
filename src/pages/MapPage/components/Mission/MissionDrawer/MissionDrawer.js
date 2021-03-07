@@ -1,6 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
@@ -15,7 +16,15 @@ import { MissionStep, useMissionValue } from '../../../contexts/MissionContext'
 import { missionInfo } from '../../../constants/missionInfo'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  drawerPaperStyle: {
+    borderRadius: '20px 20px 0 0',
+    backgroundColor: '#FAFAFA',
+    zIndex: '20',
+    [theme.breakpoints.up('sm')]: {
+      width: '400px'
+    }
+  },
   drawerContent: {
     minHeight: 150,
     height: window.innerHeight * 0.2,
@@ -42,15 +51,16 @@ const useStyles = makeStyles({
   closeButton: {
     padding: 0
   }
-})
+}))
 
-function MissionDrawer(props) {
+function MissionDrawer (props) {
   const {
     isInMission,
     handleCloseMission,
     handleBack,
     isInEdit
   } = useMissionValue()
+  const { width } = props
   const classes = useStyles()
 
   const { currentStep, missionType } = useMissionValue()
@@ -58,17 +68,11 @@ function MissionDrawer(props) {
     <>
       {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (
         <Drawer
-          anchor='bottom'
+          anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
           open={isInMission}
           onClose={handleCloseMission}
           variant='persistent'
-          PaperProps={{
-            style: {
-              borderRadius: '20px 20px 0 0',
-              backgroundColor: '#FAFAFA',
-              zIndex: '20'
-            }
-          }}
+          classes={{ paper: classes.drawerPaperStyle }}
           {...props}
         >
           <div
@@ -137,4 +141,4 @@ function MissionDrawer(props) {
   )
 }
 
-export default MissionDrawer
+export default withWidth()(MissionDrawer)

@@ -1,4 +1,5 @@
 import React from 'react'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import {
   Drawer,
   Toolbar,
@@ -21,18 +22,28 @@ import Mission1 from '../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../assets/images/mission3.svg'
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
   tag: {
     background: '#FDCC4F',
     border: '1.5px solid #FFEDC0',
     boxSizing: 'border-box',
     borderRadius: '5px'
+  },
+  drawerPaperStyle: {
+    borderRadius: '20px 20px 0 0',
+    backgroundColor: '#FAFAFA',
+    height: '50vh',
+    [theme.breakpoints.up('sm')]: {
+      width: '500px',
+      height: '100vh'
+    }
   }
-})
+}))
 
-const ReportHistory = (props) => {
+const ReportHistory = props => {
   const {
-    control: { open, setClose }
+    control: { open, setClose },
+    width
   } = props
   const { setActiveTagId, activeTag, userAddTags } = useTagValue()
   const { isInMission } = useMissionValue()
@@ -40,16 +51,10 @@ const ReportHistory = (props) => {
   const classes = useStyle()
   return (
     <Drawer
-      anchor='bottom'
+      anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
       open={open && !isInMission && !activeTag}
       onClose={setClose}
-      PaperProps={{
-        style: {
-          borderRadius: '20px 20px 0 0',
-          backgroundColor: '#FAFAFA',
-          height: '50vh'
-        }
-      }}
+      classes={{ paper: classes.drawerPaperStyle }}
     >
       <Toolbar
         style={{
@@ -69,7 +74,7 @@ const ReportHistory = (props) => {
       </Toolbar>
       {userAddTags ? (
         <List component='nav'>
-          {userAddTags.map((item) => {
+          {userAddTags.map(item => {
             return (
               <>
                 <ListItem>
@@ -130,4 +135,4 @@ const ReportHistory = (props) => {
   )
 }
 
-export default ReportHistory
+export default withWidth()(ReportHistory)
