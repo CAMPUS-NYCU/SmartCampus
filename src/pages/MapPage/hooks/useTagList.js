@@ -5,7 +5,7 @@ import { generateTime } from './useTagDetail'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
-    tagRenderList {
+    unarchivedTagList {
       id
       locationName
       category {
@@ -34,12 +34,12 @@ export const GET_TAG_LIST_QUERY = gql`
   }
 `
 
-const reformatTagList = (data) => {
-  const tagRenderList = data ? data.tagRenderList : []
-  const filteredTags = tagRenderList.filter((tag) => {
+const reformatTagList = data => {
+  const tagRenderList = data ? data.unarchivedTagList : []
+  const filteredTags = tagRenderList.filter(tag => {
     return tag.coordinates
   })
-  const tagList = filteredTags.map((tag) => {
+  const tagList = filteredTags.map(tag => {
     const {
       id,
       locationName,
@@ -48,7 +48,7 @@ const reformatTagList = (data) => {
       coordinates: { latitude, longitude },
       status: { statusName, description }
     } = tag
-    const statusHistory = tag.statusHistory.map((history) => {
+    const statusHistory = tag.statusHistory.map(history => {
       return {
         statusName: history.statusName,
         createTime: generateTime(history.createTime),
@@ -72,7 +72,7 @@ const reformatTagList = (data) => {
   return tagList
 }
 
-function useTagList() {
+function useTagList () {
   const [tags, setTags] = useState(null)
   const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {
     onCompleted: () => {
@@ -81,7 +81,7 @@ function useTagList() {
   })
   // Reformat tags
 
-  const updateTagList = (dataIn) => {
+  const updateTagList = dataIn => {
     setTags(reformatTagList(dataIn))
   }
 
