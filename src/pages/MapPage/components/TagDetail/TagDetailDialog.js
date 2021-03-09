@@ -17,7 +17,6 @@ import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
-// import { BreakingChangeType } from 'graphql'
 
 const useStyles = makeStyles(theme => ({
   DrawerPaperStyle: {
@@ -70,9 +69,7 @@ function TagDetailDialog (props) {
   )
   const status = tagStatus[tagMissionIndex][tagStatusIndex]
   return (
-    
     <>
-    
       <Drawer
         anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
         open={activeTag && !isInMission}
