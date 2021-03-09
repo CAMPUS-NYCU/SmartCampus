@@ -134,6 +134,7 @@ function TagDetailDialog (props) {
                     <img src={missionImage[tagMissionIndex]} alt='' />
                     <Typography>{activeTag.category.subTypeName}</Typography>
                     <Typography>{activeTag.locationName}</Typography>
+                    {activeTag.floor === 0 ?(""):(<>{activeTag.floor < 0 ?(<Typography>B{-1*activeTag.floor}樓</Typography>):(<Typography>{activeTag.floor}樓</Typography>)}</>)}
                   </Box>
                   <div
                     style={{
