@@ -17,7 +17,7 @@ import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../contexts/MissionContext'
 import { useTagValue } from '../../contexts/TagContext'
-import { BreakingChangeType } from 'graphql'
+// import { BreakingChangeType } from 'graphql'
 
 const useStyles = makeStyles(theme => ({
   DrawerPaperStyle: {
