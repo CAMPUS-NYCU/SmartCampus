@@ -27,7 +27,16 @@ export const missionGuide = [
     missionDescription:'校園各個地點的人潮，像是餐廳、球場等等。'
   }
 ]
-
+export const missionName = [
+  {
+    missionName: '設施類型',
+    missionDescription: '具體設施'
+  },
+  {
+    missionName: '問題類型',
+    missionDescription: '具體問題'
+  }
+]
 export const facilitySubType = [
   [
     {
