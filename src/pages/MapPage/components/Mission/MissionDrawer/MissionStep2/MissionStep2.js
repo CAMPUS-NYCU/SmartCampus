@@ -19,7 +19,7 @@ import {
   MissionStep
 } from '../../../../contexts/MissionContext'
 import ImageUpload from '../../ImageUpload'
-import { facilitySubType } from '../../../../constants/missionInfo'
+import { facilitySubType,missionName } from '../../../../constants/missionInfo'
 import PicturePreview from './PicturePreview'
 import Picker from 'react-mobile-picker-scroll'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
@@ -139,7 +139,7 @@ function MissionStep3 () {
         {/* * ==================== 設施類型選擇 ==================== */}
         <Grid container item xs={12} direction='row'>
           <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-          <Typography>設施類型</Typography>
+          <Typography>{missionName[missionType].missionName}</Typography>
         </Grid>
         {facilitySubType[missionType].map(facility => (
           <Grid key={facility.subTypeName} item xs={4}>
@@ -161,7 +161,7 @@ function MissionStep3 () {
         {/* * ==================== 具體設施子類別 ==================== */}
         <Grid container item xs={12} direction='row'>
           <ApartmentIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-          <Typography>具體設施</Typography>
+          <Typography>{missionName[missionType].missionDescription}</Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
