@@ -32,9 +32,9 @@ const DetailPart = props => {
     activeTag.category.missionName === '問題任務' &&
       detail &&
       enqueueSnackbar(
-        `${
+        `再${
           detail ? 10 - detail.status.numberOfUpVote : 10
-        }再人投票即可刪除回報`,
+        }人投票即可刪除回報`,
         {
           variant: 'warning'
         }
@@ -214,7 +214,7 @@ const DetailPart = props => {
               <Box className={classes.clickableFont} m={0.5}>
                 {numberOfVote ? numberOfVote : 0}
                 人贊同此問題待處理
-                <br />再{numberOfVote ? 10 - numberOfVote : 10}即可刪除此回報
+                <br />再{numberOfVote ? 10 - numberOfVote : 10}人即可刪除此回報
               </Box>
               <IconButton
                 variant='contained'
