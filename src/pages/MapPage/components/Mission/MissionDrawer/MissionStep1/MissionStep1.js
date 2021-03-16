@@ -25,10 +25,14 @@ function MissionStep1 () {
   useEffect(() => {
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${markerPosition.latitude},${markerPosition.longitude}&language=zh-TW&key=${REACT_APP_GOOGLE_MAP_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${markerPosition.latitude},${markerPosition.longitude}&language=zh-TW&result_type=premise&key=${REACT_APP_GOOGLE_MAP_API_KEY}`
       )
       .then(({ data }) => {
-        setTextLocation(data.results[1].address_components[0].long_name)
+        setTextLocation(
+          data.status === 'OK'
+            ? data.results[0].address_components[0].long_name
+            : ''
+        )
       })
   }, [markerPosition, setTextLocation])
   return (
