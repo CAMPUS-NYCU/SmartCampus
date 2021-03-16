@@ -5,6 +5,7 @@ import useTagList from '../hooks/useTagList'
 import useMissionList from '../hooks/useMissionList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
+import useThreshold from '../hooks/useThreshhold'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -25,6 +26,7 @@ export const TagContextProvider = ({ children }) => {
   const { tags, updateTagList, refetch } = useTagList()
   const { userAddTags, refetchUserAddTags } = useUserTags()
   const { missionList } = useMissionList()
+  const threshold = useThreshold()
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = [
     {
@@ -52,23 +54,23 @@ export const TagContextProvider = ({ children }) => {
   }
   const [filterTags, setFilterTags] = useState([])
 
-  const addFilterTags = (tag) => {
+  const addFilterTags = tag => {
     if (filterTags.indexOf(tag) !== -1) {
-      setFilterTags((prevFilterTags) =>
-        prevFilterTags.filter((t) => {
+      setFilterTags(prevFilterTags =>
+        prevFilterTags.filter(t => {
           return t !== tag
         })
       )
     } else {
-      setFilterTags((prevFilterTags) => [...prevFilterTags, tag])
+      setFilterTags(prevFilterTags => [...prevFilterTags, tag])
     }
   }
-  const resetFilterTags = (tag) => {
-      setFilterTags((prevFilterTags) =>
-        prevFilterTags.filter((t) => {
-          return t !== tag
-        })
-      )
+  const resetFilterTags = tag => {
+    setFilterTags(prevFilterTags =>
+      prevFilterTags.filter(t => {
+        return t !== tag
+      })
+    )
   }
   const contextValues = {
     tags,
@@ -86,7 +88,8 @@ export const TagContextProvider = ({ children }) => {
     tagDetail,
     userAddTags,
     refetchUserAddTags,
-    refetchTagDetail
+    refetchTagDetail,
+    threshold
   }
 
   return (
@@ -102,8 +105,8 @@ TagContextProvider.defaultProps = {
 
 export const useTagValue = () => useContext(TagContext)
 
-function findTagById(id, tags) {
+function findTagById (id, tags) {
   if (!id || !tags || tags.length === 0) return null
-  const targetTag = tags.find((tag) => tag.id === id)
+  const targetTag = tags.find(tag => tag.id === id)
   return targetTag || null
 }

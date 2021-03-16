@@ -16,7 +16,8 @@ const DetailPart = props => {
     setStateDrawer,
     tagMissionIndex,
     deny,
-    guest
+    guest,
+    threshold
   } = props
   const [openHistory, setOpenHistory] = useState(false)
   const handleHistoryClose = () => {
@@ -33,13 +34,13 @@ const DetailPart = props => {
       detail &&
       enqueueSnackbar(
         `再${
-          detail ? 10 - detail.status.numberOfUpVote : 10
+          detail ? threshold - detail.status.numberOfUpVote : threshold
         }人投票即可刪除回報`,
         {
           variant: 'warning'
         }
       )
-  }, [detail, enqueueSnackbar, activeTag])
+  }, [detail, enqueueSnackbar, activeTag, threshold])
   const handleUopVote = () => {
     if (guest) {
       deny()
@@ -205,7 +206,7 @@ const DetailPart = props => {
               >
                 <div
                   style={{
-                    width: `${(numberOfVote / 10) * 100}%`,
+                    width: `${(numberOfVote / threshold) * 100}%`,
                     height: '100%',
                     backgroundColor: '#FDCC4F'
                   }}
@@ -214,7 +215,7 @@ const DetailPart = props => {
               <Box className={classes.clickableFont} m={0.5}>
                 {numberOfVote ? numberOfVote : 0}
                 人贊同此問題待處理
-                <br />再{numberOfVote ? 10 - numberOfVote : 10}人即可刪除此回報
+                <br />再{numberOfVote ? threshold - numberOfVote : threshold}人即可刪除此回報
               </Box>
               <IconButton
                 variant='contained'

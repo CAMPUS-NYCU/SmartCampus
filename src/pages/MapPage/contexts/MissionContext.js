@@ -223,8 +223,6 @@ export const MissionContextProvider = ({ children }) => {
       .currentUser.getIdToken()
       .then(token => {
         if (isInEdit) {
-          console.log(imageFiles.length, imageFiles, imageDeleteUrls)
-
           tagUpdate({
             context: {
               headers: {
@@ -266,7 +264,6 @@ export const MissionContextProvider = ({ children }) => {
                 updateTagData: { imageUploadUrls, imageDeleteStatus }
               }
             }) => {
-              console.log(imageDeleteStatus)
               imageUploadUrls.forEach((url, index) => {
                 // const contentType = imageFiles[index].type
                 const options = {

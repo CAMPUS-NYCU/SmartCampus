@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 function TagDetailDialog (props) {
   const { activeTag, onClose, deny, guest, tagDetail, width } = props
   const { handleStartEdit, isInMission } = useMissionValue()
-  const { userAddTags } = useTagValue()
+  const { userAddTags, threshold } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const classes = useStyles()
@@ -162,6 +162,7 @@ function TagDetailDialog (props) {
                   tagMissionIndex={tagMissionIndex}
                   deny={deny}
                   guest={guest}
+                  threshold={threshold}
                 />
               </Box>
             </>
