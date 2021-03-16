@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, CircularProgress, IconButton } from '@material-ui/core'
+import { useSnackbar } from 'notistack'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
 import { useUpdateVote } from '../../Mutation/useVoteTag'
-import { useSnackbar } from 'notistack'
 
 const DetailPart = props => {
   const {

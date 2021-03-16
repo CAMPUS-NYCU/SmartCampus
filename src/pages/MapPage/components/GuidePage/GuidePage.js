@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { MobileStepper, Button, CircularProgress } from '@material-ui/core'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { makeStyles } from '@material-ui/core/styles'
-import GuidePageStep1 from './GuidePageStep1'
-import GuidePageStep2 from './GuidePageStep2'
-import GuidePageStep3 from './GuidePageStep3'
 import * as firebase from 'firebase/app'
 import { gql } from 'apollo-boost'
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useSnackbar } from 'notistack'
+import GuidePageStep1 from './GuidePageStep1'
+import GuidePageStep2 from './GuidePageStep2'
+import GuidePageStep3 from './GuidePageStep3'
 import MainPage from '../../../../components/MainPage'
 
 const useStyles = makeStyles({
@@ -35,11 +37,12 @@ const SET_HAS_READ_GUIDE_MUTATION = gql`
   }
 `
 
-const GuidePage = (props) => {
-  const { step, setStep, handleNext, handleBack, guest } = props
+const GuidePage = props => {
+  const { step, setStep, handleNext, handleBack, guest, width } = props
   const [token, setToken] = useState('')
   const [setHasReadGuideMutation] = useMutation(SET_HAS_READ_GUIDE_MUTATION)
   const [hasReadGuide, setHasReadGuide] = useState(null)
+  const { enqueueSnackbar } = useSnackbar()
 
   const { data, refetch } = useQuery(GET_READ_GUIDE_QUERY, {
     context: {
@@ -47,7 +50,7 @@ const GuidePage = (props) => {
         authorization: token ? `Bearer ${token}` : ''
       }
     },
-    fetchPolicy:'no-cache',
+    fetchPolicy: 'no-cache',
     onCompleted: () => {
       setHasReadGuide(data.hasReadGuide)
     }
@@ -56,9 +59,9 @@ const GuidePage = (props) => {
     firebase
       .auth()
       .currentUser.getIdToken()
-      .then((t) => {
+      .then(t => {
         setToken(t)
-        refetch().then((data) => {
+        refetch().then(data => {
           if (data.data) {
             setHasReadGuide(data.data.hasReadGuide)
             if (!data.data.hasReadGuide) {
@@ -69,14 +72,24 @@ const GuidePage = (props) => {
                   }
                 }
               })
-            }
-            else{
+              if (isWidthUp('sm', width)) {
+                enqueueSnackbar('功能介紹目前只能在手機上瀏覽')
+                setStep(3)
+              }
+            } else {
               setStep(3)
             }
           }
         })
       })
   }
+  useEffect(() => {
+    console.log('hi')
+    if (isWidthUp('sm', width)) {
+      enqueueSnackbar('功能介紹目前只能在手機上瀏覽', { variant: 'warning' })
+      setStep(3)
+    }
+  }, [hasReadGuide, setStep, width, enqueueSnackbar, step])
   return hasReadGuide === null && !guest ? (
     <LoadingPage />
   ) : (
@@ -124,7 +137,7 @@ const LoadingPage = () => {
   )
 }
 
-const GuidePageContent = (props) => {
+const GuidePageContent = props => {
   const classes = useStyles()
   const { step, handleNext, handleBack } = props
   return step <= 2 ? (
@@ -174,4 +187,4 @@ const GuidePageContent = (props) => {
   )
 }
 
-export default GuidePage
+export default withWidth()(GuidePage)
