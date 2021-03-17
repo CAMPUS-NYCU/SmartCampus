@@ -3,7 +3,8 @@ import {
   GoogleMap,
   LoadScript,
   Marker,
-  StreetViewPanorama
+  StreetViewPanorama,
+  MarkerClusterer
 } from '@react-google-maps/api'
 import { usePosition } from 'use-position'
 
@@ -19,7 +20,7 @@ import Mission1 from '../../../../assets/images/mission1circle.svg'
 import Mission3 from '../../../../assets/images/mission3circle.svg'
 import { missionInfo } from '../../constants/missionInfo'
 
-function Map(props) {
+function Map (props) {
   const { mapCenter } = props
   const {
     handleToggleShowControl,
@@ -40,7 +41,7 @@ function Map(props) {
     filterTags.length === 0
       ? tags
       : tags.filter(
-          (tag) =>
+          tag =>
             filterTags.includes(tag.category.missionName) ||
             filterTags.includes(tag.category.subTypeName) ||
             filterTags.includes(tag.category.targetName)
@@ -51,7 +52,7 @@ function Map(props) {
     error: positionError
   } = usePosition(false, { enableHighAccuracy: true })
   const missionImage = [Mission1, Mission2, Mission3]
-  const missionName = missionInfo.map((mission) => {
+  const missionName = missionInfo.map(mission => {
     return mission.missionName
   })
 
@@ -113,24 +114,35 @@ function Map(props) {
               }}
             />
           )}
-          {!isInMission &&
-            showTags.map((tag) => (
-              <Marker
-                key={tag.id}
-                position={tag.position}
-                icon={{
-                  url:
-                    missionImage[
-                      missionName.findIndex(
-                        (mission) => mission === tag.category.missionName
-                      )
-                    ],
-                  scaledSize: { width: 20, height: 20 }
-                }}
-                clickable
-                onClick={() => setActiveTagId(tag.id)}
-              />
-            ))}
+          {!isInMission && (
+            <MarkerClusterer
+              option={{
+                imagePath:
+                  'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+              }}
+            >
+              {clusterer =>
+                showTags.map(tag => (
+                  <Marker
+                    key={tag.id}
+                    position={tag.position}
+                    icon={{
+                      url:
+                        missionImage[
+                          missionName.findIndex(
+                            mission => mission === tag.category.missionName
+                          )
+                        ],
+                      scaledSize: { width: 20, height: 20 }
+                    }}
+                    clickable
+                    onClick={() => setActiveTagId(tag.id)}
+                    clusterer={clusterer}
+                  />
+                ))
+              }
+            </MarkerClusterer>
+          )}
           {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
             <Marker
               draggable
