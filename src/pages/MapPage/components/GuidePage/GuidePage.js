@@ -84,7 +84,6 @@ const GuidePage = props => {
       })
   }
   useEffect(() => {
-    console.log('hi')
     if (isWidthUp('sm', width)) {
       enqueueSnackbar('功能介紹目前只能在手機上瀏覽', { variant: 'warning' })
       setStep(3)

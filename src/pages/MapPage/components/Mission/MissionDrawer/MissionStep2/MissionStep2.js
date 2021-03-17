@@ -258,7 +258,6 @@ function MissionStep3 () {
             floor: ['無', 'B2', 'B1', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
           }}
           onChange={(name, value) => {
-            console.log(name, value)
             setFloor(value)
           }}
         />

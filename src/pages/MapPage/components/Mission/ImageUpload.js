@@ -13,7 +13,6 @@ function ImageUpload(props) {
       images.push(event.target.files[i])
       preview.push(URL.createObjectURL(event.target.files[i]))
     }
-    console.log(images)
     setPreviewImages(preview)
     setImageFiles(images)
   }
