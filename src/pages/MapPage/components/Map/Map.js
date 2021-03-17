@@ -18,6 +18,9 @@ import PinTarget from '../PinTarget'
 import Mission2 from '../../../../assets/images/mission2circle.svg'
 import Mission1 from '../../../../assets/images/mission1circle.svg'
 import Mission3 from '../../../../assets/images/mission3circle.svg'
+import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
+import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
+import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
 import { missionInfo } from '../../constants/missionInfo'
 
 function Map (props) {
@@ -36,7 +39,7 @@ function Map (props) {
     handleChangeStreetViewPOV,
     povChanged
   } = useMissionValue()
-  const { tags, setActiveTagId, filterTags } = useTagValue()
+  const { tags, setActiveTagId,activeTagId,filterTags } = useTagValue()
   const showTags =
     filterTags.length === 0
       ? tags
@@ -52,7 +55,8 @@ function Map (props) {
     error: positionError
   } = usePosition(false, { enableHighAccuracy: true })
   const missionImage = [Mission1, Mission2, Mission3]
-  const missionName = missionInfo.map(mission => {
+  const missionredImage = [Missionred1, Missionred2, Missionred3]
+  const missionName = missionInfo.map((mission) => {
     return mission.missionName
   })
 
@@ -126,15 +130,25 @@ function Map (props) {
                   <Marker
                     key={tag.id}
                     position={tag.position}
-                    icon={{
-                      url:
-                        missionImage[
-                          missionName.findIndex(
-                            mission => mission === tag.category.missionName
-                          )
-                        ],
+                    icon =
+                  {activeTagId === tag.id ?
+                    ({url:
+                        missionredImage[
+                        missionName.findIndex(
+                        (mission) => mission === tag.category.missionName
+                        )
+                      ],
                       scaledSize: { width: 20, height: 20 }
-                    }}
+                    }):
+                    ({url:
+                        missionImage[
+                        missionName.findIndex(
+                        (mission) => mission === tag.category.missionName
+                        )
+                      ],
+                      scaledSize: { width: 20, height: 20 }
+                    })
+                  }
                     clickable
                     onClick={() => setActiveTagId(tag.id)}
                     clusterer={clusterer}
