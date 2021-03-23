@@ -2,23 +2,23 @@ import React from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 
-import SearchBar from './components/SearchBar'
-import Map from './components/Map'
+import SearchBar from '../../components/SearchBar'
+import Map from '../../components/Map'
 import useModal from '../../utils/hooks/useModal'
-import MissionFab from './components/Mission/MissionFab'
-import MissionDrawer from './components/Mission/MissionDrawer'
-import ProfileDialog from './components/ProfileDialog/ProfileDialog'
+import MissionFab from '../../components/Mission/MissionFab'
+import MissionDrawer from '../../components/Mission/MissionDrawer'
+import ProfileDialog from '../../components/ProfileDialog/ProfileDialog'
 import {
   MissionContextProvider,
   useMissionValue
 } from './contexts/MissionContext'
-import ReportHistory from './components/ReportHistory'
-import GuidePage from './components/GuidePage'
+import ReportHistory from '../../components/ReportHistory'
+import GuidePage from '../../components/GuidePage'
 import { useTagValue } from './contexts/TagContext'
 import useStep from '../../utils/hooks/useStep'
-import TagDetailDialog from './components/TagDetail/TagDetailDialog'
-import FilterFab from './components/Filter/FilterFab'
-import LocationFab from './components/LocationFab'
+import TagDetailDialog from '../../components/TagDetail/TagDetailDialog'
+import FilterFab from '../../components/Filter/FilterFab'
+import LocationFab from '../../components/LocationFab'
 import WindowBackProvider from '../../components/WindowBackProvider'
 
 export default function MapPage(props) {
