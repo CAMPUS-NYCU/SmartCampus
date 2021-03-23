@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack'
 import noImage from '../../assets/images/no-image.svg'
 import EditIcon from '../../assets/images/edit.svg'
 import EditHistory from './editHistory'
-import { useUpdateVote } from '../../pages/MapPage/Mutation/useVoteTag'
+import { useUpdateVote } from '../../utils/Mutation/useVoteTag'
 
 const DetailPart = props => {
   const {

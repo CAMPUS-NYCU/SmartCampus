@@ -24,7 +24,7 @@ import { apolloClient } from './utils/grahpql'
 import {
   TagContextProvider,
   useTagValue
-} from './pages/MapPage/contexts/TagContext'
+} from './utils/contexts/TagContext'
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)

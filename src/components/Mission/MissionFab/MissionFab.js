@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import AddSharpIcon from '@material-ui/icons/AddSharp'
 import { Fab } from '@material-ui/core'
-import { useMissionValue } from '../../../pages/MapPage/contexts/MissionContext'
+import { useMissionValue } from '../../../utils/contexts/MissionContext'
 
 const useStyles = makeStyles((theme) => ({
   missionFab: {

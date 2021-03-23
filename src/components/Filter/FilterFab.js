@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import { useTagValue } from '../../pages/MapPage/contexts/TagContext'
+import { useTagValue } from '../../utils/contexts/TagContext'
 import FilterDrawer from './FilterDrawer'
 import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'

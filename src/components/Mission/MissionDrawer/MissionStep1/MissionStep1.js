@@ -10,7 +10,7 @@ import inputImg from '../../../../assets/images/input-icon.svg'
 import {
   useMissionValue,
   MissionStep
-} from '../../../../pages/MapPage/contexts/MissionContext'
+} from '../../../../utils/contexts/MissionContext'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues'
 
 function MissionStep1 () {

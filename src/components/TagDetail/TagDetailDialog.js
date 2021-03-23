@@ -11,12 +11,12 @@ import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 import Mission2 from '../../assets/images/mission2circle.svg'
 import Mission1 from '../../assets/images/mission1circle.svg'
 import Mission3 from '../../assets/images/mission3circle.svg'
-import { missionInfo } from '../../pages/MapPage/constants/missionInfo'
-import { tagStatus } from '../../pages/MapPage/constants/tagData'
+import { missionInfo } from '../../constants/missionInfo'
+import { tagStatus } from '../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
-import { useMissionValue } from '../../pages/MapPage/contexts/MissionContext'
-import { useTagValue } from '../../pages/MapPage/contexts/TagContext'
+import { useMissionValue } from '../../utils/contexts/MissionContext'
+import { useTagValue } from '../../utils/contexts/TagContext'
 
 const useStyles = makeStyles(theme => ({
   DrawerPaperStyle: {

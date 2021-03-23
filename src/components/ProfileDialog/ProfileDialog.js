@@ -15,7 +15,7 @@ import * as firebase from 'firebase/app'
 import EmailIcon from '@material-ui/icons/Email'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import { useTagValue } from '../../pages/MapPage/contexts/TagContext'
+import { useTagValue } from '../../utils/contexts/TagContext'
 
 ProfileDialog.propTypes = {
   control: PropTypes.shape({

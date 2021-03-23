@@ -12,8 +12,8 @@ import MissionStepper from './MissionStepper'
 import MissionStep1 from './MissionStep1'
 import MissionStep2 from './MissionStep2'
 import MissionStep0 from './MissionStep0'
-import { MissionStep, useMissionValue } from '../../../pages/MapPage/contexts/MissionContext'
-import { missionInfo } from '../../../pages/MapPage/constants/missionInfo'
+import { MissionStep, useMissionValue } from '../../../utils/contexts/MissionContext'
+import { missionInfo } from '../../../constants/missionInfo'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 
 const useStyles = makeStyles(theme => ({

@@ -17,9 +17,9 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import {
   useMissionValue,
   MissionStep
-} from '../../../../pages/MapPage/contexts/MissionContext'
+} from '../../../../utils/contexts/MissionContext'
 import ImageUpload from '../../ImageUpload'
-import { facilitySubType,missionName } from '../../../../pages/MapPage/constants/missionInfo'
+import { facilitySubType,missionName } from '../../../../constants/missionInfo'
 import PicturePreview from './PicturePreview'
 import Picker from 'react-mobile-picker-scroll'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'

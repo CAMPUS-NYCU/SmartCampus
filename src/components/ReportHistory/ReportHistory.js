@@ -16,8 +16,8 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import { useTagValue } from '../../pages/MapPage/contexts/TagContext'
-import { useMissionValue } from '../../pages/MapPage/contexts/MissionContext'
+import { useTagValue } from '../../utils/contexts/TagContext'
+import { useMissionValue } from '../../utils/contexts/MissionContext'
 import Mission1 from '../../assets/images/mission1.svg'
 import Mission2 from '../../assets/images/mission2.svg'
 import Mission3 from '../../assets/images/mission3.svg'

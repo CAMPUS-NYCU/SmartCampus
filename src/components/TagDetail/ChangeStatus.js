@@ -21,8 +21,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import * as firebase from 'firebase/app'
 import WaitIcon from '../../assets/images/wait.svg'
 import SolvedIcon from '../../assets/images/solved.svg'
-import { useUpdateTagStatus } from '../../pages/MapPage/Mutation/updateTagStatus'
-import { useTagValue } from '../../pages/MapPage/contexts/TagContext'
+import { useUpdateTagStatus } from '../../utils/Mutation/updateTagStatus'
+import { useTagValue } from '../../utils/contexts/TagContext'
 
 function ChangeStatus (props) {
   const {
