@@ -44,7 +44,6 @@ const useStyles = makeStyles(theme => ({
     borderRadius: `10px`
   }
 }))
-
 function MissionStepper (props) {
   const classes = useStyles()
   const {
@@ -54,7 +53,8 @@ function MissionStepper (props) {
     handleCloseStreetView,
     ableToNextStep,
     handleCompleteStreetView,
-    isInEdit
+    isInEdit,
+    setRemindOpen,
   } = useMissionValue()
   const { PlaceFlagOnStreet } = MissionStep
   const [finishOpen, setFinishOpen] = useState(false)
@@ -97,15 +97,14 @@ function MissionStepper (props) {
           className={classes.stepper}
           nextButton={
             currentStep >= MISSION_MAX_STEP ? (
-              <Button
+                <Button
                 color='primary'
                 size='medium'
-                disabled={!ableToNextStep}
-                onClick={() => setFinishOpen(true)}
+                onClick={() => {ableToNextStep === true ? (setFinishOpen(true)):(setRemindOpen(true))}}
                 className={classes.button}
-              >
-                完成
-              </Button>
+                >
+                確定
+                </Button>
             ) : (
               <Button
                 size='medium'
@@ -159,5 +158,4 @@ function MissionStepper (props) {
     </>
   )
 }
-
 export default MissionStepper

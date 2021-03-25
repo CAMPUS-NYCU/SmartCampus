@@ -40,7 +40,8 @@ function MissionStep3 () {
     missionType,
     floor,
     setFloor,
-    isInEdit
+    isInEdit,
+    remindOpen,
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const [floorDrawer, setFloorDrawer] = useState(false)
@@ -136,11 +137,26 @@ function MissionStep3 () {
           </Box>
         </Grid>
 
-        {/* * ==================== 設施類型選擇 ==================== */}
-        <Grid container item xs={12} direction='row'>
-          <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-          <Typography>{missionName[missionType].missionName}</Typography>
-        </Grid>
+        {/* * ==================== 設施類型選擇 ==================== */}        
+          <Grid container item xs={12} direction='row'>
+            <>{ remindOpen === true && selectedMissionId === '' ? 
+            (<Box
+              display='flex'
+              flexDirection='row'
+              alignItems='center'
+              width='1/2'
+              justifyContent='flex-start'
+              border={1}
+              borderColor="error.main"
+              borderRadius={6}>
+              <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+              <Typography>{missionName[missionType].missionName}</Typography>
+              <Typography>（必填選項）</Typography>
+            </Box>):(<>
+              <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+              <Typography>{missionName[missionType].missionName}</Typography>
+              </>)}</>
+          </Grid>
         {facilitySubType[missionType].map(facility => (
           <Grid key={facility.subTypeName} item xs={4}>
             <Button
@@ -160,8 +176,24 @@ function MissionStep3 () {
         ))}
         {/* * ==================== 具體設施子類別 ==================== */}
         <Grid container item xs={12} direction='row'>
-          <ApartmentIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-          <Typography>{missionName[missionType].missionDescription}</Typography>
+          <>{remindOpen === true && selectedSubOptionId === '' ? (
+            <Box
+              display='flex'
+              flexDirection='row'
+              alignItems='center'
+              width='1/2'
+              justifyContent='flex-start'
+              border={1}
+              borderColor="error.main"
+              borderRadius={6}
+            >
+              <ApartmentIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+              <Typography>{missionName[missionType].missionDescription}</Typography>
+              <Typography>（必填選項）</Typography>
+            </Box>):(<>
+              <ApartmentIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+              <Typography>{missionName[missionType].missionDescription}</Typography>
+              </>)}</>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
