@@ -62,7 +62,12 @@ const FilterDrawer = props => {
     setCurrentTarget(null)
     onClose()
   }
-
+  const handleCloseFilter = () => {
+    setCurrentMission(null)
+    setCurrentSubmission(null)
+    setCurrentTarget(null)
+    onClose()
+  }
   const changeCurrentMission = mission => {
     if (currentMission === mission) {
       setCurrentMission(null)
@@ -96,7 +101,6 @@ const FilterDrawer = props => {
   return (
     <Drawer
       anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
-      variant='persistent'
       open={open}
       onClose={onClose}
       PaperProps={{
@@ -119,7 +123,7 @@ const FilterDrawer = props => {
           <IconButton
             className={classes.closeButton}
             edge='end'
-            onClick={onClose}
+            onClick={handleCloseFilter}
           >
             <CloseIcon fontSize='medium' />
           </IconButton>
