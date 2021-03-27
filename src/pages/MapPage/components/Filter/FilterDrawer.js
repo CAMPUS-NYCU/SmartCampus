@@ -102,7 +102,7 @@ const FilterDrawer = props => {
     <Drawer
       anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
       open={open}
-      onClose={onClose}
+      onClose={handleCloseFilter}
       PaperProps={{
         style: {
           borderRadius: '20px 20px 0 0',
