@@ -129,6 +129,7 @@ export const MissionContextProvider = ({ children }) => {
     }
   }
   const handleBack = () => {
+    setRemindOpen(false)
     if (isInEdit && currentStep === MissionStep.SelectMission) {
       handleBackStep(2)
     } else if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
@@ -519,7 +520,7 @@ export const MissionContextProvider = ({ children }) => {
     setTextLocation(event.target.value)
   }
   const [floor, setFloor] = useState('無')
-
+  const [remindOpen, setRemindOpen] = useState(false)
   // ==================== Clear ====================
   const clearMissionData = () => {
     setImageFiles([])
@@ -541,6 +542,7 @@ export const MissionContextProvider = ({ children }) => {
     setPreviewImages([])
     setImageDeleteUrls([])
     setFloor(0)
+    setRemindOpen(false)
   }
 
   // ===================== Loading =======================
@@ -611,6 +613,8 @@ export const MissionContextProvider = ({ children }) => {
     setMapCenter,
     floor,
     setFloor,
+    remindOpen,
+    setRemindOpen,
     setImageDeleteUrls,
     imageDeleteUrls,
     handleChangeMissionType
