@@ -13,7 +13,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 
-import WindowHeightProvider from 'components/WindowHeightProvider'
+import WindowHeightProvider from 'utils/WindowHeightProvider'
 import MainPage from 'components/MainPage'
 import firebaseConfig from './constants/firebaseConfig'
 import { INDEX_PATH, MAP_PATH, LOGIN_PATH } from './constants/pageUrls'
