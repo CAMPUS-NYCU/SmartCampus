@@ -80,7 +80,7 @@ function MissionStep3 () {
             display='flex'
             flexDirection='row'
             alignItems='center'
-            width='70vw'
+            width='100vw'
             justifyContent='flex-start'
           >
             <StorefrontIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
@@ -88,7 +88,7 @@ function MissionStep3 () {
               id='standard-basic'
               ref={focusInput}
               disableUnderline={locationFocus}
-              style={{ width: '90%' }}
+              style={{ width: '100%' }}
               placeholder='輸入地點名稱'
               value={textLocation}
               onChange={handleChangeTextLocation}
