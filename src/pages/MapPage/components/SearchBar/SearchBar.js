@@ -15,6 +15,7 @@ import SearchBarMenu from './SearchBarMenu'
 import Fillter from '../Filter/FilterFab'
 import yellowfilter from 'assets/images/yellow-filter.svg'
 import grayfilter from 'assets/images/gray-filter.svg'
+import { useMissionValue } from '../../contexts/MissionContext'
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
@@ -44,7 +45,7 @@ const SearchBar = React.forwardRef((props, ref) => {
   const [open, changeOpen] = useState(false)
   const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
-  
+  const { currentStep } = useMissionValue()
   return (
     <div ref={ref} {...otherProps}>
       <Paper className={classes.root}>
@@ -71,7 +72,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         <IconButton
           className = {classes.iconButton}
           aria-label = 'filter'
-          onClick = {() => toggle(open)}
+          onClick = {currentStep === 1 ? ("") :()=>toggle(open)}
         >
           {open === true ?(<img src={yellowfilter} alt = ""/>):(<img src = {grayfilter} alt = ""/>)}
         </IconButton>
@@ -79,7 +80,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         <IconButton
           className={classes.iconButton}
           aria-label='menu'
-          onClick={menuControl.setOpen}
+          onClick={currentStep === 1 ? ("") :menuControl.setOpen}
         >
           <MenuIcon />
         </IconButton>

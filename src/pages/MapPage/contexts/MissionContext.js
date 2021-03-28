@@ -129,6 +129,8 @@ export const MissionContextProvider = ({ children }) => {
     }
   }
   const handleBack = () => {
+    setSelectedMissionId(InitialMissionValue.selectedMissionId)
+    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
     setRemindOpen(false)
     if (isInEdit && currentStep === MissionStep.SelectMission) {
       handleBackStep(2)

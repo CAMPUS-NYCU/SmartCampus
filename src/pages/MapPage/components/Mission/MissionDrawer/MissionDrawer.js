@@ -62,7 +62,6 @@ function MissionDrawer (props) {
   } = useMissionValue()
   const { width } = props
   const classes = useStyles()
-
   const { currentStep, missionType } = useMissionValue()
   return (
     <>
@@ -71,7 +70,7 @@ function MissionDrawer (props) {
           anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
           open={isInMission}
           onClose={handleCloseMission}
-          variant='persistent'
+          variant={currentStep === 1 ? ('persistent'):("")}
           classes={{ paper: classes.drawerPaperStyle }}
           {...props}
         >
