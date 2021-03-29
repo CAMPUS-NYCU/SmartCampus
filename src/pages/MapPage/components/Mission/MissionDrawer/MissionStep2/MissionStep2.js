@@ -80,7 +80,7 @@ function MissionStep3 () {
             display='flex'
             flexDirection='row'
             alignItems='center'
-            width='70vw'
+            width='100vw'
             justifyContent='flex-start'
           >
             <StorefrontIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
@@ -88,7 +88,7 @@ function MissionStep3 () {
               id='standard-basic'
               ref={focusInput}
               disableUnderline={locationFocus}
-              style={{ width: '70%' }}
+              style={{ width: '100%' }}
               placeholder='輸入地點名稱'
               value={textLocation}
               onChange={handleChangeTextLocation}
@@ -99,7 +99,7 @@ function MissionStep3 () {
                 setLocationFocus(true)
               }}
             />
-          </Box>
+          
           <IconButton
             size='small'
             onClick={() => {
@@ -108,6 +108,7 @@ function MissionStep3 () {
           >
             <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
           </IconButton>
+          </Box>
         </Grid>
 
         <Grid container item xs={12} justify='space-between' direction='row'>
