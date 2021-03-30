@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Button, CircularProgress, IconButton } from '@material-ui/core'
+import PropTypes from 'prop-types'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  makeStyles
+} from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
 import { useUpdateVote } from '../../../../utils/Mutation/useVoteTag'
 
-const DetailPart = props => {
+const useStyles = makeStyles(() => ({
+  clickableFont: {
+    fontSize: '0.8em',
+    color: 'gray'
+  }
+}))
+
+const DetailPart = (props) => {
   const {
     detail,
     activeTag,
-    classes,
     missionName,
     setLargeImg,
     setStateDrawer,
@@ -19,6 +32,7 @@ const DetailPart = props => {
     guest,
     threshold
   } = props
+  const classes = useStyles()
   const [openHistory, setOpenHistory] = useState(false)
   const handleHistoryClose = () => {
     setOpenHistory(false)
@@ -30,8 +44,7 @@ const DetailPart = props => {
   useEffect(() => {
     setNumberOfVote(detail ? detail.status.numberOfUpVote : 0)
     setHasUpVote(detail ? detail.status.hasUpVote : false)
-    activeTag.category.missionName === '問題任務' &&
-      detail &&
+    if (activeTag.category.missionName === '問題任務' && detail) {
       enqueueSnackbar(
         `再${
           detail ? threshold - detail.status.numberOfUpVote : threshold
@@ -40,17 +53,18 @@ const DetailPart = props => {
           variant: 'warning'
         }
       )
+    }
   }, [detail, enqueueSnackbar, activeTag, threshold])
   const handleUopVote = () => {
     if (guest) {
       deny()
       return
     }
-    setNumberOfVote(prevNumberOfVote =>
+    setNumberOfVote((prevNumberOfVote) =>
       hasUpVote ? prevNumberOfVote - 1 : prevNumberOfVote + 1
     )
     upVote(detail.id, !hasUpVote)
-    setHasUpVote(prevHasUpVote => !prevHasUpVote)
+    setHasUpVote((prevHasUpVote) => !prevHasUpVote)
   }
 
   return (
@@ -81,7 +95,7 @@ const DetailPart = props => {
                 }}
               />
             ) : (
-              detail.imageUrl.map(url => {
+              detail.imageUrl.map((url) => {
                 return (
                   <Button
                     onClick={() => setLargeImg(`${url}`)}
@@ -121,7 +135,11 @@ const DetailPart = props => {
             <Button
               id='changeStatusButton'
               onClick={() => {
-                guest ? deny() : setStateDrawer(true)
+                if (guest) {
+                  deny()
+                } else {
+                  setStateDrawer(true)
+                }
               }}
               style={{
                 background: '#FDCC4F',
@@ -213,9 +231,10 @@ const DetailPart = props => {
                 />
               </div>
               <Box className={classes.clickableFont} m={0.5}>
-                {numberOfVote ? numberOfVote : 0}
+                {numberOfVote || 0}
                 人贊同此問題待處理
-                <br />再{numberOfVote ? threshold - numberOfVote : threshold}人即可刪除此回報
+                <br />再{numberOfVote ? threshold - numberOfVote : threshold}
+                人即可刪除此回報
               </Box>
               <IconButton
                 variant='contained'
@@ -250,6 +269,18 @@ const DetailPart = props => {
       />
     </>
   )
+}
+
+DetailPart.propTypes = {
+  detail: PropTypes.object.isRequired,
+  activeTag: PropTypes.object.isRequired,
+  missionName: PropTypes.string.isRequired,
+  setLargeImg: PropTypes.func.isRequired,
+  setStateDrawer: PropTypes.func.isRequired,
+  tagMissionIndex: PropTypes.number.isRequired,
+  deny: PropTypes.func.isRequired,
+  guest: PropTypes.bool.isRequired,
+  threshold: PropTypes.number.isRequired
 }
 
 export default DetailPart

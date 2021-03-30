@@ -52,7 +52,7 @@ function ChangeStatus (props) {
     resetTemporaryTagState()
   }
   const { updateStatus } = useUpdateTagStatus()
-  const HandleDrawerComplete = () => {
+  const handleDrawerComplete = () => {
     setLoading(true)
     firebase
       .auth()
@@ -142,7 +142,7 @@ function ChangeStatus (props) {
             ))}
           </List>
           <DialogActions>
-            <Button color='primary' onClick={() => HandleDrawerComplete()}>
+            <Button color='primary' onClick={() => handleDrawerComplete()}>
               確定
             </Button>
           </DialogActions>

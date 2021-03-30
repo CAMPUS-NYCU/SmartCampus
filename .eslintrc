@@ -12,7 +12,7 @@
     "react/jsx-one-expression-per-line": "off", // 不要限制jsx一行只能有一個元件
     "no-use-before-define": "warn", // 讓 function 可在定義前就被使用，PropTypes 定義才能放在檔案最上方
     "react/jsx-props-no-spreading": "off", // 可以 prop spreading
-    "react/forbid-prop-types": "warn", // 可以用 object PropType
+    "react/forbid-prop-types": "off", // 可以用 object PropType
     "import/prefer-default-export": "warn", // 不用一定要 default export
     "react/require-default-props": "warn",
     "react/prop-types": "warn",
