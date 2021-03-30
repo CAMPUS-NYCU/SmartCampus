@@ -1,136 +1,68 @@
 import React from 'react'
-import classnames from 'classnames'
-
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
-import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import CloseIcon from '@material-ui/icons/Close'
-import { Toolbar, IconButton } from '@material-ui/core'
+
 import MissionStepper from './MissionStepper'
 import MissionStep1 from './MissionStep1'
 import MissionStep2 from './MissionStep2'
 import MissionStep0 from './MissionStep0'
-import { MissionStep, useMissionValue } from '../../../../../utils/contexts/MissionContext'
+import {
+  MissionStep,
+  useMissionValue
+} from '../../../../../utils/contexts/MissionContext'
 import { missionInfo } from '../../../../../constants/missionInfo'
-import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
+import CustomDrawer from '../../../../../components/CustomDrawer'
 
-const useStyles = makeStyles(theme => ({
-  drawerPaperStyle: {
-    borderRadius: '20px 20px 0 0',
-    backgroundColor: '#FAFAFA',
-    zIndex: '20',
-    [theme.breakpoints.up('sm')]: {
-      width: '400px'
-    }
-  },
-  drawerContent: {
-    minHeight: 150,
-    height: window.innerHeight * 0.2,
-    transitionProperty: 'height min-height',
-    transitionDuration: '0.3s',
-    width: '100%'
-  },
-  drawerContentFull: {
-    minHeight: 450,
-    height: 'calc(var(--vh, 1vh) * 100 - 100px)'
-  },
-  titleBar: {
-    position: 'sticky',
-    top: 0,
-    width: '100%',
-    height: 40,
-    backgroundColor: '#FAFAFA',
-    zIndex: 100
-  },
+const useStyles = makeStyles(() => ({
   missionContent: {
     backgroundColor: '#FAFAFA',
     paddingBottom: 64 // 48px stepper高度 + (2 * theme spacing)
-  },
-  closeButton: {
-    padding: 0
   }
 }))
 
-function MissionDrawer (props) {
+function MissionDrawer() {
   const {
     isInMission,
     handleCloseMission,
     handleBack,
     isInEdit
   } = useMissionValue()
-  const { width } = props
   const classes = useStyles()
   const { currentStep, missionType } = useMissionValue()
+
+  const getDrawerTitle = () => {
+    if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
+      return '更改座標位置'
+    }
+    if (isInEdit) {
+      return '編輯回報紀錄'
+    }
+    if (currentStep === MissionStep.selectMissionName) {
+      return `選擇要標注的任務`
+    }
+    return `標註${missionInfo[missionType].missionName}`
+  }
   return (
     <>
       {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (
-        <Drawer
-          anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
+        <CustomDrawer
           open={isInMission}
-          onClose={handleCloseMission}
-          variant={currentStep === 1 ? ('persistent'):("")}
-          classes={{ paper: classes.drawerPaperStyle }}
-          {...props}
+          handleClose={handleCloseMission}
+          handleBack={handleBack}
+          fullHeight={currentStep === MissionStep.SelectMission}
+          closeButton={
+            !isInEdit && currentStep === MissionStep.selectMissionName
+          }
+          title={getDrawerTitle()}
+          variant={currentStep === 1 ? 'persistent' : 'temporary'}
         >
-          <div
-            className={classnames(
-              currentStep === MissionStep.SelectMission &&
-                classes.drawerContentFull
-            )}
-          >
-            <Toolbar
-              disableTypography
-              style={{
-                position: 'sticky',
-                top: '0',
-                background: '#FAFAFA',
-                zIndex: '100'
-              }}
-            >
-              {!isInEdit && currentStep === MissionStep.selectMissionName ? (
-                <IconButton
-                  style={{ position: 'absolute', right: '10px' }}
-                  edge='start'
-                  aria-label='close'
-                  onClick={handleCloseMission}
-                >
-                  <CloseIcon />
-                </IconButton>
-              ) : (
-                <IconButton
-                  edge='start'
-                  aria-label='close'
-                  onClick={
-                    isInEdit && currentStep === MissionStep.selectMissionName
-                      ? handleCloseMission
-                      : handleBack
-                  }
-                >
-                  <KeyboardReturnIcon />
-                </IconButton>
-              )}
-              <Typography variant='h6'>
-                {isInEdit && currentStep === MissionStep.PlaceFlagOnMap
-                  ? '更改座標位置'
-                  : isInEdit
-                  ? '編輯回報紀錄'
-                  : currentStep === MissionStep.selectMissionName
-                  ? `選擇要標注的任務`
-                  : `標註${missionInfo[missionType].missionName}`}
-              </Typography>
-            </Toolbar>
-            <Box px={2} py={1} className={classes.missionContent}>
-              {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-              {currentStep === MissionStep.selectMissionName && (
-                <MissionStep0 />
-              )}
-              {currentStep === MissionStep.SelectMission && <MissionStep2 />}
-            </Box>
-            <MissionStepper />
-          </div>
-        </Drawer>
+          <Box px={2} py={1} className={classes.missionContent}>
+            {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
+            {currentStep === MissionStep.selectMissionName && <MissionStep0 />}
+            {currentStep === MissionStep.SelectMission && <MissionStep2 />}
+          </Box>
+          <MissionStepper />
+        </CustomDrawer>
       ) : (
         <>
           {currentStep === MissionStep.PlaceFlagOnStreet && <MissionStepper />}
@@ -140,4 +72,4 @@ function MissionDrawer (props) {
   )
 }
 
-export default withWidth()(MissionDrawer)
+export default MissionDrawer

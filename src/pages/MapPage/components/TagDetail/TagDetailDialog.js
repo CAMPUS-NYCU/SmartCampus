@@ -74,7 +74,6 @@ function TagDetailDialog (props) {
         anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
         open={activeTag && !isInMission}
         onClose={onClose}
-        variant='persistent'
         classes={{ paper: classes.DrawerPaperStyle }}
       >
         <div

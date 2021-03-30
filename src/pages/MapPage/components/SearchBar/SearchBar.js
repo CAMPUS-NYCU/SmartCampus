@@ -13,9 +13,9 @@ import { useSnackbar } from 'notistack'
 import useMenu from '../../../../utils/hooks/useMenu'
 import SearchBarMenu from './SearchBarMenu'
 import Fillter from '../Filter/FilterFab'
-import yellowfilter from 'assets/images/yellow-filter.svg'
-import grayfilter from 'assets/images/gray-filter.svg'
-import { useMissionValue } from '../../contexts/MissionContext'
+import yellowfilter from '../../../../assets/images/yellow-filter.svg'
+import grayfilter from '../../../../assets/images/gray-filter.svg'
+import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
