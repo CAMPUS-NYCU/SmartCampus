@@ -205,7 +205,7 @@ const DetailPart = (props) => {
               </Box>
             </Box>
           </div>
-          {activeTag.category.missionName === missionName[1] && (
+          {activeTag.status.statusName === '已解決' && (
             <Box
               display='flex'
               justifyContent='flex-end'
@@ -232,7 +232,7 @@ const DetailPart = (props) => {
               </div>
               <Box className={classes.clickableFont} m={0.5}>
                 {numberOfVote || 0}
-                人贊同此問題待處理
+                人贊同此問題已解決
                 <br />再{numberOfVote ? threshold - numberOfVote : threshold}
                 人即可刪除此回報
               </Box>
