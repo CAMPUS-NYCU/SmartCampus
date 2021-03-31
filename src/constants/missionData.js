@@ -1,4 +1,4 @@
-import { SubOptionOther } from '../contexts/MissionContext'
+import { SubOptionOther } from '../utils/contexts/MissionContext'
 
 export const Missions = [
   // ==================== 無障礙設施 ====================

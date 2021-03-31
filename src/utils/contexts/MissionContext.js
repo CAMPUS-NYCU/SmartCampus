@@ -6,10 +6,10 @@ import { useMutation } from '@apollo/react-hooks'
 import axios from 'axios'
 import debounce from 'utils/debounce'
 import * as firebase from 'firebase/app'
-import useStep from '../../../utils/hooks/useStep'
-import { missionInfo } from '../constants/missionInfo'
+import useStep from '../hooks/useStep'
+import { missionInfo } from '../../constants/missionInfo'
 import { useTagValue } from './TagContext'
-import { DefaultCenter } from '../constants/mapConstants'
+import { DefaultCenter } from '../../constants/mapConstants'
 
 export const TAG_ADD_MUTATION = gql`
   mutation AddNewTagResponse($input: addTagDataInput!) {

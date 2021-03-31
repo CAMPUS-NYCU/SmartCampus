@@ -11,8 +11,8 @@ import {
   Box
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import { facilitySubType, missionInfo } from '../../constants/missionInfo'
-import { useTagValue } from '../../contexts/TagContext'
+import { facilitySubType, missionInfo } from '../../../../constants/missionInfo'
+import { useTagValue } from '../../../../utils/contexts/TagContext'
 
 const useStyles = makeStyles({
   drawerContent: {

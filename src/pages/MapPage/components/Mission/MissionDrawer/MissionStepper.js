@@ -9,7 +9,7 @@ import {
   MISSION_MAX_STEP,
   useMissionValue,
   MissionStep
-} from '../../../contexts/MissionContext'
+} from '../../../../../utils/contexts/MissionContext'
 
 const useStyles = makeStyles(theme => ({
   stepper: {

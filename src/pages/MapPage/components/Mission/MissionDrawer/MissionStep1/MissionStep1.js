@@ -4,13 +4,13 @@ import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import { Button } from '@material-ui/core'
 import StreetviewIcon from '@material-ui/icons/Streetview'
+import axios from 'axios'
 import Flag from '../../../Flag'
 import inputImg from '../../../../../../assets/images/input-icon.svg'
 import {
   useMissionValue,
   MissionStep
-} from '../../../../contexts/MissionContext'
-import axios from 'axios'
+} from '../../../../../../utils/contexts/MissionContext'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
 
 function MissionStep1 () {

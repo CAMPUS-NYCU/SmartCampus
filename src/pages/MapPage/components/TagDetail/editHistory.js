@@ -15,7 +15,7 @@ import {
   Divider
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import { tagStatus } from '../../constants/tagData'
+import { tagStatus } from '../../../../constants/tagData'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

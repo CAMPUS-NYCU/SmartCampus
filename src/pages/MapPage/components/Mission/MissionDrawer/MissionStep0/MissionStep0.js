@@ -8,11 +8,11 @@ import {
 } from '@material-ui/core'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
-import { missionInfo } from '../../../../constants/missionInfo'
+import { missionInfo } from '../../../../../../constants/missionInfo'
 import Mission1 from '../../../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../../../assets/images/mission3.svg'
-import { useMissionValue } from '../../../../contexts/MissionContext'
+import { useMissionValue } from '../../../../../../utils/contexts/MissionContext'
 
 const useStyles = makeStyles(() => ({
   secondaryText: {

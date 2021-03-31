@@ -1,9 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
+import ReactRough, { Circle, LinearPath, Line } from 'react-rough'
 import TagDetailDialog from '../TagDetail/TagDetailDialog'
 import elevator from '../../../../assets/images/elevator.png'
-import ReactRough, { Circle, LinearPath, Line } from 'react-rough'
 
 const useStyles = makeStyles({
   container: {

@@ -21,8 +21,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import * as firebase from 'firebase/app'
 import WaitIcon from '../../../../assets/images/wait.svg'
 import SolvedIcon from '../../../../assets/images/solved.svg'
-import { useUpdateTagStatus } from '../../Mutation/updateTagStatus'
-import { useTagValue } from '../../contexts/TagContext'
+import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
+import { useTagValue } from '../../../../utils/contexts/TagContext'
 
 function ChangeStatus (props) {
   const {
@@ -52,7 +52,7 @@ function ChangeStatus (props) {
     resetTemporaryTagState()
   }
   const { updateStatus } = useUpdateTagStatus()
-  const HandleDrawerComplete = () => {
+  const handleDrawerComplete = () => {
     setLoading(true)
     firebase
       .auth()
@@ -142,7 +142,7 @@ function ChangeStatus (props) {
             ))}
           </List>
           <DialogActions>
-            <Button color='primary' onClick={() => HandleDrawerComplete()}>
+            <Button color='primary' onClick={() => handleDrawerComplete()}>
               確定
             </Button>
           </DialogActions>

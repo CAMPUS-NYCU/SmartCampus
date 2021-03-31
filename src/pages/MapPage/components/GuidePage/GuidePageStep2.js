@@ -8,7 +8,7 @@ import {
   ListItemText,
   ListItemIcon
 } from '@material-ui/core'
-import { missionGuide } from '../../constants/missionInfo'
+import { missionGuide } from '../../../../constants/missionInfo'
 import Mission1 from '../../../../assets/images/mission1circle.svg'
 import Mission2 from '../../../../assets/images/mission2-icon.svg'
 import Mission3 from '../../../../assets/images/mission3circle.svg'

@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTagValue } from '../pages/MapPage/contexts/TagContext'
-import { useMissionValue } from '../pages/MapPage/contexts/MissionContext'
+import { useTagValue } from './contexts/TagContext'
+import { useMissionValue } from './contexts/MissionContext'
 
 export default function WindowBackProvider (props) {
   const { activeTag, resetActiveTag } = useTagValue()

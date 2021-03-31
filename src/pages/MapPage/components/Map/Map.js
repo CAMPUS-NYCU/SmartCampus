@@ -9,11 +9,14 @@ import {
 import { usePosition } from 'use-position'
 
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues'
-import { useMissionValue, MissionStep } from '../../contexts/MissionContext'
-import { useTagValue } from '../../contexts/TagContext'
+import {
+  useMissionValue,
+  MissionStep
+} from '../../../../utils/contexts/MissionContext'
+import { useTagValue } from '../../../../utils/contexts/TagContext'
 import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.svg'
-import { DefaultZoom } from '../../constants/mapConstants'
+import { DefaultZoom } from '../../../../constants/mapConstants'
 import PinTarget from '../PinTarget'
 import Mission2 from '../../../../assets/images/mission2circle.svg'
 import Mission1 from '../../../../assets/images/mission1circle.svg'
@@ -21,7 +24,7 @@ import Mission3 from '../../../../assets/images/mission3circle.svg'
 import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
 import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
 import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
-import { missionInfo } from '../../constants/missionInfo'
+import { missionInfo } from '../../../../constants/missionInfo'
 
 function Map (props) {
   const { mapCenter } = props

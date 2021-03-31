@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 
 import Button from '@material-ui/core/Button'
-import { useMissionValue } from '../../contexts/MissionContext'
+import { useMissionValue } from '../contexts/MissionContext'
 
 function ImageUpload(props) {
   const { imageFiles, setImageFiles } = useMissionValue()
