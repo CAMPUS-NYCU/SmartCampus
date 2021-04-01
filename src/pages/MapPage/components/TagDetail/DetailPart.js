@@ -44,7 +44,7 @@ const DetailPart = (props) => {
   useEffect(() => {
     setNumberOfVote(detail ? detail.status.numberOfUpVote : 0)
     setHasUpVote(detail ? detail.status.hasUpVote : false)
-    if (activeTag.category.missionName === '問題任務' && detail) {
+    if (activeTag.status.statusName === '已解決' && detail) {
       enqueueSnackbar(
         `再${
           detail ? threshold - detail.status.numberOfUpVote : threshold
