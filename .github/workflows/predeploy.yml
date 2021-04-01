@@ -20,7 +20,7 @@ jobs:
       - name: Install Packages
         run: yarn install
       - name: Predeploy to firebase channel
-        run: yarn build && firebase hosting:channel:deploy ${{GITHUB_REF}}
+        run: yarn build && firebase hosting:channel:deploy $GITHUB_REF
         env:
           REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
