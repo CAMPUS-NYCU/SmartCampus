@@ -62,7 +62,7 @@ const demoDetail = {
   newLastUpdateTime: '2020-02-10 10:00'
 }
 
-export default function GuidePageStep3 () {
+export default function GuidePageStep3() {
   const classes = useStyles()
   return (
     <>

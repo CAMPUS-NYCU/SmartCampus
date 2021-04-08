@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, makeStyles, Typography } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
 
 import Mission2 from '../../../../assets/images/mission2circle.svg'
@@ -14,41 +14,12 @@ import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 
-const useStyles = makeStyles((theme) => ({
-  DrawerPaperStyle: {
-    borderRadius: '20px 20px 0 0',
-    backgroundColor: '#FAFAFA',
-    zIndex: '10',
-    [theme.breakpoints.up('sm')]: {
-      width: '500px'
-    }
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500]
-  },
-  changeButton: {
-    borderRadius: '40%'
-  },
-  editButton: {
-    background: '#D8D8D8',
-    border: '1px solid #BABABA',
-    boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.12)',
-    borderRadius: '20px',
-    position: 'absolute',
-    right: '15px'
-  }
-}))
-
 function TagDetailDialog(props) {
   const { activeTag, onClose, deny, guest, tagDetail, ...rest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
   const { userAddTags, threshold } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
-  const classes = useStyles()
   const missionImage = [Mission1, Mission2, Mission3]
   const missionName = missionInfo.map((mission) => {
     return mission.missionName
@@ -155,9 +126,7 @@ function TagDetailDialog(props) {
           stateDrawer={stateDrawer}
           activeTag={activeTag}
           setStateDrawer={setStateDrawer}
-          classes={classes}
           status={tagStatus[tagMissionIndex]}
-          detail={tagDetail}
         />
       )}
       {largeImg && (
