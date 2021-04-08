@@ -1,10 +1,6 @@
 import React from 'react'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import {
-  Drawer,
-  Toolbar,
   Typography,
-  IconButton,
   List,
   ListItem,
   ListItemIcon,
@@ -15,66 +11,43 @@ import {
   Button,
   CircularProgress
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
+import PropTypes from 'prop-types'
+
+import CustomDrawer from '../../../../components/CustomDrawer'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import Mission1 from '../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../assets/images/mission3.svg'
 
-const useStyle = makeStyles(theme => ({
+const useStyle = makeStyles(() => ({
   tag: {
     background: '#FDCC4F',
     border: '1.5px solid #FFEDC0',
     boxSizing: 'border-box',
     borderRadius: '5px'
-  },
-  drawerPaperStyle: {
-    borderRadius: '20px 20px 0 0',
-    backgroundColor: '#FAFAFA',
-    height: '50vh',
-    [theme.breakpoints.up('sm')]: {
-      width: '500px',
-      height: '100vh'
-    }
   }
 }))
 
-const ReportHistory = props => {
+const ReportHistory = (props) => {
   const {
-    control: { open, setClose },
-    width
+    control: { open, setClose }
   } = props
   const { setActiveTagId, activeTag, userAddTags } = useTagValue()
   const { isInMission } = useMissionValue()
   const missionImages = [Mission1, Mission2, Mission3]
   const classes = useStyle()
   return (
-    <Drawer
-      anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
+    <CustomDrawer
       open={open && !isInMission && !activeTag}
-      onClose={setClose}
-      classes={{ paper: classes.drawerPaperStyle }}
+      handleClose={setClose}
+      title='回報紀錄'
+      closeButton
+      fullHeight
     >
-      <Toolbar
-        style={{
-          position: 'sticky',
-          top: '0',
-          zIndex: '100',
-          backgroundColor: '#FAFAFA'
-        }}
-      >
-        <Typography variant='h5'>回報紀錄</Typography>
-        <IconButton
-          onClick={setClose}
-          style={{ position: 'absolute', right: '10px' }}
-        >
-          <CloseIcon fontSize='large' />
-        </IconButton>
-      </Toolbar>
       {userAddTags ? (
         <List component='nav'>
-          {userAddTags.map(item => {
+          {userAddTags.map((item) => {
             return (
               <>
                 <ListItem>
@@ -131,8 +104,15 @@ const ReportHistory = props => {
       ) : (
         <CircularProgress color='primary' />
       )}
-    </Drawer>
+    </CustomDrawer>
   )
 }
 
-export default withWidth()(ReportHistory)
+ReportHistory.propTypes = {
+  control: PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    setClose: PropTypes.func.isRequired
+  }).isRequired
+}
+
+export default ReportHistory
