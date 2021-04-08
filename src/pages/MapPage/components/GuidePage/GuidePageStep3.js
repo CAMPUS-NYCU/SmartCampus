@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import ReactRough, { Circle, LinearPath, Line } from 'react-rough'
-import TagDetailDialog from '../TagDetail/TagDetailDialog'
+import TagDetailDrawer from '../TagDetailDrawer'
 import elevator from '../../../../assets/images/elevator.png'
 
 const useStyles = makeStyles({
@@ -62,16 +62,17 @@ const demoDetail = {
   newLastUpdateTime: '2020-02-10 10:00'
 }
 
-export default function GuidePageStep3() {
+export default function GuidePageStep3 () {
   const classes = useStyles()
   return (
     <>
-      <TagDetailDialog
+      <TagDetailDrawer
         activeTag={demoTag}
         tagDetail={demoDetail}
         onClose={() => {}}
         deny={() => {}}
-        guest={true}
+        guest
+        variant='persistent'
       />
       <div className={classes.container}>
         <Typography

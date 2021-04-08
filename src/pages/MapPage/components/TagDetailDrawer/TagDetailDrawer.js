@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function TagDetailDialog(props) {
-  const { activeTag, onClose, deny, guest, tagDetail } = props
+  const { activeTag, onClose, deny, guest, tagDetail, ...rest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
   const { userAddTags, threshold } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
@@ -85,6 +85,7 @@ function TagDetailDialog(props) {
               ]
             : []
         }
+        {...rest}
       >
         <Box
           display='flex'
