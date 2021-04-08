@@ -5,7 +5,7 @@ import { usePosition } from 'use-position'
 
 const useStyles = makeStyles({
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     top: 150,
     right: 24
   }

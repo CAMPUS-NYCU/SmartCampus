@@ -9,12 +9,16 @@ import wave2 from '../../assets/images/main-wave2.svg'
 import googleIcon from '../../assets/images/google_icon.png'
 import title from '../../assets/images/title.svg'
 
-export default function LoginPage (props) {
+export default function LoginPage(props) {
   const { signInWithGoogle, guestLogin } = props
 
   return (
     <Box
-      style={{ height: 'calc(var(--vh, 1vh)*100)', width: '100vw' }}
+      style={{
+        height: 'calc(var(--vh, 1vh)*100)',
+        width: '100vw',
+        position: 'fixed'
+      }}
       display='flex'
       flexDirection='column'
       alignItems='center'

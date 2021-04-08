@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -16,9 +16,10 @@ import Fillter from '../Filter/FilterFab'
 import yellowfilter from '../../../../assets/images/yellow-filter.svg'
 import grayfilter from '../../../../assets/images/gray-filter.svg'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'absolute',
+    position: 'fixed',
     top: theme.spacing(4),
     left: '50%',
     transform: 'translate(-50%, 0)',
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 const SearchBar = React.forwardRef((props, ref) => {
-  const {menuControls, signOut, ...otherProps } = props
+  const { menuControls, signOut, ...otherProps } = props
   const classes = useStyles()
   const menuControl = useMenu()
   const [open, changeOpen] = useState(false)
@@ -70,24 +71,26 @@ const SearchBar = React.forwardRef((props, ref) => {
 
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
-          className = {classes.iconButton}
-          aria-label = 'filter'
-          onClick = {currentStep === 1 ? ("") :()=>toggle(open)}
+          className={classes.iconButton}
+          aria-label='filter'
+          onClick={currentStep === 1 ? '' : () => toggle(open)}
         >
-          {open === true ?(<img src={yellowfilter} alt = ""/>):(<img src = {grayfilter} alt = ""/>)}
+          {open === true ? (
+            <img src={yellowfilter} alt='' />
+          ) : (
+            <img src={grayfilter} alt='' />
+          )}
         </IconButton>
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
           className={classes.iconButton}
           aria-label='menu'
-          onClick={currentStep === 1 ? ("") :menuControl.setOpen}
+          onClick={currentStep === 1 ? '' : menuControl.setOpen}
         >
           <MenuIcon />
         </IconButton>
       </Paper>
-      <Fillter
-        open={open}    
-      />
+      <Fillter open={open} />
       <SearchBarMenu
         control={menuControl}
         menuControls={menuControls}

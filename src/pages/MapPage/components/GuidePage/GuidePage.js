@@ -108,7 +108,7 @@ const LoadingPage = () => {
           background: 'rgba(0.5,0.5,0.5, 0.5)',
           height: 'calc(var(--vh, 1vh)*100)',
           width: '100vw',
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           left: 0,
           zIndex: 2,
@@ -124,7 +124,7 @@ const LoadingPage = () => {
           background: 'white',
           height: 'calc(var(--vh, 1vh)*100)',
           width: '100vw',
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           left: 0,
           zIndex: 1
