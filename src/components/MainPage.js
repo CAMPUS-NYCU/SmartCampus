@@ -5,10 +5,14 @@ import wave1 from '../assets/images/main-wave1.svg'
 import wave2 from '../assets/images/main-wave2.svg'
 import mainIcon from '../assets/images/main-icon.svg'
 
-export default function MainPage(){
+export default function MainPage() {
   return (
     <Box
-      style={{ height: '100vh-150px', width: '100vw' }}
+      style={{
+        height: 'calc(var(--vh, 1vh)*100)',
+        width: '100vw',
+        position: 'fixed'
+      }}
       display='flex'
       flexDirection='column'
       alignItems='center'

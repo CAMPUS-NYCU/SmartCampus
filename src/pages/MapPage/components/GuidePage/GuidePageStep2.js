@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(0.5,0.5,0.5, 0.5)',
     width: '100vw',
     height: 'calc(var(--vh, 1vh)*100)',
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     zIndex: 1,

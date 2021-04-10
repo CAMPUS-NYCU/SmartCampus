@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import React, { useState, Fragment } from 'react'
 import {
   Box,
   Button,
@@ -9,30 +8,21 @@ import {
   ListItemText,
   Divider,
   DialogActions,
-  Drawer,
-  DialogTitle,
-  Typography,
-  IconButton,
   Dialog,
   CircularProgress,
   TextField
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
 import * as firebase from 'firebase/app'
+import PropTypes from 'prop-types'
+
 import WaitIcon from '../../../../assets/images/wait.svg'
 import SolvedIcon from '../../../../assets/images/solved.svg'
+import CustomDrawer from '../../../../components/CustomDrawer'
 import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 
-function ChangeStatus (props) {
-  const {
-    stateDrawer,
-    activeTag,
-    setStateDrawer,
-    classes,
-    status,
-    width
-  } = props
+function ChangeStatus(props) {
+  const { stateDrawer, activeTag, setStateDrawer, status } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
     activeTag.status.statusName
   )
@@ -44,7 +34,7 @@ function ChangeStatus (props) {
   const [newDescription, setNewDescription] = useState(
     activeTag.status.description
   )
-  const handleChangeDescription = event => {
+  const handleChangeDescription = (event) => {
     setNewDescription(event.target.value)
   }
   const handleDrawerClose = () => {
@@ -57,7 +47,7 @@ function ChangeStatus (props) {
     firebase
       .auth()
       .currentUser.getIdToken()
-      .then(token => {
+      .then((token) => {
         updateStatus({
           context: {
             headers: {
@@ -70,7 +60,7 @@ function ChangeStatus (props) {
             description: newDescription
           }
         }).then(() => {
-          refetch().then(data => {
+          refetch().then((data) => {
             updateTagList(data.data)
             setLoading(false)
             setStateDrawer(false)
@@ -81,22 +71,12 @@ function ChangeStatus (props) {
   const images = [WaitIcon, SolvedIcon, SolvedIcon]
   return (
     <>
-      <Drawer
-        anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
+      <CustomDrawer
         open={stateDrawer}
-        onClose={() => setStateDrawer(false)}
-        PaperProps={isWidthUp('sm', width) && { style: { width: '500px' } }}
+        handleClose={handleDrawerClose}
+        closeButton
+        title='選擇目前狀態'
       >
-        <DialogTitle disableTypography>
-          <Typography variant='h5'>選擇目前狀態</Typography>
-          <IconButton
-            aria-label='close'
-            className={classes.closeButton}
-            onClick={() => handleDrawerClose()}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
         <Box
           display='flex'
           width='100%'
@@ -105,7 +85,7 @@ function ChangeStatus (props) {
         >
           <List component='nav'>
             {status.map((item, index) => (
-              <>
+              <Fragment key={item.statusName}>
                 <ListItem
                   button
                   onClick={() => setTemporaryTagState(item.statusName)}
@@ -138,7 +118,7 @@ function ChangeStatus (props) {
                   />
                 )}
                 {index !== status.length - 1 && <Divider variant='middle' />}
-              </>
+              </Fragment>
             ))}
           </List>
           <DialogActions>
@@ -147,7 +127,7 @@ function ChangeStatus (props) {
             </Button>
           </DialogActions>
         </Box>
-      </Drawer>
+      </CustomDrawer>
       <Dialog
         open={loading}
         PaperProps={{
@@ -165,4 +145,11 @@ function ChangeStatus (props) {
   )
 }
 
-export default withWidth()(ChangeStatus)
+ChangeStatus.propTypes = {
+  stateDrawer: PropTypes.bool.isRequired,
+  activeTag: PropTypes.object.isRequired,
+  setStateDrawer: PropTypes.func.isRequired,
+  status: PropTypes.arrayOf(PropTypes.object).isRequired
+}
+
+export default ChangeStatus

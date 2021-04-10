@@ -6,7 +6,7 @@ import { useMissionValue } from '../../../../../utils/contexts/MissionContext'
 
 const useStyles = makeStyles((theme) => ({
   missionFab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(4),
     left: 'calc(50vw - 28px)'
   }

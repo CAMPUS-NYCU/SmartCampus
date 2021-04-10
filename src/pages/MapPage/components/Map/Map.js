@@ -67,7 +67,8 @@ function Map (props) {
     <div
       style={{
         height: window.innerHeight,
-        width: '100vw'
+        width: '100vw',
+        position: 'fixed'
       }}
     >
       <LoadScript googleMapsApiKey={REACT_APP_GOOGLE_MAP_API_KEY}>

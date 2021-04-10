@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import ReactRough, { Circle, LinearPath, Line } from 'react-rough'
-import TagDetailDialog from '../TagDetail/TagDetailDialog'
+import TagDetailDrawer from '../TagDetailDrawer'
 import elevator from '../../../../assets/images/elevator.png'
 
 const useStyles = makeStyles({
@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(0.5,0.5,0.5, 0.5)',
     width: '100vw',
     height: 'calc(var(--vh, 1vh)*100)',
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     zIndex: 100
@@ -66,12 +66,13 @@ export default function GuidePageStep3() {
   const classes = useStyles()
   return (
     <>
-      <TagDetailDialog
+      <TagDetailDrawer
         activeTag={demoTag}
         tagDetail={demoDetail}
         onClose={() => {}}
         deny={() => {}}
-        guest={true}
+        guest
+        variant='persistent'
       />
       <div className={classes.container}>
         <Typography

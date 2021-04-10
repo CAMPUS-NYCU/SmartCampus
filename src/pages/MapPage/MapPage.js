@@ -16,7 +16,7 @@ import ReportHistory from './components/ReportHistory'
 import GuidePage from './components/GuidePage'
 import { useTagValue } from '../../utils/contexts/TagContext'
 import useStep from '../../utils/hooks/useStep'
-import TagDetailDialog from './components/TagDetail/TagDetailDialog'
+import TagDetailDrawer from './components/TagDetailDrawer'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
@@ -57,9 +57,6 @@ const MapPageContent = (props) => {
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
   const { activeTag, resetActiveTag, tagDetail } = useTagValue()
-  
-
-  
   return (
     <div>
       <Map mapCenter={mapCenter} />
@@ -86,7 +83,7 @@ const MapPageContent = (props) => {
       <ReportHistory control={ReportHistoryControl} />
       <ProfileDialog control={profileDialogControl} />
       {activeTag && (
-        <TagDetailDialog
+        <TagDetailDrawer
           activeTag={activeTag}
           tagDetail={tagDetail}
           onClose={resetActiveTag}
