@@ -204,7 +204,6 @@ export const MissionContextProvider = ({ children }) => {
   const {
     activeTag,
     refetch,
-    updateTagList,
     tagDetail,
     refetchUserAddTags,
     refetchTagDetail
@@ -278,7 +277,6 @@ export const MissionContextProvider = ({ children }) => {
                   refetchUserAddTags()
                   refetchTagDetail()
                   refetch().then(data => {
-                    updateTagList(data.data)
                     setLoading(false)
                     clearMissionData()
                     setMissionType(null)
@@ -288,7 +286,6 @@ export const MissionContextProvider = ({ children }) => {
               })
               if (imageUploadUrls.length === 0) {
                 refetch().then(data => {
-                  updateTagList(data.data)
                   setLoading(false)
                   clearMissionData()
                   setMissionType(null)
@@ -350,7 +347,6 @@ export const MissionContextProvider = ({ children }) => {
                 }
                 axios.put(url, imageFiles[index], options).then(res => {
                   refetch().then(data => {
-                    updateTagList(data.data)
                     setLoading(false)
                     clearMissionData()
                     setMissionType(null)
@@ -360,7 +356,6 @@ export const MissionContextProvider = ({ children }) => {
               })
               if (imageUploadUrls.length === 0) {
                 refetch().then(data => {
-                  updateTagList(data.data)
                   setLoading(false)
                   clearMissionData()
                   setMissionType(null)
