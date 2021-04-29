@@ -1,6 +1,7 @@
+import { useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { useState } from 'react'
+
 import { generateTime } from './useTagDetail'
 
 export const GET_TAG_LIST_QUERY = gql`
@@ -35,12 +36,12 @@ export const GET_TAG_LIST_QUERY = gql`
   }
 `
 
-const reformatTagList = data => {
+const reformatTagList = (data) => {
   const tagRenderList = data ? data.unarchivedTagList : []
-  const filteredTags = tagRenderList.filter(tag => {
+  const filteredTags = tagRenderList.filter((tag) => {
     return tag.coordinates
   })
-  const tagList = filteredTags.map(tag => {
+  const tagList = filteredTags.map((tag) => {
     const {
       id,
       locationName,
@@ -50,7 +51,7 @@ const reformatTagList = data => {
       coordinates: { latitude, longitude },
       status: { statusName, description }
     } = tag
-    const statusHistory = tag.statusHistory.map(history => {
+    const statusHistory = tag.statusHistory.map((history) => {
       return {
         statusName: history.statusName,
         createTime: generateTime(history.createTime),
@@ -75,20 +76,15 @@ const reformatTagList = data => {
   return tagList
 }
 
-function useTagList () {
-  const [tags, setTags] = useState(null)
-  const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {
-    onCompleted: () => {
-      setTags(reformatTagList(data))
-    }
-  })
-  // Reformat tags
-
-  const updateTagList = dataIn => {
-    setTags(reformatTagList(dataIn))
-  }
-
-  return { tags, refetch, updateTagList }
+function useTagList() {
+  const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {})
+  const updateTagList = useCallback(() => {
+    setTimeout(async () => {
+      refetch()
+      updateTagList()
+    }, 30000)
+  }, [refetch])
+  return { tags: reformatTagList(data), refetch, updateTagList }
 }
 
 export default useTagList

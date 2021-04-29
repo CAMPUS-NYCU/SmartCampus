@@ -15,15 +15,15 @@ export const TagContext = React.createContext({
   resetActiveTag: () => {},
   missionList: [],
   categoryList: [],
-  updateTagList: () => {},
   refetch: () => {},
   upVote: () => {},
   userAddTags: null,
-  refetchUserAddTags: () => {}
+  refetchUserAddTags: () => {},
+  updateTagList: () => {}
 })
 
 export const TagContextProvider = ({ children }) => {
-  const { tags, updateTagList, refetch } = useTagList()
+  const { tags, refetch, updateTagList } = useTagList()
   const { userAddTags, refetchUserAddTags } = useUserTags()
   const { missionList } = useMissionList()
   const threshold = useThreshold()
@@ -53,21 +53,20 @@ export const TagContextProvider = ({ children }) => {
     setTagDetail(null)
   }
   const [filterTags, setFilterTags] = useState([])
-
-  const addFilterTags = tag => {
+  const addFilterTags = (tag) => {
     if (filterTags.indexOf(tag) !== -1) {
-      setFilterTags(prevFilterTags =>
-        prevFilterTags.filter(t => {
+      setFilterTags((prevFilterTags) =>
+        prevFilterTags.filter((t) => {
           return t !== tag
         })
       )
     } else {
-      setFilterTags(prevFilterTags => [...prevFilterTags, tag])
+      setFilterTags((prevFilterTags) => [...prevFilterTags, tag])
     }
   }
-  const resetFilterTags = tag => {
-    setFilterTags(prevFilterTags =>
-      prevFilterTags.filter(t => {
+  const resetFilterTags = (tag) => {
+    setFilterTags((prevFilterTags) =>
+      prevFilterTags.filter((t) => {
         return t !== tag
       })
     )
@@ -80,7 +79,6 @@ export const TagContextProvider = ({ children }) => {
     resetActiveTag,
     missionList,
     categoryList,
-    updateTagList,
     refetch,
     filterTags,
     addFilterTags,
@@ -89,7 +87,8 @@ export const TagContextProvider = ({ children }) => {
     userAddTags,
     refetchUserAddTags,
     refetchTagDetail,
-    threshold
+    threshold,
+    updateTagList
   }
 
   return (
@@ -105,8 +104,8 @@ TagContextProvider.defaultProps = {
 
 export const useTagValue = () => useContext(TagContext)
 
-function findTagById (id, tags) {
+function findTagById(id, tags) {
   if (!id || !tags || tags.length === 0) return null
-  const targetTag = tags.find(tag => tag.id === id)
+  const targetTag = tags.find((tag) => tag.id === id)
   return targetTag || null
 }
