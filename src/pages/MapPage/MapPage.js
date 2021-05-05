@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 
@@ -28,7 +28,7 @@ export default function MapPage(props) {
     maxStep: 3,
     minStep: 0
   })
-  const { updateTagList } = useTagValue()
+  // const { updateTagList } = useTagValue()
   // useEffect(() => {
   //   updateTagList()
   // }, [updateTagList])
