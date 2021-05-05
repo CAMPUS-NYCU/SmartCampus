@@ -29,9 +29,9 @@ export default function MapPage(props) {
     minStep: 0
   })
   const { updateTagList } = useTagValue()
-  useEffect(() => {
-    updateTagList()
-  }, [updateTagList])
+  // useEffect(() => {
+  //   updateTagList()
+  // }, [updateTagList])
   return (
     // <TagContextProvider>
     <MissionContextProvider>
