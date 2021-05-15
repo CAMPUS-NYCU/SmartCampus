@@ -40,7 +40,6 @@ function TagDetailDialog(props) {
     return false
   }
   useEffect(() => {
-    console.log('effect')
     incrementViewCount(activeTag.id)
   }, [incrementViewCount, activeTag])
   useEffect(() => {
