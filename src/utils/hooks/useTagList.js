@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
@@ -78,13 +78,17 @@ const reformatTagList = (data) => {
 
 function useTagList() {
   const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {})
+  const [tagList, setTagList] = useState(null)
   const updateTagList = useCallback(() => {
     setTimeout(async () => {
       refetch()
       updateTagList()
     }, 30000)
   }, [refetch])
-  return { tags: reformatTagList(data), refetch, updateTagList }
+  useEffect(() => {
+    setTagList(reformatTagList(data))
+  }, [data])
+  return { tags: tagList, refetch, updateTagList }
 }
 
 export default useTagList
