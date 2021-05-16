@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Typography } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
@@ -13,13 +13,15 @@ import DetailPart from './DetailPart'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
+import { useViewCount } from '../../../../utils/hooks/useViewCount'
 
 function TagDetailDialog(props) {
   const { activeTag, onClose, deny, guest, tagDetail, ...rest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
-  const { userAddTags, threshold } = useTagValue()
+  const { userAddTags, threshold, fetchTagDetail } = useTagValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
+  const { incrementViewCount } = useViewCount()
   const missionImage = [Mission1, Mission2, Mission3]
   const missionName = missionInfo.map((mission) => {
     return mission.missionName
@@ -37,6 +39,12 @@ function TagDetailDialog(props) {
     }
     return false
   }
+  useEffect(() => {
+    incrementViewCount(activeTag.id)
+  }, [incrementViewCount, activeTag])
+  useEffect(() => {
+    fetchTagDetail()
+  }, [fetchTagDetail])
   return (
     <>
       <CustomDrawer

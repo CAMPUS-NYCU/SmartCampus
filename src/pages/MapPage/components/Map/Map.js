@@ -84,15 +84,6 @@ function Map (props) {
             streetViewControl: false,
             disableDefaultUI: true,
             styles: [
-              // {
-              //   featureType: 'all',
-              //   elementType: 'labels.text',
-              //   stylers: [
-              //     {
-              //       visibility: 'off'
-              //     }
-              //   ]
-              // },
               {
                 featureType: 'poi',
                 elementType: 'labels.icon',

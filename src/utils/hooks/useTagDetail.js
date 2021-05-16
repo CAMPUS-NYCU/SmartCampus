@@ -1,7 +1,5 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { useState } from 'react'
-import * as firebase from 'firebase/app'
 
 export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
@@ -68,40 +66,35 @@ export const generateTime = (time) => {
   return `${times[3]}-${month}-${times[2]} ${times[4]}`
 }
 
-function useTagDetail(id) {
-  const [token, setToken] = useState('')
-  const [tagDetail, setTagDetail] = useState(null)
-  if (firebase.auth().currentUser) {
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((t) => {
-        setToken(t)
-      })
+const tagDetailInitial = {
+  id: null,
+  createTime: '',
+  lastUpdateTime: '',
+  imageUrl: [],
+  status: {
+    numberOfUpVote: null,
+    hasUpVote: null
+  },
+  createUser: {
+    displayName: ''
   }
-  const { data: { tag = null } = {}, refetch } = useQuery(
+}
+
+function useTagDetail() {
+  // const [tagDetail, setTagDetail] = useState(null)
+  const [getTagDetail, { data: { tag = null } = {} }] = useLazyQuery(
     GET_TAG_DETAIL_QUERY,
     {
-      context: {
-        headers: {
-          authorization: token ? `Bearer ${token}` : ''
-        }
-      },
-      fetchPolicy: 'no-cache',
-      variables: { id },
-      onCompleted: () => {
-        setTagDetail({
-          ...tag,
-          newCreateTime: generateTime(tag.createTime),
-          newLastUpdateTime: generateTime(tag.lastUpdateTime)
-        })
-      }
+      fetchPolicy: 'no-cache'
     }
   )
-  const refetchTagDetail = () => {
-    refetch({ fetchPolicy: 'no-cache' })
+  const tagDetail = {
+    ...tagDetailInitial,
+    ...tag,
+    newCreateTime: '0',
+    newLastUpdateTime: '0'
   }
-  return { tagDetail, setTagDetail, refetchTagDetail }
+  return { tagDetail, getTagDetail }
 }
 
 export default useTagDetail
