@@ -7,37 +7,41 @@ import { generateTime } from './useTagDetail'
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
     unarchivedTagList {
-      id
-      locationName
-      floor
-      category {
-        missionName
-        subTypeName
-        targetName
-      }
-      accessibility
-      coordinates {
-        latitude
-        longitude
-      }
-      status {
-        statusName
-        description
-      }
-      statusHistory {
-        statusName
-        createTime
-        createUser {
-          displayName
+      tags {
+        id
+        locationName
+        floor
+        category {
+          missionName
+          subTypeName
+          targetName
         }
-        description
+        accessibility
+        coordinates {
+          latitude
+          longitude
+        }
+        status {
+          statusName
+          description
+        }
+        statusHistory {
+          statusList {
+            statusName
+            createTime
+            createUser {
+              displayName
+            }
+            description
+          }
+        }
       }
     }
   }
 `
 
 const reformatTagList = (data) => {
-  const tagRenderList = data ? data.unarchivedTagList : []
+  const tagRenderList = data ? data.unarchivedTagList.tags : []
   const filteredTags = tagRenderList.filter((tag) => {
     return tag.coordinates
   })
@@ -51,7 +55,7 @@ const reformatTagList = (data) => {
       coordinates: { latitude, longitude },
       status: { statusName, description }
     } = tag
-    const statusHistory = tag.statusHistory.map((history) => {
+    const statusHistory = tag.statusHistory.statusList.map((history) => {
       return {
         statusName: history.statusName,
         createTime: generateTime(history.createTime),

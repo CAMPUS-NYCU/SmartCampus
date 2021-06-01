@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 
@@ -21,10 +21,8 @@ import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
-import {
-  TagContextProvider,
-  useTagValue
-} from './utils/contexts/TagContext'
+import { TagContextProvider, useTagValue } from './utils/contexts/TagContext'
+import { REACT_APP_FIREBASE_LOCAL_SERVER } from './constants/envValues'
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)
@@ -46,7 +44,7 @@ const Pages = (props) => {
   const { tags } = useTagValue()
   return (
     <>
-      { !tags ? (
+      {!tags ? (
         <MainPage />
       ) : (
         <BrowserRouter>
@@ -102,6 +100,13 @@ function App(props) {
   const onClickDismiss = (key) => () => {
     notistackRef.current.closeSnackbar(key)
   }
+  useEffect(() => {
+    console.log(REACT_APP_FIREBASE_LOCAL_SERVER)
+    if (REACT_APP_FIREBASE_LOCAL_SERVER) {
+      firebaseAppAuth.useEmulator('http://0.0.0.0:9099')
+    }
+  }, [])
+  console.log(firebase.auth())
   const [guest, setGuest] = useState(false)
   return (
     <ThemeProvider theme={theme}>
