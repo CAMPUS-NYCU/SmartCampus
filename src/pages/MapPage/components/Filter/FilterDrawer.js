@@ -94,79 +94,85 @@ const FilterDrawer = (props) => {
       closeButton
       fullHeight
     >
-      <Box p={2} display='flex'>
-        <Grid container spacing={2}>
-          <Grid container item xs={12} direction='row'>
-            <Typography variant='h6'>標註類型</Typography>
-          </Grid>
-          {missionInfo.map((mission) => (
-            <Grid key={mission.missionName} item xs={4}>
-              <Button
-                variant='contained'
-                fullWidth
-                size='small'
-                color={currentMission !== mission ? '' : 'primary'}
-                onClick={() => {
-                  changeCurrentMission(mission)
-                }}
-              >
-                {mission.missionName}
-              </Button>
+      <>
+        <Box p={2} display='flex'>
+          <Grid container spacing={2}>
+            <Grid container item xs={12} direction='row'>
+              <Typography variant='h6'>標註類型</Typography>
             </Grid>
-          ))}
-          <Grid container item xs={12} direction='row'>
-            <Typography variant='h6'>設施類型</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              {subMission.map((discovery) => (
-                <Grid id={discovery.subTypeName} item xs={4}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='small'
-                    color={currentSubmission !== discovery ? '' : 'primary'}
-                    onClick={() => changeCurrentSubmission(discovery)}
-                  >
-                    {discovery.subTypeName}
-                  </Button>
-                </Grid>
-              ))}
+            {missionInfo.map((mission) => (
+              <Grid key={mission.missionName} item xs={4}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='small'
+                  color={currentMission !== mission ? 'default' : 'primary'}
+                  onClick={() => {
+                    changeCurrentMission(mission)
+                  }}
+                >
+                  {mission.missionName}
+                </Button>
+              </Grid>
+            ))}
+            <Grid container item xs={12} direction='row'>
+              <Typography variant='h6'>設施類型</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                {subMission.map((discovery) => (
+                  <Grid key={discovery.subTypeName} item xs={4}>
+                    <Button
+                      variant='contained'
+                      fullWidth
+                      size='small'
+                      color={
+                        currentSubmission !== discovery ? 'default' : 'primary'
+                      }
+                      onClick={() => changeCurrentSubmission(discovery)}
+                    >
+                      {discovery.subTypeName}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+            <Grid container item xs={12} direction='row'>
+              <Typography variant='h6'>具體設施</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                {target.map((discovery) => (
+                  <Grid key={discovery.targetName} item xs={4}>
+                    <Button
+                      variant='contained'
+                      fullWidth
+                      size='small'
+                      color={
+                        currentTarget !== discovery.targetName
+                          ? 'default'
+                          : 'primary'
+                      }
+                      onClick={() => changeCurrentTarget(discovery.targetName)}
+                    >
+                      {discovery.targetName}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={12} direction='row'>
-            <Typography variant='h6'>具體設施</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              {target.map((discovery) => (
-                <Grid id={discovery.targetName} item xs={4}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='small'
-                    color={
-                      currentTarget !== discovery.targetName ? '' : 'primary'
-                    }
-                    onClick={() => changeCurrentTarget(discovery.targetName)}
-                  >
-                    {discovery.targetName}
-                  </Button>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Box>
-      <Button
-        className={classes.button}
-        onClick={handleFinishFilter}
-        color={final ? 'primary' : ''}
-        disabled={!final}
-        variant='contained'
-      >
-        加入
-      </Button>
+        </Box>
+        <Button
+          className={classes.button}
+          onClick={handleFinishFilter}
+          color={final ? 'primary' : 'default'}
+          disabled={!final}
+          variant='contained'
+        >
+          加入
+        </Button>
+      </>
     </CustomDrawer>
   )
 }

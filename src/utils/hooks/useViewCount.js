@@ -15,7 +15,6 @@ export const useViewCount = () => {
   )
   const incrementViewCount = useCallback(
     async (id) => {
-      console.log('increment')
       try {
         const token = await firebase.auth().currentUser.getIdToken()
         incrementViewCountMutation({

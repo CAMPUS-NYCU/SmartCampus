@@ -78,7 +78,7 @@ function MissionStep1 () {
           onClick={() => {
             setStep(MissionStep.PlaceFlagOnStreet)
           }}
-          color={streetViewUpload ? 'primary' : ''}
+          color={streetViewUpload ? 'primary' : 'default'}
         >
           新增街景
         </Button>

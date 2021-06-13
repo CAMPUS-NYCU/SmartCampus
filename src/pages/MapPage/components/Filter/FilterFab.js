@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import { useTagValue } from '../../../../utils/contexts/TagContext'
-import FilterDrawer from './FilterDrawer'
 import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
+import { useTagValue } from '../../../../utils/contexts/TagContext'
+import FilterDrawer from './FilterDrawer'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   fab: {
     position: 'absolute',
     top: 96,
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     top: 96,
     width: '100vw',
     height: '35px',
-    webkitFlexGrow: '1',
+    flexGrow: '1',
     overflowX: 'scroll',
     overflowY: 'hidden',
     display: '-webkit-flex',
@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function FilterFab (props) {
+function FilterFab(props) {
   const classes = useStyles()
   const [filterDrawer, setFilterDrawer] = useState(false)
   const closeDrawer = () => {
@@ -76,22 +76,21 @@ function FilterFab (props) {
             className={classes.button}
             variant='contained'
             size='small'
-            color={filterDrawer ? 'primary' : ''}
+            color={filterDrawer ? 'primary' : 'default'}
             onClick={() => setFilterDrawer(true)}
-            //disabled
           >
             加入其他
             <AddIcon className={classes.addIcon} />
           </Button>
-          {filterTags.map(item => {
+          {filterTags.map((item) => {
             return (
               <Button
+                key={item}
                 className={classes.button}
                 variant='contained'
                 size='small'
                 onClick={() => addFilterTags(item)}
                 color='primary'
-                //disabled
               >
                 {item}
                 <CloseIcon className={classes.addIcon} />
@@ -99,14 +98,14 @@ function FilterFab (props) {
             )
           })}
           {filterTags.length === 0 &&
-            filterInfo.map(item => {
+            filterInfo.map((item) => {
               return (
                 <Button
+                  key={item}
                   className={classes.button}
                   variant='contained'
                   size='small'
                   onClick={() => addFilterTags(item)}
-                  //disabled
                 >
                   {item}
                   <AddIcon className={classes.addIcon} />
@@ -118,7 +117,7 @@ function FilterFab (props) {
         <>
           {filterTags.length > 0 &&
             open === false &&
-            filterTags.map(item => {
+            filterTags.map((item) => {
               return resetFilterTags(item)
             })}
         </>

@@ -49,7 +49,7 @@ const ReportHistory = (props) => {
         <List component='nav'>
           {userAddTags.map((item) => {
             return (
-              <>
+              <div key={item.id}>
                 <ListItem>
                   <ListItemIcon>
                     <img
@@ -97,7 +97,7 @@ const ReportHistory = (props) => {
                   </Button>
                 </ListItem>
                 <Divider variant='middle' />
-              </>
+              </div>
             )
           })}
         </List>

@@ -20,8 +20,6 @@ const MissionFab = (props) => {
     <Fab
       className={classes.missionFab}
       display='flex'
-      flexDirection='column'
-      justifyContent='space-between'
       color='primary'
       onClick={guest ? deny : handleStartMission}
     >

@@ -76,7 +76,7 @@ const DetailPart = (props) => {
               width: '100%',
               margin: '4vw 0 0 0',
               height: '100%',
-              webkitFlexGrow: '1',
+              flexGrow: '1',
               overflowX: 'scroll',
               overflowY: 'hidden',
               display: '-webkit-flex',
@@ -98,6 +98,7 @@ const DetailPart = (props) => {
               detail.imageUrl.map((url) => {
                 return (
                   <Button
+                    key={url}
                     onClick={() => setLargeImg(`${url}`)}
                     style={{
                       width: '80%',
@@ -274,7 +275,7 @@ const DetailPart = (props) => {
 DetailPart.propTypes = {
   detail: PropTypes.object.isRequired,
   activeTag: PropTypes.object.isRequired,
-  missionName: PropTypes.string.isRequired,
+  missionName: PropTypes.array.isRequired,
   setLargeImg: PropTypes.func.isRequired,
   setStateDrawer: PropTypes.func.isRequired,
   tagMissionIndex: PropTypes.number.isRequired,

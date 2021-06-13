@@ -106,7 +106,7 @@ function SearchBarMenu(props) {
 SearchBarMenu.propTypes = {
   control: PropTypes.shape({
     open: PropTypes.bool.isRequired,
-    anchorEl: PropTypes.element,
+    anchorEl: PropTypes.object,
     setClose: PropTypes.func.isRequired
   }).isRequired,
   menuControls: PropTypes.shape({

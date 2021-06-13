@@ -110,7 +110,7 @@ const CustomDrawer = (props) => {
                   className={classes.titleActionButton}
                   size='small'
                   onClick={titleAction.handleOnClick}
-                  disable={titleAction.disable}
+                  disabled={titleAction.disable}
                 >
                   {titleAction.name}
                 </Button>
