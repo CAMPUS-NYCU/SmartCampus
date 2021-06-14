@@ -13,7 +13,7 @@ import {
 } from '../../../../../../utils/contexts/MissionContext'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
 
-function MissionStep1 () {
+function MissionStep1() {
   const {
     textLocation,
     handleChangeTextLocation,

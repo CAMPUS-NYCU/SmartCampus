@@ -27,7 +27,7 @@ export const useUpdateVote = () => {
             tagId: id,
             action: voteAction ? 'UPVOTE' : 'CANCEL_UPVOTE'
           }
-        }).then((res) => {})
+        })
       })
   }
   return { upVote }

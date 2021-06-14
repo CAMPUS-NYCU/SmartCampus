@@ -15,16 +15,16 @@ export const missionInfo = [
 
 export const missionGuide = [
   {
-    missionName:'校園設施',
-    missionDescription:'校園中的各種設施，包含無障礙與交通設施等等。'
+    missionName: '校園設施',
+    missionDescription: '校園中的各種設施，包含無障礙與交通設施等等。'
   },
   {
-    missionName:'校園問題',
-    missionDescription:'校園中待解決的問題，像是積水、道路施工等等。'
+    missionName: '校園問題',
+    missionDescription: '校園中待解決的問題，像是積水、道路施工等等。'
   },
   {
-    missionName:'校園動態',
-    missionDescription:'校園各個地點的人潮，像是餐廳、球場等等。'
+    missionName: '校園動態',
+    missionDescription: '校園各個地點的人潮，像是餐廳、球場等等。'
   }
 ]
 export const missionName = [

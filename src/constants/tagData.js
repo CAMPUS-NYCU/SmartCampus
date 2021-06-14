@@ -1,4 +1,4 @@
-export const tagStatus = [
+export default [
   [
     {
       statusName: '存在',

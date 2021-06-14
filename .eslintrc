@@ -9,13 +9,14 @@
     // 可討論要不要設定其他rule
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], // jsx副檔名可以是.js
     "no-console": "off", // 可以使用console.log
+    "react/jsx-curly-newline": "off", 
     "react/jsx-one-expression-per-line": "off", // 不要限制jsx一行只能有一個元件
-    "no-use-before-define": "warn", // 讓 function 可在定義前就被使用，PropTypes 定義才能放在檔案最上方
+    "no-use-before-define": "off", // 讓 function 可在定義前就被使用，PropTypes 定義才能放在檔案最上方
     "react/jsx-props-no-spreading": "off", // 可以 prop spreading
     "react/forbid-prop-types": "off", // 可以用 object PropType
-    "import/prefer-default-export": "warn", // 不用一定要 default export
+    "import/prefer-default-export": "off", // 不用一定要 default export
     "react/require-default-props": "warn",
-    "react/prop-types": "warn",
+    "react/prop-types": "off",
     "no-empty": "warn",
     "no-param-reassign": "warn",
     "react/jsx-wrap-multilines": [  //多行的 jsx code 不一定要 '()'

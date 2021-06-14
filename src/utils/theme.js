@@ -10,8 +10,8 @@ const ThemeSettings = {
       main: '#F4511F',
       contrastText: '#ffffff'
     },
-    test:{
-      main:'#dce775',
+    test: {
+      main: '#dce775',
       contrastText: '#ffffff'
     }
   },

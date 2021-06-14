@@ -10,19 +10,12 @@ import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
 import { AppBar, Toolbar } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-//import EditIcon from '@material-ui/icons/Edit'
+// import EditIcon from '@material-ui/icons/Edit'
 import * as firebase from 'firebase/app'
 import EmailIcon from '@material-ui/icons/Email'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
-
-ProfileDialog.propTypes = {
-  control: PropTypes.shape({
-    open: PropTypes.bool.isRequired,
-    setClose: PropTypes.func.isRequired
-  }).isRequired
-}
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -125,6 +118,13 @@ function ProfileDialog(props) {
       </DialogContent>
     </Dialog>
   )
+}
+
+ProfileDialog.propTypes = {
+  control: PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    setClose: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default ProfileDialog

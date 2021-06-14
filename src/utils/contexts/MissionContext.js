@@ -263,7 +263,7 @@ export const MissionContextProvider = ({ children }) => {
           }).then(
             ({
               data: {
-                updateTagData: { imageUploadUrls, imageDeleteStatus }
+                updateTagData: { imageUploadUrls }
               }
             }) => {
               imageUploadUrls.forEach((url, index) => {
@@ -273,10 +273,10 @@ export const MissionContextProvider = ({ children }) => {
                     'Content-Type': 'application/octet-stream'
                   }
                 }
-                axios.put(url, imageFiles[index], options).then((res) => {
+                axios.put(url, imageFiles[index], options).then(() => {
                   refetchUserAddTags()
                   refetchTagDetail()
-                  refetch().then((data) => {
+                  refetch().then(() => {
                     setLoading(false)
                     clearMissionData()
                     setMissionType(null)
@@ -285,7 +285,7 @@ export const MissionContextProvider = ({ children }) => {
                 })
               })
               if (imageUploadUrls.length === 0) {
-                refetch().then((data) => {
+                refetch().then(() => {
                   setLoading(false)
                   clearMissionData()
                   setMissionType(null)
@@ -335,7 +335,7 @@ export const MissionContextProvider = ({ children }) => {
           }).then(
             ({
               data: {
-                addNewTagData: { imageNumber, imageUploadUrls }
+                addNewTagData: { imageUploadUrls }
               }
             }) => {
               imageUploadUrls.forEach((url, index) => {
@@ -345,8 +345,8 @@ export const MissionContextProvider = ({ children }) => {
                     'Content-Type': 'application/octet-stream'
                   }
                 }
-                axios.put(url, imageFiles[index], options).then((res) => {
-                  refetch().then((data) => {
+                axios.put(url, imageFiles[index], options).then(() => {
+                  refetch().then(() => {
                     setLoading(false)
                     clearMissionData()
                     setMissionType(null)
@@ -355,7 +355,7 @@ export const MissionContextProvider = ({ children }) => {
                 })
               })
               if (imageUploadUrls.length === 0) {
-                refetch().then((data) => {
+                refetch().then(() => {
                   setLoading(false)
                   clearMissionData()
                   setMissionType(null)
@@ -484,13 +484,6 @@ export const MissionContextProvider = ({ children }) => {
   const [selectedMissionId, setSelectedMissionId] = useState(
     InitialMissionValue.selectedMissionId
   )
-  const handleSetSelectedMissionId = (newMissionId) => {
-    setSelectedMissionId(newMissionId)
-    // mission和subOption有從屬關係，
-    // 修改mission的話，subOption也要被重設
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
-  }
-
   // --------------- Discovery ---------------
   const [selectedSubOptionId, setSelectedSubOptionId] = useState(
     InitialMissionValue.selectedSubOptionId
@@ -498,6 +491,14 @@ export const MissionContextProvider = ({ children }) => {
   const [subOptionOtherText, setSubOptionOtherText] = useState(
     InitialMissionValue.subOptionOtherText
   )
+
+  const handleSetSelectedMissionId = (newMissionId) => {
+    setSelectedMissionId(newMissionId)
+    // mission和subOption有從屬關係，
+    // 修改mission的話，subOption也要被重設
+    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
+  }
+
   const handleChangeSubOptionOtherText = (event) =>
     setSubOptionOtherText(event.target.value)
 
