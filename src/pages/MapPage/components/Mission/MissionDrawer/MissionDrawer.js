@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 
@@ -30,7 +30,7 @@ function MissionDrawer() {
   const classes = useStyles()
   const { currentStep, missionType } = useMissionValue()
 
-  const getDrawerTitle = () => {
+  const getDrawerTitle = useCallback(() => {
     if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
       return '更改座標位置'
     }
@@ -41,7 +41,7 @@ function MissionDrawer() {
       return `選擇要標注的任務`
     }
     return `標註${missionInfo[missionType].missionName}`
-  }
+  }, [isInEdit, currentStep, missionType])
   return (
     <>
       {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (

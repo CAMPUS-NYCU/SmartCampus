@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   GoogleMap,
   LoadScript,
@@ -43,25 +43,35 @@ function Map(props) {
     povChanged
   } = useMissionValue()
   const { tags, setActiveTagId, activeTagId, filterTags } = useTagValue()
-  const showTags =
-    filterTags.length === 0
-      ? tags
-      : tags.filter(
-          (tag) =>
-            filterTags.includes(tag.category.missionName) ||
-            filterTags.includes(tag.category.subTypeName) ||
-            filterTags.includes(tag.category.targetName)
-        )
+  const showTags = useMemo(
+    () =>
+      filterTags.length === 0
+        ? tags
+        : tags.filter(
+            (tag) =>
+              filterTags.includes(tag.category.missionName) ||
+              filterTags.includes(tag.category.subTypeName) ||
+              filterTags.includes(tag.category.targetName)
+          ),
+    [filterTags, tags]
+  )
   const {
     latitude: positionLat,
     longitude: positionLng,
     error: positionError
   } = usePosition(false, { enableHighAccuracy: true })
-  const missionImage = [Mission1, Mission2, Mission3]
-  const missionredImage = [Missionred1, Missionred2, Missionred3]
-  const missionName = missionInfo.map((mission) => {
-    return mission.missionName
-  })
+  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
+  const missionredImage = useMemo(
+    () => [Missionred1, Missionred2, Missionred3],
+    []
+  )
+  const missionName = useMemo(
+    () =>
+      missionInfo.map((mission) => {
+        return mission.missionName
+      }),
+    []
+  )
 
   return (
     <div

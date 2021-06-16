@@ -1,6 +1,7 @@
+import { useCallback, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { useState } from 'react'
+
 import * as firebase from 'firebase/app'
 import { generateTime } from './useTagDetail'
 
@@ -69,12 +70,12 @@ const useUserTags = () => {
     }
   })
 
-  const refetchUserAddTags = () => {
+  const refetchUserAddTags = useCallback(() => {
     // refetch
     refetch({ fetchPolicy: 'no-cache' }).then((d) => {
       setUserAddTags(reformatTagList(d.data))
     })
-  }
+  }, [refetch])
 
   return { userAddTags, setUserAddTags, refetchUserAddTags }
 }

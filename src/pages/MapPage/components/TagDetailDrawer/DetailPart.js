@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
@@ -55,7 +55,7 @@ const DetailPart = (props) => {
       )
     }
   }, [detail, enqueueSnackbar, activeTag, threshold])
-  const handleUopVote = () => {
+  const handleUopVote = useCallback(() => {
     if (guest) {
       deny()
       return
@@ -65,7 +65,7 @@ const DetailPart = (props) => {
     )
     upVote(detail.id, !hasUpVote)
     setHasUpVote((prevHasUpVote) => !prevHasUpVote)
-  }
+  }, [deny, guest, detail.id, hasUpVote, upVote])
 
   return (
     <>

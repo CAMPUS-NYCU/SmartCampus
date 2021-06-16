@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Typography } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
@@ -22,23 +22,38 @@ function TagDetailDialog(props) {
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const { incrementViewCount } = useViewCount()
-  const missionImage = [Mission1, Mission2, Mission3]
-  const missionName = missionInfo.map((mission) => {
-    return mission.missionName
-  })
-  const tagMissionIndex = missionName.findIndex(
-    (mission) => mission === activeTag.category.missionName
+  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
+  const missionName = useMemo(
+    () =>
+      missionInfo.map((mission) => {
+        return mission.missionName
+      }),
+    []
   )
-  const tagStatusIndex = tagStatus[tagMissionIndex].findIndex(
-    (status) => status.statusName === activeTag.status.statusName
+  const tagMissionIndex = useMemo(
+    () =>
+      missionName.findIndex(
+        (mission) => mission === activeTag.category.missionName
+      ),
+    [activeTag.category.missionName, missionName]
   )
-  const status = tagStatus[tagMissionIndex][tagStatusIndex]
-  const checkTagOwner = () => {
+  const tagStatusIndex = useMemo(
+    () =>
+      tagStatus[tagMissionIndex].findIndex(
+        (status) => status.statusName === activeTag.status.statusName
+      ),
+    [activeTag.status.statusName, tagMissionIndex]
+  )
+  const status = useMemo(() => tagStatus[tagMissionIndex][tagStatusIndex], [
+    tagMissionIndex,
+    tagStatusIndex
+  ])
+  const checkTagOwner = useCallback(() => {
     if (userAddTags) {
       return userAddTags.find((userAddTag) => userAddTag.id === activeTag.id)
     }
     return false
-  }
+  }, [activeTag.id, userAddTags])
   useEffect(() => {
     incrementViewCount(activeTag.id)
   }, [incrementViewCount, activeTag])
