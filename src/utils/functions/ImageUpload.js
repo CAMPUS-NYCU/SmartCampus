@@ -32,7 +32,7 @@ function ImageUpload(props) {
       />
       <Button
         variant='contained'
-        color={imageFiles.length !== 0 ? 'primary' : ''}
+        color={imageFiles.length !== 0 ? 'primary' : 'default'}
         onClick={fileButtonClick}
         style={{
           filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',

@@ -11,7 +11,7 @@ import {
   MissionStep
 } from '../../../../../utils/contexts/MissionContext'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   stepper: {
     position: 'fixed',
     bottom: 0,
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: `10px`
   }
 }))
-function MissionStepper (props) {
+function MissionStepper(props) {
   const classes = useStyles()
   const {
     currentStep,
@@ -54,7 +54,7 @@ function MissionStepper (props) {
     ableToNextStep,
     handleCompleteStreetView,
     isInEdit,
-    setRemindOpen,
+    setRemindOpen
   } = useMissionValue()
   const { PlaceFlagOnStreet } = MissionStep
   const [finishOpen, setFinishOpen] = useState(false)
@@ -97,14 +97,18 @@ function MissionStepper (props) {
           className={classes.stepper}
           nextButton={
             currentStep >= MISSION_MAX_STEP ? (
-                <Button
+              <Button
                 color='primary'
                 size='medium'
-                onClick={() => {ableToNextStep === true ? (setFinishOpen(true)):(setRemindOpen(true))}}
+                onClick={
+                  ableToNextStep === true
+                    ? () => setFinishOpen(true)
+                    : () => setRemindOpen(true)
+                }
                 className={classes.button}
-                >
+              >
                 確定
-                </Button>
+              </Button>
             ) : (
               <Button
                 size='medium'

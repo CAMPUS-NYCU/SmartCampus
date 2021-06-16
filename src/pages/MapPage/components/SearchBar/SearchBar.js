@@ -73,7 +73,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         <IconButton
           className={classes.iconButton}
           aria-label='filter'
-          onClick={currentStep === 1 ? '' : () => toggle(open)}
+          onClick={currentStep === 1 ? () => {} : () => toggle(open)}
         >
           {open === true ? (
             <img src={yellowfilter} alt='' />
@@ -85,7 +85,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         <IconButton
           className={classes.iconButton}
           aria-label='menu'
-          onClick={currentStep === 1 ? '' : menuControl.setOpen}
+          onClick={currentStep === 1 ? () => {} : menuControl.setOpen}
         >
           <MenuIcon />
         </IconButton>

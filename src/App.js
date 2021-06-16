@@ -101,12 +101,10 @@ function App(props) {
     notistackRef.current.closeSnackbar(key)
   }
   useEffect(() => {
-    console.log(REACT_APP_FIREBASE_LOCAL_SERVER)
     if (REACT_APP_FIREBASE_LOCAL_SERVER) {
       firebaseAppAuth.useEmulator('http://0.0.0.0:9099')
     }
   }, [])
-  console.log(firebase.auth())
   const [guest, setGuest] = useState(false)
   return (
     <ThemeProvider theme={theme}>

@@ -15,7 +15,7 @@ import {
   Divider
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import { tagStatus } from '../../../../constants/tagData'
+import tagStatus from '../../../../constants/tagData'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -46,7 +46,7 @@ const EditHistory = (props) => {
       </AppBar>
       <List component='nav'>
         {activeTag.statusHistory.map((history) => {
-          let tagStatusIndex 
+          let tagStatusIndex
           tagStatus.forEach((s) => {
             const f = s.findIndex(
               (status) => status.statusName === history.statusName
@@ -57,7 +57,7 @@ const EditHistory = (props) => {
           })
           const color = tagStatus[tagMissionIndex][tagStatusIndex].statusColor
           return (
-            <>
+            <div key={history.statusName}>
               <ListItem style={{ marginTop: '10px' }}>
                 <ListItemIcon>
                   <Button style={{ backgroundColor: `${color}` }}>
@@ -81,7 +81,7 @@ const EditHistory = (props) => {
               </ListItem>
               <Box m={2.5}>{history.description}</Box>
               <Divider variant='middle' />
-            </>
+            </div>
           )
         })}
       </List>

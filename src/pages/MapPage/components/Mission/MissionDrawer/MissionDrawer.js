@@ -56,12 +56,16 @@ function MissionDrawer() {
           title={getDrawerTitle()}
           variant={currentStep === 1 ? 'persistent' : 'temporary'}
         >
-          <Box px={2} py={1} className={classes.missionContent}>
-            {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-            {currentStep === MissionStep.selectMissionName && <MissionStep0 />}
-            {currentStep === MissionStep.SelectMission && <MissionStep2 />}
-          </Box>
-          <MissionStepper />
+          <>
+            <Box px={2} py={1} className={classes.missionContent}>
+              {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
+              {currentStep === MissionStep.selectMissionName && (
+                <MissionStep0 />
+              )}
+              {currentStep === MissionStep.SelectMission && <MissionStep2 />}
+            </Box>
+            <MissionStepper />
+          </>
         </CustomDrawer>
       ) : (
         <>

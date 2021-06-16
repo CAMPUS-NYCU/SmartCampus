@@ -34,7 +34,7 @@ const PicturePreview = (props) => {
       for (
         let i = previewImages.length - imageFiles.length;
         i < previewImages.length;
-        i++
+        i += 1
       ) {
         if (i !== index) {
           images.push(imageFiles[i])

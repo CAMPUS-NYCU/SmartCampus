@@ -12,11 +12,11 @@ export const UP_VOTE_MUTATION = gql`
 `
 export const useUpdateVote = () => {
   const [upVoteMutation] = useMutation(UP_VOTE_MUTATION)
-  function upVote (id, voteAction) {
+  function upVote(id, voteAction) {
     firebase
       .auth()
       .currentUser.getIdToken()
-      .then(token => {
+      .then((token) => {
         upVoteMutation({
           context: {
             headers: {
@@ -27,7 +27,7 @@ export const useUpdateVote = () => {
             tagId: id,
             action: voteAction ? 'UPVOTE' : 'CANCEL_UPVOTE'
           }
-        }).then(res => {})
+        })
       })
   }
   return { upVote }

@@ -31,6 +31,7 @@ const MissionStep0 = () => {
           onClick={() => handleChangeMissionType(index)}
           button
           disabled={index === 2}
+          key={item.missionName}
         >
           <ListItemIcon>
             <img

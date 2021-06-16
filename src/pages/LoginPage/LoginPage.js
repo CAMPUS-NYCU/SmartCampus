@@ -72,7 +72,7 @@ export default function LoginPage(props) {
             />
           </Box>
           <Typography
-            variant='6h'
+            variant='subtitle1'
             style={{ color: 'white', marginLeft: '50px' }}
           >
             使用Google登入
