@@ -31,54 +31,59 @@ export const TagContextProvider = ({ children }) => {
   const { userAddTags, refetchUserAddTags } = useUserTags()
   const threshold = useThreshold()
   // ! TEMP: 之後會串接 API 拿category列表？
-  const categoryList = [
-    {
-      id: 1,
-      name: '校園設施'
-    },
-    {
-      id: 2,
-      name: '校園問題'
-    },
-    {
-      id: 3,
-      name: '校園狀態'
-    }
-  ]
-
+  const categoryList = useMemo(
+    () => [
+      {
+        id: 1,
+        name: '校園設施'
+      },
+      {
+        id: 2,
+        name: '校園問題'
+      },
+      {
+        id: 3,
+        name: '校園狀態'
+      }
+    ],
+    []
+  )
   const [activeTagId, setActiveTagId] = useState(null)
   const activeTag = useMemo(() => findTagById(activeTagId, tags), [
     activeTagId,
     tags
   ])
   const { tagDetail, getTagDetail } = useTagDetail()
-  const resetActiveTag = () => {
+  const resetActiveTag = useCallback(() => {
     setActiveTagId(null)
-  }
+  }, [])
   const fetchTagDetail = useCallback(() => {
     getTagDetail({
       variables: { id: activeTagId }
     })
   }, [getTagDetail, activeTagId])
   const [filterTags, setFilterTags] = useState([])
-  const addFilterTags = (tag) => {
-    if (filterTags.indexOf(tag) !== -1) {
-      setFilterTags((prevFilterTags) =>
-        prevFilterTags.filter((t) => {
-          return t !== tag
-        })
-      )
-    } else {
-      setFilterTags((prevFilterTags) => [...prevFilterTags, tag])
-    }
-  }
-  const resetFilterTags = (tag) => {
+  const addFilterTags = useCallback(
+    (tag) => {
+      if (filterTags.indexOf(tag) !== -1) {
+        setFilterTags((prevFilterTags) =>
+          prevFilterTags.filter((t) => {
+            return t !== tag
+          })
+        )
+      } else {
+        setFilterTags((prevFilterTags) => [...prevFilterTags, tag])
+      }
+    },
+    [filterTags]
+  )
+  const resetFilterTags = useCallback((tag) => {
     setFilterTags((prevFilterTags) =>
       prevFilterTags.filter((t) => {
         return t !== tag
       })
     )
-  }
+  }, [])
   const contextValues = {
     tags,
     activeTag,

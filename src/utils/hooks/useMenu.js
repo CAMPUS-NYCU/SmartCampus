@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 const useMenu = (initialAnchorEl = null) => {
   const [anchorEl, setAnchorEl] = useState(initialAnchorEl)
-  const setOpen = (event) => setAnchorEl(event.currentTarget)
-  const setClose = () => setAnchorEl(null)
-  const open = Boolean(anchorEl)
+  const setOpen = useCallback((event) => setAnchorEl(event.currentTarget), [])
+  const setClose = useCallback(() => setAnchorEl(null), [])
+  const open = useMemo(() => Boolean(anchorEl), [anchorEl])
   return {
     open,
     anchorEl,

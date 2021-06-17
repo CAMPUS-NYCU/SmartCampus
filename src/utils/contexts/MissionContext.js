@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { gql } from 'apollo-boost'
@@ -105,8 +105,15 @@ export const MissionContextProvider = ({ children }) => {
   const [tagAdd] = useMutation(TAG_ADD_MUTATION)
   const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION)
 
-  // ==================== Step control ====================
-  const { enqueueSnackbar } = useSnackbar()
+  const [isInEdit, setIsInEdit] = useState(false)
+
+  const [missionType, setMissionType] = useState(null)
+  const [mapCenter, setMapCenter] = useState(DefaultCenter)
+
+  // 照片
+  const [imageFiles, setImageFiles] = useState([])
+  const [previewImages, setPreviewImages] = useState([])
+  const [imageDeleteUrls, setImageDeleteUrls] = useState([])
   const {
     step: currentStep,
     handleBack: handleBackStep,
@@ -117,18 +124,14 @@ export const MissionContextProvider = ({ children }) => {
     maxStep: MISSION_MAX_STEP,
     minStep: MISSION_MIN_STEP
   })
-  const isInMission = currentStep >= MissionStep.selectMissionName
-  const [isInEdit, setIsInEdit] = useState(false)
-
-  const handleNext = () => {
-    // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
-    if (isInEdit && currentStep === MissionStep.selectMissionName) {
-      handleNextStep(2)
-    } else {
-      handleNextStep(1)
-    }
-  }
-  const handleBack = () => {
+  const {
+    activeTag,
+    refetch,
+    tagDetail,
+    refetchUserAddTags,
+    refetchTagDetail
+  } = useTagValue()
+  const handleBack = useCallback(() => {
     setSelectedMissionId(InitialMissionValue.selectedMissionId)
     setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
     setRemindOpen(false)
@@ -139,16 +142,216 @@ export const MissionContextProvider = ({ children }) => {
     } else {
       handleBackStep(1)
     }
-  }
+  }, [currentStep, handleBackStep, isInEdit])
+  const isInMission = useMemo(
+    () => currentStep >= MissionStep.selectMissionName,
+    [currentStep]
+  )
+  // ==================== UI toggle control ====================
+  // 是否顯示各控制元件，點地圖來toggle
+  const [showControl, setShowControl] = useState(true)
+  const handleToggleShowControl = useCallback(() => {
+    if (isInMission || isInEdit) return // 正在標注中就不能調整
+    setShowControl(!showControl)
+  }, [isInEdit, isInMission, showControl])
 
-  const [missionType, setMissionType] = useState(null)
-  const [mapCenter, setMapCenter] = useState(DefaultCenter)
-  const handleChangeMissionType = (target) => {
+  // ==================== Map viewport control ====================
+  const [mapInstance, setMapInstance] = React.useState(null)
+  const handleMapOnLoad = useCallback((map) => {
+    setMapInstance(map)
+  }, [])
+
+  // ==================== Marker control ====================
+  const [markerPosition, setMarkerPosition] = useState(
+    InitialMissionValue.markerPosition
+  )
+  const handleSetMarkerPosition = useCallback((event) => {
+    setMarkerPosition({
+      longitude: event.latLng.lng(),
+      latitude: event.latLng.lat()
+    })
+    // ? marker改地點，street view也要重設？
+    setStreetViewPosition({
+      longitude: event.latLng.lng(),
+      latitude: event.latLng.lat()
+    })
+  }, [])
+
+  // ==================== Street View control ====================
+  const [streetViewUpload, setStreetViewUpload] = useState(false)
+  const [streetViewInstance, setStreetViewInstance] = useState(null)
+  const [povChanged, setPovChanged] = useState(false)
+  const handleStreetViewOnLoad = useCallback((panorama) => {
+    setStreetViewInstance(panorama)
+  }, [])
+  const [streetViewPosition, setStreetViewPosition] = useState(
+    InitialMissionValue.streetViewPosition
+  )
+  const handleChangeStreetViewPosition = useCallback(() => {
+    if (!streetViewInstance) return
+    setStreetViewPosition({
+      longitude: streetViewInstance.position.lng(),
+      latitude: streetViewInstance.position.lat()
+    })
+  }, [streetViewInstance])
+  const [streetViewPOV, setStreetViewPOV] = useState(
+    InitialMissionValue.streetViewPOV
+  )
+  const handleChangeStreetViewPOVUndebounced = useCallback(() => {
+    if (!streetViewInstance) return
+    setPovChanged(true)
+    setStreetViewPOV({
+      heading: streetViewInstance.pov.heading,
+      pitch: streetViewInstance.pov.pitch
+    })
+  }, [streetViewInstance])
+  // ! 因為不debounce的話，街景FPS會很低，所以加入debounce
+  const handleChangeStreetViewPOV = useMemo(
+    () => debounce(handleChangeStreetViewPOVUndebounced, 200),
+    [handleChangeStreetViewPOVUndebounced]
+  )
+  const handleCompleteStreetView = useCallback(() => {
+    if (!streetViewInstance) {
+      setStreetViewUpload(true)
+      setPovChanged(false)
+      handleBack()
+      return
+    }
+    setPovChanged(false)
+    setStreetViewUpload(true)
+    setStreetViewPOV({
+      heading: streetViewInstance.pov.heading,
+      pitch: streetViewInstance.pov.pitch
+    })
+    setStreetViewPosition({
+      longitude: streetViewInstance.position.lng(),
+      latitude: streetViewInstance.position.lat()
+    })
+    setStep(MissionStep.PlaceFlagOnMap)
+  }, [handleBack, setStep, streetViewInstance])
+  const handleCloseStreetView = useCallback(() => {
+    setStreetViewPosition({
+      longitude: markerPosition.longitude,
+      latitude: markerPosition.latitude
+    })
+    setPovChanged(false)
+    setStreetViewPOV(InitialMissionValue.streetViewPOV)
+    setStreetViewUpload(false)
+    setStep(MissionStep.PlaceFlagOnMap)
+  }, [markerPosition, setStep])
+
+  // ==================== Option control ====================
+  // TODO 使用 useReducer 優化這坨 useState？
+
+  // --------------- Category ---------------
+  const [selectedCategoryId, setSelectedCategoryId] = useState(
+    InitialMissionValue.selectedCategoryId
+  )
+  const handleSetSelectedCategoryId = useCallback((newCategoryId) => {
+    setSelectedCategoryId(newCategoryId)
+  }, [])
+
+  // --------------- Mission ---------------
+  const [selectedMissionId, setSelectedMissionId] = useState(
+    InitialMissionValue.selectedMissionId
+  )
+  // --------------- Discovery ---------------
+  const [selectedSubOptionId, setSelectedSubOptionId] = useState(
+    InitialMissionValue.selectedSubOptionId
+  )
+  const [subOptionOtherText, setSubOptionOtherText] = useState(
+    InitialMissionValue.subOptionOtherText
+  )
+
+  const handleSetSelectedMissionId = useCallback((newMissionId) => {
+    setSelectedMissionId(newMissionId)
+    // mission和subOption有從屬關係，
+    // 修改mission的話，subOption也要被重設
+    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
+  }, [])
+
+  const handleChangeSubOptionOtherText = useCallback(
+    (event) => setSubOptionOtherText(event.target.value),
+    []
+  )
+  // --------------- Description ---------------
+  const [moreDescriptionText, setMoreDescriptionText] = useState(
+    InitialMissionValue.moreDescriptionText
+  )
+  const handleChangeMoreDescriptionText = useCallback(
+    (event) => setMoreDescriptionText(event.target.value),
+    []
+  )
+  const [photos, setPhotos] = useState(InitialMissionValue.photos)
+
+  // --------------- Location Text ---------------
+  const [textLocation, setTextLocation] = useState(
+    InitialMissionValue.textLocation
+  )
+  const handleChangeTextLocation = useCallback((event) => {
+    setTextLocation(event.target.value)
+  }, [])
+  const [floor, setFloor] = useState('無')
+  const [remindOpen, setRemindOpen] = useState(false)
+
+  // ===================== Loading =======================
+  const [loading, setLoading] = useState(false)
+
+  // ========== Token ==========
+
+  const checkNextStep = useCallback(() => {
+    if (currentStep === MissionStep.selectMissionName) {
+      return missionType !== null
+    }
+    if (currentStep === MissionStep.SelectMission) {
+      return selectedMissionId !== '' && selectedSubOptionId !== ''
+    }
+    return true
+  }, [currentStep, missionType, selectedMissionId, selectedSubOptionId])
+  const ableToNextStep = useMemo(() => checkNextStep(), [checkNextStep])
+
+  // ==================== Clear ====================
+  const clearMissionData = useCallback(() => {
+    setImageFiles([])
+    setStep(InitialMissionValue.currentStep)
+    setMarkerPosition(InitialMissionValue.markerPosition)
+    setSelectedCategoryId(InitialMissionValue.selectedCategoryId)
+    setSelectedMissionId(InitialMissionValue.selectedMissionId)
+    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
+    setSubOptionOtherText(InitialMissionValue.subOptionOtherText)
+    setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
+    setPhotos(InitialMissionValue.photos)
+    setTextLocation(InitialMissionValue.textLocation)
+    setStreetViewPosition({
+      longitude: markerPosition.longitude,
+      latitude: markerPosition.latitude
+    })
+    setStreetViewPOV(InitialMissionValue.streetViewPOV)
+    setStreetViewUpload(false)
+    setPreviewImages([])
+    setImageDeleteUrls([])
+    setFloor(0)
+    setRemindOpen(false)
+  }, [markerPosition, setStep])
+
+  // ==================== Step control ====================
+  const { enqueueSnackbar } = useSnackbar()
+
+  const handleNext = useCallback(() => {
+    // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
+    if (isInEdit && currentStep === MissionStep.selectMissionName) {
+      handleNextStep(2)
+    } else {
+      handleNextStep(1)
+    }
+  }, [currentStep, handleNextStep, isInEdit])
+
+  const handleChangeMissionType = useCallback((target) => {
     setMissionType(target)
     setSelectedMissionId('')
     setSelectedSubOptionId('')
-  }
-  const handleStartMission = () => {
+  }, [])
+  const handleStartMission = useCallback(() => {
     setShowControl(true)
     const center = mapInstance.getCenter()
     setMarkerPosition({
@@ -160,55 +363,51 @@ export const MissionContextProvider = ({ children }) => {
       latitude: center.lat()
     })
     setStep(MissionStep.selectMissionName)
-  }
-  const handleStartEdit = (activeTag) => {
-    setShowControl(true)
-    setMarkerPosition({
-      longitude: activeTag.position.lng,
-      latitude: activeTag.position.lat
-    })
-    setMapCenter(activeTag.position)
-    setStreetViewPosition({
-      longitude: activeTag.position.lng,
-      latitude: activeTag.position.lat
-    })
-    setMissionType(
-      missionInfo.findIndex(
-        (element) => element.missionName === activeTag.category.missionName
+  }, [mapInstance, setStep])
+  const handleStartEdit = useCallback(
+    (startTag) => {
+      setShowControl(true)
+      setMarkerPosition({
+        longitude: startTag.position.lng,
+        latitude: startTag.position.lat
+      })
+      setMapCenter(startTag.position)
+      setStreetViewPosition({
+        longitude: startTag.position.lng,
+        latitude: startTag.position.lat
+      })
+      setMissionType(
+        missionInfo.findIndex(
+          (element) => element.missionName === startTag.category.missionName
+        )
       )
-    )
-    setSelectedMissionId(activeTag.category.subTypeName)
-    setSelectedSubOptionId(activeTag.category.targetName)
-    setStep(MissionStep.selectMissionName)
-    setMoreDescriptionText(tagDetail.description)
-    setPreviewImages(tagDetail.imageUrl)
-    setImageFiles([])
-    setImageDeleteUrls([])
-    setTextLocation(activeTag.locationName)
-    setIsInEdit(true)
-  }
+      setSelectedMissionId(startTag.category.subTypeName)
+      setSelectedSubOptionId(startTag.category.targetName)
+      setStep(MissionStep.selectMissionName)
+      setMoreDescriptionText(tagDetail.description)
+      setPreviewImages(tagDetail.imageUrl)
+      setImageFiles([])
+      setImageDeleteUrls([])
+      setTextLocation(startTag.locationName)
+      setIsInEdit(true)
+    },
+    [setStep, tagDetail.description, tagDetail.imageUrl]
+  )
 
-  const handleCloseMission = () => {
+  const handleCloseMission = useCallback(() => {
     clearMissionData()
     setMissionType(null)
     setStep(MissionStep.Init)
     setIsInEdit(false)
-  }
-  const handleCloseEdit = () => {
+  }, [clearMissionData, setStep])
+  const handleCloseEdit = useCallback(() => {
     clearMissionData()
     setMissionType(null)
     setStep(MissionStep.Init)
     setIsInEdit(false)
-  }
+  }, [clearMissionData, setStep])
 
-  const {
-    activeTag,
-    refetch,
-    tagDetail,
-    refetchUserAddTags,
-    refetchTagDetail
-  } = useTagValue()
-  const handleCompleteMission = () => {
+  const handleCompleteMission = useCallback(() => {
     setLoading(true)
     let floorNumber = 0
     if (floor === '無') {
@@ -370,194 +569,29 @@ export const MissionContextProvider = ({ children }) => {
 
     // .catch()
     // .finally()
-  }
-
-  // 照片
-  const [imageFiles, setImageFiles] = useState([])
-  const [previewImages, setPreviewImages] = useState([])
-  const [imageDeleteUrls, setImageDeleteUrls] = useState([])
-  // ==================== UI toggle control ====================
-  // 是否顯示各控制元件，點地圖來toggle
-  const [showControl, setShowControl] = useState(true)
-  const handleToggleShowControl = () => {
-    if (isInMission || isInEdit) return // 正在標注中就不能調整
-    setShowControl(!showControl)
-  }
-
-  // ==================== Map viewport control ====================
-  const [mapInstance, setMapInstance] = React.useState(null)
-  const handleMapOnLoad = (map) => {
-    setMapInstance(map)
-  }
-
-  // ==================== Marker control ====================
-  const [markerPosition, setMarkerPosition] = useState(
-    InitialMissionValue.markerPosition
-  )
-  const handleSetMarkerPosition = (event) => {
-    setMarkerPosition({
-      longitude: event.latLng.lng(),
-      latitude: event.latLng.lat()
-    })
-    // ? marker改地點，street view也要重設？
-    setStreetViewPosition({
-      longitude: event.latLng.lng(),
-      latitude: event.latLng.lat()
-    })
-  }
-
-  // ==================== Street View control ====================
-  const [streetViewUpload, setStreetViewUpload] = useState(false)
-  const [streetViewInstance, setStreetViewInstance] = useState(null)
-  const [povChanged, setPovChanged] = useState(false)
-  const handleStreetViewOnLoad = (panorama) => {
-    setStreetViewInstance(panorama)
-  }
-  const [streetViewPosition, setStreetViewPosition] = useState(
-    InitialMissionValue.streetViewPosition
-  )
-  const handleChangeStreetViewPosition = () => {
-    if (!streetViewInstance) return
-    setStreetViewPosition({
-      longitude: streetViewInstance.position.lng(),
-      latitude: streetViewInstance.position.lat()
-    })
-  }
-  const [streetViewPOV, setStreetViewPOV] = useState(
-    InitialMissionValue.streetViewPOV
-  )
-  const handleChangeStreetViewPOVUndebounced = () => {
-    if (!streetViewInstance) return
-    setPovChanged(true)
-    setStreetViewPOV({
-      heading: streetViewInstance.pov.heading,
-      pitch: streetViewInstance.pov.pitch
-    })
-  }
-  // ! 因為不debounce的話，街景FPS會很低，所以加入debounce
-  const handleChangeStreetViewPOV = debounce(
-    handleChangeStreetViewPOVUndebounced,
-    200
-  )
-  const handleCompleteStreetView = () => {
-    if (!streetViewInstance) {
-      setStreetViewUpload(true)
-      setPovChanged(false)
-      handleBack()
-      return
-    }
-    setPovChanged(false)
-    setStreetViewUpload(true)
-    setStreetViewPOV({
-      heading: streetViewInstance.pov.heading,
-      pitch: streetViewInstance.pov.pitch
-    })
-    setStreetViewPosition({
-      longitude: streetViewInstance.position.lng(),
-      latitude: streetViewInstance.position.lat()
-    })
-    setStep(MissionStep.PlaceFlagOnMap)
-  }
-  const handleCloseStreetView = () => {
-    setStreetViewPosition({
-      longitude: markerPosition.longitude,
-      latitude: markerPosition.latitude
-    })
-    setPovChanged(false)
-    setStreetViewPOV(InitialMissionValue.streetViewPOV)
-    setStreetViewUpload(false)
-    setStep(MissionStep.PlaceFlagOnMap)
-  }
-
-  // ==================== Option control ====================
-  // TODO 使用 useReducer 優化這坨 useState？
-
-  // --------------- Category ---------------
-  const [selectedCategoryId, setSelectedCategoryId] = useState(
-    InitialMissionValue.selectedCategoryId
-  )
-  const handleSetSelectedCategoryId = (newCategoryId) => {
-    setSelectedCategoryId(newCategoryId)
-  }
-
-  // --------------- Mission ---------------
-  const [selectedMissionId, setSelectedMissionId] = useState(
-    InitialMissionValue.selectedMissionId
-  )
-  // --------------- Discovery ---------------
-  const [selectedSubOptionId, setSelectedSubOptionId] = useState(
-    InitialMissionValue.selectedSubOptionId
-  )
-  const [subOptionOtherText, setSubOptionOtherText] = useState(
-    InitialMissionValue.subOptionOtherText
-  )
-
-  const handleSetSelectedMissionId = (newMissionId) => {
-    setSelectedMissionId(newMissionId)
-    // mission和subOption有從屬關係，
-    // 修改mission的話，subOption也要被重設
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
-  }
-
-  const handleChangeSubOptionOtherText = (event) =>
-    setSubOptionOtherText(event.target.value)
-
-  // --------------- Description ---------------
-  const [moreDescriptionText, setMoreDescriptionText] = useState(
-    InitialMissionValue.moreDescriptionText
-  )
-  const handleChangeMoreDescriptionText = (event) =>
-    setMoreDescriptionText(event.target.value)
-  const [photos, setPhotos] = useState(InitialMissionValue.photos)
-
-  // --------------- Location Text ---------------
-  const [textLocation, setTextLocation] = useState(
-    InitialMissionValue.textLocation
-  )
-  const handleChangeTextLocation = (event) => {
-    setTextLocation(event.target.value)
-  }
-  const [floor, setFloor] = useState('無')
-  const [remindOpen, setRemindOpen] = useState(false)
-  // ==================== Clear ====================
-  const clearMissionData = () => {
-    setImageFiles([])
-    setStep(InitialMissionValue.currentStep)
-    setMarkerPosition(InitialMissionValue.markerPosition)
-    setSelectedCategoryId(InitialMissionValue.selectedCategoryId)
-    setSelectedMissionId(InitialMissionValue.selectedMissionId)
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
-    setSubOptionOtherText(InitialMissionValue.subOptionOtherText)
-    setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
-    setPhotos(InitialMissionValue.photos)
-    setTextLocation(InitialMissionValue.textLocation)
-    setStreetViewPosition({
-      longitude: markerPosition.longitude,
-      latitude: markerPosition.latitude
-    })
-    setStreetViewPOV(InitialMissionValue.streetViewPOV)
-    setStreetViewUpload(false)
-    setPreviewImages([])
-    setImageDeleteUrls([])
-    setFloor(0)
-    setRemindOpen(false)
-  }
-
-  // ===================== Loading =======================
-  const [loading, setLoading] = useState(false)
-
-  // ========== Token ==========
-
-  const checkNextStep = () => {
-    if (currentStep === MissionStep.selectMissionName) {
-      return missionType !== null
-    }
-    if (currentStep === MissionStep.SelectMission) {
-      return selectedMissionId !== '' && selectedSubOptionId !== ''
-    }
-    return true
-  }
-  const ableToNextStep = checkNextStep()
+  }, [
+    activeTag,
+    clearMissionData,
+    enqueueSnackbar,
+    floor,
+    imageDeleteUrls,
+    imageFiles,
+    isInEdit,
+    markerPosition,
+    missionType,
+    moreDescriptionText,
+    refetch,
+    refetchTagDetail,
+    refetchUserAddTags,
+    selectedMissionId,
+    selectedSubOptionId,
+    streetViewPOV,
+    streetViewPosition,
+    streetViewUpload,
+    tagAdd,
+    tagUpdate,
+    textLocation
+  ])
 
   const contextValues = {
     missionType,

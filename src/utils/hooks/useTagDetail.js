@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
@@ -88,12 +89,15 @@ function useTagDetail() {
       fetchPolicy: 'no-cache'
     }
   )
-  const tagDetail = {
-    ...tagDetailInitial,
-    ...tag,
-    newCreateTime: '0',
-    newLastUpdateTime: '0'
-  }
+  const tagDetail = useMemo(
+    () => ({
+      ...tagDetailInitial,
+      ...tag,
+      newCreateTime: '0',
+      newLastUpdateTime: '0'
+    }),
+    [tag]
+  )
   return { tagDetail, getTagDetail }
 }
 

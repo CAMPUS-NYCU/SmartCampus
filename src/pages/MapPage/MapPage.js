@@ -28,12 +28,7 @@ export default function MapPage(props) {
     maxStep: 3,
     minStep: 0
   })
-  // const { updateTagList } = useTagValue()
-  // useEffect(() => {
-  //   updateTagList()
-  // }, [updateTagList])
   return (
-    // <TagContextProvider>
     <MissionContextProvider>
       <WindowBackProvider />
       <GuidePage
@@ -50,7 +45,6 @@ export default function MapPage(props) {
         setGuideStep={setStep}
       />
     </MissionContextProvider>
-    // </TagContextProvider>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -50,10 +50,13 @@ function MissionStep2() {
   const [floorDrawer, setFloorDrawer] = useState(false)
   const [floorChoose, setFloorChoose] = useState(false)
   const focusInput = useRef(null)
-  const { target = [] } =
-    facilitySubType[missionType].find(
-      (facility) => facility.subTypeName === selectedMissionId
-    ) || {}
+  const { target = [] } = useMemo(
+    () =>
+      facilitySubType[missionType].find(
+        (facility) => facility.subTypeName === selectedMissionId
+      ) || {},
+    [missionType, selectedMissionId]
+  )
   return (
     <>
       <Grid container spacing={3}>
