@@ -8,6 +8,7 @@ import debounce from 'utils/debounce'
 import * as firebase from 'firebase/app'
 import useStep from '../hooks/useStep'
 import { missionInfo } from '../../constants/missionInfo'
+import tagData from '../../constants/tagData'
 import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../../constants/mapConstants'
 
@@ -456,7 +457,8 @@ export const MissionContextProvider = ({ children }) => {
                   panoID: '',
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
-                }
+                },
+                statusName: tagData[missionType][0].statusName
               }
             }
           }).then(
@@ -496,6 +498,7 @@ export const MissionContextProvider = ({ children }) => {
             }
           )
         } else {
+          console.log()
           tagAdd({
             context: {
               headers: {
@@ -528,7 +531,8 @@ export const MissionContextProvider = ({ children }) => {
                   panoID: '',
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
-                }
+                },
+                statusName: tagData[missionType][0].statusName
               }
             }
           }).then(
