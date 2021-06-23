@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { Button } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import FilterDrawer from './FilterDrawer'
+import CustomButton from '../../../../components/CustomButton'
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: 'absolute',
+    position: 'absolgiute',
     top: 96,
     right: 24
   },
@@ -31,23 +30,21 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   button: {
-    border: '1px solid #BABABA',
     flexShrink: '0',
     boxSizing: 'border-box',
-    borderRadius: '40px',
     // width: '20vw',
     height: '30px',
-    marginRight: '7px'
+    marginRight: '7px',
+    color:'#686868',
+    backgroundColor:'#EEEEEE'
   },
   addIcon: {
     marginLeft: '2px'
   },
   missionButton: {
-    border: 'solid 1px #707070',
     margin: theme.spacing(1)
   },
   discoveryButton: {
-    border: 'solid 1px #707070',
     margin: theme.spacing(1),
     boxSizing: 'content-box',
     width: 16,
@@ -72,7 +69,7 @@ function FilterFab(props) {
     <>
       {open === true ? (
         <div className={classes.grid}>
-          <Button
+          {/* <Button
             className={classes.button}
             variant='contained'
             size='small'
@@ -80,27 +77,55 @@ function FilterFab(props) {
             onClick={() => setFilterDrawer(true)}
           >
             加入其他
-            <AddIcon className={classes.addIcon} />
-          </Button>
+          </Button> */}
+          <CustomButton
+            className={classes.button}
+            variant='contained'
+            size='small'
+            color={filterDrawer ? 'primary' : '#default'}
+            onClick={() => setFilterDrawer(true)}
+            children="加入其他"
+          ></CustomButton>
           {filterTags.map((item) => {
             return (
-              <Button
+              // <Button
+              //   key={item}
+              //   className={classes.button}
+              //   variant='contained'
+              //   size='small'
+              //   onClick={() => addFilterTags(item)}
+              //   color='primary'
+              // >
+              //   {item}
+              //   <CloseIcon className={classes.addIcon} />
+              // </Button>
+              <CustomButton
                 key={item}
                 className={classes.button}
                 variant='contained'
                 size='small'
-                onClick={() => addFilterTags(item)}
                 color='primary'
+                onClick={() => addFilterTags(item)}
               >
                 {item}
                 <CloseIcon className={classes.addIcon} />
-              </Button>
+              </CustomButton>
             )
           })}
           {filterTags.length === 0 &&
             filterInfo.map((item) => {
               return (
-                <Button
+                // <Button
+                //   key={item}
+                //   className={classes.button}
+                //   variant='contained'
+                //   size='small'
+                //   onClick={() => addFilterTags(item)}
+                // >
+                //   {item}
+
+                // </Button>
+                <CustomButton
                   key={item}
                   className={classes.button}
                   variant='contained'
@@ -108,8 +133,7 @@ function FilterFab(props) {
                   onClick={() => addFilterTags(item)}
                 >
                   {item}
-                  <AddIcon className={classes.addIcon} />
-                </Button>
+                </CustomButton>
               )
             })}
         </div>

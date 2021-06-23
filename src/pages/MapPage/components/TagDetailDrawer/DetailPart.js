@@ -145,10 +145,8 @@ const DetailPart = (props) => {
               style={{
                 background: '#FDCC4F',
                 /* Primary_light */
-                border: '1px solid #FFEDC0',
                 borderRadius: '20px',
-                boxShadow:
-                  'inset 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 4px 4px rgba(0, 0, 0, 0.25)'
+                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
               }}
               variant='contained'
             >
@@ -242,7 +240,7 @@ const DetailPart = (props) => {
                 style={{
                   marginLeft: '8px',
                   background: hasUpVote ? '#FDCC4F' : '#EEEEEE',
-                  border: '1px solid #BABABA',
+                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
                   fontSize: '15px'
                 }}
                 onClick={handleUopVote}

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { makeStyles, Typography, Grid, Button, Box } from '@material-ui/core'
+import { makeStyles, Typography, Grid, Box } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { facilitySubType, missionInfo } from '../../../../constants/missionInfo'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
-
+import CustomButton from '../../../../components/CustomButton'
 const useStyles = makeStyles({
   content: {
     overflowY: 'scroll'
@@ -15,7 +15,6 @@ const useStyles = makeStyles({
     bottom: '20px',
     left: '10%',
     width: '80%',
-    borderRadius: '20px'
   }
 })
 
@@ -102,17 +101,14 @@ const FilterDrawer = (props) => {
             </Grid>
             {missionInfo.map((mission) => (
               <Grid key={mission.missionName} item xs={4}>
-                <Button
-                  variant='contained'
+                <CustomButton
                   fullWidth
-                  size='small'
                   color={currentMission !== mission ? 'default' : 'primary'}
-                  onClick={() => {
-                    changeCurrentMission(mission)
-                  }}
-                >
-                  {mission.missionName}
-                </Button>
+                  variant='contained'
+                  size='small'
+                  onClick={()=> changeCurrentMission(mission)}
+                  children={mission.missionName}
+                ></CustomButton>
               </Grid>
             ))}
             <Grid container item xs={12} direction='row'>
@@ -122,17 +118,16 @@ const FilterDrawer = (props) => {
               <Grid container spacing={2}>
                 {subMission.map((discovery) => (
                   <Grid key={discovery.subTypeName} item xs={4}>
-                    <Button
-                      variant='contained'
+                    <CustomButton
                       fullWidth
-                      size='small'
                       color={
                         currentSubmission !== discovery ? 'default' : 'primary'
                       }
-                      onClick={() => changeCurrentSubmission(discovery)}
-                    >
-                      {discovery.subTypeName}
-                    </Button>
+                      variant='contained'
+                      size='small'
+                      onClick={()=> changeCurrentSubmission(discovery)}
+                      children={discovery.subTypeName}
+                    ></CustomButton>
                   </Grid>
                 ))}
               </Grid>
@@ -144,34 +139,34 @@ const FilterDrawer = (props) => {
               <Grid container spacing={2}>
                 {target.map((discovery) => (
                   <Grid key={discovery.targetName} item xs={4}>
-                    <Button
-                      variant='contained'
+                    <CustomButton
                       fullWidth
-                      size='small'
                       color={
                         currentTarget !== discovery.targetName
                           ? 'default'
                           : 'primary'
                       }
+                      variant='contained'
+                      size='small'
                       onClick={() => changeCurrentTarget(discovery.targetName)}
-                    >
-                      {discovery.targetName}
-                    </Button>
+                      children={discovery.targetName}
+                    ></CustomButton>
                   </Grid>
                 ))}
               </Grid>
             </Grid>
           </Grid>
         </Box>
-        <Button
+
+        <CustomButton
           className={classes.button}
-          onClick={handleFinishFilter}
           color={final ? 'primary' : 'default'}
-          disabled={!final}
           variant='contained'
-        >
-          加入
-        </Button>
+          onClick={handleFinishFilter}
+          disabled={!final}
+          children='加入'
+          borderRadius='20px'
+        ></CustomButton>
       </>
     </CustomDrawer>
   )

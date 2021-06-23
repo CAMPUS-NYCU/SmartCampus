@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { makeStyles } from '@material-ui/core/styles'
 import { Dialog, DialogTitle } from '@material-ui/core'
@@ -10,6 +9,7 @@ import {
   useMissionValue,
   MissionStep
 } from '../../../../../utils/contexts/MissionContext'
+import CustomButton from 'components/CustomButton'
 
 const useStyles = makeStyles((theme) => ({
   stepper: {
@@ -32,9 +32,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#FDCC4F'
   },
   finishButton: {
-    filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
     background: '#EEEEEE',
-    border: '1px solid #E8E8E8',
     boxSizing: 'border-box',
     borderRadius: '20px'
   },
@@ -68,22 +66,22 @@ function MissionStepper(props) {
           activeStep={-1}
           className={classes.stepper}
           backButton={
-            <Button
+            <CustomButton
+              className={classes.button}
               size='medium'
               onClick={handleCloseStreetView}
-              className={classes.button}
-            >
-              取消
-            </Button>
+              children='取消'
+              noShadow='true'
+            ></CustomButton>
           }
           nextButton={
-            <Button
+            <CustomButton
+              className={classes.button}
               size='medium'
               onClick={handleCompleteStreetView}
-              className={classes.button}
-            >
-              確定
-            </Button>
+              children='確定'
+              noShadow='true'
+            ></CustomButton>
           }
           {...props}
         />
@@ -97,29 +95,30 @@ function MissionStepper(props) {
           className={classes.stepper}
           nextButton={
             currentStep >= MISSION_MAX_STEP ? (
-              <Button
+              <CustomButton
                 color='primary'
+                className={classes.button}
                 size='medium'
                 onClick={
                   ableToNextStep === true
-                    ? () => setFinishOpen(true)
-                    : () => setRemindOpen(true)
-                }
-                className={classes.button}
-              >
-                確定
-              </Button>
+                  ? () => setFinishOpen(true)
+                  : () => setRemindOpen(true)
+                  }
+                children='確定'
+                noShadow='true'
+              ></CustomButton>
             ) : (
-              <Button
+              <CustomButton
+                className={classes.button}
                 size='medium'
                 disabled={!ableToNextStep}
                 onClick={handleNext}
-                className={classes.button}
+                noShadow='true'
               >
                 {isInEdit && currentStep === MissionStep.PlaceFlagOnMap
                   ? ' 確定'
                   : '下一步'}
-              </Button>
+              </CustomButton>
             )
           }
           {...props}
@@ -130,7 +129,7 @@ function MissionStepper(props) {
         PaperProps={{
           style: {
             background: 'r #FAFAFA',
-            boxShadow: `0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2)`,
+            boxShadow: `0px 2px 4px rgba(0, 0, 0, 0.12), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2)`,
             borderRadius: `10px`
           }
         }}
@@ -143,20 +142,18 @@ function MissionStepper(props) {
           display='flex'
           justifyContent='space-around'
         >
-          <Button
+          <CustomButton
             className={classes.finishButton}
             onClick={() => {
               setFinishOpen(false)
             }}
-          >
-            取消
-          </Button>
-          <Button
+            children='取消'
+          ></CustomButton>
+          <CustomButton
             className={classes.finishButton}
             onClick={handleCompleteMission}
-          >
-            送出
-          </Button>
+            children='送出'
+          ></CustomButton>
         </Box>
       </Dialog>
     </>

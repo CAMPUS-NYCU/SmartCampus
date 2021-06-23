@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 
 import { useMissionValue } from '../../../../../utils/contexts/MissionContext'
 import Flag from '../../Flag'
+import CustomButton from '../../../../../components/CustomButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,14 +40,14 @@ function MissionBar(props) {
         <Typography>標注</Typography>
       </Box>
       <Box m={1}>
-        <Button
-          onClick={handleCloseMission}
+        <CustomButton
           className={classes.roundButton}
           variant='outlined'
           size='small'
-        >
-          取消
-        </Button>
+          onClick={handleCloseMission}
+          children='取消'
+          noShadow='true'
+        ></CustomButton>
       </Box>
     </Paper>
   )
