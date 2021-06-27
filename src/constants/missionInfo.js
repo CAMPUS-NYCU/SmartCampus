@@ -121,14 +121,13 @@ export const facilitySubType = [
   ],
   [
     {
-      subTypeName: '餐廳人潮',
+      subTypeName: '餐廳人潮'
     },
     {
-      subTypeName: '車站排隊人潮',
+      subTypeName: '車站排隊人潮'
     },
     {
-      subTypeName: 'Wi-Fi 訊號',
-    
+      subTypeName: 'Wi-Fi 訊號'
     }
   ]
 ]

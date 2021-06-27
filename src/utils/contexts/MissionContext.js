@@ -293,7 +293,7 @@ export const MissionContextProvider = ({ children }) => {
     setTextLocation(event.target.value)
   }, [])
   const [floor, setFloor] = useState('無')
-  const [state,setState] = useState('請選擇')
+  const [state, setState] = useState('請選擇')
   const [remindOpen, setRemindOpen] = useState(false)
 
   // ===================== Loading =======================
@@ -460,7 +460,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: state.toString(),
+                statusName: state.toString()
               }
             }
           }).then(
@@ -534,7 +534,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: state.toString(),
+                statusName: state.toString()
               }
             }
           }).then(

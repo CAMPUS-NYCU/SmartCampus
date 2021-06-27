@@ -30,6 +30,12 @@
         "logical": "ignore",
         "prop": "ignore"
       }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
     ]
   },
   "extends": [
