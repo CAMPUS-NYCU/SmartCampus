@@ -35,6 +35,10 @@ export const missionName = [
   {
     missionName: '問題類型',
     missionDescription: '具體問題'
+  },
+  {
+    missionName: '動態類型',
+    missionDescription: '請選擇目前狀態'
   }
 ]
 export const facilitySubType = [
@@ -115,5 +119,16 @@ export const facilitySubType = [
       ]
     }
   ],
-  []
+  [
+    {
+      subTypeName: '餐廳人潮',
+    },
+    {
+      subTypeName: '車站排隊人潮',
+    },
+    {
+      subTypeName: 'Wi-Fi 訊號',
+    
+    }
+  ]
 ]

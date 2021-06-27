@@ -26,6 +26,7 @@ import {
   missionName
 } from '../../../../../../constants/missionInfo'
 import PicturePreview from './PicturePreview'
+import tagData from 'constants/tagData'
 
 function MissionStep2() {
   const {
@@ -43,12 +44,16 @@ function MissionStep2() {
     missionType,
     floor,
     setFloor,
+    state,
+    setState,
     isInEdit,
     remindOpen
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const [floorDrawer, setFloorDrawer] = useState(false)
+  const [stateDrawer, setStateDrawer] = useState(false)
   const [floorChoose, setFloorChoose] = useState(false)
+  const [stateChoose, setStateChoose] = useState(false)
   const focusInput = useRef(null)
   const { target = [] } = useMemo(
     () =>
@@ -189,7 +194,51 @@ function MissionStep2() {
         ))}
         {/* * ==================== 具體設施子類別 ==================== */}
         <Grid container item xs={12} direction='row'>
-          <>
+          <>{missionType === 2 ?(<>
+            {remindOpen === true && selectedSubOptionId === '' ? (
+              <Box
+                display='flex'
+                flexDirection='row'
+                alignItems='center'
+                width='1/2'
+                justifyContent='flex-start'
+                border={1}
+                borderColor='error.main'
+                borderRadius={6}
+              >
+                <ApartmentIcon
+                  style={{ color: 'FDCC4F', marginRight: '5px' }}
+                />
+                <Typography>請選擇目前狀態</Typography>
+                <Typography>（必填選項）</Typography>
+              </Box>
+            ) : (
+              <>
+                <ApartmentIcon
+                  style={{ color: 'FDCC4F', marginRight: '5px' }}
+                />
+                <Typography>
+                  請選擇目前狀態
+                </Typography>
+              </>
+            )}
+            <Button
+              onClick={() => setStateDrawer(true)}
+              variant={stateChoose ? 'contained' : 'text'}
+              color='primary'
+              style={{
+                borderBottom: stateChoose ? '' : 'solid 1px',
+                borderRadius: '0',
+                marginLeft: '10px',
+                color: 'black'
+              }}
+            >
+              {state}
+              {setSelectedSubOptionId(state)}
+              <UnfoldMoreIcon size='small' />
+            </Button>
+            </>):(<>
+            {setState(tagData[missionType][0].statusName)}
             {remindOpen === true && selectedSubOptionId === '' ? (
               <Box
                 display='flex'
@@ -218,12 +267,13 @@ function MissionStep2() {
                   {missionName[missionType].missionDescription}
                 </Typography>
               </>
-            )}
+            )}</>)}
           </>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            {target.map((discovery) => (
+            {missionType === 2 ?(""):(<>
+              {target.map((discovery) => (
               <Grid
                 key={discovery.targetName}
                 id={discovery.targetName}
@@ -243,11 +293,12 @@ function MissionStep2() {
                 >
                   {discovery.targetName}
                 </Button>
-              </Grid>
-            ))}
+              </Grid> ))}
+            </>)}
           </Grid>
         </Grid>
-        {!isInEdit && (
+        {!isInEdit && (<>
+          {missionType === 2 ?(""):(
           <Grid container item xs={12} direction='row'>
             <DescriptionIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
             <TextField
@@ -259,8 +310,8 @@ function MissionStep2() {
               value={moreDescriptionText}
               onChange={handleChangeMoreDescriptionText}
             />
-          </Grid>
-        )}
+          </Grid>)}
+          </>)}
 
         {/* * ==================== 7.上傳照片 ==================== */}
         <Grid container item xs={12} direction='row' alignItems='center'>
@@ -324,6 +375,65 @@ function MissionStep2() {
             setFloor(value)
           }}
         />
+      </Drawer>
+      <Drawer
+        anchor='bottom'
+        open={stateDrawer}
+        onClose={() => {
+          setStateDrawer(false)
+          setStateChoose(true)
+        }}
+        PaperProps={{
+          style: {
+            borderRadius: '20px 20px 0 0',
+            backgroundColor: '#FAFAFA',
+            height: '50vh'
+          }
+        }}
+      >
+        <Toolbar
+          style={{
+            position: 'sticky',
+            top: '0',
+            zIndex: '100',
+            backgroundColor: '#FAFAFA'
+          }}
+        >
+          <Typography variant='h6'>選擇狀態</Typography>
+          <Button
+            color='primary'
+            onClick={() => {
+              setStateDrawer(false)
+              setStateChoose(true)
+            }}
+            style={{ position: 'absolute', right: '10px' }}
+          >
+            確定
+          </Button>
+        </Toolbar>
+        {selectedMissionId ==='Wi-Fi 訊號'?(
+          <Picker
+            valueGroups={{
+              state
+            }}
+            optionGroups={{
+              state: ['良好', '正常', '微弱']
+            }}
+            onChange={(name, value) => {
+              setState(value)
+            }}
+          />):(
+          <Picker
+            valueGroups={{
+              state
+            }}
+            optionGroups={{
+              state: ['人少', '人稍多', '擁擠']
+            }}
+            onChange={(name, value) => {
+              setState(value)
+            }}
+          />)}
       </Drawer>
     </>
   )
