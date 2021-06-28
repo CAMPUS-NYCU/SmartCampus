@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, useMemo, useEffect } from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -62,6 +62,9 @@ function MissionStep2() {
       ) || {},
     [missionType, selectedMissionId]
   )
+  useEffect(() => {
+    setStateChoose(false)
+  }, [selectedMissionId])
   return (
     <>
       <Grid container spacing={3}>
