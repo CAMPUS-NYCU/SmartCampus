@@ -80,8 +80,7 @@ function SearchBarMenu(props) {
         horizontal: 'right'
       }}
     >
-      <List
-className={classes.list} dense disablePadding>
+      <List className={classes.list} dense disablePadding>
         {menuItems.map((item) => (
           <ListItem
             key={item.id}
