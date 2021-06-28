@@ -265,6 +265,7 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleSetSelectedMissionId = useCallback((newMissionId) => {
     setState('請選擇')
+    setRemindOpen(false)
     setSelectedMissionId(newMissionId)
     // mission和subOption有從屬關係，
     // 修改mission的話，subOption也要被重設
@@ -306,7 +307,9 @@ export const MissionContextProvider = ({ children }) => {
       return missionType !== null
     }
     if (currentStep === MissionStep.SelectMission) {
-      return selectedMissionId !== '' && selectedSubOptionId !== ''
+      return (
+        selectedMissionId !== '' && selectedSubOptionId !== ('' || '請選擇')
+      )
     }
     return true
   }, [currentStep, missionType, selectedMissionId, selectedSubOptionId])

@@ -197,7 +197,8 @@ function MissionStep2() {
           <>
             {missionType === 2 ? (
               <>
-                {remindOpen === true && selectedSubOptionId === '' ? (
+                {remindOpen === true &&
+                selectedSubOptionId === ('請選擇' || '') ? (
                   <Box
                     display='flex'
                     flexDirection='row'
