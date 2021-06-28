@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { useMissionValue } from '../contexts/MissionContext'
 import CustomButton from '../../components/CustomButton'
+
 function ImageUpload(props) {
   const { imageFiles, setImageFiles } = useMissionValue()
   const { setPreviewImages, previewImages } = props
@@ -30,12 +31,16 @@ function ImageUpload(props) {
       />
 
       <CustomButton
-        color={imageFiles.length !== 0 ? 'primary' : 'default'}
+        buttonType={
+          imageFiles.length !== 0
+            ? 'roundButton_activated'
+            : 'roundButton_inactivated'
+        }
         variant='contained'
         onClick={fileButtonClick}
-        borderRadius='20px'
-        children='選擇照片'
-      ></CustomButton>     
+      >
+        選擇照片
+      </CustomButton>
     </>
   )
 }

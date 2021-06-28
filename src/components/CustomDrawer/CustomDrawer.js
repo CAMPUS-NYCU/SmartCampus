@@ -47,11 +47,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center'
-  },
-  titleActionButton: {
-    background: '#D8D8D8',
-    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
-    borderRadius: '20px'
   }
 }))
 
@@ -106,12 +101,13 @@ const CustomDrawer = (props) => {
             {titleActions.map((titleAction) => (
               <Box key={titleAction.name} p={2}>
                 <CustomButton
-                  className={classes.titleActionButton}
+                  buttonType='roundButton_inactivated'
                   size='small'
                   onClick={titleAction.handleOnClick}
                   disabled={titleAction.disable}
-                  children={titleAction.name}
-                ></CustomButton>
+                >
+                  {titleAction.name}
+                </CustomButton>
               </Box>
             ))}
           </Box>

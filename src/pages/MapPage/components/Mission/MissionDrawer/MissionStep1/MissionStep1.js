@@ -12,6 +12,7 @@ import {
 } from '../../../../../../utils/contexts/MissionContext'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
 import CustomButton from '../../../../../../components/CustomButton'
+
 function MissionStep1() {
   const {
     textLocation,
@@ -68,29 +69,19 @@ function MissionStep1() {
       </Box>
       <Box display='flex' alignItems='center'>
         <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
-        {/* <Button
-          style={{
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
-            borderRadius: '20px'
-          }}
+        <CustomButton
+          buttonType={
+            streetViewUpload
+              ? 'roundButton_activated'
+              : 'roundButton_inactivated'
+          }
           variant='contained'
           onClick={() => {
             setStep(MissionStep.PlaceFlagOnStreet)
           }}
-          color={streetViewUpload ? 'primary' : 'default'}
         >
           新增街景
-        </Button> */}
-        <CustomButton
-          variant='contained'
-          onClick={() => {
-            setStep(MissionStep.PlaceFlagOnStreet)
-          }}
-          color={streetViewUpload ? 'primary' : 'default'}
-          children='新增街景'
-          borderRadius='20px'
-        ></CustomButton>
- 
+        </CustomButton>
       </Box>
     </>
   )

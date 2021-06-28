@@ -182,13 +182,13 @@ function MissionStep2() {
         {facilitySubType[missionType].map((facility) => (
           <Grid key={facility.subTypeName} item xs={4}>
             <CustomButton
-              variant='contained'
               onClick={() => handleSetSelectedMissionId(facility.subTypeName)}
-              color={
+              buttonType={
                 selectedMissionId === facility.subTypeName
-                  ? 'primary'
-                  : 'default'
+                  ? 'boxButton_activated'
+                  : 'boxButton_inactivated'
               }
+              variant='contained'
               size='small'
               fullWidth
             >

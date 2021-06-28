@@ -29,15 +29,7 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: '5vw'
     }
   },
-  button: {
-    flexShrink: '0',
-    boxSizing: 'border-box',
-    // width: '20vw',
-    height: '30px',
-    marginRight: '7px',
-    color:'#686868',
-    backgroundColor:'#EEEEEE'
-  },
+  button: {},
   addIcon: {
     marginLeft: '2px'
   },
@@ -69,43 +61,38 @@ function FilterFab(props) {
     <>
       {open === true ? (
         <div className={classes.grid}>
-          {/* <Button
-            className={classes.button}
+          <CustomButton
+            buttonType={
+              filterDrawer ? 'boxButton_activated' : 'boxButton_inactivated'
+            }
             variant='contained'
             size='small'
-            color={filterDrawer ? 'primary' : 'default'}
             onClick={() => setFilterDrawer(true)}
+            style={{
+              flexShrink: '0',
+              boxSizing: 'border-box',
+              // width: '20vw',
+              height: '30px',
+              marginRight: '7px'
+            }}
           >
             加入其他
-          </Button> */}
-          <CustomButton
-            className={classes.button}
-            variant='contained'
-            size='small'
-            color={filterDrawer ? 'primary' : '#default'}
-            onClick={() => setFilterDrawer(true)}
-            children="加入其他"
-          ></CustomButton>
+          </CustomButton>
           {filterTags.map((item) => {
             return (
-              // <Button
-              //   key={item}
-              //   className={classes.button}
-              //   variant='contained'
-              //   size='small'
-              //   onClick={() => addFilterTags(item)}
-              //   color='primary'
-              // >
-              //   {item}
-              //   <CloseIcon className={classes.addIcon} />
-              // </Button>
               <CustomButton
                 key={item}
-                className={classes.button}
+                buttonType='boxButton_activated'
                 variant='contained'
                 size='small'
-                color='primary'
                 onClick={() => addFilterTags(item)}
+                style={{
+                  flexShrink: '0',
+                  boxSizing: 'border-box',
+                  // width: '20vw',
+                  height: '30px',
+                  marginRight: '7px'
+                }}
               >
                 {item}
                 <CloseIcon className={classes.addIcon} />
@@ -127,10 +114,17 @@ function FilterFab(props) {
                 // </Button>
                 <CustomButton
                   key={item}
-                  className={classes.button}
+                  buttonType='boxButton_inactivated'
                   variant='contained'
                   size='small'
                   onClick={() => addFilterTags(item)}
+                  style={{
+                    flexShrink: '0',
+                    boxSizing: 'border-box',
+                    // width: '20vw',
+                    height: '30px',
+                    marginRight: '7px'
+                  }}
                 >
                   {item}
                 </CustomButton>

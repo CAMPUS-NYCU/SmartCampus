@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   missionFab: {
     position: 'fixed',
     bottom: theme.spacing(4),
-    left: 'calc(50vw - 28px)',
+    left: 'calc(50vw - 28px)'
   }
 }))
 
@@ -26,7 +26,7 @@ const MissionFab = (props) => {
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
       }}
     >
-      <AddSharpIcon fontSize='large' color='#FFFFFF'/>
+      <AddSharpIcon fontSize='large' color='#FFFFFF' />
     </Fab>
   )
 }

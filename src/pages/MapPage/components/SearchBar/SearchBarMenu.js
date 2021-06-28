@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme) => ({
   listIcon: {
     minWidth: 0,
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
 }))
 
@@ -81,9 +81,7 @@ function SearchBarMenu(props) {
       }}
     >
       <List
-        className={classes.list}
-        dense
-        disablePadding>
+className={classes.list} dense disablePadding>
         {menuItems.map((item) => (
           <ListItem
             key={item.id}

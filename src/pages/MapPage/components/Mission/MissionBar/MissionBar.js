@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -21,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     maxWidth: 800,
     width: '90%'
-  },
-  roundButton: {
-    borderRadius: 15
   }
 }))
 
@@ -41,13 +37,17 @@ function MissionBar(props) {
       </Box>
       <Box m={1}>
         <CustomButton
+          buttonType='defaultButton'
           className={classes.roundButton}
           variant='outlined'
           size='small'
           onClick={handleCloseMission}
-          children='取消'
-          noShadow='true'
-        ></CustomButton>
+          style={{
+            borderRadius: 15
+          }}
+        >
+          取消
+        </CustomButton>
       </Box>
     </Paper>
   )

@@ -88,12 +88,13 @@ const ReportHistory = (props) => {
                   </Grid>
 
                   <CustomButton
-                    color='primary'
+                    buttonType='roundButton_activated'
                     variant='contained'
                     size='small'
-                    onClick={()=> setActiveTagId(item.id)}
-                    children='檢視'
-                  ></CustomButton>
+                    onClick={() => setActiveTagId(item.id)}
+                  >
+                    檢視
+                  </CustomButton>
                 </ListItem>
                 <Divider variant='middle' />
               </div>

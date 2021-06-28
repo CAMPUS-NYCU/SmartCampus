@@ -1,26 +1,14 @@
 import React, { useState } from 'react'
-import { makeStyles, Typography, Grid, Box } from '@material-ui/core'
+import { Typography, Grid, Box } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { facilitySubType, missionInfo } from '../../../../constants/missionInfo'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import CustomButton from '../../../../components/CustomButton'
-const useStyles = makeStyles({
-  content: {
-    overflowY: 'scroll'
-  },
-  button: {
-    position: 'absolute',
-    bottom: '20px',
-    left: '10%',
-    width: '80%',
-  }
-})
 
 const FilterDrawer = (props) => {
   const { open, onClose } = props
-  const classes = useStyles()
   const { addFilterTags } = useTagValue()
   const [currentMission, setCurrentMission] = useState(null)
   const [currentSubmission, setCurrentSubmission] = useState(null)
@@ -103,12 +91,17 @@ const FilterDrawer = (props) => {
               <Grid key={mission.missionName} item xs={4}>
                 <CustomButton
                   fullWidth
-                  color={currentMission !== mission ? 'default' : 'primary'}
+                  buttonType={
+                    currentMission !== mission
+                      ? 'boxButton_inactivated'
+                      : 'boxButton_activated'
+                  }
                   variant='contained'
                   size='small'
-                  onClick={()=> changeCurrentMission(mission)}
-                  children={mission.missionName}
-                ></CustomButton>
+                  onClick={() => changeCurrentMission(mission)}
+                >
+                  {mission.missionName}
+                </CustomButton>
               </Grid>
             ))}
             <Grid container item xs={12} direction='row'>
@@ -120,14 +113,17 @@ const FilterDrawer = (props) => {
                   <Grid key={discovery.subTypeName} item xs={4}>
                     <CustomButton
                       fullWidth
-                      color={
-                        currentSubmission !== discovery ? 'default' : 'primary'
+                      buttonType={
+                        currentSubmission !== discovery
+                          ? 'boxButton_inactivated'
+                          : 'boxButton_activated'
                       }
                       variant='contained'
                       size='small'
-                      onClick={()=> changeCurrentSubmission(discovery)}
-                      children={discovery.subTypeName}
-                    ></CustomButton>
+                      onClick={() => changeCurrentSubmission(discovery)}
+                    >
+                      {discovery.subTypeName}
+                    </CustomButton>
                   </Grid>
                 ))}
               </Grid>
@@ -141,16 +137,17 @@ const FilterDrawer = (props) => {
                   <Grid key={discovery.targetName} item xs={4}>
                     <CustomButton
                       fullWidth
-                      color={
+                      buttonType={
                         currentTarget !== discovery.targetName
-                          ? 'default'
-                          : 'primary'
+                          ? 'boxButton_inactivated'
+                          : 'boxButton_activated'
                       }
                       variant='contained'
                       size='small'
                       onClick={() => changeCurrentTarget(discovery.targetName)}
-                      children={discovery.targetName}
-                    ></CustomButton>
+                    >
+                      {discovery.targetName}
+                    </CustomButton>
                   </Grid>
                 ))}
               </Grid>
@@ -159,14 +156,21 @@ const FilterDrawer = (props) => {
         </Box>
 
         <CustomButton
-          className={classes.button}
-          color={final ? 'primary' : 'default'}
+          buttonType={
+            final ? 'roundButton_activated' : 'roundButton_inactivated'
+          }
           variant='contained'
           onClick={handleFinishFilter}
           disabled={!final}
-          children='加入'
-          borderRadius='20px'
-        ></CustomButton>
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '10%',
+            width: '80%'
+          }}
+        >
+          加入
+        </CustomButton>
       </>
     </CustomDrawer>
   )
