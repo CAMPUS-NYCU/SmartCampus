@@ -8,7 +8,7 @@ import CustomButton from '../../../../components/CustomButton'
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: 'absolgiute',
+    position: 'absolute',
     top: 96,
     right: 24
   },
