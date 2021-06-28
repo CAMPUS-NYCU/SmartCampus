@@ -149,7 +149,15 @@ function TagDetailDialog(props) {
           stateDrawer={stateDrawer}
           activeTag={activeTag}
           setStateDrawer={setStateDrawer}
-          status={tagStatus[tagMissionIndex]}
+          status={(() => {
+            if (tagMissionIndex === 2) {
+              if (activeTag.category.subTypeName === 'Wi-Fi 訊號') {
+                return tagStatus[4]
+              }
+              return tagStatus[3]
+            }
+            return tagStatus[tagMissionIndex]
+          })()}
         />
       )}
       {largeImg && (

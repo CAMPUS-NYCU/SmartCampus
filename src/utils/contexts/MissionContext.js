@@ -8,7 +8,6 @@ import debounce from 'utils/debounce'
 import * as firebase from 'firebase/app'
 import useStep from '../hooks/useStep'
 import { missionInfo } from '../../constants/missionInfo'
-import tagData from '../../constants/tagData'
 import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../../constants/mapConstants'
 
@@ -265,6 +264,8 @@ export const MissionContextProvider = ({ children }) => {
   )
 
   const handleSetSelectedMissionId = useCallback((newMissionId) => {
+    setState('請選擇')
+    setRemindOpen(false)
     setSelectedMissionId(newMissionId)
     // mission和subOption有從屬關係，
     // 修改mission的話，subOption也要被重設
@@ -293,6 +294,7 @@ export const MissionContextProvider = ({ children }) => {
     setTextLocation(event.target.value)
   }, [])
   const [floor, setFloor] = useState('無')
+  const [state, setState] = useState('請選擇')
   const [remindOpen, setRemindOpen] = useState(false)
 
   // ===================== Loading =======================
@@ -305,7 +307,9 @@ export const MissionContextProvider = ({ children }) => {
       return missionType !== null
     }
     if (currentStep === MissionStep.SelectMission) {
-      return selectedMissionId !== '' && selectedSubOptionId !== ''
+      return (
+        selectedMissionId !== '' && selectedSubOptionId !== ('' || '請選擇')
+      )
     }
     return true
   }, [currentStep, missionType, selectedMissionId, selectedSubOptionId])
@@ -331,7 +335,8 @@ export const MissionContextProvider = ({ children }) => {
     setStreetViewUpload(false)
     setPreviewImages([])
     setImageDeleteUrls([])
-    setFloor(0)
+    setFloor('無')
+    setState('請選擇')
     setRemindOpen(false)
   }, [markerPosition, setStep])
 
@@ -458,7 +463,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: tagData[missionType][0].statusName
+                statusName: state.toString()
               }
             }
           }).then(
@@ -532,7 +537,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: tagData[missionType][0].statusName
+                statusName: state.toString()
               }
             }
           }).then(
@@ -578,6 +583,7 @@ export const MissionContextProvider = ({ children }) => {
     clearMissionData,
     enqueueSnackbar,
     floor,
+    state,
     imageDeleteUrls,
     imageFiles,
     isInEdit,
@@ -651,6 +657,8 @@ export const MissionContextProvider = ({ children }) => {
     setMapCenter,
     floor,
     setFloor,
+    state,
+    setState,
     remindOpen,
     setRemindOpen,
     setImageDeleteUrls,
