@@ -45,16 +45,16 @@ function MissionStep2() {
     missionType,
     floor,
     setFloor,
-    state,
-    setState,
+    status,
+    setStatus,
     isInEdit,
     remindOpen
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const [floorDrawer, setFloorDrawer] = useState(false)
-  const [stateDrawer, setStateDrawer] = useState(false)
+  const [statusDrawer, setStatusDrawer] = useState(false)
   const [floorChoose, setFloorChoose] = useState(false)
-  const [stateChoose, setStateChoose] = useState(false)
+  const [statusChoose, setStatusChoose] = useState(false)
   const focusInput = useRef(null)
   const { target = [] } = useMemo(
     () =>
@@ -64,8 +64,14 @@ function MissionStep2() {
     [missionType, selectedMissionId]
   )
   useEffect(() => {
-    setStateChoose(false)
+    setStatusChoose(false)
   }, [selectedMissionId])
+  useEffect(() => {
+    setStatus(tagData[missionType][0].statusName)
+  }, [missionType, setStatus])
+  useEffect(() => {
+    setSelectedSubOptionId(status)
+  }, [status, setSelectedSubOptionId])
   return (
     <>
       <Grid container spacing={3}>
@@ -228,24 +234,22 @@ function MissionStep2() {
                   </>
                 )}
                 <Button
-                  onClick={() => setStateDrawer(true)}
-                  variant={stateChoose ? 'contained' : 'text'}
+                  onClick={() => setStatusDrawer(true)}
+                  variant={statusChoose ? 'contained' : 'text'}
                   color='primary'
                   style={{
-                    borderBottom: stateChoose ? '' : 'solid 1px',
+                    borderBottom: statusChoose ? '' : 'solid 1px',
                     borderRadius: '0',
                     marginLeft: '10px',
                     color: 'black'
                   }}
                 >
-                  {state}
-                  {setSelectedSubOptionId(state)}
+                  {status}
                   <UnfoldMoreIcon size='small' />
                 </Button>
               </>
             ) : (
               <>
-                {setState(tagData[missionType][0].statusName)}
                 {remindOpen === true && selectedSubOptionId === '' ? (
                   <Box
                     display='flex'
@@ -401,10 +405,10 @@ function MissionStep2() {
       </Drawer>
       <Drawer
         anchor='bottom'
-        open={stateDrawer}
+        open={statusDrawer}
         onClose={() => {
-          setStateDrawer(false)
-          setStateChoose(true)
+          setStatusDrawer(false)
+          setStatusChoose(true)
         }}
         PaperProps={{
           style: {
@@ -426,8 +430,8 @@ function MissionStep2() {
           <Button
             color='primary'
             onClick={() => {
-              setStateDrawer(false)
-              setStateChoose(true)
+              setStatusDrawer(false)
+              setStatusChoose(true)
             }}
             style={{ position: 'absolute', right: '10px' }}
           >
@@ -437,25 +441,25 @@ function MissionStep2() {
         {selectedMissionId === 'Wi-Fi 訊號' ? (
           <Picker
             valueGroups={{
-              state
+              status
             }}
             optionGroups={{
-              state: ['良好', '正常', '微弱']
+              status: ['良好', '正常', '微弱']
             }}
             onChange={(name, value) => {
-              setState(value)
+              setStatus(value)
             }}
           />
         ) : (
           <Picker
             valueGroups={{
-              state
+              status
             }}
             optionGroups={{
-              state: ['人少', '人稍多', '擁擠']
+              status: ['人少', '人稍多', '擁擠']
             }}
             onChange={(name, value) => {
-              setState(value)
+              setStatus(value)
             }}
           />
         )}

@@ -264,7 +264,7 @@ export const MissionContextProvider = ({ children }) => {
   )
 
   const handleSetSelectedMissionId = useCallback((newMissionId) => {
-    setState('請選擇')
+    setStatus('請選擇')
     setRemindOpen(false)
     setSelectedMissionId(newMissionId)
     // mission和subOption有從屬關係，
@@ -294,7 +294,7 @@ export const MissionContextProvider = ({ children }) => {
     setTextLocation(event.target.value)
   }, [])
   const [floor, setFloor] = useState('無')
-  const [state, setState] = useState('請選擇')
+  const [status, setStatus] = useState('請選擇')
   const [remindOpen, setRemindOpen] = useState(false)
 
   // ===================== Loading =======================
@@ -336,7 +336,7 @@ export const MissionContextProvider = ({ children }) => {
     setPreviewImages([])
     setImageDeleteUrls([])
     setFloor('無')
-    setState('請選擇')
+    setStatus('請選擇')
     setRemindOpen(false)
   }, [markerPosition, setStep])
 
@@ -463,7 +463,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: state.toString()
+                statusName: status.toString()
               }
             }
           }).then(
@@ -503,7 +503,6 @@ export const MissionContextProvider = ({ children }) => {
             }
           )
         } else {
-          console.log()
           tagAdd({
             context: {
               headers: {
@@ -537,7 +536,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: state.toString()
+                statusName: status.toString()
               }
             }
           }).then(
@@ -583,7 +582,7 @@ export const MissionContextProvider = ({ children }) => {
     clearMissionData,
     enqueueSnackbar,
     floor,
-    state,
+    status,
     imageDeleteUrls,
     imageFiles,
     isInEdit,
@@ -657,8 +656,8 @@ export const MissionContextProvider = ({ children }) => {
     setMapCenter,
     floor,
     setFloor,
-    state,
-    setState,
+    status,
+    setStatus,
     remindOpen,
     setRemindOpen,
     setImageDeleteUrls,

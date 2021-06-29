@@ -10,10 +10,12 @@
     "@react-google-maps/api": "^1.8.5",
     "apollo-boost": "^0.4.7",
     "axios": "^0.21.1",
+    "babel-eslint": "10.0.3",
     "classnames": "^2.2.6",
     "firebase": "^7.2.2",
     "graphql": "^14.6.0",
     "material-ui-popup-state": "^1.5.3",
+    "moment": "^2.29.1",
     "notistack": "^0.9.7",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
@@ -27,8 +29,7 @@
     "react-with-firebase-auth": "^1.1.0",
     "roughjs": "^4.3.1",
     "typescript": "^3.6.4",
-    "use-position": "^0.0.6",
-    "babel-eslint": "10.0.3"
+    "use-position": "^0.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
