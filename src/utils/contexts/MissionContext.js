@@ -503,7 +503,6 @@ export const MissionContextProvider = ({ children }) => {
             }
           )
         } else {
-          console.log()
           tagAdd({
             context: {
               headers: {

@@ -447,7 +447,6 @@ function MissionStep2() {
               status: ['良好', '正常', '微弱']
             }}
             onChange={(name, value) => {
-              console.log(value)
               setStatus(value)
             }}
           />
