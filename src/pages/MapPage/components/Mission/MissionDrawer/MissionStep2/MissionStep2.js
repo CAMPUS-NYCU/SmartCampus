@@ -52,9 +52,9 @@ function MissionStep2() {
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const [floorDrawer, setFloorDrawer] = useState(false)
-  const [stateDrawer, setStateDrawer] = useState(false)
+  const [statusDrawer, setStatusDrawer] = useState(false)
   const [floorChoose, setFloorChoose] = useState(false)
-  const [stateChoose, setStateChoose] = useState(false)
+  const [statusChoose, setStatusChoose] = useState(false)
   const focusInput = useRef(null)
   const { target = [] } = useMemo(
     () =>
@@ -64,7 +64,7 @@ function MissionStep2() {
     [missionType, selectedMissionId]
   )
   useEffect(() => {
-    setStateChoose(false)
+    setStatusChoose(false)
   }, [selectedMissionId])
   useEffect(() => {
     setStatus(tagData[missionType][0].statusName)
@@ -234,11 +234,11 @@ function MissionStep2() {
                   </>
                 )}
                 <Button
-                  onClick={() => setStateDrawer(true)}
-                  variant={stateChoose ? 'contained' : 'text'}
+                  onClick={() => setStatusDrawer(true)}
+                  variant={statusChoose ? 'contained' : 'text'}
                   color='primary'
                   style={{
-                    borderBottom: stateChoose ? '' : 'solid 1px',
+                    borderBottom: statusChoose ? '' : 'solid 1px',
                     borderRadius: '0',
                     marginLeft: '10px',
                     color: 'black'
@@ -405,10 +405,10 @@ function MissionStep2() {
       </Drawer>
       <Drawer
         anchor='bottom'
-        open={stateDrawer}
+        open={statusDrawer}
         onClose={() => {
-          setStateDrawer(false)
-          setStateChoose(true)
+          setStatusDrawer(false)
+          setStatusChoose(true)
         }}
         PaperProps={{
           style: {
@@ -430,8 +430,8 @@ function MissionStep2() {
           <Button
             color='primary'
             onClick={() => {
-              setStateDrawer(false)
-              setStateChoose(true)
+              setStatusDrawer(false)
+              setStatusChoose(true)
             }}
             style={{ position: 'absolute', right: '10px' }}
           >

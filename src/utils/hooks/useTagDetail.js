@@ -52,7 +52,7 @@ function useTagDetail() {
       ...tagDetailInitial,
       ...tag,
       newCreateTime: generateTime(tag.createTime) || '0',
-      newLastUpdateTime: generateTime(tag.lastUpdateTime) || '0',
+      newLastUpdateTime: generateTime(tag.lastUpdateTime) || '0'
     }),
     [tag]
   )
