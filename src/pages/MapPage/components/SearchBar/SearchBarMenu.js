@@ -10,6 +10,7 @@ import PersonIcon from '@material-ui/icons/Person'
 import DescriptionIcon from '@material-ui/icons/Description'
 import HelpIcon from '@material-ui/icons/Help'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import RateReviewIcon from '@material-ui/icons/RateReview'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -40,12 +41,6 @@ function SearchBarMenu(props) {
       action: handleOpenHistory,
       icon: <DescriptionIcon color='primary' />
     },
-    // {
-    //   id: 3,
-    //   text: '通知設定',
-    //   action: handleOpenSetting,
-    //   icon: <SettingsIcon />
-    // },
     {
       id: 3,
       text: '功能介紹',
@@ -54,16 +49,16 @@ function SearchBarMenu(props) {
     },
     {
       id: 4,
+      text: '意見回饋',
+      action: () => window.open('https://forms.gle/M9zsKyJyAvLLx3o2A'),
+      icon: <RateReviewIcon color='primary' />
+    },
+    {
+      id: 5,
       text: '登出',
       action: signOut,
       icon: <ExitToAppIcon color='primary' />
     }
-    // {
-    //   id: 5,
-    //   text: '條款事項',
-    //   action: handleOpenTerms,
-    //   icon: <AssignmentIcon />
-    // }
   ]
 
   return (
