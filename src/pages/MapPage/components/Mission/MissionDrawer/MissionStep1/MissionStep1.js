@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
-import { Button } from '@material-ui/core'
 import StreetviewIcon from '@material-ui/icons/Streetview'
 import axios from 'axios'
 import Flag from '../../../Flag'
@@ -12,6 +11,7 @@ import {
   MissionStep
 } from '../../../../../../utils/contexts/MissionContext'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
+import CustomButton from '../../../../../../components/CustomButton'
 
 function MissionStep1() {
   const {
@@ -69,19 +69,19 @@ function MissionStep1() {
       </Box>
       <Box display='flex' alignItems='center'>
         <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
-        <Button
+        <CustomButton
+          buttonType={
+            streetViewUpload
+              ? 'roundButton_activated'
+              : 'roundButton_inactivated'
+          }
           variant='contained'
-          style={{
-            filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-            borderRadius: '20px'
-          }}
           onClick={() => {
             setStep(MissionStep.PlaceFlagOnStreet)
           }}
-          color={streetViewUpload ? 'primary' : 'default'}
         >
           新增街景
-        </Button>
+        </CustomButton>
       </Box>
     </>
   )

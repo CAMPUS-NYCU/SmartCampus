@@ -57,7 +57,7 @@ function ProfileDialog(props) {
       <AppBar position='static'>
         <Toolbar>
           <IconButton edge='start' onClick={setClose}>
-            <ArrowBackIcon style={{ color: 'ffffff' }} />
+            <ArrowBackIcon style={{ color: '000000' }} />
           </IconButton>
           <Typography variant='h6'>個人資訊</Typography>
         </Toolbar>

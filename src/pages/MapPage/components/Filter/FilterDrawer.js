@@ -1,27 +1,14 @@
 import React, { useState } from 'react'
-import { makeStyles, Typography, Grid, Button, Box } from '@material-ui/core'
+import { Typography, Grid, Box } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { facilitySubType, missionInfo } from '../../../../constants/missionInfo'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
-
-const useStyles = makeStyles({
-  content: {
-    overflowY: 'scroll'
-  },
-  button: {
-    position: 'absolute',
-    bottom: '20px',
-    left: '10%',
-    width: '80%',
-    borderRadius: '20px'
-  }
-})
+import CustomButton from '../../../../components/CustomButton'
 
 const FilterDrawer = (props) => {
   const { open, onClose } = props
-  const classes = useStyles()
   const { addFilterTags } = useTagValue()
   const [currentMission, setCurrentMission] = useState(null)
   const [currentSubmission, setCurrentSubmission] = useState(null)
@@ -102,17 +89,19 @@ const FilterDrawer = (props) => {
             </Grid>
             {missionInfo.map((mission) => (
               <Grid key={mission.missionName} item xs={4}>
-                <Button
-                  variant='contained'
+                <CustomButton
                   fullWidth
+                  buttonType={
+                    currentMission !== mission
+                      ? 'boxButton_inactivated'
+                      : 'boxButton_activated'
+                  }
+                  variant='contained'
                   size='small'
-                  color={currentMission !== mission ? 'default' : 'primary'}
-                  onClick={() => {
-                    changeCurrentMission(mission)
-                  }}
+                  onClick={() => changeCurrentMission(mission)}
                 >
                   {mission.missionName}
-                </Button>
+                </CustomButton>
               </Grid>
             ))}
             <Grid container item xs={12} direction='row'>
@@ -122,17 +111,19 @@ const FilterDrawer = (props) => {
               <Grid container spacing={2}>
                 {subMission.map((discovery) => (
                   <Grid key={discovery.subTypeName} item xs={4}>
-                    <Button
-                      variant='contained'
+                    <CustomButton
                       fullWidth
-                      size='small'
-                      color={
-                        currentSubmission !== discovery ? 'default' : 'primary'
+                      buttonType={
+                        currentSubmission !== discovery
+                          ? 'boxButton_inactivated'
+                          : 'boxButton_activated'
                       }
+                      variant='contained'
+                      size='small'
                       onClick={() => changeCurrentSubmission(discovery)}
                     >
                       {discovery.subTypeName}
-                    </Button>
+                    </CustomButton>
                   </Grid>
                 ))}
               </Grid>
@@ -144,34 +135,42 @@ const FilterDrawer = (props) => {
               <Grid container spacing={2}>
                 {target.map((discovery) => (
                   <Grid key={discovery.targetName} item xs={4}>
-                    <Button
-                      variant='contained'
+                    <CustomButton
                       fullWidth
-                      size='small'
-                      color={
+                      buttonType={
                         currentTarget !== discovery.targetName
-                          ? 'default'
-                          : 'primary'
+                          ? 'boxButton_inactivated'
+                          : 'boxButton_activated'
                       }
+                      variant='contained'
+                      size='small'
                       onClick={() => changeCurrentTarget(discovery.targetName)}
                     >
                       {discovery.targetName}
-                    </Button>
+                    </CustomButton>
                   </Grid>
                 ))}
               </Grid>
             </Grid>
           </Grid>
         </Box>
-        <Button
-          className={classes.button}
-          onClick={handleFinishFilter}
-          color={final ? 'primary' : 'default'}
-          disabled={!final}
+
+        <CustomButton
+          buttonType={
+            final ? 'roundButton_activated' : 'roundButton_inactivated'
+          }
           variant='contained'
+          onClick={handleFinishFilter}
+          disabled={!final}
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '10%',
+            width: '80%'
+          }}
         >
           加入
-        </Button>
+        </CustomButton>
       </>
     </CustomDrawer>
   )

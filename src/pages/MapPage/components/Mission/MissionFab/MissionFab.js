@@ -22,8 +22,11 @@ const MissionFab = (props) => {
       display='flex'
       color='primary'
       onClick={guest ? deny : handleStartMission}
+      style={{
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+      }}
     >
-      <AddSharpIcon fontSize='large' />
+      <AddSharpIcon fontSize='large' color='#FFFFFF' />
     </Fab>
   )
 }

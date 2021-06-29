@@ -82,7 +82,6 @@ export default function LoginPage(props) {
           style={{
             marginTop: '30px',
             color: '#BABABA',
-            borderBottom: 'solid 0.5px',
             padding: '0'
           }}
           onClick={guestLogin}

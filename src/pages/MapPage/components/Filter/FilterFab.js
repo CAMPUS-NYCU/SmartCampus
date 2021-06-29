@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { Button } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import FilterDrawer from './FilterDrawer'
+import CustomButton from '../../../../components/CustomButton'
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -30,24 +29,14 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: '5vw'
     }
   },
-  button: {
-    border: '1px solid #BABABA',
-    flexShrink: '0',
-    boxSizing: 'border-box',
-    borderRadius: '40px',
-    // width: '20vw',
-    height: '30px',
-    marginRight: '7px'
-  },
+  button: {},
   addIcon: {
     marginLeft: '2px'
   },
   missionButton: {
-    border: 'solid 1px #707070',
     margin: theme.spacing(1)
   },
   discoveryButton: {
-    border: 'solid 1px #707070',
     margin: theme.spacing(1),
     boxSizing: 'content-box',
     width: 16,
@@ -72,44 +61,73 @@ function FilterFab(props) {
     <>
       {open === true ? (
         <div className={classes.grid}>
-          <Button
-            className={classes.button}
+          <CustomButton
+            buttonType={
+              filterDrawer ? 'boxButton_activated' : 'boxButton_inactivated'
+            }
             variant='contained'
             size='small'
-            color={filterDrawer ? 'primary' : 'default'}
             onClick={() => setFilterDrawer(true)}
+            style={{
+              flexShrink: '0',
+              boxSizing: 'border-box',
+              // width: '20vw',
+              height: '30px',
+              marginRight: '7px'
+            }}
           >
             加入其他
-            <AddIcon className={classes.addIcon} />
-          </Button>
+          </CustomButton>
           {filterTags.map((item) => {
             return (
-              <Button
+              <CustomButton
                 key={item}
-                className={classes.button}
+                buttonType='boxButton_activated'
                 variant='contained'
                 size='small'
                 onClick={() => addFilterTags(item)}
-                color='primary'
+                style={{
+                  flexShrink: '0',
+                  boxSizing: 'border-box',
+                  // width: '20vw',
+                  height: '30px',
+                  marginRight: '7px'
+                }}
               >
                 {item}
                 <CloseIcon className={classes.addIcon} />
-              </Button>
+              </CustomButton>
             )
           })}
           {filterTags.length === 0 &&
             filterInfo.map((item) => {
               return (
-                <Button
+                // <Button
+                //   key={item}
+                //   className={classes.button}
+                //   variant='contained'
+                //   size='small'
+                //   onClick={() => addFilterTags(item)}
+                // >
+                //   {item}
+
+                // </Button>
+                <CustomButton
                   key={item}
-                  className={classes.button}
+                  buttonType='boxButton_inactivated'
                   variant='contained'
                   size='small'
                   onClick={() => addFilterTags(item)}
+                  style={{
+                    flexShrink: '0',
+                    boxSizing: 'border-box',
+                    // width: '20vw',
+                    height: '30px',
+                    marginRight: '7px'
+                  }}
                 >
                   {item}
-                  <AddIcon className={classes.addIcon} />
-                </Button>
+                </CustomButton>
               )
             })}
         </div>

@@ -27,6 +27,7 @@ import {
   missionName
 } from '../../../../../../constants/missionInfo'
 import PicturePreview from './PicturePreview'
+import CustomButton from '../../../../../../components/CustomButton'
 
 function MissionStep2() {
   const {
@@ -180,19 +181,19 @@ function MissionStep2() {
         </Grid>
         {facilitySubType[missionType].map((facility) => (
           <Grid key={facility.subTypeName} item xs={4}>
-            <Button
-              variant='contained'
-              fullWidth
-              size='small'
-              color={
-                selectedMissionId === facility.subTypeName
-                  ? 'primary'
-                  : 'default'
-              }
+            <CustomButton
               onClick={() => handleSetSelectedMissionId(facility.subTypeName)}
+              buttonType={
+                selectedMissionId === facility.subTypeName
+                  ? 'boxButton_activated'
+                  : 'boxButton_inactivated'
+              }
+              variant='contained'
+              size='small'
+              fullWidth
             >
               {facility.subTypeName}
-            </Button>
+            </CustomButton>
           </Grid>
         ))}
         {/* * ==================== 具體設施子類別 ==================== */}
@@ -291,7 +292,7 @@ function MissionStep2() {
                     item
                     xs={4}
                   >
-                    <Button
+                    <CustomButton
                       variant='contained'
                       fullWidth
                       size='small'
@@ -305,7 +306,7 @@ function MissionStep2() {
                       }
                     >
                       {discovery.targetName}
-                    </Button>
+                    </CustomButton>
                   </Grid>
                 ))}
               </>
