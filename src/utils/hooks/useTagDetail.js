@@ -21,6 +21,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
 `
 
 export const generateTime = (time) => {
+  console.log(time)
   const times = time.split(' ')
   let month = 0
   switch (times[1]) {

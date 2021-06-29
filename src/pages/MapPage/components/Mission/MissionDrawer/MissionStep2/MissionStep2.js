@@ -45,8 +45,8 @@ function MissionStep2() {
     missionType,
     floor,
     setFloor,
-    state,
-    setState,
+    status,
+    setStatus,
     isInEdit,
     remindOpen
   } = useMissionValue()
@@ -66,6 +66,12 @@ function MissionStep2() {
   useEffect(() => {
     setStateChoose(false)
   }, [selectedMissionId])
+  useEffect(() => {
+    setStatus(tagData[missionType][0].statusName)
+  }, [missionType, setStatus])
+  useEffect(() => {
+    setSelectedSubOptionId(status)
+  }, [status, setSelectedSubOptionId])
   return (
     <>
       <Grid container spacing={3}>
@@ -238,14 +244,12 @@ function MissionStep2() {
                     color: 'black'
                   }}
                 >
-                  {state}
-                  {setSelectedSubOptionId(state)}
+                  {status}
                   <UnfoldMoreIcon size='small' />
                 </Button>
               </>
             ) : (
               <>
-                {setState(tagData[missionType][0].statusName)}
                 {remindOpen === true && selectedSubOptionId === '' ? (
                   <Box
                     display='flex'
@@ -437,25 +441,26 @@ function MissionStep2() {
         {selectedMissionId === 'Wi-Fi 訊號' ? (
           <Picker
             valueGroups={{
-              state
+              status
             }}
             optionGroups={{
-              state: ['良好', '正常', '微弱']
+              status: ['良好', '正常', '微弱']
             }}
             onChange={(name, value) => {
-              setState(value)
+              console.log(value)
+              setStatus(value)
             }}
           />
         ) : (
           <Picker
             valueGroups={{
-              state
+              status
             }}
             optionGroups={{
-              state: ['人少', '人稍多', '擁擠']
+              status: ['人少', '人稍多', '擁擠']
             }}
             onChange={(name, value) => {
-              setState(value)
+              setStatus(value)
             }}
           />
         )}
