@@ -7,11 +7,11 @@ export default [
     { statusName: '資訊有誤', statusColor: '#FFB59F' }
   ],
   [
+    { statusName: '待處理', statusColor: '#FFB59F' },
     {
       statusName: '已解決',
       statusColor: '#dce775'
-    },
-    { statusName: '待處理', statusColor: '#FFB59F' }
+    }
   ],
   [
     {

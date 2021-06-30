@@ -300,10 +300,10 @@ function MissionStep2() {
                       variant='contained'
                       fullWidth
                       size='small'
-                      color={
+                      buttonType={
                         selectedSubOptionId === discovery.targetName
-                          ? 'primary'
-                          : 'default'
+                          ? 'boxButton_activated'
+                          : 'boxButton_inactivated'
                       }
                       onClick={() =>
                         setSelectedSubOptionId(discovery.targetName)

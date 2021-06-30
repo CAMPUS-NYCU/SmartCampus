@@ -8,6 +8,7 @@ import debounce from 'utils/debounce'
 import * as firebase from 'firebase/app'
 import useStep from '../hooks/useStep'
 import { missionInfo } from '../../constants/missionInfo'
+import tagDate from '../../constants/tagData'
 import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../../constants/mapConstants'
 
@@ -463,7 +464,10 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: status.toString()
+                statusName:
+                  status !== '請選擇'
+                    ? status.toString()
+                    : tagDate[missionType][0].statusName
               }
             }
           }).then(
@@ -499,10 +503,10 @@ export const MissionContextProvider = ({ children }) => {
                 })
               }
               refetchUserAddTags()
-              refetchTagDetail()
             }
           )
         } else {
+          console.log(status)
           tagAdd({
             context: {
               headers: {
@@ -536,7 +540,10 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName: status.toString()
+                statusName:
+                  status !== '請選擇'
+                    ? status.toString()
+                    : tagDate[missionType][0].statusName
               }
             }
           }).then(
