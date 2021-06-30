@@ -22,7 +22,7 @@ import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
 import { TagContextProvider, useTagValue } from './utils/contexts/TagContext'
-import { REACT_APP_FIREBASE_LOCAL_SERVER } from './constants/envValues'
+import { REACT_APP_FIREBASE_LOCAL_SERVER, REACT_APP_FIREBASE_EMULATER_URL } from './constants/envValues'
 
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)
@@ -102,7 +102,7 @@ function App(props) {
   }
   useEffect(() => {
     if (REACT_APP_FIREBASE_LOCAL_SERVER) {
-      firebaseAppAuth.useEmulator('http://0.0.0.0:9099')
+      firebaseAppAuth.useEmulator(REACT_APP_FIREBASE_EMULATER_URL)
     }
   }, [])
   const [guest, setGuest] = useState(false)
