@@ -8,7 +8,6 @@ import debounce from 'utils/debounce'
 import * as firebase from 'firebase/app'
 import useStep from '../hooks/useStep'
 import { missionInfo } from '../../constants/missionInfo'
-import tagDate from '../../constants/tagData'
 import { useTagValue } from './TagContext'
 import { DefaultCenter } from '../../constants/mapConstants'
 
@@ -264,14 +263,19 @@ export const MissionContextProvider = ({ children }) => {
     InitialMissionValue.subOptionOtherText
   )
 
-  const handleSetSelectedMissionId = useCallback((newMissionId) => {
-    setStatus('請選擇')
-    setRemindOpen(false)
-    setSelectedMissionId(newMissionId)
-    // mission和subOption有從屬關係，
-    // 修改mission的話，subOption也要被重設
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
-  }, [])
+  const handleSetSelectedMissionId = useCallback(
+    (newMissionId) => {
+      if (missionType === 2) {
+        setStatus('請選擇')
+      }
+      setRemindOpen(false)
+      setSelectedMissionId(newMissionId)
+      // mission和subOption有從屬關係，
+      // 修改mission的話，subOption也要被重設
+      setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
+    },
+    [missionType]
+  )
 
   const handleChangeSubOptionOtherText = useCallback(
     (event) => setSubOptionOtherText(event.target.value),
@@ -464,10 +468,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName:
-                  status !== '請選擇'
-                    ? status.toString()
-                    : tagDate[missionType][0].statusName
+                statusName: status.toString()
               }
             }
           }).then(
@@ -506,7 +507,6 @@ export const MissionContextProvider = ({ children }) => {
             }
           )
         } else {
-          console.log(status)
           tagAdd({
             context: {
               headers: {
@@ -540,10 +540,7 @@ export const MissionContextProvider = ({ children }) => {
                   cameraLatitude: streetViewPosition.latitude,
                   cameraLongitude: streetViewPosition.longitude
                 },
-                statusName:
-                  status !== '請選擇'
-                    ? status.toString()
-                    : tagDate[missionType][0].statusName
+                statusName: status.toString()
               }
             }
           }).then(

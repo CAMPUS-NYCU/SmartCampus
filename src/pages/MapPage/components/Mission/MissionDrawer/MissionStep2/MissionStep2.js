@@ -67,7 +67,9 @@ function MissionStep2() {
     setStatusChoose(false)
   }, [selectedMissionId])
   useEffect(() => {
-    setStatus(tagData[missionType][0].statusName)
+    if (missionType !== 2) {
+      setStatus(tagData[missionType][0].statusName)
+    }
   }, [missionType, setStatus])
   useEffect(() => {
     setSelectedSubOptionId(status)
