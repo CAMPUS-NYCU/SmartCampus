@@ -87,7 +87,14 @@ function ChangeStatus(props) {
                   onClick={() => setTemporaryTagState(item.statusName)}
                 >
                   <ListItemIcon>
-                    <img src={item.statusIcon} alt='' />
+                    <img
+                      src={
+                        item.statusName === temporaryTagState
+                          ? item.statusOnIcon
+                          : item.statusIcon
+                      }
+                      alt=''
+                    />
                   </ListItemIcon>
                   <ListItemText
                     primary={item.statusName}
