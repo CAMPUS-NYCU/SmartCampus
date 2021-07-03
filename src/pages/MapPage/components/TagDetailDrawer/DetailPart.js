@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 
 const DetailPart = (props) => {
   const {
-    detail,
+    tagDetail,
     activeTag,
     missionName,
     setLargeImg,
@@ -42,19 +42,19 @@ const DetailPart = (props) => {
   const [hasUpVote, setHasUpVote] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
   useEffect(() => {
-    setNumberOfVote(detail ? detail.status.numberOfUpVote : 0)
-    setHasUpVote(detail ? detail.status.hasUpVote : false)
-    if (activeTag.status.statusName === '已解決' && detail) {
+    setNumberOfVote(tagDetail ? tagDetail.status.numberOfUpVote : 0)
+    setHasUpVote(tagDetail ? tagDetail.status.hasUpVote : false)
+    if (tagDetail.status.statusName === '已解決' && tagDetail) {
       enqueueSnackbar(
         `再${
-          detail ? threshold - detail.status.numberOfUpVote : threshold
+          tagDetail ? threshold - tagDetail.status.numberOfUpVote : threshold
         }人投票即可刪除回報`,
         {
           variant: 'warning'
         }
       )
     }
-  }, [detail, enqueueSnackbar, activeTag, threshold])
+  }, [tagDetail, enqueueSnackbar, threshold])
   const handleUopVote = useCallback(() => {
     if (guest) {
       deny()
@@ -63,13 +63,13 @@ const DetailPart = (props) => {
     setNumberOfVote((prevNumberOfVote) =>
       hasUpVote ? prevNumberOfVote - 1 : prevNumberOfVote + 1
     )
-    upVote(detail.id, !hasUpVote)
+    upVote(tagDetail.id, !hasUpVote)
     setHasUpVote((prevHasUpVote) => !prevHasUpVote)
-  }, [deny, guest, detail.id, hasUpVote, upVote])
+  }, [deny, guest, tagDetail.id, hasUpVote, upVote])
 
   return (
     <>
-      {detail ? (
+      {tagDetail.id ? (
         <>
           <div
             style={{
@@ -83,7 +83,7 @@ const DetailPart = (props) => {
               flexDirection: 'row'
             }}
           >
-            {detail.imageUrl.length === 0 ? (
+            {tagDetail.imageUrl.length === 0 ? (
               <div
                 style={{
                   width: '100%',
@@ -95,7 +95,7 @@ const DetailPart = (props) => {
                 }}
               />
             ) : (
-              detail.imageUrl.map((url) => {
+              tagDetail.imageUrl.map((url) => {
                 return (
                   <Button
                     key={url}
@@ -112,7 +112,7 @@ const DetailPart = (props) => {
                 )
               })
             )}
-            {detail.imageUrl.length === 1 && (
+            {tagDetail.imageUrl.length === 1 && (
               <div
                 style={{
                   width: '80%',
@@ -170,8 +170,8 @@ const DetailPart = (props) => {
                 狀態編輯紀錄
               </Box>
               <Box className={classes.clickableFont} m={0.5}>
-                {detail.createUser.displayName} 編輯於{' '}
-                {detail.newLastUpdateTime}
+                {tagDetail.createUser.displayName} 編輯於{' '}
+                {tagDetail.newLastUpdateTime}
               </Box>
             </Box>
           </Box>
@@ -185,7 +185,7 @@ const DetailPart = (props) => {
               paddingBottom: '2'
             }}
           >
-            {activeTag.status.description ? (
+            {tagDetail.status.description ? (
               <Box
                 my={2}
                 textOverflow='ellipsis'
@@ -193,18 +193,18 @@ const DetailPart = (props) => {
                 overflow='hidden'
                 height='4.5em'
               >
-                {activeTag.status.description}
+                {tagDetail.status.description}
               </Box>
             ) : (
               <p>無描述</p>
             )}
             <Box display='flex' justifyContent='flex-end'>
               <Box className={classes.clickableFont} m={0.5}>
-                {detail.newCreateTime}
+                {tagDetail.newCreateTime}
               </Box>
             </Box>
           </div>
-          {activeTag.status.statusName === '已解決' && (
+          {tagDetail.status.statusName === '已解決' && (
             <Box
               display='flex'
               justifyContent='flex-end'
@@ -260,18 +260,20 @@ const DetailPart = (props) => {
           <CircularProgress />
         </Box>
       )}
-      <EditHistory
-        open={openHistory}
-        handleHistoryClose={handleHistoryClose}
-        tagMissionIndex={tagMissionIndex}
-        activeTag={activeTag}
-      />
+      {tagDetail.id && (
+        <EditHistory
+          open={openHistory}
+          handleHistoryClose={handleHistoryClose}
+          tagMissionIndex={tagMissionIndex}
+          tagDetail={tagDetail}
+        />
+      )}
     </>
   )
 }
 
 DetailPart.propTypes = {
-  detail: PropTypes.object.isRequired,
+  tagDetail: PropTypes.object.isRequired,
   activeTag: PropTypes.object.isRequired,
   missionName: PropTypes.array.isRequired,
   setLargeImg: PropTypes.func.isRequired,

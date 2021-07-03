@@ -2,15 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-import { generateTime } from './useTagDetail'
-
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
     unarchivedTagList {
       tags {
         id
-        locationName
-        floor
         category {
           missionName
           subTypeName
@@ -20,65 +16,37 @@ export const GET_TAG_LIST_QUERY = gql`
           latitude
           longitude
         }
-        status {
-          statusName
-          description
-        }
-        statusHistory {
-          statusList {
-            statusName
-            createTime
-            createUser {
-              displayName
-            }
-            description
-          }
-        }
       }
     }
   }
 `
 
-const reformatTagList = (data) => {
-  const tagRenderList = data ? data.unarchivedTagList.tags : []
-  const filteredTags = tagRenderList.filter((tag) => {
-    return tag.coordinates
-  })
-  const tagList = filteredTags.map((tag) => {
+const reformatTagList = (tags) => {
+  const tagList = tags.map((tag) => {
     const {
       id,
       locationName,
-      floor,
       category: { missionName, subTypeName, targetName },
-      coordinates: { latitude, longitude },
-      status: { statusName, description }
+      coordinates: { latitude, longitude }
     } = tag
-    const statusHistory = tag.statusHistory.statusList.map((history) => {
-      return {
-        statusName: history.statusName,
-        createTime: generateTime(history.createTime),
-        createUser: history.createUser,
-        description: history.description
-      }
-    })
     return {
       id,
       locationName,
-      floor,
       category: { missionName, subTypeName, targetName },
       position: {
         lat: parseFloat(latitude),
         lng: parseFloat(longitude)
-      },
-      status: { statusName, description },
-      statusHistory
+      }
     }
   })
   return tagList
 }
 
 function useTagList() {
-  const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {})
+  const {
+    data: { unarchivedTagList: { tags = [] } = {} } = {},
+    refetch
+  } = useQuery(GET_TAG_LIST_QUERY, {})
   const [tagList, setTagList] = useState(null)
   const updateTagList = useCallback(() => {
     setTimeout(async () => {
@@ -87,8 +55,8 @@ function useTagList() {
     }, 30000)
   }, [refetch])
   useEffect(() => {
-    setTagList(reformatTagList(data))
-  }, [data])
+    setTagList(reformatTagList(tags))
+  }, [tags])
   return { tags: tagList, refetch, updateTagList }
 }
 

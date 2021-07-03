@@ -57,7 +57,7 @@ export const TagContextProvider = ({ children }) => {
   const resetActiveTag = useCallback(() => {
     setActiveTagId(null)
   }, [])
-  const fetchTagDetail = useCallback(() => {
+  const fetchTagDetail = useCallback(async () => {
     getTagDetail({
       variables: { id: activeTagId }
     })

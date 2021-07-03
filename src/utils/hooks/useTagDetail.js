@@ -8,14 +8,28 @@ export const GET_TAG_DETAIL_QUERY = gql`
     tag(tagId: $id) {
       id
       createTime
+      locationName
+      floor
       lastUpdateTime
       imageUrl
       status {
         numberOfUpVote
         hasUpVote
+        statusName
+        description
       }
       createUser {
         displayName
+      }
+      statusHistory {
+        statusList {
+          statusName
+          createTime
+          createUser {
+            displayName
+          }
+          description
+        }
       }
     }
   }
@@ -36,6 +50,9 @@ const tagDetailInitial = {
   },
   createUser: {
     displayName: ''
+  },
+  statusHistory: {
+    statusList: []
   }
 }
 
