@@ -312,9 +312,10 @@ export const MissionContextProvider = ({ children }) => {
       return missionType !== null
     }
     if (currentStep === MissionStep.SelectMission) {
-      return (
-        selectedMissionId !== '' && selectedSubOptionId !== ('' || '請選擇')
-      )
+      if (missionType === 2) {
+        return selectedMissionId !== '' && selectedSubOptionId !== '請選擇'
+      }
+      return selectedMissionId !== '' && selectedSubOptionId !== ''
     }
     return true
   }, [currentStep, missionType, selectedMissionId, selectedSubOptionId])

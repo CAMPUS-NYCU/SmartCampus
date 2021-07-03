@@ -14,9 +14,6 @@ import {
 } from '@material-ui/core'
 import * as firebase from 'firebase/app'
 import PropTypes from 'prop-types'
-
-import WaitIcon from '../../../../assets/images/wait.svg'
-import SolvedIcon from '../../../../assets/images/solved.svg'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
@@ -68,7 +65,6 @@ function ChangeStatus(props) {
         })
       })
   }
-  const images = [WaitIcon, SolvedIcon, SolvedIcon]
   return (
     <>
       <CustomDrawer
@@ -91,7 +87,14 @@ function ChangeStatus(props) {
                   onClick={() => setTemporaryTagState(item.statusName)}
                 >
                   <ListItemIcon>
-                    <img src={images[index]} alt='' />
+                    <img
+                      src={
+                        item.statusName === temporaryTagState
+                          ? item.statusOnIcon
+                          : item.statusIcon
+                      }
+                      alt=''
+                    />
                   </ListItemIcon>
                   <ListItemText
                     primary={item.statusName}
