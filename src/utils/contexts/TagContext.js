@@ -5,6 +5,7 @@ import useTagList from '../hooks/useTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
 import useThreshold from '../hooks/useThreshhold'
+import useTagSubscription from 'utils/hooks/useTagsSubscription'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -30,6 +31,9 @@ export const TagContextProvider = ({ children }) => {
   const { tags, refetch, updateTagList } = useTagList()
   const { userAddTags, refetchUserAddTags } = useUserTags()
   const threshold = useThreshold()
+  // TODO
+  const newTag = useTagSubscription()
+  console.log(newTag)
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = useMemo(
     () => [
