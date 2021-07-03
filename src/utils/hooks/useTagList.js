@@ -16,7 +16,6 @@ export const GET_TAG_LIST_QUERY = gql`
           subTypeName
           targetName
         }
-        accessibility
         coordinates {
           latitude
           longitude
@@ -49,7 +48,6 @@ const reformatTagList = (data) => {
     const {
       id,
       locationName,
-      accessibility,
       floor,
       category: { missionName, subTypeName, targetName },
       coordinates: { latitude, longitude },
@@ -66,7 +64,6 @@ const reformatTagList = (data) => {
     return {
       id,
       locationName,
-      accessibility,
       floor,
       category: { missionName, subTypeName, targetName },
       position: {
