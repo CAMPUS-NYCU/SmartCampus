@@ -266,12 +266,11 @@ export const MissionContextProvider = ({ children }) => {
     (newMissionId) => {
       if (missionType === 2) {
         setStatus('請選擇')
+      } else {
+        setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
       }
       setRemindOpen(false)
       setSelectedMissionId(newMissionId)
-      // mission和subOption有從屬關係，
-      // 修改mission的話，subOption也要被重設
-      setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
     },
     [missionType]
   )
