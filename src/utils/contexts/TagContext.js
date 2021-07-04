@@ -1,10 +1,17 @@
-import React, { useContext, useState, useCallback, useMemo } from 'react'
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect
+} from 'react'
 import PropTypes from 'prop-types'
 
 import useTagList from '../hooks/useTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
 import useThreshold from '../hooks/useThreshhold'
+import useTagSubscription from 'utils/hooks/useTagsSubscription'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -55,6 +62,7 @@ export const TagContextProvider = ({ children }) => {
     tags
   ])
   const { tagDetail, getTagDetail } = useTagDetail()
+  const newTag = useTagSubscription()
   const resetActiveTag = useCallback(() => {
     setActiveTagId(null)
   }, [])
@@ -63,6 +71,11 @@ export const TagContextProvider = ({ children }) => {
       variables: { id: activeTagId }
     })
   }, [getTagDetail, activeTagId])
+  useEffect(() => {
+    if (newTag.changeType === 'updated' && activeTagId) {
+      fetchTagDetail()
+    }
+  }, [newTag, fetchTagDetail, activeTagId])
   const [filterTags, setFilterTags] = useState([])
   const addFilterTags = useCallback(
     (tag) => {
