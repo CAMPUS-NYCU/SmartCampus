@@ -40,14 +40,14 @@ function TagDetailDialog(props) {
   const tagStatusIndex = useMemo(
     () =>
       tagStatus[tagMissionIndex].findIndex(
-        (status) => status.statusName === activeTag.status.statusName
+        (status) => status.statusName === tagDetail.status.statusName || ''
       ),
-    [activeTag.status.statusName, tagMissionIndex]
+    [tagDetail.status.statusName, tagMissionIndex]
   )
-  const status = useMemo(() => tagStatus[tagMissionIndex][tagStatusIndex], [
-    tagMissionIndex,
-    tagStatusIndex
-  ])
+  const status = useMemo(
+    () => tagStatus[tagMissionIndex][tagStatusIndex] || tagStatus[0][0],
+    [tagMissionIndex, tagStatusIndex]
+  )
   const checkTagOwner = useCallback(() => {
     if (userAddTags) {
       return userAddTags.find((userAddTag) => userAddTag.id === activeTag.id)
@@ -87,52 +87,54 @@ function TagDetailDialog(props) {
           alignItems='center'
           flexGrow={1}
         >
-          <Box
-            display='flex'
-            alignItems='center'
-            flexDirection='row'
-            justifyContent='space-between'
-            width='100%'
-          >
+          {tagDetail.id && (
             <Box
               display='flex'
               alignItems='center'
-              justifyContent='space-around'
-              width='70%'
+              flexDirection='row'
+              justifyContent='space-between'
+              width='100%'
             >
-              <img src={missionImage[tagMissionIndex]} alt='' />
-              <Typography>{activeTag.category.subTypeName}</Typography>
-              <Typography>{activeTag.locationName}</Typography>
-              {activeTag.floor === 0 ? (
-                ''
-              ) : (
-                <>
-                  {activeTag.floor < 0 ? (
-                    <Typography>B{-1 * activeTag.floor}樓</Typography>
-                  ) : (
-                    <Typography>{activeTag.floor}樓</Typography>
-                  )}
-                </>
-              )}
+              <Box
+                display='flex'
+                alignItems='center'
+                justifyContent='space-around'
+                width='70%'
+              >
+                <img src={missionImage[tagMissionIndex]} alt='' />
+                <Typography>{activeTag.category.subTypeName}</Typography>
+                <Typography>{tagDetail.locationName}</Typography>
+                {tagDetail.floor === 0 ? (
+                  ''
+                ) : (
+                  <>
+                    {tagDetail.floor < 0 ? (
+                      <Typography>B{-1 * tagDetail.floor}樓</Typography>
+                    ) : (
+                      <Typography>{tagDetail.floor}樓</Typography>
+                    )}
+                  </>
+                )}
+              </Box>
+              <div
+                style={{
+                  cursor: 'default',
+                  width: '100px',
+                  height: '36px',
+                  borderTop: `18px solid ${status.statusColor}`,
+                  borderBottom: `18px solid ${status.statusColor}`,
+                  borderLeft: '12px solid transparent',
+                  textAlign: 'center'
+                }}
+              >
+                <Typography style={{ position: 'relative', top: '-10px' }}>
+                  {status.statusName}
+                </Typography>
+              </div>
             </Box>
-            <div
-              style={{
-                cursor: 'default',
-                width: '100px',
-                height: '36px',
-                borderTop: `18px solid ${status.statusColor}`,
-                borderBottom: `18px solid ${status.statusColor}`,
-                borderLeft: '12px solid transparent',
-                textAlign: 'center'
-              }}
-            >
-              <Typography style={{ position: 'relative', top: '-10px' }}>
-                {status.statusName}
-              </Typography>
-            </div>
-          </Box>
+          )}
           <DetailPart
-            detail={tagDetail}
+            tagDetail={tagDetail}
             activeTag={activeTag}
             missionName={missionName}
             setLargeImg={setLargeImg}
@@ -144,10 +146,10 @@ function TagDetailDialog(props) {
           />
         </Box>
       </CustomDrawer>
-      {tagDetail && (
+      {tagDetail.id && (
         <ChangeStatus
           stateDrawer={stateDrawer}
-          activeTag={activeTag}
+          tagDetail={tagDetail}
           setStateDrawer={setStateDrawer}
           status={(() => {
             if (tagMissionIndex === 2) {

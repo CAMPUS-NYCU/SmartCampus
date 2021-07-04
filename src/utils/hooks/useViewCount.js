@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
-import { gql } from 'apollo-boost'
-import { useMutation } from '@apollo/react-hooks'
+import { gql, useMutation } from '@apollo/client'
 import * as firebase from 'firebase/app'
 
 export const INCREMENT_VIEW_COUNT_MUTATION = gql`

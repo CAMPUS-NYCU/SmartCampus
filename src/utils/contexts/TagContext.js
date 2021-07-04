@@ -1,6 +1,13 @@
-import React, { useContext, useState, useCallback, useMemo } from 'react'
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect
+} from 'react'
 import PropTypes from 'prop-types'
 
+import useTagSubscription from 'utils/hooks/useTagsSubscription'
 import useTagList from '../hooks/useTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
@@ -30,6 +37,7 @@ export const TagContextProvider = ({ children }) => {
   const { tags, refetch, updateTagList } = useTagList()
   const { userAddTags, refetchUserAddTags } = useUserTags()
   const threshold = useThreshold()
+
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = useMemo(
     () => [
@@ -54,14 +62,20 @@ export const TagContextProvider = ({ children }) => {
     tags
   ])
   const { tagDetail, getTagDetail } = useTagDetail()
+  const newTag = useTagSubscription()
   const resetActiveTag = useCallback(() => {
     setActiveTagId(null)
   }, [])
-  const fetchTagDetail = useCallback(() => {
+  const fetchTagDetail = useCallback(async () => {
     getTagDetail({
       variables: { id: activeTagId }
     })
   }, [getTagDetail, activeTagId])
+  useEffect(() => {
+    if (newTag.changeType === 'updated' && activeTagId) {
+      fetchTagDetail()
+    }
+  }, [newTag, fetchTagDetail, activeTagId])
   const [filterTags, setFilterTags] = useState([])
   const addFilterTags = useCallback(
     (tag) => {

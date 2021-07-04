@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditHistory = (props) => {
   const classes = useStyles()
-  const { open, handleHistoryClose, tagMissionIndex, activeTag } = props
+  const { open, handleHistoryClose, tagMissionIndex, tagDetail } = props
   return (
     <Dialog fullScreen open={open} onClose={handleHistoryClose}>
       <AppBar position='sticky'>
@@ -45,8 +45,8 @@ const EditHistory = (props) => {
         </Toolbar>
       </AppBar>
       <List component='nav'>
-        {activeTag.statusHistory.map((history) => {
-          let tagStatusIndex
+        {tagDetail.statusHistory.statusList.map((history) => {
+          let tagStatusIndex = null
           tagStatus.forEach((s) => {
             const f = s.findIndex(
               (status) => status.statusName === history.statusName
@@ -55,9 +55,11 @@ const EditHistory = (props) => {
               tagStatusIndex = f
             }
           })
-          const color = tagStatus[tagMissionIndex][tagStatusIndex].statusColor
+          const color = tagStatusIndex
+            ? tagStatus[tagMissionIndex][tagStatusIndex].statusColor
+            : tagStatus[0][0].statusColor
           return (
-            <div key={history.statusName}>
+            <div key={history.statusName + history.createTime}>
               <ListItem style={{ marginTop: '10px' }}>
                 <ListItemIcon>
                   <Button style={{ backgroundColor: `${color}` }}>

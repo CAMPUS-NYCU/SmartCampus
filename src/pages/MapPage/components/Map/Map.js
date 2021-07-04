@@ -151,7 +151,10 @@ function Map(props) {
                 showTags.map((tag) => (
                   <Marker
                     key={tag.id}
-                    position={tag.position}
+                    position={{
+                      lat: parseFloat(tag.coordinates.latitude),
+                      lng: parseFloat(tag.coordinates.longitude)
+                    }}
                     icon={
                       activeTagId === tag.id
                         ? {

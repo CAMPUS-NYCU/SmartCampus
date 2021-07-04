@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { gql, useQuery } from '@apollo/client'
 
 import * as firebase from 'firebase/app'
 import { generateTime } from './useTagDetail'
