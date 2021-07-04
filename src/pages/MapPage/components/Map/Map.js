@@ -59,7 +59,7 @@ function Map(props) {
     latitude: positionLat,
     longitude: positionLng,
     error: positionError
-  } = usePosition(false, { enableHighAccuracy: true })
+  } = usePosition(false, { enableHighAccuracy: true, maximumAge: 2000 })
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const missionredImage = useMemo(
     () => [Missionred1, Missionred2, Missionred3],
