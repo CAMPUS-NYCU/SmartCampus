@@ -12,7 +12,7 @@ const useThreshold = () => {
       return archivedThreshold
     }
   })
-  return archivedThreshold
+  return archivedThreshold + 1
 }
 
 export default useThreshold

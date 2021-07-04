@@ -42,6 +42,11 @@ function useTagList() {
     if (newTag.changeType === 'added') {
       setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
     }
+    if (newTag.changeType === 'archived') {
+      setTagList((prevTagList) =>
+        prevTagList.filter((tag) => tag.id !== newTag.tagContent.id)
+      )
+    }
   }, [newTag])
   return { tags: tagList, refetch, updateTagList }
 }

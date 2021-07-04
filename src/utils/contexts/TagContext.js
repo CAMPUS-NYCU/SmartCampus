@@ -7,11 +7,11 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 
+import useTagSubscription from 'utils/hooks/useTagsSubscription'
 import useTagList from '../hooks/useTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
 import useThreshold from '../hooks/useThreshhold'
-import useTagSubscription from 'utils/hooks/useTagsSubscription'
 
 export const TagContext = React.createContext({
   tags: [],
