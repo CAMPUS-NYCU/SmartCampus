@@ -1,5 +1,4 @@
-import { useSubscription } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { useSubscription, gql } from '@apollo/client'
 
 export const TAG_CHANGE_SUBSCRIPTION = gql`
   subscription onTagChange {
@@ -13,7 +12,9 @@ export const TAG_CHANGE_SUBSCRIPTION = gql`
 `
 
 const useTagSubscription = () => {
-  const data = useSubscription(TAG_CHANGE_SUBSCRIPTION)
+  const data = useSubscription(TAG_CHANGE_SUBSCRIPTION, {
+    onSubscriptionData: (t) => console.log(t)
+  })
   return data
 }
 

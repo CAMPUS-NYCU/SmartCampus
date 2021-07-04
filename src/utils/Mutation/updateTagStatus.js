@@ -1,5 +1,4 @@
-import { gql } from 'apollo-boost'
-import { useMutation } from '@apollo/react-hooks'
+import { gql, useMutation } from '@apollo/client'
 
 export const UPDATE_TAG_STATUS_MUTATION = gql`
   mutation updateTagStatus(

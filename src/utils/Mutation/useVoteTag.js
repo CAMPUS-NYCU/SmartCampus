@@ -1,5 +1,4 @@
-import { gql } from 'apollo-boost'
-import { useMutation } from '@apollo/react-hooks'
+import { gql, useMutation } from '@apollo/client'
 import * as firebase from 'firebase/app'
 
 export const UP_VOTE_MUTATION = gql`

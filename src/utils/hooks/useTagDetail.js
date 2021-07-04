@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
-import { useLazyQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { gql, useLazyQuery } from '@apollo/client'
 import moment from 'moment'
 
 export const GET_TAG_DETAIL_QUERY = gql`

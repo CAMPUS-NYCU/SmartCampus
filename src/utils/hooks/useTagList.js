@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { gql, useQuery } from '@apollo/client'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
@@ -21,27 +20,6 @@ export const GET_TAG_LIST_QUERY = gql`
   }
 `
 
-const reformatTagList = (tags) => {
-  const tagList = tags.map((tag) => {
-    const {
-      id,
-      locationName,
-      category: { missionName, subTypeName, targetName },
-      coordinates: { latitude, longitude }
-    } = tag
-    return {
-      id,
-      locationName,
-      category: { missionName, subTypeName, targetName },
-      position: {
-        lat: parseFloat(latitude),
-        lng: parseFloat(longitude)
-      }
-    }
-  })
-  return tagList
-}
-
 function useTagList() {
   const {
     data: { unarchivedTagList: { tags = [] } = {} } = {},
@@ -55,7 +33,7 @@ function useTagList() {
     }, 30000)
   }, [refetch])
   useEffect(() => {
-    setTagList(reformatTagList(tags))
+    setTagList(tags)
   }, [tags])
   return { tags: tagList, refetch, updateTagList }
 }
