@@ -45,7 +45,7 @@ export default function GuidePageStep2() {
       </Typography>
       <List>
         {missionGuide.map((item, index) => (
-          <ListItem>
+          <ListItem key={item.missionName}>
             <ListItemIcon>
               <img
                 src={missionImage[index]}

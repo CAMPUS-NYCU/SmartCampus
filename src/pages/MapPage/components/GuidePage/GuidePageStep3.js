@@ -47,19 +47,24 @@ const demoTag = {
 }
 
 const demoDetail = {
+  id: 1,
   createTime: '2020-02-10 14:50',
   lastUpdateTime: '2020-02-10 14:50',
-  imageUrl: [elevator, elevator],
+  imageUrl: [elevator],
   status: {
     numberOfUpVote: 0,
     hasUpVote: false,
+    statusName: '存在',
     description:
       '水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。水淹到腳踝，雖然嚴重但仍可通行。'
   },
   createUser: {
     displayName: 'ilovenctu'
   },
-  newLastUpdateTime: '2020-02-10 10:00'
+  newLastUpdateTime: '2020-02-10 10:00',
+  statusHistory: {
+    statusList: []
+  }
 }
 
 export default function GuidePageStep3() {
