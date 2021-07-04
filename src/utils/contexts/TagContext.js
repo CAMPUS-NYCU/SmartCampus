@@ -1,7 +1,6 @@
 import React, { useContext, useState, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import useTagSubscription from 'utils/hooks/useTagsSubscription'
 import useTagList from '../hooks/useTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
@@ -29,11 +28,8 @@ function findTagById(id, tags) {
 
 export const TagContextProvider = ({ children }) => {
   const { tags, refetch, updateTagList } = useTagList()
-  const newTags = useTagSubscription()
-  console.log(newTags)
   const { userAddTags, refetchUserAddTags } = useUserTags()
   const threshold = useThreshold()
-  // TODO
 
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = useMemo(

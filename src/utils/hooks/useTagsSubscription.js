@@ -6,18 +6,23 @@ export const TAG_CHANGE_SUBSCRIPTION = gql`
       changeType
       tagContent {
         id
+        category {
+          missionName
+          subTypeName
+          targetName
+        }
+        coordinates {
+          latitude
+          longitude
+        }
       }
     }
   }
 `
 
 const useTagSubscription = () => {
-  const data = useSubscription(TAG_CHANGE_SUBSCRIPTION, {
-    onSubscriptionData: (t) => console.log(t)
-  })
-  return data
+  const { data, loading } = useSubscription(TAG_CHANGE_SUBSCRIPTION)
+  return !loading && data.tagChangeSubscription
 }
 
 export default useTagSubscription
-
-// TODO
