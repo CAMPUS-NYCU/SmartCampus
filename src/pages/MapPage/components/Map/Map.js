@@ -77,7 +77,9 @@ function Map(props) {
     []
   )
   const compareTime = (time) => {
-    return moment(time, 'YYYY-MM-DD h:mm').fromNow()
+    const tagTime = moment(time, 'YYYY-MM-DD h:mm')
+    const nowTime = moment()
+    return moment.duration(nowTime.diff(tagTime)).as('minutes') < 30
   }
   return (
     <div
@@ -175,31 +177,10 @@ function Map(props) {
                         }
                       }
                       if (tag.category.missionName === '動態任務') {
-                        if (
-                          compareTime(tag.lastUpdateTime) ===
-                            'a few seconds ago' ||
-                          compareTime(tag.lastUpdateTime)[2] === 'm'
-                        ) {
+                        if (compareTime(tag.lastUpdateTime)) {
                           return {
                             url: missionImage[3],
                             scaledSize: { width: 20, height: 20 }
-                          }
-                        }
-                        if (
-                          compareTime(tag.lastUpdateTime)[0] === 'a' &&
-                          compareTime(tag.lastUpdateTime)[2] === 'm'
-                        ) {
-                          return {
-                            url: missionImage[3],
-                            scaledSize: { width: 20, height: 20 }
-                          }
-                        }
-                        if (compareTime(tag.lastUpdateTime)[3] === 'm') {
-                          if (compareTime(tag.lastUpdateTime)[0] < '3') {
-                            return {
-                              url: missionImage[3],
-                              scaledSize: { width: 20, height: 20 }
-                            }
                           }
                         }
                         return {
