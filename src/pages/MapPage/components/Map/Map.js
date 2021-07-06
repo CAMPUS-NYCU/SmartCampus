@@ -7,7 +7,7 @@ import {
   MarkerClusterer
 } from '@react-google-maps/api'
 import { usePosition } from 'use-position'
-
+import moment from 'moment'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues'
 import {
   useMissionValue,
@@ -24,6 +24,7 @@ import Mission3 from '../../../../assets/images/mission3circle.svg'
 import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
 import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
 import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
+import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
 
 function Map(props) {
@@ -60,7 +61,10 @@ function Map(props) {
     longitude: positionLng,
     error: positionError
   } = usePosition(false, { enableHighAccuracy: true, maximumAge: 2000 })
-  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
+  const missionImage = useMemo(
+    () => [Mission1, Mission2, Mission3, Missiongreen3],
+    []
+  )
   const missionredImage = useMemo(
     () => [Missionred1, Missionred2, Missionred3],
     []
@@ -72,7 +76,9 @@ function Map(props) {
       }),
     []
   )
-
+  const compareTime = (time) => {
+    return moment(time, 'YYYY-MM-DD h:mm').fromNow()
+  }
   return (
     <div
       style={{
@@ -155,29 +161,62 @@ function Map(props) {
                       lat: parseFloat(tag.coordinates.latitude),
                       lng: parseFloat(tag.coordinates.longitude)
                     }}
-                    icon={
-                      activeTagId === tag.id
-                        ? {
-                            url:
-                              missionredImage[
-                                missionName.findIndex(
-                                  (mission) =>
-                                    mission === tag.category.missionName
-                                )
-                              ],
+                    icon={(() => {
+                      if (activeTagId === tag.id) {
+                        return {
+                          url:
+                            missionredImage[
+                              missionName.findIndex(
+                                (mission) =>
+                                  mission === tag.category.missionName
+                              )
+                            ],
+                          scaledSize: { width: 20, height: 20 }
+                        }
+                      }
+                      if (tag.category.missionName === '動態任務') {
+                        if (
+                          compareTime(tag.lastUpdateTime) ===
+                            'a few seconds ago' ||
+                          compareTime(tag.lastUpdateTime)[2] === 'm'
+                        ) {
+                          return {
+                            url: missionImage[3],
                             scaledSize: { width: 20, height: 20 }
                           }
-                        : {
-                            url:
-                              missionImage[
-                                missionName.findIndex(
-                                  (mission) =>
-                                    mission === tag.category.missionName
-                                )
-                              ],
+                        }
+                        if (
+                          compareTime(tag.lastUpdateTime)[0] === 'a' &&
+                          compareTime(tag.lastUpdateTime)[2] === 'm'
+                        ) {
+                          return {
+                            url: missionImage[3],
                             scaledSize: { width: 20, height: 20 }
                           }
-                    }
+                        }
+                        if (compareTime(tag.lastUpdateTime)[3] === 'm') {
+                          if (compareTime(tag.lastUpdateTime)[0] < '3') {
+                            return {
+                              url: missionImage[3],
+                              scaledSize: { width: 20, height: 20 }
+                            }
+                          }
+                        }
+                        return {
+                          url: missionImage[2],
+                          scaledSize: { width: 20, height: 20 }
+                        }
+                      }
+                      return {
+                        url:
+                          missionImage[
+                            missionName.findIndex(
+                              (mission) => mission === tag.category.missionName
+                            )
+                          ],
+                        scaledSize: { width: 20, height: 20 }
+                      }
+                    })()}
                     clickable
                     onClick={() => setActiveTagId(tag.id)}
                     clusterer={clusterer}
