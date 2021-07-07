@@ -21,7 +21,7 @@ import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
 
 const Pages = () => {
   const { tags } = useTagValue()
-  const { token, signInWithGuest, signOut, signInWithGoogle } = useUserValue()
+  const { token } = useUserValue()
   return (
     <>
       {!tags ? (
@@ -37,25 +37,10 @@ const Pages = () => {
               )}
             </Route>
             <Route path={MAP_PATH} exact>
-              {token ? (
-                <MapPage
-                  signOut={signOut}
-                  // deny={() => setGuest(false)}
-                />
-              ) : (
-                <Redirect to={LOGIN_PATH} />
-              )}
+              {token ? <MapPage /> : <Redirect to={LOGIN_PATH} />}
             </Route>
             <Route path={LOGIN_PATH} exact>
-              {token ? (
-                <Redirect to={MAP_PATH} />
-              ) : (
-                <LoginPage
-                  signInWithGoogle={signInWithGoogle}
-                  signOut={signOut}
-                  guestLogin={signInWithGuest}
-                />
-              )}
+              {token ? <Redirect to={MAP_PATH} /> : <LoginPage />}
             </Route>
           </Switch>
         </BrowserRouter>

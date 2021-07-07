@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useMemo
 } from 'react'
+import 'firebase/auth'
 import * as firebase from 'firebase/app'
 import withFirebaseAuth from 'react-with-firebase-auth'
 
@@ -54,7 +55,13 @@ const reducer = (user, action) => {
   }
 }
 
-const UserContext = createContext(initialUser)
+const initialUserValue = {
+  ...initialUser,
+  signInWithGuest: () => {},
+  signInWithGoogle: () => {},
+  signOut: () => {}
+}
+const UserContext = createContext(initialUserValue)
 
 export const UserContextProvider = withFirebaseAuth({
   providers,
@@ -67,8 +74,6 @@ export const UserContextProvider = withFirebaseAuth({
       payload: 'guest'
     })
   }, [])
-  console.log(userInfo)
-  console.log(user)
   const handleGetUserInfo = useCallback(async () => {
     if (user) {
       dispatch({

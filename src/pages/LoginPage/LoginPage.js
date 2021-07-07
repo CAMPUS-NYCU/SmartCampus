@@ -4,13 +4,14 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 
+import { useUserValue } from '../../utils/contexts/UserContext'
 import wave1 from '../../assets/images/main-wave1.svg'
 import wave2 from '../../assets/images/main-wave2.svg'
 import googleIcon from '../../assets/images/google_icon.png'
 import title from '../../assets/images/title.svg'
 
-export default function LoginPage(props) {
-  const { signInWithGoogle, guestLogin } = props
+export default function LoginPage() {
+  const { signInWithGoogle, signInWithGuest } = useUserValue()
 
   return (
     <Box
@@ -84,7 +85,7 @@ export default function LoginPage(props) {
             color: '#BABABA',
             padding: '0'
           }}
-          onClick={guestLogin}
+          onClick={signInWithGuest}
         >
           以訪客身分進入
         </Button>
