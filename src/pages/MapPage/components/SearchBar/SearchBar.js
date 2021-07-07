@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 const SearchBar = React.forwardRef((props, ref) => {
-  const { menuControls, signOut, ...otherProps } = props
+  const { menuControls, ...otherProps } = props
   const classes = useStyles()
   const menuControl = useMenu()
   const [open, changeOpen] = useState(false)
@@ -93,11 +93,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         </IconButton>
       </Paper>
       <Fillter open={open} />
-      <SearchBarMenu
-        control={menuControl}
-        menuControls={menuControls}
-        signOut={signOut}
-      />
+      <SearchBarMenu control={menuControl} menuControls={menuControls} />
     </div>
   )
 })

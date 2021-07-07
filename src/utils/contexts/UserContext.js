@@ -59,7 +59,8 @@ const initialUserValue = {
   ...initialUser,
   signInWithGuest: () => {},
   signInWithGoogle: () => {},
-  signOut: () => {}
+  signOut: () => {},
+  isGuest: false
 }
 const UserContext = createContext(initialUserValue)
 
@@ -111,7 +112,8 @@ export const UserContextProvider = withFirebaseAuth({
       ...userInfo,
       signInWithGuest,
       signInWithGoogle,
-      signOut: handleSignOut
+      signOut: handleSignOut,
+      isGuest: userInfo.token === 'guest'
     }),
     [signInWithGuest, userInfo, signInWithGoogle, handleSignOut]
   )
