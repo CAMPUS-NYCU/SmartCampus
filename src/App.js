@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
-
-import withFirebaseAuth from 'react-with-firebase-auth'
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
 
 import { ApolloProvider } from '@apollo/client'
 
@@ -15,36 +11,17 @@ import CloseIcon from '@material-ui/icons/Close'
 
 import WindowHeightProvider from 'utils/WindowHeightProvider'
 import MainPage from 'components/MainPage'
-import firebaseConfig from './constants/firebaseConfig'
 import { INDEX_PATH, MAP_PATH, LOGIN_PATH } from './constants/pageUrls'
 import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
 import { TagContextProvider, useTagValue } from './utils/contexts/TagContext'
-import {
-  REACT_APP_FIREBASE_LOCAL_SERVER,
-  REACT_APP_FIREBASE_EMULATER_URL
-} from './constants/envValues'
+import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
 
-// Firebase Google authentication settings
-const firebaseApp = firebase.initializeApp(firebaseConfig)
-const firebaseAppAuth = firebaseApp.auth()
-const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider(),
-  facebookProvider: new firebase.auth.FacebookAuthProvider()
-}
-
-const Pages = (props) => {
-  const {
-    user,
-    guest,
-    signOut,
-    signInWithFacebook,
-    signInWithGoogle,
-    setGuest
-  } = props
+const Pages = () => {
   const { tags } = useTagValue()
+  const { token, signInWithGuest, signOut, signInWithGoogle } = useUserValue()
   return (
     <>
       {!tags ? (
@@ -53,33 +30,30 @@ const Pages = (props) => {
         <BrowserRouter>
           <Switch>
             <Route path={INDEX_PATH} exact>
-              {user || guest ? (
+              {token ? (
                 <Redirect to={MAP_PATH} />
               ) : (
                 <Redirect to={LOGIN_PATH} />
               )}
             </Route>
             <Route path={MAP_PATH} exact>
-              {user || guest ? (
+              {token ? (
                 <MapPage
                   signOut={signOut}
-                  deny={() => setGuest(false)}
-                  guest={guest}
+                  // deny={() => setGuest(false)}
                 />
               ) : (
                 <Redirect to={LOGIN_PATH} />
               )}
             </Route>
             <Route path={LOGIN_PATH} exact>
-              {user || guest ? (
+              {token ? (
                 <Redirect to={MAP_PATH} />
               ) : (
                 <LoginPage
                   signInWithGoogle={signInWithGoogle}
-                  signInWithFacebook={signInWithFacebook}
                   signOut={signOut}
-                  user={user}
-                  guestLogin={() => setGuest(true)}
+                  guestLogin={signInWithGuest}
                 />
               )}
             </Route>
@@ -90,25 +64,13 @@ const Pages = (props) => {
   )
 }
 
-function App(props) {
-  const {
-    /** These props are provided by withFirebaseAuth HOC */
-    signInWithGoogle,
-    signInWithFacebook,
-    signOut,
-    user
-  } = props
+function App() {
   // add action to all snackbars
   const notistackRef = React.createRef()
   const onClickDismiss = (key) => () => {
     notistackRef.current.closeSnackbar(key)
   }
-  useEffect(() => {
-    if (REACT_APP_FIREBASE_LOCAL_SERVER) {
-      firebaseAppAuth.useEmulator(REACT_APP_FIREBASE_EMULATER_URL)
-    }
-  }, [])
-  const [guest, setGuest] = useState(false)
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -133,23 +95,15 @@ function App(props) {
             </IconButton>
           )}
         >
-          <TagContextProvider>
-            <Pages
-              user={user}
-              setGuest={setGuest}
-              signOut={signOut}
-              signInWithGoogle={signInWithGoogle}
-              signInWithFacebook={signInWithFacebook}
-              guest={guest}
-            />
-          </TagContextProvider>
+          <UserContextProvider>
+            <TagContextProvider>
+              <Pages />
+            </TagContextProvider>
+          </UserContextProvider>
         </SnackbarProvider>
       </ApolloProvider>
     </ThemeProvider>
   )
 }
 
-export default withFirebaseAuth({
-  providers,
-  firebaseAppAuth
-})(App)
+export default App
