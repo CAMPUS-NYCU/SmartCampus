@@ -74,6 +74,10 @@ function MissionStep2() {
     setStatusChoose(false)
   }, [selectedMissionId])
   useEffect(() => {
+    if (status !== '請選擇') setStatusChoose(true)
+    else setStatusChoose(false)
+  }, [status])
+  useEffect(() => {
     if (missionType !== 2) {
       setStatus(tagData[missionType][0].statusName)
     }
@@ -217,7 +221,13 @@ function MissionStep2() {
         <Grid container item xs={12} direction='row'>
           <>
             {missionType === 2 ? (
-              <>
+              <Box
+                display='flex'
+                flexDirection='row'
+                alignItems='center'
+                width='100vw'
+                justifyContent='flex-start'
+              >
                 {remindOpen === true && status === '請選擇' ? (
                   <Box
                     display='flex'
@@ -257,7 +267,7 @@ function MissionStep2() {
                   {status}
                   <UnfoldMoreIcon size='small' />
                 </Button>
-              </>
+              </Box>
             ) : (
               <>
                 {remindOpen === true && selectedSubOptionId === '' ? (
@@ -416,7 +426,6 @@ function MissionStep2() {
         open={statusDrawer}
         onClose={() => {
           setStatusDrawer(false)
-          setStatusChoose(true)
         }}
         PaperProps={{
           style: {
@@ -439,7 +448,6 @@ function MissionStep2() {
             color='primary'
             onClick={() => {
               setStatusDrawer(false)
-              setStatusChoose(true)
             }}
             style={{ position: 'absolute', right: '10px' }}
           >

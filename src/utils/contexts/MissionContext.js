@@ -350,7 +350,7 @@ export const MissionContextProvider = ({ children }) => {
     setStreetViewUpload(false)
     setPreviewImages([])
     setImageDeleteUrls([])
-    setFloor('無')
+    setFloor(0)
     setStatus('請選擇')
     setRemindOpen(false)
   }, [markerPosition, setStep])
