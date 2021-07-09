@@ -12,13 +12,15 @@ import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useViewCount } from '../../../../utils/hooks/useViewCount'
 
 function TagDetailDialog(props) {
-  const { activeTag, onClose, deny, guest, tagDetail, ...rest } = props
+  const { activeTag, onClose, tagDetail, ...rest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
   const { userAddTags, threshold, fetchTagDetail } = useTagValue()
+  const { isGuest } = useUserValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const { incrementViewCount } = useViewCount()
@@ -55,8 +57,10 @@ function TagDetailDialog(props) {
     return false
   }, [activeTag.id, userAddTags])
   useEffect(() => {
-    incrementViewCount(activeTag.id)
-  }, [incrementViewCount, activeTag])
+    if (!isGuest) {
+      incrementViewCount(activeTag.id)
+    }
+  }, [incrementViewCount, activeTag, isGuest])
   useEffect(() => {
     fetchTagDetail()
   }, [fetchTagDetail])
@@ -140,8 +144,6 @@ function TagDetailDialog(props) {
             setLargeImg={setLargeImg}
             setStateDrawer={setStateDrawer}
             tagMissionIndex={tagMissionIndex}
-            deny={deny}
-            guest={guest}
             threshold={threshold}
           />
         </Box>
@@ -177,8 +179,6 @@ function TagDetailDialog(props) {
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
   onClose: PropTypes.func.isRequired,
-  deny: PropTypes.func.isRequired,
-  guest: PropTypes.bool.isRequired,
   tagDetail: PropTypes.object.isRequired
 }
 TagDetailDialog.defaultProps = {
