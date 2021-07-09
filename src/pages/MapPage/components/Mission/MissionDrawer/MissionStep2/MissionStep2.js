@@ -72,8 +72,10 @@ function MissionStep2() {
     }
   }, [missionType, setStatus])
   useEffect(() => {
-    setSelectedSubOptionId(status)
-  }, [status, setSelectedSubOptionId])
+    if (missionType === 2) {
+      setSelectedSubOptionId(status)
+    }
+  }, [status, setSelectedSubOptionId, missionType])
   return (
     <>
       <Grid container spacing={3}>

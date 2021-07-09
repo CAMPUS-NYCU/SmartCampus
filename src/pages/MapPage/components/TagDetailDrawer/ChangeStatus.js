@@ -12,11 +12,11 @@ import {
   CircularProgress,
   TextField
 } from '@material-ui/core'
-import * as firebase from 'firebase/app'
 import PropTypes from 'prop-types'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 
 function ChangeStatus(props) {
   const { stateDrawer, tagDetail, setStateDrawer, status } = props
@@ -24,6 +24,7 @@ function ChangeStatus(props) {
     tagDetail.status.statusName
   )
   const { fetchTagDetail } = useTagValue()
+  const { token } = useUserValue()
   const [loading, setLoading] = useState(false)
   const resetTemporaryTagState = () => {
     setTemporaryTagState(tagDetail.status.statusName)
@@ -39,13 +40,11 @@ function ChangeStatus(props) {
     resetTemporaryTagState()
   }
   const { updateStatus } = useUpdateTagStatus()
-  const handleDrawerComplete = () => {
+  const handleDrawerComplete = async () => {
     setLoading(true)
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((token) => {
-        updateStatus({
+    if (token) {
+      try {
+        await updateStatus({
           context: {
             headers: {
               authorization: token ? `Bearer ${token}` : ''
@@ -56,13 +55,16 @@ function ChangeStatus(props) {
             statusName: temporaryTagState,
             description: newDescription
           }
-        }).then(() => {
-          fetchTagDetail().then(() => {
-            setLoading(false)
-            setStateDrawer(false)
-          })
         })
-      })
+        await fetchTagDetail()
+        setLoading(false)
+        setStateDrawer(false)
+      } catch (err) {
+        console.error(err)
+        setLoading(false)
+        setStateDrawer(false)
+      }
+    }
   }
   return (
     <>

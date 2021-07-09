@@ -4,10 +4,10 @@ import { useSnackbar } from 'notistack'
 import { gql, useMutation } from '@apollo/client'
 import axios from 'axios'
 import debounce from 'utils/debounce'
-import * as firebase from 'firebase/app'
 import useStep from '../hooks/useStep'
 import { missionInfo } from '../../constants/missionInfo'
 import { useTagValue } from './TagContext'
+import { useUserValue } from './UserContext'
 import { DefaultCenter } from '../../constants/mapConstants'
 
 export const TAG_ADD_MUTATION = gql`
@@ -103,6 +103,7 @@ export const MissionContext = React.createContext({
 export const MissionContextProvider = ({ children }) => {
   const [tagAdd] = useMutation(TAG_ADD_MUTATION)
   const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION)
+  const { token } = useUserValue()
 
   const [isInEdit, setIsInEdit] = useState(false)
 
@@ -123,13 +124,7 @@ export const MissionContextProvider = ({ children }) => {
     maxStep: MISSION_MAX_STEP,
     minStep: MISSION_MIN_STEP
   })
-  const {
-    activeTag,
-    refetch,
-    tagDetail,
-    refetchUserAddTags,
-    refetchTagDetail
-  } = useTagValue()
+  const { activeTag, tagDetail } = useTagValue()
   const handleBack = useCallback(() => {
     setSelectedMissionId(InitialMissionValue.selectedMissionId)
     setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
@@ -378,19 +373,24 @@ export const MissionContextProvider = ({ children }) => {
     (startTag) => {
       setShowControl(true)
       setMarkerPosition({
-        longitude: startTag.position.lng,
-        latitude: startTag.position.lat
+        latitude: parseFloat(startTag.coordinates.latitude),
+        longitude: parseFloat(startTag.coordinates.longitude)
       })
-      setMapCenter(startTag.position)
+      setMapCenter({
+        lat: parseFloat(startTag.coordinates.latitude),
+        lng: parseFloat(startTag.coordinates.longitude)
+      })
       setStreetViewPosition({
-        longitude: startTag.position.lng,
-        latitude: startTag.position.lat
+        latitude: parseFloat(startTag.coordinates.latitude),
+        longitude: parseFloat(startTag.coordinates.longitude)
       })
-      setMissionType(
-        missionInfo.findIndex(
-          (element) => element.missionName === startTag.category.missionName
-        )
+      const tagMissionType = missionInfo.findIndex(
+        (element) => element.missionName === startTag.category.missionName
       )
+      setMissionType(tagMissionType)
+      if (tagMissionType === 2) {
+        setStatus(startTag.category.targetName)
+      }
       setSelectedMissionId(startTag.category.subTypeName)
       setSelectedSubOptionId(startTag.category.targetName)
       setStep(MissionStep.selectMissionName)
@@ -417,7 +417,22 @@ export const MissionContextProvider = ({ children }) => {
     setIsInEdit(false)
   }, [clearMissionData, setStep])
 
-  const handleCompleteMission = useCallback(() => {
+  const handleUploadImages = useCallback(
+    async (imageUrlList) => {
+      const requests = imageUrlList.map((url, index) => {
+        const options = {
+          headers: {
+            'Content-Type': 'application/octet-stream'
+          }
+        }
+        return axios.put(url, imageFiles[index], options)
+      })
+      await Promise.all(requests)
+    },
+    [imageFiles]
+  )
+
+  const handleCompleteMission = useCallback(async () => {
     setLoading(true)
     let floorNumber = 0
     if (floor === '無') {
@@ -429,157 +444,76 @@ export const MissionContextProvider = ({ children }) => {
     } else {
       floorNumber = floor
     }
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((token) => {
-        if (isInEdit) {
-          tagUpdate({
-            context: {
-              headers: {
-                authorization: token ? `Bearer ${token}` : ''
-              }
-            },
-            variables: {
-              tagId: activeTag.id,
-              data: {
-                locationName: textLocation,
-                category: {
-                  missionName: missionInfo[missionType].missionName.toString(),
-                  subTypeName: selectedMissionId.toString(),
-                  targetName: selectedSubOptionId.toString()
-                },
-                coordinates: {
-                  latitude: streetViewUpload
-                    ? streetViewPosition.latitude.toString()
-                    : markerPosition.latitude.toString(),
-                  longitude: streetViewUpload
-                    ? streetViewPosition.longitude.toString()
-                    : markerPosition.longitude.toString()
-                },
-                floor: floorNumber,
-                imageDeleteUrls,
-                imageUploadNumber: imageFiles.length,
-                streetViewInfo: {
-                  povHeading: streetViewPOV.heading,
-                  povPitch: streetViewPOV.pitch,
-                  panoID: '',
-                  cameraLatitude: streetViewPosition.latitude,
-                  cameraLongitude: streetViewPosition.longitude
-                },
-                statusName: status.toString()
-              }
-            }
-          }).then(
-            ({
-              data: {
-                updateTagData: { imageUploadUrls }
-              }
-            }) => {
-              imageUploadUrls.forEach((url, index) => {
-                // const contentType = imageFiles[index].type
-                const options = {
-                  headers: {
-                    'Content-Type': 'application/octet-stream'
-                  }
-                }
-                axios.put(url, imageFiles[index], options).then(() => {
-                  refetchUserAddTags()
-                  refetchTagDetail()
-                  refetch().then(() => {
-                    setLoading(false)
-                    clearMissionData()
-                    setMissionType(null)
-                    enqueueSnackbar('更改完成', { variant: 'success' })
-                  })
-                })
-              })
-              if (imageUploadUrls.length === 0) {
-                refetch().then(() => {
-                  setLoading(false)
-                  clearMissionData()
-                  setMissionType(null)
-                  enqueueSnackbar('更改完成', { variant: 'success' })
-                })
-              }
-              refetchUserAddTags()
-            }
-          )
-        } else {
-          tagAdd({
-            context: {
-              headers: {
-                authorization: token ? `Bearer ${token}` : ''
-              }
-            },
-            variables: {
-              input: {
-                locationName: textLocation,
-                category: {
-                  missionName: missionInfo[missionType].missionName.toString(),
-                  subTypeName: selectedMissionId.toString(),
-                  targetName: selectedSubOptionId.toString()
-                },
-                coordinates: {
-                  latitude: streetViewUpload
-                    ? streetViewPosition.latitude.toString()
-                    : markerPosition.latitude.toString(),
-                  longitude: streetViewUpload
-                    ? streetViewPosition.longitude.toString()
-                    : markerPosition.longitude.toString()
-                },
-                // createUserID: 'NO_USER',
-                description: moreDescriptionText,
-                floor: floorNumber,
-                imageUploadNumber: imageFiles.length,
-                streetViewInfo: {
-                  povHeading: streetViewPOV.heading,
-                  povPitch: streetViewPOV.pitch,
-                  panoID: '',
-                  cameraLatitude: streetViewPosition.latitude,
-                  cameraLongitude: streetViewPosition.longitude
-                },
-                statusName: status.toString()
-              }
-            }
-          }).then(
-            ({
-              data: {
-                addNewTagData: { imageUploadUrls }
-              }
-            }) => {
-              imageUploadUrls.forEach((url, index) => {
-                // const contentType = imageFiles[index].type
-                const options = {
-                  headers: {
-                    'Content-Type': 'application/octet-stream'
-                  }
-                }
-                axios.put(url, imageFiles[index], options).then(() => {
-                  refetch().then(() => {
-                    setLoading(false)
-                    clearMissionData()
-                    setMissionType(null)
-                    enqueueSnackbar('標注完成', { variant: 'success' })
-                  })
-                })
-              })
-              if (imageUploadUrls.length === 0) {
-                refetch().then(() => {
-                  setLoading(false)
-                  clearMissionData()
-                  setMissionType(null)
-                  enqueueSnackbar('標注完成', { variant: 'success' })
-                })
-              }
-              refetchUserAddTags()
-            }
-          )
-        }
-      })
-
-    // .catch()
-    // .finally()
+    const payload = {
+      locationName: textLocation,
+      category: {
+        missionName: missionInfo[missionType].missionName.toString(),
+        subTypeName: selectedMissionId.toString(),
+        targetName: selectedSubOptionId.toString()
+      },
+      coordinates: {
+        latitude: streetViewUpload
+          ? streetViewPosition.latitude.toString()
+          : markerPosition.latitude.toString(),
+        longitude: streetViewUpload
+          ? streetViewPosition.longitude.toString()
+          : markerPosition.longitude.toString()
+      },
+      description: moreDescriptionText,
+      floor: floorNumber,
+      imageUploadNumber: imageFiles.length,
+      streetViewInfo: {
+        povHeading: streetViewPOV.heading,
+        povPitch: streetViewPOV.pitch,
+        panoID: '',
+        cameraLatitude: streetViewPosition.latitude,
+        cameraLongitude: streetViewPosition.longitude
+      },
+      statusName: status.toString()
+    }
+    const context = {
+      headers: {
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    }
+    try {
+      if (isInEdit) {
+        const {
+          data: {
+            updateTagData: { imageUploadUrls }
+          }
+        } = await tagUpdate({
+          context,
+          variables: {
+            tagId: activeTag.id,
+            data: { ...payload, imageDeleteUrls }
+          }
+        })
+        await handleUploadImages(imageUploadUrls)
+      } else {
+        const {
+          data: {
+            addNewTagData: { imageUploadUrls }
+          }
+        } = await tagAdd({
+          context,
+          variables: {
+            input: payload
+          }
+        })
+        await handleUploadImages(imageUploadUrls)
+      }
+      setLoading(false)
+      clearMissionData()
+      setMissionType(null)
+      enqueueSnackbar('更改完成', { variant: 'success' })
+    } catch (err) {
+      console.error(err)
+      setLoading(false)
+      clearMissionData()
+      setMissionType(null)
+      enqueueSnackbar('錯誤', { variant: 'error' })
+    }
   }, [
     activeTag,
     clearMissionData,
@@ -592,9 +526,6 @@ export const MissionContextProvider = ({ children }) => {
     markerPosition,
     missionType,
     moreDescriptionText,
-    refetch,
-    refetchTagDetail,
-    refetchUserAddTags,
     selectedMissionId,
     selectedSubOptionId,
     streetViewPOV,
@@ -602,7 +533,9 @@ export const MissionContextProvider = ({ children }) => {
     streetViewUpload,
     tagAdd,
     tagUpdate,
-    textLocation
+    textLocation,
+    token,
+    handleUploadImages
   ])
 
   const contextValues = {

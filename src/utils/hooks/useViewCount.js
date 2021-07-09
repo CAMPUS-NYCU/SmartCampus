@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import * as firebase from 'firebase/app'
+import { useUserValue } from '../contexts/UserContext'
 
 export const INCREMENT_VIEW_COUNT_MUTATION = gql`
   mutation incrementViewCount($tagId: ID!) {
@@ -12,10 +12,10 @@ export const useViewCount = () => {
   const [incrementViewCountMutation] = useMutation(
     INCREMENT_VIEW_COUNT_MUTATION
   )
+  const { token } = useUserValue()
   const incrementViewCount = useCallback(
     async (id) => {
       try {
-        const token = await firebase.auth().currentUser.getIdToken()
         incrementViewCountMutation({
           context: {
             headers: {
@@ -30,7 +30,7 @@ export const useViewCount = () => {
         console.error(err)
       }
     },
-    [incrementViewCountMutation]
+    [incrementViewCountMutation, token]
   )
   return { incrementViewCount }
 }
