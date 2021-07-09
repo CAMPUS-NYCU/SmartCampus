@@ -31,6 +31,22 @@ export const MISSION_MAX_STEP = 2
 export const MISSION_MIN_STEP = 0
 export const MISSION_NUM_STEPS = 4
 
+export const floorMapping = [
+  '無',
+  'B1',
+  'B2',
+  '1樓',
+  '2樓',
+  '3樓',
+  '4樓',
+  '5樓',
+  '6樓',
+  '7樓',
+  '8樓',
+  '9樓',
+  '10樓'
+]
+
 // 特殊的 selectedSubOptionId 數值，
 // 當 user 要手動輸入 subOption 的文字框時，selectedSubOptionId 會是這個
 export const SubOptionOther = Symbol('SubOptionOther')
@@ -291,7 +307,7 @@ export const MissionContextProvider = ({ children }) => {
   const handleChangeTextLocation = useCallback((event) => {
     setTextLocation(event.target.value)
   }, [])
-  const [floor, setFloor] = useState('無')
+  const [floor, setFloor] = useState(0)
   const [status, setStatus] = useState('請選擇')
   const [remindOpen, setRemindOpen] = useState(false)
 
@@ -391,6 +407,7 @@ export const MissionContextProvider = ({ children }) => {
       if (tagMissionType === 2) {
         setStatus(startTag.category.targetName)
       }
+      setFloor(tagDetail.floor)
       setSelectedMissionId(startTag.category.subTypeName)
       setSelectedSubOptionId(startTag.category.targetName)
       setStep(MissionStep.selectMissionName)
@@ -401,7 +418,7 @@ export const MissionContextProvider = ({ children }) => {
       setTextLocation(startTag.locationName)
       setIsInEdit(true)
     },
-    [setStep, tagDetail.description, tagDetail.imageUrl]
+    [setStep, tagDetail.description, tagDetail.imageUrl, tagDetail.floor]
   )
 
   const handleCloseMission = useCallback(() => {
@@ -435,15 +452,7 @@ export const MissionContextProvider = ({ children }) => {
   const handleCompleteMission = useCallback(async () => {
     setLoading(true)
     let floorNumber = 0
-    if (floor === '無') {
-      floorNumber = 0
-    } else if (floor === 'B1') {
-      floorNumber = -1
-    } else if (floor === 'B2') {
-      floorNumber = -2
-    } else {
-      floorNumber = floor
-    }
+    floorNumber = floor
     const payload = {
       locationName: textLocation,
       category: {

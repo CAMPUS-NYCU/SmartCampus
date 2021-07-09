@@ -19,7 +19,8 @@ import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import tagData from 'constants/tagData'
 import {
   useMissionValue,
-  MissionStep
+  MissionStep,
+  floorMapping
 } from '../../../../../../utils/contexts/MissionContext'
 import ImageUpload from '../../../../../../utils/functions/ImageUpload'
 import {
@@ -63,6 +64,12 @@ function MissionStep2() {
       ) || {},
     [missionType, selectedMissionId]
   )
+  useEffect(() => {
+    if (floor !== 0) setFloorChoose(true)
+    else {
+      setFloorChoose(false)
+    }
+  }, [floor])
   useEffect(() => {
     setStatusChoose(false)
   }, [selectedMissionId])
@@ -157,7 +164,7 @@ function MissionStep2() {
                 color: 'black'
               }}
             >
-              {floor}
+              {floorMapping[floor] || floor}
               <UnfoldMoreIcon size='small' />
             </Button>
           </Box>
@@ -364,7 +371,6 @@ function MissionStep2() {
         open={floorDrawer}
         onClose={() => {
           setFloorDrawer(false)
-          setFloorChoose(true)
         }}
         PaperProps={{
           style: {
@@ -387,7 +393,6 @@ function MissionStep2() {
             color='primary'
             onClick={() => {
               setFloorDrawer(false)
-              setFloorChoose(true)
             }}
             style={{ position: 'absolute', right: '10px' }}
           >
@@ -396,13 +401,13 @@ function MissionStep2() {
         </Toolbar>
         <Picker
           valueGroups={{
-            floor
+            floor: floorMapping[floor]
           }}
           optionGroups={{
-            floor: ['無', 'B2', 'B1', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            floor: floorMapping
           }}
           onChange={(name, value) => {
-            setFloor(value)
+            setFloor(floorMapping.indexOf(value))
           }}
         />
       </Drawer>
