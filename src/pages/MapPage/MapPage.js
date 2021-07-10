@@ -21,8 +21,7 @@ import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
 
-export default function MapPage(props) {
-  const { signOut, deny, guest } = props
+export default function MapPage() {
   const { step: guideStep, setStep, handleNext, handleBack } = useStep({
     initialStep: 0,
     maxStep: 3,
@@ -36,20 +35,14 @@ export default function MapPage(props) {
         setStep={setStep}
         handleNext={() => handleNext(1)}
         handleBack={() => handleBack(1)}
-        guest={guest}
       />
-      <MapPageContent
-        signOut={signOut}
-        deny={deny}
-        guest={guest}
-        setGuideStep={setStep}
-      />
+      <MapPageContent setGuideStep={setStep} />
     </MissionContextProvider>
   )
 }
 
 const MapPageContent = (props) => {
-  const { signOut, deny, guest, setGuideStep } = props
+  const { setGuideStep } = props
   const profileDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
@@ -69,9 +62,8 @@ const MapPageContent = (props) => {
               },
               handleOpenTerms: profileDialogControl.setOpen
             }}
-            signOut={guest ? deny : signOut}
           />
-          <MissionFab deny={deny} guest={guest} />
+          <MissionFab />
           <FilterFab />
           <LocationFab setMapCenter={setMapCenter} />
         </div>
@@ -84,8 +76,6 @@ const MapPageContent = (props) => {
           activeTag={activeTag}
           tagDetail={tagDetail}
           onClose={resetActiveTag}
-          deny={deny}
-          guest={guest}
         />
       )}
       <Dialog

@@ -13,6 +13,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import RateReviewIcon from '@material-ui/icons/RateReview'
 import { makeStyles } from '@material-ui/core/styles'
 
+import { useUserValue } from '../../../../utils/contexts/UserContext'
+
 const useStyles = makeStyles((theme) => ({
   listIcon: {
     minWidth: 0,
@@ -23,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
 function SearchBarMenu(props) {
   const {
     control: { open, anchorEl, setClose },
-    menuControls: { handleOpenProfile, handleOpenHistory, handleOpenHowToUse },
-    signOut
+    menuControls: { handleOpenProfile, handleOpenHistory, handleOpenHowToUse }
   } = props
   const classes = useStyles()
+  const { signOut } = useUserValue()
 
   const menuItems = [
     {

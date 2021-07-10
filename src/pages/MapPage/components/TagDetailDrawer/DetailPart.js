@@ -12,6 +12,7 @@ import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
 import { useUpdateVote } from '../../../../utils/Mutation/useVoteTag'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 
 const useStyles = makeStyles(() => ({
   clickableFont: {
@@ -28,11 +29,10 @@ const DetailPart = (props) => {
     setLargeImg,
     setStateDrawer,
     tagMissionIndex,
-    deny,
-    guest,
     threshold
   } = props
   const classes = useStyles()
+  const { isGuest, signOut } = useUserValue()
   const [openHistory, setOpenHistory] = useState(false)
   const handleHistoryClose = () => {
     setOpenHistory(false)
@@ -56,8 +56,8 @@ const DetailPart = (props) => {
     }
   }, [tagDetail, enqueueSnackbar, threshold])
   const handleUopVote = useCallback(() => {
-    if (guest) {
-      deny()
+    if (isGuest) {
+      signOut()
       return
     }
     setNumberOfVote((prevNumberOfVote) =>
@@ -65,7 +65,7 @@ const DetailPart = (props) => {
     )
     upVote(tagDetail.id, !hasUpVote)
     setHasUpVote((prevHasUpVote) => !prevHasUpVote)
-  }, [deny, guest, tagDetail.id, hasUpVote, upVote])
+  }, [signOut, isGuest, tagDetail.id, hasUpVote, upVote])
 
   return (
     <>
@@ -136,8 +136,8 @@ const DetailPart = (props) => {
             <Button
               id='changeStatusButton'
               onClick={() => {
-                if (guest) {
-                  deny()
+                if (isGuest) {
+                  signOut()
                 } else {
                   setStateDrawer(true)
                 }
@@ -279,8 +279,6 @@ DetailPart.propTypes = {
   setLargeImg: PropTypes.func.isRequired,
   setStateDrawer: PropTypes.func.isRequired,
   tagMissionIndex: PropTypes.number.isRequired,
-  deny: PropTypes.func.isRequired,
-  guest: PropTypes.bool.isRequired,
   threshold: PropTypes.number.isRequired
 }
 

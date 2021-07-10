@@ -61,6 +61,7 @@ const PicturePreview = (props) => {
           {previewImages.map((url, index) => {
             return (
               <div
+                key={url}
                 style={{
                   position: 'relative',
                   marginRight: '5px',
