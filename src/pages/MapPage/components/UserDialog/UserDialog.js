@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useImperativeHandle, useState } from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
@@ -31,12 +31,14 @@ const useStyles = makeStyles((theme) => ({
 
 function UserDialog(props) {
   const {
+    userId,
     control: { open, setClose }
   } = props
   const classes = useStyles()
   const { userAddTags } = useTagValue()
   const [likeNum, setLikeNum] = useState(0)
-  const {userDetail}=useUserDetail()
+  // const {userDetail,getUserDetail}=useUserDetail()
+  const { userDetail } = useUserDetail({ userId })
   useEffect(() => {
     if (userAddTags) {
       userAddTags.forEach((t) => {
@@ -46,7 +48,6 @@ function UserDialog(props) {
       })
     }
   }, [userAddTags])
-
   return (
     <Dialog
       onClose={setClose}
@@ -88,9 +89,7 @@ function UserDialog(props) {
             </Avatar>
           </>
           <Box m={4} display='flex' alignItems='center'>
-            <Typography variant='h5'>
-              {userDetail.displayName}
-            </Typography>
+            <Typography variant='h5'>{userDetail.displayName}</Typography>
             {/* <IconButton edge='end'>
               <EditIcon style={{ color: 'C6C6C6' }} />
             </IconButton> */}

@@ -13,6 +13,8 @@ import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
 import { useUpdateVote } from '../../../../utils/Mutation/useVoteTag'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
+import UserDialog from '../UserDialog/UserDialog'
+import useModal from '../../../../utils/hooks/useModal'
 
 const useStyles = makeStyles(() => ({
   clickableFont: {
@@ -41,6 +43,7 @@ const DetailPart = (props) => {
   const [numberOfVote, setNumberOfVote] = useState(0)
   const [hasUpVote, setHasUpVote] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
+  const userDialogControl = useModal()
   useEffect(() => {
     setNumberOfVote(tagDetail ? tagDetail.status.numberOfUpVote : 0)
     setHasUpVote(tagDetail ? tagDetail.status.hasUpVote : false)
@@ -169,7 +172,11 @@ const DetailPart = (props) => {
                 <img src={EditIcon} alt='' />
                 狀態編輯紀錄
               </Box>
-              <Box className={classes.clickableFont} m={0.5}>
+              <Box
+                className={classes.clickableFont}
+                m={0.5}
+                onClick={() => userDialogControl.setOpen(true)}
+              >
                 {tagDetail.createUser.displayName} 編輯於{' '}
                 {tagDetail.newLastUpdateTime}
               </Box>
@@ -249,6 +256,10 @@ const DetailPart = (props) => {
               </IconButton>
             </Box>
           )}
+          <UserDialog
+            userId={tagDetail.createUser.uid}
+            control={userDialogControl}
+          />
         </>
       ) : (
         <Box
