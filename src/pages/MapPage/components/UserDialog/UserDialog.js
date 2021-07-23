@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
@@ -10,11 +10,12 @@ import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
 import { AppBar, Toolbar } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import * as firebase from 'firebase/app'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import EmailIcon from '@material-ui/icons/Email'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import useUserDetail from '../../../../utils/hooks/useUserDetail'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -34,6 +35,8 @@ function UserDialog(props) {
     userId,
     control: { open, setClose }
   } = props
+  const { uid } = useUserValue()
+  // console.log(uid)
   const classes = useStyles()
   const { userAddTags } = useTagValue()
   const [likeNum, setLikeNum] = useState(0)
@@ -66,14 +69,7 @@ function UserDialog(props) {
       <DialogContent>
         <Box m={3} display='flex' flexDirection='column' alignItems='center'>
           <>
-            <Avatar
-              className={classes.picture}
-              src={
-                firebase.auth().currentUser
-                  ? firebase.auth().currentUser.photoURL
-                  : ''
-              }
-            >
+            <Avatar className={classes.picture} src={userDetail.photoURL}>
               {/* <IconButton style={{ position: 'absolute', bottom: '0' }}>
                 <EditIcon style={{ color: 'C6C6C6' }} />
               </IconButton>
@@ -94,16 +90,27 @@ function UserDialog(props) {
               <EditIcon style={{ color: 'C6C6C6' }} />
             </IconButton> */}
           </Box>
-
           <Grid container spacing={2}>
+            {userId === uid ? (
+              <Grid item container xs={12} alignItems='center'>
+                <EmailIcon style={{ marginRight: '8px' }} />
+                {userDetail.email}
+              </Grid>
+            ) : (
+              ' '
+            )}
             <Grid item container xs={12} alignItems='center'>
               <AssessmentIcon style={{ marginRight: '8px' }} />
-              回報次數：{userAddTags ? userAddTags.length : 0}
+              回報次數：{userDetail.userAddTagNumber}
             </Grid>
-            <Grid item container xs={12} alignItems='center'>
-              <ThumbUpAltIcon style={{ marginRight: '8px' }} />
-              收到的讚：{likeNum}
-            </Grid>
+            {userId === uid ? (
+              <Grid item container xs={12} alignItems='center'>
+                <ThumbUpAltIcon style={{ marginRight: '8px' }} />
+                收到的讚：{likeNum}
+              </Grid>
+            ) : (
+              ' '
+            )}
           </Grid>
         </Box>
       </DialogContent>

@@ -28,6 +28,7 @@ const initialUser = {
   userName: '',
   userEmail: '',
   userPicture: '',
+  uid: '',
   token: null
 }
 const actionTypes = {
@@ -35,6 +36,7 @@ const actionTypes = {
   setUserEmail: 'setUserEmail',
   setUserPicture: 'setUserPicture',
   setToken: 'setToken',
+  setUid: 'setUid',
   cleanUser: 'cleanUser'
 }
 
@@ -48,6 +50,8 @@ const reducer = (user, action) => {
       return { ...user, userPicture: action.payload }
     case actionTypes.setToken:
       return { ...user, token: action.payload }
+    case actionTypes.setUid:
+      return { ...user, uid: action.payload }
     case actionTypes.cleanUser:
       return initialUser
     default:
@@ -92,6 +96,10 @@ export const UserContextProvider = withFirebaseAuth({
       dispatch({
         type: actionTypes.setToken,
         payload: await user.getIdToken()
+      })
+      dispatch({
+        type: actionTypes.setUid,
+        payload: user.uid
       })
     }
   }, [user])
