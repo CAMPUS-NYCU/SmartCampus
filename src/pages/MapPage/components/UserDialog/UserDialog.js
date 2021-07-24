@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
@@ -10,12 +10,11 @@ import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
 import { AppBar, Toolbar } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-// import EditIcon from '@material-ui/icons/Edit'
-import * as firebase from 'firebase/app'
-import EmailIcon from '@material-ui/icons/Email'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import { useTagValue } from '../../../../utils/contexts/TagContext'
+import EmailIcon from '@material-ui/icons/Email'
+import useUserDetail from '../../../../utils/hooks/useUserDetail'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -30,23 +29,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function ProfileDialog(props) {
+function UserDialog(props) {
   const {
+    userId,
     control: { open, setClose }
   } = props
+  const { uid } = useUserValue()
+  // console.log(uid)
   const classes = useStyles()
-  const { userAddTags } = useTagValue()
-  const [likeNum, setLikeNum] = useState(0)
-  useEffect(() => {
-    if (userAddTags) {
-      userAddTags.forEach((t) => {
-        if (t.status.numberOfUpVote) {
-          setLikeNum((prevLikeNum) => prevLikeNum + t.status.numberOfUpVote)
-        }
-      })
-    }
-  }, [userAddTags])
-
+  // const {userDetail,getUserDetail}=useUserDetail()
+  const { userDetail } = useUserDetail({ userId })
   return (
     <Dialog
       onClose={setClose}
@@ -65,14 +57,7 @@ function ProfileDialog(props) {
       <DialogContent>
         <Box m={3} display='flex' flexDirection='column' alignItems='center'>
           <>
-            <Avatar
-              className={classes.picture}
-              src={
-                firebase.auth().currentUser
-                  ? firebase.auth().currentUser.photoURL
-                  : ''
-              }
-            >
+            <Avatar className={classes.picture} src={userDetail.photoURL}>
               {/* <IconButton style={{ position: 'absolute', bottom: '0' }}>
                 <EditIcon style={{ color: 'C6C6C6' }} />
               </IconButton>
@@ -88,31 +73,30 @@ function ProfileDialog(props) {
             </Avatar>
           </>
           <Box m={4} display='flex' alignItems='center'>
-            <Typography variant='h5'>
-              {firebase.auth().currentUser
-                ? firebase.auth().currentUser.displayName
-                : '匿名'}
-            </Typography>
+            <Typography variant='h5'>{userDetail.displayName}</Typography>
             {/* <IconButton edge='end'>
               <EditIcon style={{ color: 'C6C6C6' }} />
             </IconButton> */}
           </Box>
-
           <Grid container spacing={2}>
-            <Grid item container xs={12} alignItems='center'>
-              <EmailIcon style={{ marginRight: '8px' }} />
-              {firebase.auth().currentUser
-                ? firebase.auth().currentUser.email
-                : ''}
-            </Grid>
+            {userId === uid && (
+              <Grid item container xs={12} alignItems='center'>
+                <EmailIcon style={{ marginRight: '8px' }} />
+                {userDetail.email}
+              </Grid>
+            )}
             <Grid item container xs={12} alignItems='center'>
               <AssessmentIcon style={{ marginRight: '8px' }} />
-              回報次數：{userAddTags ? userAddTags.length : 0}
+              回報次數：{userDetail.userAddTagNumber}
             </Grid>
-            <Grid item container xs={12} alignItems='center'>
-              <ThumbUpAltIcon style={{ marginRight: '8px' }} />
-              收到的讚：{likeNum}
-            </Grid>
+            {userId === uid ? (
+              <Grid item container xs={12} alignItems='center'>
+                <ThumbUpAltIcon style={{ marginRight: '8px' }} />
+                收到的讚：{userDetail.userAddTagNumber}
+              </Grid>
+            ) : (
+              ' '
+            )}
           </Grid>
         </Box>
       </DialogContent>
@@ -120,11 +104,11 @@ function ProfileDialog(props) {
   )
 }
 
-ProfileDialog.propTypes = {
+UserDialog.propTypes = {
   control: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     setClose: PropTypes.func.isRequired
   }).isRequired
 }
 
-export default ProfileDialog
+export default UserDialog

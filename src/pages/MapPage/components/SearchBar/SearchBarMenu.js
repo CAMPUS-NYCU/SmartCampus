@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 function SearchBarMenu(props) {
   const {
     control: { open, anchorEl, setClose },
-    menuControls: { handleOpenProfile, handleOpenHistory, handleOpenHowToUse }
+    menuControls: { handleOpenUser, handleOpenHistory, handleOpenHowToUse }
   } = props
   const classes = useStyles()
   const { signOut } = useUserValue()
@@ -34,7 +34,7 @@ function SearchBarMenu(props) {
     {
       id: 1,
       text: '個人資料',
-      action: handleOpenProfile,
+      action: handleOpenUser,
       icon: <PersonIcon color='primary' />
     },
     {
@@ -107,7 +107,7 @@ SearchBarMenu.propTypes = {
     setClose: PropTypes.func.isRequired
   }).isRequired,
   menuControls: PropTypes.shape({
-    handleOpenProfile: PropTypes.func.isRequired,
+    handleOpenUser: PropTypes.func.isRequired,
     handleOpenHistory: PropTypes.func.isRequired,
     handleOpenSetting: PropTypes.func.isRequired,
     handleOpenHowToUse: PropTypes.func.isRequired,

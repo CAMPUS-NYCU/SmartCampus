@@ -13,11 +13,15 @@ import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
 import { useUpdateVote } from '../../../../utils/Mutation/useVoteTag'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
+import UserDialog from '../UserDialog/UserDialog'
+import useModal from '../../../../utils/hooks/useModal'
 
 const useStyles = makeStyles(() => ({
   clickableFont: {
     fontSize: '0.8em',
-    color: 'gray'
+    color: 'gray',
+    cursor: 'pointer',
+    textDecoration: 'underline'
   }
 }))
 
@@ -41,6 +45,7 @@ const DetailPart = (props) => {
   const [numberOfVote, setNumberOfVote] = useState(0)
   const [hasUpVote, setHasUpVote] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
+  const userDialogControl = useModal()
   useEffect(() => {
     setNumberOfVote(tagDetail ? tagDetail.status.numberOfUpVote : 0)
     setHasUpVote(tagDetail ? tagDetail.status.hasUpVote : false)
@@ -155,10 +160,6 @@ const DetailPart = (props) => {
             <Box display='flex' flexDirection='column' alignItems='flex-end'>
               <Box
                 className={classes.clickableFont}
-                style={{
-                  textDecoration: 'underline',
-                  cursor: 'pointer'
-                }}
                 m={0.5}
                 width='85px'
                 display='flex'
@@ -169,9 +170,17 @@ const DetailPart = (props) => {
                 <img src={EditIcon} alt='' />
                 狀態編輯紀錄
               </Box>
-              <Box className={classes.clickableFont} m={0.5}>
-                {tagDetail.createUser.displayName} 編輯於{' '}
-                {tagDetail.newLastUpdateTime}
+              <Box m={0.5} style={{ fontSize: '0.8em', color: 'gray' }}>
+                <Box
+                  display='inline'
+                  className={classes.clickableFont}
+                  style={{ fontSize: '1em' }}
+                  onClick={() => userDialogControl.setOpen(true)}
+                  mr={1}
+                >
+                  {tagDetail.createUser.displayName}
+                </Box>
+                編輯於 {tagDetail.newLastUpdateTime}
               </Box>
             </Box>
           </Box>
@@ -249,6 +258,10 @@ const DetailPart = (props) => {
               </IconButton>
             </Box>
           )}
+          <UserDialog
+            userId={tagDetail.createUser.uid}
+            control={userDialogControl}
+          />
         </>
       ) : (
         <Box

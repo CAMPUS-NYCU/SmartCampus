@@ -19,6 +19,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
       }
       createUser {
         displayName
+        uid
       }
       statusHistory {
         statusList {
@@ -48,6 +49,7 @@ const tagDetailInitial = {
     hasUpVote: null
   },
   createUser: {
+    uid: '',
     displayName: ''
   },
   statusHistory: {
