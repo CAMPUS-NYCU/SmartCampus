@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
@@ -13,7 +13,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import EmailIcon from '@material-ui/icons/Email'
-import { useTagValue } from '../../../../utils/contexts/TagContext'
 import useUserDetail from '../../../../utils/hooks/useUserDetail'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
 
@@ -38,19 +37,8 @@ function UserDialog(props) {
   const { uid } = useUserValue()
   // console.log(uid)
   const classes = useStyles()
-  const { userAddTags } = useTagValue()
-  const [likeNum, setLikeNum] = useState(0)
   // const {userDetail,getUserDetail}=useUserDetail()
   const { userDetail } = useUserDetail({ userId })
-  useEffect(() => {
-    if (userAddTags) {
-      userAddTags.forEach((t) => {
-        if (t.status.numberOfUpVote) {
-          setLikeNum((prevLikeNum) => prevLikeNum + t.status.numberOfUpVote)
-        }
-      })
-    }
-  }, [userAddTags])
   return (
     <Dialog
       onClose={setClose}
@@ -91,13 +79,11 @@ function UserDialog(props) {
             </IconButton> */}
           </Box>
           <Grid container spacing={2}>
-            {userId === uid ? (
+            {userId === uid && (
               <Grid item container xs={12} alignItems='center'>
                 <EmailIcon style={{ marginRight: '8px' }} />
                 {userDetail.email}
               </Grid>
-            ) : (
-              ' '
             )}
             <Grid item container xs={12} alignItems='center'>
               <AssessmentIcon style={{ marginRight: '8px' }} />
@@ -106,7 +92,7 @@ function UserDialog(props) {
             {userId === uid ? (
               <Grid item container xs={12} alignItems='center'>
                 <ThumbUpAltIcon style={{ marginRight: '8px' }} />
-                收到的讚：{likeNum}
+                收到的讚：{userDetail.userAddTagNumber}
               </Grid>
             ) : (
               ' '

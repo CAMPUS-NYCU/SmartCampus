@@ -107,7 +107,7 @@ SearchBarMenu.propTypes = {
     setClose: PropTypes.func.isRequired
   }).isRequired,
   menuControls: PropTypes.shape({
-    handleOpenProfile: PropTypes.func.isRequired,
+    handleOpenUser: PropTypes.func.isRequired,
     handleOpenHistory: PropTypes.func.isRequired,
     handleOpenSetting: PropTypes.func.isRequired,
     handleOpenHowToUse: PropTypes.func.isRequired,
