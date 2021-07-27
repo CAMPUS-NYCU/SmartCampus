@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 
@@ -30,7 +30,7 @@ function MissionDrawer() {
   const classes = useStyles()
   const { currentStep, missionType } = useMissionValue()
 
-  const getDrawerTitle = () => {
+  const getDrawerTitle = useCallback(() => {
     if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
       return '更改座標位置'
     }
@@ -41,7 +41,7 @@ function MissionDrawer() {
       return `選擇要標注的任務`
     }
     return `標註${missionInfo[missionType].missionName}`
-  }
+  }, [isInEdit, currentStep, missionType])
   return (
     <>
       {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (
@@ -56,12 +56,16 @@ function MissionDrawer() {
           title={getDrawerTitle()}
           variant={currentStep === 1 ? 'persistent' : 'temporary'}
         >
-          <Box px={2} py={1} className={classes.missionContent}>
-            {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-            {currentStep === MissionStep.selectMissionName && <MissionStep0 />}
-            {currentStep === MissionStep.SelectMission && <MissionStep2 />}
-          </Box>
-          <MissionStepper />
+          <>
+            <Box px={2} py={1} className={classes.missionContent}>
+              {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
+              {currentStep === MissionStep.selectMissionName && (
+                <MissionStep0 />
+              )}
+              {currentStep === MissionStep.SelectMission && <MissionStep2 />}
+            </Box>
+            <MissionStepper />
+          </>
         </CustomDrawer>
       ) : (
         <>

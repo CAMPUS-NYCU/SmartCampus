@@ -1,27 +1,14 @@
 import React, { useState } from 'react'
-import { makeStyles, Typography, Grid, Button, Box } from '@material-ui/core'
+import { Typography, Grid, Box } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { facilitySubType, missionInfo } from '../../../../constants/missionInfo'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
-
-const useStyles = makeStyles({
-  content: {
-    overflowY: 'scroll'
-  },
-  button: {
-    position: 'absolute',
-    bottom: '20px',
-    left: '10%',
-    width: '80%',
-    borderRadius: '20px'
-  }
-})
+import CustomButton from '../../../../components/CustomButton'
 
 const FilterDrawer = (props) => {
   const { open, onClose } = props
-  const classes = useStyles()
   const { addFilterTags } = useTagValue()
   const [currentMission, setCurrentMission] = useState(null)
   const [currentSubmission, setCurrentSubmission] = useState(null)
@@ -94,79 +81,97 @@ const FilterDrawer = (props) => {
       closeButton
       fullHeight
     >
-      <Box p={2} display='flex'>
-        <Grid container spacing={2}>
-          <Grid container item xs={12} direction='row'>
-            <Typography variant='h6'>標註類型</Typography>
-          </Grid>
-          {missionInfo.map((mission) => (
-            <Grid key={mission.missionName} item xs={4}>
-              <Button
-                variant='contained'
-                fullWidth
-                size='small'
-                color={currentMission !== mission ? '' : 'primary'}
-                onClick={() => {
-                  changeCurrentMission(mission)
-                }}
-              >
-                {mission.missionName}
-              </Button>
+      <>
+        <Box p={2} display='flex'>
+          <Grid container spacing={2}>
+            <Grid container item xs={12} direction='row'>
+              <Typography variant='h6'>標註類型</Typography>
             </Grid>
-          ))}
-          <Grid container item xs={12} direction='row'>
-            <Typography variant='h6'>設施類型</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              {subMission.map((discovery) => (
-                <Grid id={discovery.subTypeName} item xs={4}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='small'
-                    color={currentSubmission !== discovery ? '' : 'primary'}
-                    onClick={() => changeCurrentSubmission(discovery)}
-                  >
-                    {discovery.subTypeName}
-                  </Button>
-                </Grid>
-              ))}
+            {missionInfo.map((mission) => (
+              <Grid key={mission.missionName} item xs={4}>
+                <CustomButton
+                  fullWidth
+                  buttonType={
+                    currentMission !== mission
+                      ? 'boxButton_inactivated'
+                      : 'boxButton_activated'
+                  }
+                  variant='contained'
+                  size='small'
+                  onClick={() => changeCurrentMission(mission)}
+                >
+                  {mission.missionName}
+                </CustomButton>
+              </Grid>
+            ))}
+            <Grid container item xs={12} direction='row'>
+              <Typography variant='h6'>設施類型</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                {subMission.map((discovery) => (
+                  <Grid key={discovery.subTypeName} item xs={4}>
+                    <CustomButton
+                      fullWidth
+                      buttonType={
+                        currentSubmission !== discovery
+                          ? 'boxButton_inactivated'
+                          : 'boxButton_activated'
+                      }
+                      variant='contained'
+                      size='small'
+                      onClick={() => changeCurrentSubmission(discovery)}
+                    >
+                      {discovery.subTypeName}
+                    </CustomButton>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+            <Grid container item xs={12} direction='row'>
+              <Typography variant='h6'>具體設施</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                {target.map((discovery) => (
+                  <Grid key={discovery.targetName} item xs={4}>
+                    <CustomButton
+                      fullWidth
+                      buttonType={
+                        currentTarget !== discovery.targetName
+                          ? 'boxButton_inactivated'
+                          : 'boxButton_activated'
+                      }
+                      variant='contained'
+                      size='small'
+                      onClick={() => changeCurrentTarget(discovery.targetName)}
+                    >
+                      {discovery.targetName}
+                    </CustomButton>
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={12} direction='row'>
-            <Typography variant='h6'>具體設施</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              {target.map((discovery) => (
-                <Grid id={discovery.targetName} item xs={4}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='small'
-                    color={
-                      currentTarget !== discovery.targetName ? '' : 'primary'
-                    }
-                    onClick={() => changeCurrentTarget(discovery.targetName)}
-                  >
-                    {discovery.targetName}
-                  </Button>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Box>
-      <Button
-        className={classes.button}
-        onClick={handleFinishFilter}
-        color={final ? 'primary' : ''}
-        disabled={!final}
-        variant='contained'
-      >
-        加入
-      </Button>
+        </Box>
+
+        <CustomButton
+          buttonType={
+            final ? 'roundButton_activated' : 'roundButton_inactivated'
+          }
+          variant='contained'
+          onClick={handleFinishFilter}
+          disabled={!final}
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '10%',
+            width: '80%'
+          }}
+        >
+          加入
+        </CustomButton>
+      </>
     </CustomDrawer>
   )
 }

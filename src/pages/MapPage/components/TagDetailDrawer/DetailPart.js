@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
@@ -12,27 +12,31 @@ import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
 import { useUpdateVote } from '../../../../utils/Mutation/useVoteTag'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
+import UserDialog from '../UserDialog/UserDialog'
+import useModal from '../../../../utils/hooks/useModal'
 
 const useStyles = makeStyles(() => ({
   clickableFont: {
     fontSize: '0.8em',
-    color: 'gray'
+    color: 'gray',
+    cursor: 'pointer',
+    textDecoration: 'underline'
   }
 }))
 
 const DetailPart = (props) => {
   const {
-    detail,
+    tagDetail,
     activeTag,
     missionName,
     setLargeImg,
     setStateDrawer,
     tagMissionIndex,
-    deny,
-    guest,
     threshold
   } = props
   const classes = useStyles()
+  const { isGuest, signOut } = useUserValue()
   const [openHistory, setOpenHistory] = useState(false)
   const handleHistoryClose = () => {
     setOpenHistory(false)
@@ -41,49 +45,50 @@ const DetailPart = (props) => {
   const [numberOfVote, setNumberOfVote] = useState(0)
   const [hasUpVote, setHasUpVote] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
+  const userDialogControl = useModal()
   useEffect(() => {
-    setNumberOfVote(detail ? detail.status.numberOfUpVote : 0)
-    setHasUpVote(detail ? detail.status.hasUpVote : false)
-    if (activeTag.status.statusName === '已解決' && detail) {
+    setNumberOfVote(tagDetail ? tagDetail.status.numberOfUpVote : 0)
+    setHasUpVote(tagDetail ? tagDetail.status.hasUpVote : false)
+    if (tagDetail.status.statusName === '已解決' && tagDetail) {
       enqueueSnackbar(
         `再${
-          detail ? threshold - detail.status.numberOfUpVote : threshold
+          tagDetail ? threshold - tagDetail.status.numberOfUpVote : threshold
         }人投票即可刪除回報`,
         {
           variant: 'warning'
         }
       )
     }
-  }, [detail, enqueueSnackbar, activeTag, threshold])
-  const handleUopVote = () => {
-    if (guest) {
-      deny()
+  }, [tagDetail, enqueueSnackbar, threshold])
+  const handleUopVote = useCallback(() => {
+    if (isGuest) {
+      signOut()
       return
     }
     setNumberOfVote((prevNumberOfVote) =>
       hasUpVote ? prevNumberOfVote - 1 : prevNumberOfVote + 1
     )
-    upVote(detail.id, !hasUpVote)
+    upVote(tagDetail.id, !hasUpVote)
     setHasUpVote((prevHasUpVote) => !prevHasUpVote)
-  }
+  }, [signOut, isGuest, tagDetail.id, hasUpVote, upVote])
 
   return (
     <>
-      {detail ? (
+      {tagDetail.id ? (
         <>
           <div
             style={{
               width: '100%',
               margin: '4vw 0 0 0',
               height: '100%',
-              webkitFlexGrow: '1',
+              flexGrow: '1',
               overflowX: 'scroll',
               overflowY: 'hidden',
               display: '-webkit-flex',
               flexDirection: 'row'
             }}
           >
-            {detail.imageUrl.length === 0 ? (
+            {tagDetail.imageUrl.length === 0 ? (
               <div
                 style={{
                   width: '100%',
@@ -95,9 +100,10 @@ const DetailPart = (props) => {
                 }}
               />
             ) : (
-              detail.imageUrl.map((url) => {
+              tagDetail.imageUrl.map((url) => {
                 return (
                   <Button
+                    key={url}
                     onClick={() => setLargeImg(`${url}`)}
                     style={{
                       width: '80%',
@@ -111,7 +117,7 @@ const DetailPart = (props) => {
                 )
               })
             )}
-            {detail.imageUrl.length === 1 && (
+            {tagDetail.imageUrl.length === 1 && (
               <div
                 style={{
                   width: '80%',
@@ -135,8 +141,8 @@ const DetailPart = (props) => {
             <Button
               id='changeStatusButton'
               onClick={() => {
-                if (guest) {
-                  deny()
+                if (isGuest) {
+                  signOut()
                 } else {
                   setStateDrawer(true)
                 }
@@ -144,10 +150,8 @@ const DetailPart = (props) => {
               style={{
                 background: '#FDCC4F',
                 /* Primary_light */
-                border: '1px solid #FFEDC0',
                 borderRadius: '20px',
-                boxShadow:
-                  'inset 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 4px 4px rgba(0, 0, 0, 0.25)'
+                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
               }}
               variant='contained'
             >
@@ -156,10 +160,6 @@ const DetailPart = (props) => {
             <Box display='flex' flexDirection='column' alignItems='flex-end'>
               <Box
                 className={classes.clickableFont}
-                style={{
-                  textDecoration: 'underline',
-                  cursor: 'pointer'
-                }}
                 m={0.5}
                 width='85px'
                 display='flex'
@@ -170,9 +170,17 @@ const DetailPart = (props) => {
                 <img src={EditIcon} alt='' />
                 狀態編輯紀錄
               </Box>
-              <Box className={classes.clickableFont} m={0.5}>
-                {detail.createUser.displayName} 編輯於{' '}
-                {detail.newLastUpdateTime}
+              <Box m={0.5} style={{ fontSize: '0.8em', color: 'gray' }}>
+                <Box
+                  display='inline'
+                  className={classes.clickableFont}
+                  style={{ fontSize: '1em' }}
+                  onClick={() => userDialogControl.setOpen(true)}
+                  mr={1}
+                >
+                  {tagDetail.createUser.displayName}
+                </Box>
+                編輯於 {tagDetail.newLastUpdateTime}
               </Box>
             </Box>
           </Box>
@@ -186,7 +194,7 @@ const DetailPart = (props) => {
               paddingBottom: '2'
             }}
           >
-            {activeTag.status.description ? (
+            {tagDetail.status.description ? (
               <Box
                 my={2}
                 textOverflow='ellipsis'
@@ -194,18 +202,18 @@ const DetailPart = (props) => {
                 overflow='hidden'
                 height='4.5em'
               >
-                {activeTag.status.description}
+                {tagDetail.status.description}
               </Box>
             ) : (
               <p>無描述</p>
             )}
             <Box display='flex' justifyContent='flex-end'>
               <Box className={classes.clickableFont} m={0.5}>
-                {detail.newCreateTime}
+                {tagDetail.newCreateTime}
               </Box>
             </Box>
           </div>
-          {activeTag.status.statusName === '已解決' && (
+          {tagDetail.status.statusName === '已解決' && (
             <Box
               display='flex'
               justifyContent='flex-end'
@@ -241,7 +249,7 @@ const DetailPart = (props) => {
                 style={{
                   marginLeft: '8px',
                   background: hasUpVote ? '#FDCC4F' : '#EEEEEE',
-                  border: '1px solid #BABABA',
+                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
                   fontSize: '15px'
                 }}
                 onClick={handleUopVote}
@@ -250,36 +258,40 @@ const DetailPart = (props) => {
               </IconButton>
             </Box>
           )}
+          <UserDialog
+            userId={tagDetail.createUser.uid}
+            control={userDialogControl}
+          />
         </>
       ) : (
         <Box
           height='100%'
           display='flex'
           alignItems='center'
-          style={{ webkitFlexGrow: '1', display: '-webkit-flex' }}
+          style={{ flexGrow: '1', display: '-webkit-flex' }}
         >
           <CircularProgress />
         </Box>
       )}
-      <EditHistory
-        open={openHistory}
-        handleHistoryClose={handleHistoryClose}
-        tagMissionIndex={tagMissionIndex}
-        activeTag={activeTag}
-      />
+      {tagDetail.id && (
+        <EditHistory
+          open={openHistory}
+          handleHistoryClose={handleHistoryClose}
+          tagMissionIndex={tagMissionIndex}
+          tagDetail={tagDetail}
+        />
+      )}
     </>
   )
 }
 
 DetailPart.propTypes = {
-  detail: PropTypes.object.isRequired,
+  tagDetail: PropTypes.object.isRequired,
   activeTag: PropTypes.object.isRequired,
-  missionName: PropTypes.string.isRequired,
+  missionName: PropTypes.array.isRequired,
   setLargeImg: PropTypes.func.isRequired,
   setStateDrawer: PropTypes.func.isRequired,
   tagMissionIndex: PropTypes.number.isRequired,
-  deny: PropTypes.func.isRequired,
-  guest: PropTypes.bool.isRequired,
   threshold: PropTypes.number.isRequired
 }
 

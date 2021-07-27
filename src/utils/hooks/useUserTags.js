@@ -1,33 +1,37 @@
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+import { gql, useQuery } from '@apollo/client'
+
 import * as firebase from 'firebase/app'
 import { generateTime } from './useTagDetail'
 
 const GET_USER_TAGS_QUERY = gql`
   query getUserTags($uid: ID!) {
     userAddTagHistory(uid: $uid) {
-      id
-      locationName
-      category {
-        missionName
-        subTypeName
-        targetName
-      }
-      status {
-        statusName
-        numberOfUpVote
-      }
-      statusHistory {
-        statusName
-        createTime
+      tags {
+        id
+        locationName
+        category {
+          missionName
+          subTypeName
+          targetName
+        }
+        status {
+          statusName
+          numberOfUpVote
+        }
+        statusHistory {
+          statusList {
+            statusName
+            createTime
+          }
+        }
       }
     }
   }
 `
 
 const reformatTagList = (data) => {
-  const tagRenderList = data ? data.userAddTagHistory : []
+  const tagRenderList = data ? data.userAddTagHistory.tags : []
   const tagList = tagRenderList.map((tag) => {
     const {
       id,
@@ -35,7 +39,7 @@ const reformatTagList = (data) => {
       category: { missionName, subTypeName, targetName },
       status: { statusName, numberOfUpVote }
     } = tag
-    const statusHistory = tag.statusHistory.map((history) => {
+    const statusHistory = tag.statusHistory.statusList.map((history) => {
       return {
         statusName: history.statusName,
         createTime: generateTime(history.createTime)
@@ -56,7 +60,7 @@ const useUserTags = () => {
   const uid = firebase.auth().currentUser ? firebase.auth().currentUser.uid : ''
   const [userAddTags, setUserAddTags] = useState(null)
   const { data, refetch } = useQuery(GET_USER_TAGS_QUERY, {
-    fetchPolicy: "no-cache",
+    fetchPolicy: 'no-cache',
     variables: {
       uid
     },
@@ -64,15 +68,15 @@ const useUserTags = () => {
       setUserAddTags(reformatTagList(data))
     }
   })
-  
-  const refetchUserAddTags = () => {
-    //refetch
-    refetch({fetchPolicy: "no-cache"}).then((d) => {
+
+  const refetchUserAddTags = useCallback(() => {
+    // refetch
+    refetch({ fetchPolicy: 'no-cache' }).then((d) => {
       setUserAddTags(reformatTagList(d.data))
     })
-  }
+  }, [refetch])
 
-  return { userAddTags, setUserAddTags, refetchUserAddTags}
+  return { userAddTags, setUserAddTags, refetchUserAddTags }
 }
 
 export default useUserTags

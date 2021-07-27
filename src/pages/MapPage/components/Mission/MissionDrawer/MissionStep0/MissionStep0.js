@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   List,
   ListItem,
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const MissionStep0 = () => {
-  const missionImage = [Mission1, Mission2, Mission3]
+  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const { missionType, handleChangeMissionType } = useMissionValue()
   const classes = useStyles()
   return (
@@ -30,7 +30,7 @@ const MissionStep0 = () => {
         <ListItem
           onClick={() => handleChangeMissionType(index)}
           button
-          disabled={index === 2}
+          key={item.missionName}
         >
           <ListItemIcon>
             <img

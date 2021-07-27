@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { MobileStepper, Button, CircularProgress } from '@material-ui/core'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { makeStyles } from '@material-ui/core/styles'
-import * as firebase from 'firebase/app'
-import { gql } from 'apollo-boost'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { gql, useLazyQuery, useMutation } from '@apollo/client'
 import { useSnackbar } from 'notistack'
+
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 import GuidePageStep1 from './GuidePageStep1'
 import GuidePageStep2 from './GuidePageStep2'
 import GuidePageStep3 from './GuidePageStep3'
@@ -38,61 +38,47 @@ const SET_HAS_READ_GUIDE_MUTATION = gql`
 `
 
 const GuidePage = (props) => {
-  const { step, setStep, handleNext, handleBack, guest, width } = props
-  const [token, setToken] = useState('')
+  const { step, setStep, handleNext, handleBack, width } = props
+  const { token, isGuest } = useUserValue()
   const [setHasReadGuideMutation] = useMutation(SET_HAS_READ_GUIDE_MUTATION)
-  const [hasReadGuide, setHasReadGuide] = useState(null)
   const { enqueueSnackbar } = useSnackbar()
 
-  const [loadHasReadGuide, { data }] = useLazyQuery(GET_READ_GUIDE_QUERY, {
-    context: {
-      headers: {
-        authorization: token ? `Bearer ${token}` : ''
-      }
-    },
-    fetchPolicy: 'no-cache',
-    onCompleted: () => {
-      setHasReadGuide(data.hasReadGuide)
-    }
-  })
-  if (data && firebase.auth().currentUser && hasReadGuide === null) {
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((t) => {
-        setToken(t)
-        if (data.hasReadGuide) {
-          setHasReadGuide(data.hasReadGuide)
-          if (!data.hasReadGuide) {
-            setHasReadGuideMutation({
-              context: {
-                headers: {
-                  authorization: token ? `Bearer ${token}` : ''
-                }
-              }
-            })
-            if (isWidthUp('sm', width)) {
-              enqueueSnackbar('功能介紹目前只能在手機上瀏覽')
-              setStep(3)
-            }
-          } else {
-            setStep(3)
-          }
+  const [loadHasReadGuide, { data = null }] = useLazyQuery(
+    GET_READ_GUIDE_QUERY,
+    {
+      context: {
+        headers: {
+          authorization: token ? `Bearer ${token}` : ''
         }
-      })
-  }
+      },
+      fetchPolicy: 'no-cache'
+    }
+  )
   useEffect(() => {
     if (isWidthUp('sm', width)) {
       enqueueSnackbar('功能介紹目前只能在手機上瀏覽', { variant: 'warning' })
       setStep(3)
     }
-  }, [hasReadGuide, setStep, width, enqueueSnackbar, step])
+  }, [setStep, enqueueSnackbar, width])
   useEffect(() => {
-    if (token) {
+    if (token && !isGuest) {
       loadHasReadGuide()
     }
-  }, [token, loadHasReadGuide])
-  return data === null && !guest ? (
+  }, [token, loadHasReadGuide, isGuest])
+  useEffect(() => {
+    if (data && !data.hasReadGuide) {
+      setHasReadGuideMutation({
+        context: {
+          headers: {
+            authorization: token ? `Bearer ${token}` : ''
+          }
+        }
+      })
+    } else if (data && data.hasReadGuide) {
+      setStep(3)
+    }
+  }, [data, token, setHasReadGuideMutation, setStep])
+  return data === null && !isGuest ? (
     <LoadingPage />
   ) : (
     <GuidePageContent

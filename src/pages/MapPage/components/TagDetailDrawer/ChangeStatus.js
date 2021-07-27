@@ -12,27 +12,25 @@ import {
   CircularProgress,
   TextField
 } from '@material-ui/core'
-import * as firebase from 'firebase/app'
 import PropTypes from 'prop-types'
-
-import WaitIcon from '../../../../assets/images/wait.svg'
-import SolvedIcon from '../../../../assets/images/solved.svg'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 
 function ChangeStatus(props) {
-  const { stateDrawer, activeTag, setStateDrawer, status } = props
+  const { stateDrawer, tagDetail, setStateDrawer, status } = props
   const [temporaryTagState, setTemporaryTagState] = useState(
-    activeTag.status.statusName
+    tagDetail.status.statusName
   )
-  const { updateTagList, refetch } = useTagValue()
+  const { fetchTagDetail } = useTagValue()
+  const { token } = useUserValue()
   const [loading, setLoading] = useState(false)
   const resetTemporaryTagState = () => {
-    setTemporaryTagState(activeTag.status.statusName)
+    setTemporaryTagState(tagDetail.status.statusName)
   }
   const [newDescription, setNewDescription] = useState(
-    activeTag.status.description
+    tagDetail.status.description
   )
   const handleChangeDescription = (event) => {
     setNewDescription(event.target.value)
@@ -42,33 +40,32 @@ function ChangeStatus(props) {
     resetTemporaryTagState()
   }
   const { updateStatus } = useUpdateTagStatus()
-  const handleDrawerComplete = () => {
+  const handleDrawerComplete = async () => {
     setLoading(true)
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then((token) => {
-        updateStatus({
+    if (token) {
+      try {
+        await updateStatus({
           context: {
             headers: {
               authorization: token ? `Bearer ${token}` : ''
             }
           },
           variables: {
-            tagId: activeTag.id,
+            tagId: tagDetail.id,
             statusName: temporaryTagState,
             description: newDescription
           }
-        }).then(() => {
-          refetch().then((data) => {
-            updateTagList(data.data)
-            setLoading(false)
-            setStateDrawer(false)
-          })
         })
-      })
+        await fetchTagDetail()
+        setLoading(false)
+        setStateDrawer(false)
+      } catch (err) {
+        console.error(err)
+        setLoading(false)
+        setStateDrawer(false)
+      }
+    }
   }
-  const images = [WaitIcon, SolvedIcon, SolvedIcon]
   return (
     <>
       <CustomDrawer
@@ -91,7 +88,14 @@ function ChangeStatus(props) {
                   onClick={() => setTemporaryTagState(item.statusName)}
                 >
                   <ListItemIcon>
-                    <img src={images[index]} alt='' />
+                    <img
+                      src={
+                        item.statusName === temporaryTagState
+                          ? item.statusOnIcon
+                          : item.statusIcon
+                      }
+                      alt=''
+                    />
                   </ListItemIcon>
                   <ListItemText
                     primary={item.statusName}
@@ -108,7 +112,7 @@ function ChangeStatus(props) {
                     multiline
                     rows={2}
                     variant='outlined'
-                    placeholder={activeTag.status.description}
+                    placeholder={tagDetail.status.description}
                     onChange={handleChangeDescription}
                     style={{
                       width: '90%',
@@ -147,7 +151,7 @@ function ChangeStatus(props) {
 
 ChangeStatus.propTypes = {
   stateDrawer: PropTypes.bool.isRequired,
-  activeTag: PropTypes.object.isRequired,
+  tagDetail: PropTypes.object.isRequired,
   setStateDrawer: PropTypes.func.isRequired,
   status: PropTypes.arrayOf(PropTypes.object).isRequired
 }

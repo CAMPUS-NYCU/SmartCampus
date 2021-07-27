@@ -5,13 +5,13 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Box,
-  Button
+  Box
 } from '@material-ui/core'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import CloseIcon from '@material-ui/icons/Close'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 import PropTypes from 'prop-types'
+import CustomButton from '../CustomButton'
 
 const useStyles = makeStyles((theme) => ({
   drawerPaperStyle: {
@@ -47,12 +47,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center'
-  },
-  titleActionButton: {
-    background: '#D8D8D8',
-    border: '1px solid #BABABA',
-    boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.12)',
-    borderRadius: '20px'
   }
 }))
 
@@ -106,14 +100,14 @@ const CustomDrawer = (props) => {
           <Box className={classes.titleActionContainer}>
             {titleActions.map((titleAction) => (
               <Box key={titleAction.name} p={2}>
-                <Button
-                  className={classes.titleActionButton}
+                <CustomButton
+                  buttonType='roundButton_inactivated'
                   size='small'
                   onClick={titleAction.handleOnClick}
-                  disable={titleAction.disable}
+                  disabled={titleAction.disable}
                 >
                   {titleAction.name}
-                </Button>
+                </CustomButton>
               </Box>
             ))}
           </Box>

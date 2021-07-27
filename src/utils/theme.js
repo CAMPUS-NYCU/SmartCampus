@@ -4,15 +4,19 @@ const ThemeSettings = {
   palette: {
     primary: {
       main: '#FDCC4F',
-      contrastText: '#ffffff'
+      contrastText: '#000000'
     },
     secondary: {
       main: '#F4511F',
       contrastText: '#ffffff'
     },
-    test:{
-      main:'#dce775',
+    test: {
+      main: '#dce775',
       contrastText: '#ffffff'
+    },
+    greyOut: {
+      main: '#EEEEEE',
+      contrastText: '#686868'
     }
   },
   overrides: {

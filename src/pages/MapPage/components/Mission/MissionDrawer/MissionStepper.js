@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { makeStyles } from '@material-ui/core/styles'
 import { Dialog, DialogTitle } from '@material-ui/core'
+import CustomButton from 'components/CustomButton'
 import {
   MISSION_MAX_STEP,
   useMissionValue,
   MissionStep
 } from '../../../../../utils/contexts/MissionContext'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   stepper: {
     position: 'fixed',
     bottom: 0,
@@ -32,9 +32,7 @@ const useStyles = makeStyles(theme => ({
     color: '#FDCC4F'
   },
   finishButton: {
-    filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
     background: '#EEEEEE',
-    border: '1px solid #E8E8E8',
     boxSizing: 'border-box',
     borderRadius: '20px'
   },
@@ -44,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: `10px`
   }
 }))
-function MissionStepper (props) {
+function MissionStepper(props) {
   const classes = useStyles()
   const {
     currentStep,
@@ -54,7 +52,7 @@ function MissionStepper (props) {
     ableToNextStep,
     handleCompleteStreetView,
     isInEdit,
-    setRemindOpen,
+    setRemindOpen
   } = useMissionValue()
   const { PlaceFlagOnStreet } = MissionStep
   const [finishOpen, setFinishOpen] = useState(false)
@@ -68,22 +66,24 @@ function MissionStepper (props) {
           activeStep={-1}
           className={classes.stepper}
           backButton={
-            <Button
+            <CustomButton
+              buttonType='textButton_activated'
               size='medium'
               onClick={handleCloseStreetView}
-              className={classes.button}
+              style={{ minWidth: 80 }}
             >
               取消
-            </Button>
+            </CustomButton>
           }
           nextButton={
-            <Button
+            <CustomButton
+              buttonType='textButton_activated'
               size='medium'
               onClick={handleCompleteStreetView}
-              className={classes.button}
+              style={{ minWidth: 80 }}
             >
               確定
-            </Button>
+            </CustomButton>
           }
           {...props}
         />
@@ -97,25 +97,30 @@ function MissionStepper (props) {
           className={classes.stepper}
           nextButton={
             currentStep >= MISSION_MAX_STEP ? (
-                <Button
-                color='primary'
+              <CustomButton
+                buttonType='textButton_activated'
                 size='medium'
-                onClick={() => {ableToNextStep === true ? (setFinishOpen(true)):(setRemindOpen(true))}}
-                className={classes.button}
-                >
+                onClick={
+                  ableToNextStep === true
+                    ? () => setFinishOpen(true)
+                    : () => setRemindOpen(true)
+                }
+                style={{ minWidth: 80 }}
+              >
                 確定
-                </Button>
+              </CustomButton>
             ) : (
-              <Button
+              <CustomButton
+                buttonType='textButton_activated'
                 size='medium'
                 disabled={!ableToNextStep}
                 onClick={handleNext}
-                className={classes.button}
+                style={{ minWidth: 80 }}
               >
                 {isInEdit && currentStep === MissionStep.PlaceFlagOnMap
                   ? ' 確定'
                   : '下一步'}
-              </Button>
+              </CustomButton>
             )
           }
           {...props}
@@ -126,7 +131,7 @@ function MissionStepper (props) {
         PaperProps={{
           style: {
             background: 'r #FAFAFA',
-            boxShadow: `0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2)`,
+            boxShadow: `0px 2px 4px rgba(0, 0, 0, 0.12), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2)`,
             borderRadius: `10px`
           }
         }}
@@ -139,20 +144,20 @@ function MissionStepper (props) {
           display='flex'
           justifyContent='space-around'
         >
-          <Button
-            className={classes.finishButton}
+          <CustomButton
+            buttonType='finishButton'
             onClick={() => {
               setFinishOpen(false)
             }}
           >
             取消
-          </Button>
-          <Button
-            className={classes.finishButton}
+          </CustomButton>
+          <CustomButton
+            buttonType='finishButton'
             onClick={handleCompleteMission}
           >
             送出
-          </Button>
+          </CustomButton>
         </Box>
       </Dialog>
     </>

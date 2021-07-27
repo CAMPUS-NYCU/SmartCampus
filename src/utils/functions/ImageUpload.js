@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
-
-import Button from '@material-ui/core/Button'
 import { useMissionValue } from '../contexts/MissionContext'
+import CustomButton from '../../components/CustomButton'
 
 function ImageUpload(props) {
   const { imageFiles, setImageFiles } = useMissionValue()
@@ -30,17 +29,18 @@ function ImageUpload(props) {
         onChange={changeFiles}
         multiple
       />
-      <Button
+
+      <CustomButton
+        buttonType={
+          imageFiles.length !== 0
+            ? 'roundButton_activated'
+            : 'roundButton_inactivated'
+        }
         variant='contained'
-        color={imageFiles.length !== 0 ? 'primary' : ''}
         onClick={fileButtonClick}
-        style={{
-          filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-          borderRadius: '20px'
-        }}
       >
         選擇照片
-      </Button>
+      </CustomButton>
     </>
   )
 }

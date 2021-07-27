@@ -26,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     maxWidth: 800,
-    width: '90%'
+    width: '90%',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    backgroundColor: '#FAFAFA'
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 const SearchBar = React.forwardRef((props, ref) => {
-  const { menuControls, signOut, ...otherProps } = props
+  const { menuControls, ...otherProps } = props
   const classes = useStyles()
   const menuControl = useMenu()
   const [open, changeOpen] = useState(false)
@@ -73,7 +75,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         <IconButton
           className={classes.iconButton}
           aria-label='filter'
-          onClick={currentStep === 1 ? '' : () => toggle(open)}
+          onClick={currentStep === 1 ? () => {} : () => toggle(open)}
         >
           {open === true ? (
             <img src={yellowfilter} alt='' />
@@ -85,17 +87,13 @@ const SearchBar = React.forwardRef((props, ref) => {
         <IconButton
           className={classes.iconButton}
           aria-label='menu'
-          onClick={currentStep === 1 ? '' : menuControl.setOpen}
+          onClick={currentStep === 1 ? () => {} : menuControl.setOpen}
         >
           <MenuIcon />
         </IconButton>
       </Paper>
       <Fillter open={open} />
-      <SearchBarMenu
-        control={menuControl}
-        menuControls={menuControls}
-        signOut={signOut}
-      />
+      <SearchBarMenu control={menuControl} menuControls={menuControls} />
     </div>
   )
 })

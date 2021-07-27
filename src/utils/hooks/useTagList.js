@@ -1,83 +1,34 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { gql, useQuery } from '@apollo/client'
 
-import { generateTime } from './useTagDetail'
+import useTagSubscription from './useTagsSubscription'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
     unarchivedTagList {
-      id
-      locationName
-      floor
-      category {
-        missionName
-        subTypeName
-        targetName
-      }
-      accessibility
-      coordinates {
-        latitude
-        longitude
-      }
-      status {
-        statusName
-        description
-      }
-      statusHistory {
-        statusName
-        createTime
-        createUser {
-          displayName
+      tags {
+        id
+        category {
+          missionName
+          subTypeName
+          targetName
         }
-        description
+        coordinates {
+          latitude
+          longitude
+        }
+        lastUpdateTime
       }
     }
   }
 `
 
-const reformatTagList = (data) => {
-  const tagRenderList = data ? data.unarchivedTagList : []
-  const filteredTags = tagRenderList.filter((tag) => {
-    return tag.coordinates
-  })
-  const tagList = filteredTags.map((tag) => {
-    const {
-      id,
-      locationName,
-      accessibility,
-      floor,
-      category: { missionName, subTypeName, targetName },
-      coordinates: { latitude, longitude },
-      status: { statusName, description }
-    } = tag
-    const statusHistory = tag.statusHistory.map((history) => {
-      return {
-        statusName: history.statusName,
-        createTime: generateTime(history.createTime),
-        createUser: history.createUser,
-        description: history.description
-      }
-    })
-    return {
-      id,
-      locationName,
-      accessibility,
-      floor,
-      category: { missionName, subTypeName, targetName },
-      position: {
-        lat: parseFloat(latitude),
-        lng: parseFloat(longitude)
-      },
-      status: { statusName, description },
-      statusHistory
-    }
-  })
-  return tagList
-}
-
 function useTagList() {
-  const { data, refetch } = useQuery(GET_TAG_LIST_QUERY, {})
+  const {
+    data: { unarchivedTagList: { tags = [] } = {} } = {},
+    refetch
+  } = useQuery(GET_TAG_LIST_QUERY, {})
+  const newTag = useTagSubscription()
   const [tagList, setTagList] = useState(null)
   const updateTagList = useCallback(() => {
     setTimeout(async () => {
@@ -86,8 +37,18 @@ function useTagList() {
     }, 30000)
   }, [refetch])
   useEffect(() => {
-    setTagList(reformatTagList(data))
-  }, [data])
+    setTagList(tags)
+  }, [tags])
+  useEffect(() => {
+    if (newTag.changeType === 'added') {
+      setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
+    }
+    if (newTag.changeType === 'archived') {
+      setTagList((prevTagList) =>
+        prevTagList.filter((tag) => tag.id !== newTag.tagContent.id)
+      )
+    }
+  }, [newTag])
   return { tags: tagList, refetch, updateTagList }
 }
 

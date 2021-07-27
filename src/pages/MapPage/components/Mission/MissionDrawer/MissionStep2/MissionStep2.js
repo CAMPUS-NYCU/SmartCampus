@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useMemo, useEffect } from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -14,17 +14,23 @@ import BusinessIcon from '@material-ui/icons/Business'
 import ApartmentIcon from '@material-ui/icons/Apartment'
 import DescriptionIcon from '@material-ui/icons/Description'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
-import {
-  useMissionValue,
-  MissionStep
-} from '../../../../../../utils/contexts/MissionContext'
-import ImageUpload from '../../../../../../utils/functions/ImageUpload'
-import { facilitySubType,missionName } from '../../../../../../constants/missionInfo'
-import PicturePreview from './PicturePreview'
 import Picker from 'react-mobile-picker-scroll'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
+import tagData from 'constants/tagData'
+import {
+  useMissionValue,
+  MissionStep,
+  floorMapping
+} from '../../../../../../utils/contexts/MissionContext'
+import ImageUpload from '../../../../../../utils/functions/ImageUpload'
+import {
+  facilitySubType,
+  missionName
+} from '../../../../../../constants/missionInfo'
+import PicturePreview from './PicturePreview'
+import CustomButton from '../../../../../../components/CustomButton'
 
-function MissionStep3 () {
+function MissionStep2() {
   const {
     selectedMissionId,
     handleSetSelectedMissionId,
@@ -40,17 +46,47 @@ function MissionStep3 () {
     missionType,
     floor,
     setFloor,
+    status,
+    setStatus,
     isInEdit,
-    remindOpen,
+    remindOpen
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
   const [floorDrawer, setFloorDrawer] = useState(false)
+  const [statusDrawer, setStatusDrawer] = useState(false)
   const [floorChoose, setFloorChoose] = useState(false)
+  const [statusChoose, setStatusChoose] = useState(false)
   const focusInput = useRef(null)
-  const { target = [] } =
-    facilitySubType[missionType].find(
-      facility => facility.subTypeName === selectedMissionId
-    ) || {}
+  const { target = [] } = useMemo(
+    () =>
+      facilitySubType[missionType].find(
+        (facility) => facility.subTypeName === selectedMissionId
+      ) || {},
+    [missionType, selectedMissionId]
+  )
+  useEffect(() => {
+    if (floor !== 0) setFloorChoose(true)
+    else {
+      setFloorChoose(false)
+    }
+  }, [floor])
+  useEffect(() => {
+    setStatusChoose(false)
+  }, [selectedMissionId])
+  useEffect(() => {
+    if (status !== '請選擇') setStatusChoose(true)
+    else setStatusChoose(false)
+  }, [status])
+  useEffect(() => {
+    if (missionType !== 2) {
+      setStatus(tagData[missionType][0].statusName)
+    }
+  }, [missionType, setStatus])
+  useEffect(() => {
+    if (missionType === 2) {
+      setSelectedSubOptionId(status)
+    }
+  }, [status, setSelectedSubOptionId, missionType])
   return (
     <>
       <Grid container spacing={3}>
@@ -99,15 +135,15 @@ function MissionStep3 () {
                 setLocationFocus(true)
               }}
             />
-          
-          <IconButton
-            size='small'
-            onClick={() => {
-              focusInput.current.click()
-            }}
-          >
-            <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
-          </IconButton>
+
+            <IconButton
+              size='small'
+              onClick={() => {
+                focusInput.current.click()
+              }}
+            >
+              <CreateIcon fontSize='small' style={{ color: '#E2E2E2' }} />
+            </IconButton>
           </Box>
         </Grid>
 
@@ -123,7 +159,7 @@ function MissionStep3 () {
             <Typography>請選擇目標樓層</Typography>
             <Button
               onClick={() => setFloorDrawer(true)}
-              variant={floorChoose ? 'contained' : ''}
+              variant={floorChoose ? 'contained' : 'text'}
               color='primary'
               style={{
                 borderBottom: floorChoose ? '' : 'solid 1px',
@@ -132,104 +168,196 @@ function MissionStep3 () {
                 color: 'black'
               }}
             >
-              {floor}
+              {floorMapping[floor] || floor}
               <UnfoldMoreIcon size='small' />
             </Button>
           </Box>
         </Grid>
 
-        {/* * ==================== 設施類型選擇 ==================== */}        
-          <Grid container item xs={12} direction='row'>
-            <>{ remindOpen === true && selectedMissionId === '' ? 
-            (<Box
-              display='flex'
-              flexDirection='row'
-              alignItems='center'
-              width='1/2'
-              justifyContent='flex-start'
-              border={1}
-              borderColor="error.main"
-              borderRadius={6}>
-              <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-              <Typography>{missionName[missionType].missionName}</Typography>
-              <Typography>（必填選項）</Typography>
-            </Box>):(<>
-              <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-              <Typography>{missionName[missionType].missionName}</Typography>
-              </>)}</>
-          </Grid>
-        {facilitySubType[missionType].map(facility => (
+        {/* * ==================== 設施類型選擇 ==================== */}
+        <Grid container item xs={12} direction='row'>
+          <>
+            {remindOpen === true && selectedMissionId === '' ? (
+              <Box
+                display='flex'
+                flexDirection='row'
+                alignItems='center'
+                width='1/2'
+                justifyContent='flex-start'
+                border={1}
+                borderColor='error.main'
+                borderRadius={6}
+              >
+                <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+                <Typography>{missionName[missionType].missionName}</Typography>
+                <Typography>（必填選項）</Typography>
+              </Box>
+            ) : (
+              <>
+                <BusinessIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+                <Typography>{missionName[missionType].missionName}</Typography>
+              </>
+            )}
+          </>
+        </Grid>
+        {facilitySubType[missionType].map((facility) => (
           <Grid key={facility.subTypeName} item xs={4}>
-            <Button
-              variant='contained'
-              fullWidth
-              size='small'
-              color={
-                selectedMissionId === facility.subTypeName
-                  ? 'primary'
-                  : 'default'
-              }
+            <CustomButton
               onClick={() => handleSetSelectedMissionId(facility.subTypeName)}
+              buttonType={
+                selectedMissionId === facility.subTypeName
+                  ? 'boxButton_activated'
+                  : 'boxButton_inactivated'
+              }
+              variant='contained'
+              size='small'
+              fullWidth
             >
               {facility.subTypeName}
-            </Button>
+            </CustomButton>
           </Grid>
         ))}
         {/* * ==================== 具體設施子類別 ==================== */}
         <Grid container item xs={12} direction='row'>
-          <>{remindOpen === true && selectedSubOptionId === '' ? (
-            <Box
-              display='flex'
-              flexDirection='row'
-              alignItems='center'
-              width='1/2'
-              justifyContent='flex-start'
-              border={1}
-              borderColor="error.main"
-              borderRadius={6}
-            >
-              <ApartmentIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-              <Typography>{missionName[missionType].missionDescription}</Typography>
-              <Typography>（必填選項）</Typography>
-            </Box>):(<>
-              <ApartmentIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-              <Typography>{missionName[missionType].missionDescription}</Typography>
-              </>)}</>
+          <>
+            {missionType === 2 ? (
+              <Box
+                display='flex'
+                flexDirection='row'
+                alignItems='center'
+                width='100vw'
+                justifyContent='flex-start'
+              >
+                {remindOpen === true && status === '請選擇' ? (
+                  <Box
+                    display='flex'
+                    flexDirection='row'
+                    alignItems='center'
+                    width='1/2'
+                    justifyContent='flex-start'
+                    border={1}
+                    borderColor='error.main'
+                    borderRadius={6}
+                  >
+                    <ApartmentIcon
+                      style={{ color: 'FDCC4F', marginRight: '5px' }}
+                    />
+                    <Typography>請選擇目前狀態</Typography>
+                    <Typography>（必填選項）</Typography>
+                  </Box>
+                ) : (
+                  <>
+                    <ApartmentIcon
+                      style={{ color: 'FDCC4F', marginRight: '5px' }}
+                    />
+                    <Typography>請選擇目前狀態</Typography>
+                  </>
+                )}
+                <Button
+                  onClick={() => setStatusDrawer(true)}
+                  variant={statusChoose ? 'contained' : 'text'}
+                  color='primary'
+                  style={{
+                    borderBottom: statusChoose ? '' : 'solid 1px',
+                    borderRadius: '0',
+                    marginLeft: '10px',
+                    color: 'black'
+                  }}
+                >
+                  {status}
+                  <UnfoldMoreIcon size='small' />
+                </Button>
+              </Box>
+            ) : (
+              <>
+                {remindOpen === true && selectedSubOptionId === '' ? (
+                  <Box
+                    display='flex'
+                    flexDirection='row'
+                    alignItems='center'
+                    width='1/2'
+                    justifyContent='flex-start'
+                    border={1}
+                    borderColor='error.main'
+                    borderRadius={6}
+                  >
+                    <ApartmentIcon
+                      style={{ color: 'FDCC4F', marginRight: '5px' }}
+                    />
+                    <Typography>
+                      {missionName[missionType].missionDescription}
+                    </Typography>
+                    <Typography>（必填選項）</Typography>
+                  </Box>
+                ) : (
+                  <>
+                    <ApartmentIcon
+                      style={{ color: 'FDCC4F', marginRight: '5px' }}
+                    />
+                    <Typography>
+                      {missionName[missionType].missionDescription}
+                    </Typography>
+                  </>
+                )}
+              </>
+            )}
+          </>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            {target.map(discovery => (
-              <Grid id={discovery.targetName} item xs={4}>
-                <Button
-                  variant='contained'
-                  fullWidth
-                  size='small'
-                  color={
-                    selectedSubOptionId === discovery.targetName
-                      ? 'primary'
-                      : 'default'
-                  }
-                  onClick={() => setSelectedSubOptionId(discovery.targetName)}
-                >
-                  {discovery.targetName}
-                </Button>
-              </Grid>
-            ))}
+            {missionType === 2 ? (
+              ''
+            ) : (
+              <>
+                {target.map((discovery) => (
+                  <Grid
+                    key={discovery.targetName}
+                    id={discovery.targetName}
+                    item
+                    xs={4}
+                  >
+                    <CustomButton
+                      variant='contained'
+                      fullWidth
+                      size='small'
+                      buttonType={
+                        selectedSubOptionId === discovery.targetName
+                          ? 'boxButton_activated'
+                          : 'boxButton_inactivated'
+                      }
+                      onClick={() =>
+                        setSelectedSubOptionId(discovery.targetName)
+                      }
+                    >
+                      {discovery.targetName}
+                    </CustomButton>
+                  </Grid>
+                ))}
+              </>
+            )}
           </Grid>
         </Grid>
         {!isInEdit && (
-          <Grid container item xs={12} direction='row'>
-            <DescriptionIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-            <TextField
-              name='moreDescriptionText'
-              multiline
-              id='standard-basic'
-              style={{ width: '80vw' }}
-              placeholder='詳細說明'
-              value={moreDescriptionText}
-              onChange={handleChangeMoreDescriptionText}
-            />
-          </Grid>
+          <>
+            {missionType === 2 ? (
+              ''
+            ) : (
+              <Grid container item xs={12} direction='row'>
+                <DescriptionIcon
+                  style={{ color: 'FDCC4F', marginRight: '5px' }}
+                />
+                <TextField
+                  name='moreDescriptionText'
+                  multiline
+                  id='standard-basic'
+                  style={{ width: '80vw' }}
+                  placeholder='詳細說明'
+                  value={moreDescriptionText}
+                  onChange={handleChangeMoreDescriptionText}
+                />
+              </Grid>
+            )}
+          </>
         )}
 
         {/* * ==================== 7.上傳照片 ==================== */}
@@ -253,7 +381,6 @@ function MissionStep3 () {
         open={floorDrawer}
         onClose={() => {
           setFloorDrawer(false)
-          setFloorChoose(true)
         }}
         PaperProps={{
           style: {
@@ -276,7 +403,6 @@ function MissionStep3 () {
             color='primary'
             onClick={() => {
               setFloorDrawer(false)
-              setFloorChoose(true)
             }}
             style={{ position: 'absolute', right: '10px' }}
           >
@@ -285,18 +411,77 @@ function MissionStep3 () {
         </Toolbar>
         <Picker
           valueGroups={{
-            floor
+            floor: floorMapping[floor]
           }}
           optionGroups={{
-            floor: ['無', 'B2', 'B1', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            floor: floorMapping
           }}
           onChange={(name, value) => {
-            setFloor(value)
+            setFloor(floorMapping.indexOf(value))
           }}
         />
+      </Drawer>
+      <Drawer
+        anchor='bottom'
+        open={statusDrawer}
+        onClose={() => {
+          setStatusDrawer(false)
+        }}
+        PaperProps={{
+          style: {
+            borderRadius: '20px 20px 0 0',
+            backgroundColor: '#FAFAFA',
+            height: '50vh'
+          }
+        }}
+      >
+        <Toolbar
+          style={{
+            position: 'sticky',
+            top: '0',
+            zIndex: '100',
+            backgroundColor: '#FAFAFA'
+          }}
+        >
+          <Typography variant='h6'>選擇狀態</Typography>
+          <Button
+            color='primary'
+            onClick={() => {
+              setStatusDrawer(false)
+            }}
+            style={{ position: 'absolute', right: '10px' }}
+          >
+            確定
+          </Button>
+        </Toolbar>
+        {selectedMissionId === 'Wi-Fi 訊號' ? (
+          <Picker
+            valueGroups={{
+              status
+            }}
+            optionGroups={{
+              status: ['良好', '正常', '微弱']
+            }}
+            onChange={(name, value) => {
+              setStatus(value)
+            }}
+          />
+        ) : (
+          <Picker
+            valueGroups={{
+              status
+            }}
+            optionGroups={{
+              status: ['人少', '人稍多', '擁擠']
+            }}
+            onChange={(name, value) => {
+              setStatus(value)
+            }}
+          />
+        )}
       </Drawer>
     </>
   )
 }
 
-export default MissionStep3
+export default MissionStep2

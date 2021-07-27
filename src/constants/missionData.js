@@ -1,6 +1,6 @@
 import { SubOptionOther } from '../utils/contexts/MissionContext'
 
-export const Missions = [
+export default [
   // ==================== 無障礙設施 ====================
   {
     id: 1,

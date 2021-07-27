@@ -1,6 +1,5 @@
-import { gql } from 'apollo-boost'
-import { useMutation } from '@apollo/react-hooks'
-import * as firebase from 'firebase/app'
+import { gql, useMutation } from '@apollo/client'
+import { useUserValue } from '../contexts/UserContext'
 
 export const UP_VOTE_MUTATION = gql`
   mutation updateUpVoteStatus($tagId: ID!, $action: updateUpVoteAction!) {
@@ -12,12 +11,11 @@ export const UP_VOTE_MUTATION = gql`
 `
 export const useUpdateVote = () => {
   const [upVoteMutation] = useMutation(UP_VOTE_MUTATION)
-  function upVote (id, voteAction) {
-    firebase
-      .auth()
-      .currentUser.getIdToken()
-      .then(token => {
-        upVoteMutation({
+  const { token } = useUserValue()
+  async function upVote(id, voteAction) {
+    if (token) {
+      try {
+        await upVoteMutation({
           context: {
             headers: {
               authorization: token ? `Bearer ${token}` : ''
@@ -27,8 +25,11 @@ export const useUpdateVote = () => {
             tagId: id,
             action: voteAction ? 'UPVOTE' : 'CANCEL_UPVOTE'
           }
-        }).then(res => {})
-      })
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    }
   }
   return { upVote }
 }

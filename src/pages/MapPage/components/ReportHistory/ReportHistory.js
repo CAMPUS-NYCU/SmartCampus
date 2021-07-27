@@ -8,7 +8,6 @@ import {
   Grid,
   Box,
   makeStyles,
-  Button,
   CircularProgress
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
@@ -19,6 +18,7 @@ import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import Mission1 from '../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../assets/images/mission3.svg'
+import CustomButton from '../../../../components/CustomButton'
 
 const useStyle = makeStyles(() => ({
   tag: {
@@ -49,7 +49,7 @@ const ReportHistory = (props) => {
         <List component='nav'>
           {userAddTags.map((item) => {
             return (
-              <>
+              <div key={item.id}>
                 <ListItem>
                   <ListItemIcon>
                     <img
@@ -86,18 +86,18 @@ const ReportHistory = (props) => {
                       </Box>
                     </Grid>
                   </Grid>
-                  <Button
-                    color='primary'
+
+                  <CustomButton
+                    buttonType='roundButton_activated'
                     variant='contained'
                     size='small'
                     onClick={() => setActiveTagId(item.id)}
-                    style={{ borderRadius: '20px', color: 'black' }}
                   >
                     檢視
-                  </Button>
+                  </CustomButton>
                 </ListItem>
                 <Divider variant='middle' />
-              </>
+              </div>
             )
           })}
         </List>

@@ -1,14 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import pinImg from '../../../assets/images/pin.svg'
-
-PinImg.propTypes = {
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-}
-PinImg.defaultProps = {
-  size: 20
-}
+import pinImg from '../../../../assets/images/pin.svg'
 
 function PinImg({ size }) {
   return (
@@ -22,6 +15,13 @@ function PinImg({ size }) {
       }}
     />
   )
+}
+
+PinImg.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+}
+PinImg.defaultProps = {
+  size: 20
 }
 
 export default PinImg

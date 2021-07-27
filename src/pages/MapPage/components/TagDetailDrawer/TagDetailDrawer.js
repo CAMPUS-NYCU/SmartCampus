@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Typography } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
@@ -7,41 +7,60 @@ import Mission2 from '../../../../assets/images/mission2circle.svg'
 import Mission1 from '../../../../assets/images/mission1circle.svg'
 import Mission3 from '../../../../assets/images/mission3circle.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
-import { tagStatus } from '../../../../constants/tagData'
+import tagStatus from '../../../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useViewCount } from '../../../../utils/hooks/useViewCount'
 
 function TagDetailDialog(props) {
-  const { activeTag, onClose, deny, guest, tagDetail, ...rest } = props
+  const { activeTag, onClose, tagDetail, ...rest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
   const { userAddTags, threshold, fetchTagDetail } = useTagValue()
+  const { isGuest } = useUserValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
   const { incrementViewCount } = useViewCount()
-  const missionImage = [Mission1, Mission2, Mission3]
-  const missionName = missionInfo.map((mission) => {
-    return mission.missionName
-  })
-  const tagMissionIndex = missionName.findIndex(
-    (mission) => mission === activeTag.category.missionName
+  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
+  const missionName = useMemo(
+    () =>
+      missionInfo.map((mission) => {
+        return mission.missionName
+      }),
+    []
   )
-  const tagStatusIndex = tagStatus[tagMissionIndex].findIndex(
-    (status) => status.statusName === activeTag.status.statusName
+  const tagMissionIndex = useMemo(
+    () =>
+      missionName.findIndex(
+        (mission) => mission === activeTag.category.missionName
+      ),
+    [activeTag.category.missionName, missionName]
   )
-  const status = tagStatus[tagMissionIndex][tagStatusIndex]
-  const checkTagOwner = () => {
+  const tagStatusIndex = useMemo(
+    () =>
+      tagStatus[tagMissionIndex].findIndex(
+        (status) => status.statusName === tagDetail.status.statusName || ''
+      ),
+    [tagDetail.status.statusName, tagMissionIndex]
+  )
+  const status = useMemo(
+    () => tagStatus[tagMissionIndex][tagStatusIndex] || tagStatus[0][0],
+    [tagMissionIndex, tagStatusIndex]
+  )
+  const checkTagOwner = useCallback(() => {
     if (userAddTags) {
       return userAddTags.find((userAddTag) => userAddTag.id === activeTag.id)
     }
     return false
-  }
+  }, [activeTag.id, userAddTags])
   useEffect(() => {
-    incrementViewCount(activeTag.id)
-  }, [incrementViewCount, activeTag])
+    if (!isGuest) {
+      incrementViewCount(activeTag.id)
+    }
+  }, [incrementViewCount, activeTag, isGuest])
   useEffect(() => {
     fetchTagDetail()
   }, [fetchTagDetail])
@@ -72,69 +91,77 @@ function TagDetailDialog(props) {
           alignItems='center'
           flexGrow={1}
         >
-          <Box
-            display='flex'
-            alignItems='center'
-            flexDirection='row'
-            justifyContent='space-between'
-            width='100%'
-          >
+          {tagDetail.id && (
             <Box
               display='flex'
               alignItems='center'
-              justifyContent='space-around'
-              width='70%'
+              flexDirection='row'
+              justifyContent='space-between'
+              width='100%'
             >
-              <img src={missionImage[tagMissionIndex]} alt='' />
-              <Typography>{activeTag.category.subTypeName}</Typography>
-              <Typography>{activeTag.locationName}</Typography>
-              {activeTag.floor === 0 ? (
-                ''
-              ) : (
-                <>
-                  {activeTag.floor < 0 ? (
-                    <Typography>B{-1 * activeTag.floor}樓</Typography>
-                  ) : (
-                    <Typography>{activeTag.floor}樓</Typography>
-                  )}
-                </>
-              )}
+              <Box
+                display='flex'
+                alignItems='center'
+                justifyContent='space-around'
+                width='70%'
+              >
+                <img src={missionImage[tagMissionIndex]} alt='' />
+                <Typography>{activeTag.category.subTypeName}</Typography>
+                <Typography>{tagDetail.locationName}</Typography>
+                {tagDetail.floor === 0 ? (
+                  ''
+                ) : (
+                  <>
+                    {tagDetail.floor < 0 ? (
+                      <Typography>B{-1 * tagDetail.floor}樓</Typography>
+                    ) : (
+                      <Typography>{tagDetail.floor}樓</Typography>
+                    )}
+                  </>
+                )}
+              </Box>
+              <div
+                style={{
+                  cursor: 'default',
+                  width: '100px',
+                  height: '36px',
+                  borderTop: `18px solid ${status.statusColor}`,
+                  borderBottom: `18px solid ${status.statusColor}`,
+                  borderLeft: '12px solid transparent',
+                  textAlign: 'center'
+                }}
+              >
+                <Typography style={{ position: 'relative', top: '-10px' }}>
+                  {status.statusName}
+                </Typography>
+              </div>
             </Box>
-            <div
-              style={{
-                cursor: 'default',
-                width: '100px',
-                height: '36px',
-                borderTop: `18px solid ${status.statusColor}`,
-                borderBottom: `18px solid ${status.statusColor}`,
-                borderLeft: '12px solid transparent',
-                textAlign: 'center'
-              }}
-            >
-              <Typography style={{ position: 'relative', top: '-10px' }}>
-                {status.statusName}
-              </Typography>
-            </div>
-          </Box>
+          )}
           <DetailPart
-            detail={tagDetail}
+            tagDetail={tagDetail}
             activeTag={activeTag}
             missionName={missionName}
             setLargeImg={setLargeImg}
             setStateDrawer={setStateDrawer}
             tagMissionIndex={tagMissionIndex}
-            deny={deny}
-            guest={guest}
             threshold={threshold}
           />
         </Box>
       </CustomDrawer>
-      {tagDetail && (
+      {tagDetail.id && (
         <ChangeStatus
           stateDrawer={stateDrawer}
-          activeTag={activeTag}
+          tagDetail={tagDetail}
           setStateDrawer={setStateDrawer}
-          status={tagStatus[tagMissionIndex]}
+          status={(() => {
+            if (tagMissionIndex === 2) {
+              if (activeTag.category.subTypeName === 'Wi-Fi 訊號') {
+                return tagStatus[4]
+              }
+              return tagStatus[3]
+            }
+            return tagStatus[tagMissionIndex]
+          })()}
         />
       )}
       {largeImg && (
@@ -152,8 +179,6 @@ function TagDetailDialog(props) {
 TagDetailDialog.propTypes = {
   activeTag: PropTypes.object,
   onClose: PropTypes.func.isRequired,
-  deny: PropTypes.func.isRequired,
-  guest: PropTypes.bool.isRequired,
   tagDetail: PropTypes.object.isRequired
 }
 TagDetailDialog.defaultProps = {

@@ -7,7 +7,6 @@ import Map from './components/Map'
 import useModal from '../../utils/hooks/useModal'
 import MissionFab from './components/Mission/MissionFab'
 import MissionDrawer from './components/Mission/MissionDrawer'
-import ProfileDialog from './components/ProfileDialog/ProfileDialog'
 import {
   MissionContextProvider,
   useMissionValue
@@ -15,25 +14,21 @@ import {
 import ReportHistory from './components/ReportHistory'
 import GuidePage from './components/GuidePage'
 import { useTagValue } from '../../utils/contexts/TagContext'
+import { useUserValue } from '../../utils/contexts/UserContext'
 import useStep from '../../utils/hooks/useStep'
 import TagDetailDrawer from './components/TagDetailDrawer'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
+import UserDialog from './components/UserDialog/UserDialog'
 
-export default function MapPage(props) {
-  const { signOut, deny, guest } = props
+export default function MapPage() {
   const { step: guideStep, setStep, handleNext, handleBack } = useStep({
     initialStep: 0,
     maxStep: 3,
     minStep: 0
   })
-  // const { updateTagList } = useTagValue()
-  // useEffect(() => {
-  //   updateTagList()
-  // }, [updateTagList])
   return (
-    // <TagContextProvider>
     <MissionContextProvider>
       <WindowBackProvider />
       <GuidePage
@@ -41,25 +36,19 @@ export default function MapPage(props) {
         setStep={setStep}
         handleNext={() => handleNext(1)}
         handleBack={() => handleBack(1)}
-        guest={guest}
       />
-      <MapPageContent
-        signOut={signOut}
-        deny={deny}
-        guest={guest}
-        setGuideStep={setStep}
-      />
+      <MapPageContent setGuideStep={setStep} />
     </MissionContextProvider>
-    // </TagContextProvider>
   )
 }
 
 const MapPageContent = (props) => {
-  const { signOut, deny, guest, setGuideStep } = props
-  const profileDialogControl = useModal()
+  const { setGuideStep } = props
+  const userDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
   const { activeTag, resetActiveTag, tagDetail } = useTagValue()
+  const { uid } = useUserValue()
   return (
     <div>
       <Map mapCenter={mapCenter} />
@@ -67,31 +56,28 @@ const MapPageContent = (props) => {
         <div>
           <SearchBar
             menuControls={{
-              handleOpenProfile: profileDialogControl.setOpen,
+              handleOpenUser: userDialogControl.setOpen,
               handleOpenHistory: ReportHistoryControl.setOpen,
-              handleOpenSetting: profileDialogControl.setOpen,
+              handleOpenSetting: userDialogControl.setOpen,
               handleOpenHowToUse: () => {
                 setGuideStep(0)
               },
-              handleOpenTerms: profileDialogControl.setOpen
+              handleOpenTerms: userDialogControl.setOpen
             }}
-            signOut={guest ? deny : signOut}
           />
-          <MissionFab deny={deny} guest={guest} />
+          <MissionFab />
           <FilterFab />
           <LocationFab setMapCenter={setMapCenter} />
         </div>
       </Fade>
       <MissionDrawer />
       <ReportHistory control={ReportHistoryControl} />
-      <ProfileDialog control={profileDialogControl} />
+      <UserDialog userId={uid} control={userDialogControl} />
       {activeTag && (
         <TagDetailDrawer
           activeTag={activeTag}
           tagDetail={tagDetail}
           onClose={resetActiveTag}
-          deny={deny}
-          guest={guest}
         />
       )}
       <Dialog
