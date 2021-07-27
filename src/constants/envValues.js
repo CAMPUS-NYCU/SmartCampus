@@ -23,3 +23,5 @@ export const REACT_APP_FIREBASE_EMULATER_URL =
 // GraphQL
 export const REACT_APP_GRAPHQL_API_URL =
   process.env.REACT_APP_GRAPHQL_API_URL || ''
+export const REACT_APP_GRAPHQL_WEBSOCKET_URL =
+  process.env.REACT_APP_GRAPHQL_WEBSOCKET_URL || ''
