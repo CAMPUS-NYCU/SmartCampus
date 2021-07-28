@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
+import { usePosition } from 'use-position'
 
 import SearchBar from './components/SearchBar'
 import Map from './components/Map'
@@ -49,9 +50,18 @@ const MapPageContent = (props) => {
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
   const { activeTag, resetActiveTag, tagDetail } = useTagValue()
   const { uid } = useUserValue()
+  const {
+    latitude: positionLat,
+    longitude: positionLng,
+    error: positionError
+  } = usePosition(false)
   return (
     <div>
-      <Map mapCenter={mapCenter} />
+      <Map
+        mapCenter={mapCenter}
+        userPositionError={positionError}
+        userPosition={{ lat: positionLat, lng: positionLng }}
+      />
       <Fade in={showControl}>
         <div>
           <SearchBar
@@ -67,7 +77,12 @@ const MapPageContent = (props) => {
           />
           <MissionFab />
           <FilterFab />
-          <LocationFab setMapCenter={setMapCenter} />
+          <LocationFab
+            setMapCenter={() => {
+              if (!positionError)
+                setMapCenter({ lat: positionLat, lng: positionLng })
+            }}
+          />
         </div>
       </Fade>
       <MissionDrawer />

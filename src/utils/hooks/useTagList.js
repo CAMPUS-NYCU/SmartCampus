@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import useTagSubscription from './useTagsSubscription'
@@ -27,19 +27,22 @@ function useTagList() {
   const {
     data: { unarchivedTagList: { tags = [] } = {} } = {},
     refetch
-  } = useQuery(GET_TAG_LIST_QUERY, {})
+  } = useQuery(GET_TAG_LIST_QUERY, {
+    onCompleted: () => {
+      console.log('hi')
+      setTagList(tags)
+    }
+  })
   const newTag = useTagSubscription()
   const [tagList, setTagList] = useState(null)
-  const updateTagList = useCallback(() => {
+  const updateTagList = () => {
     setTimeout(async () => {
       refetch()
       updateTagList()
     }, 30000)
-  }, [refetch])
+  }
   useEffect(() => {
-    setTagList(tags)
-  }, [tags])
-  useEffect(() => {
+    console.log('hihhih')
     if (newTag.changeType === 'added') {
       setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
     }

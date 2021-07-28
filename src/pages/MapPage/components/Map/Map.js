@@ -6,7 +6,6 @@ import {
   StreetViewPanorama,
   MarkerClusterer
 } from '@react-google-maps/api'
-import { usePosition } from 'use-position'
 import moment from 'moment'
 import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues'
 import {
@@ -28,7 +27,7 @@ import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
 
 function Map(props) {
-  const { mapCenter } = props
+  const { mapCenter, userPosition, userPositionError } = props
   const {
     handleToggleShowControl,
     isInMission,
@@ -56,11 +55,6 @@ function Map(props) {
           ),
     [filterTags, tags]
   )
-  const {
-    latitude: positionLat,
-    longitude: positionLng,
-    error: positionError
-  } = usePosition(false, { enableHighAccuracy: true, maximumAge: 2000 })
   const missionImage = useMemo(
     () => [Mission1, Mission2, Mission3, Missiongreen3],
     []
@@ -135,13 +129,10 @@ function Map(props) {
             width: '100%'
           }}
         >
-          {!positionError && (
+          {!userPositionError && (
             <Marker
               clickable={false}
-              position={{
-                lat: positionLat,
-                lng: positionLng
-              }}
+              position={userPosition}
               icon={{
                 url: myLocationImg,
                 scaledSize: { width: 20, height: 20 }

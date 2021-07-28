@@ -3,8 +3,7 @@ import React, {
   createContext,
   useReducer,
   useEffect,
-  useCallback,
-  useMemo
+  useCallback
 } from 'react'
 import 'firebase/auth'
 import * as firebase from 'firebase/app'
@@ -73,12 +72,12 @@ export const UserContextProvider = withFirebaseAuth({
   firebaseAppAuth
 })(({ children, user, signInWithGoogle, signOut }) => {
   const [userInfo, dispatch] = useReducer(reducer, initialUser)
-  const signInWithGuest = useCallback(() => {
+  const signInWithGuest = () => {
     dispatch({
       type: actionTypes.setToken,
       payload: 'guest'
     })
-  }, [])
+  }
   const handleGetUserInfo = useCallback(async () => {
     if (user) {
       dispatch({
@@ -103,10 +102,10 @@ export const UserContextProvider = withFirebaseAuth({
       })
     }
   }, [user])
-  const handleSignOut = useCallback(() => {
+  const handleSignOut = () => {
     dispatch({ type: actionTypes.cleanUser })
     signOut()
-  }, [signOut])
+  }
   useEffect(() => {
     handleGetUserInfo()
   }, [handleGetUserInfo])
@@ -115,16 +114,13 @@ export const UserContextProvider = withFirebaseAuth({
       firebaseAppAuth.useEmulator(REACT_APP_FIREBASE_EMULATER_URL)
     }
   }, [])
-  const contextValues = useMemo(
-    () => ({
-      ...userInfo,
-      signInWithGuest,
-      signInWithGoogle,
-      signOut: handleSignOut,
-      isGuest: userInfo.token === 'guest'
-    }),
-    [signInWithGuest, userInfo, signInWithGoogle, handleSignOut]
-  )
+  const contextValues = {
+    ...userInfo,
+    signInWithGuest,
+    signInWithGoogle,
+    signOut: handleSignOut,
+    isGuest: userInfo.token === 'guest'
+  }
   return (
     <UserContext.Provider value={contextValues}>
       {children}
