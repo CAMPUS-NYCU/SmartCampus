@@ -46,7 +46,7 @@ function MissionStep1() {
         justifyContent='space-between'
       >
         <Flag />
-        <Typography>將放置在要標注的位。</Typography>
+        <Typography>將放置在要標注的位置。</Typography>
       </Box>
 
       <Box
