@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Typography } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
@@ -50,12 +50,12 @@ function TagDetailDialog(props) {
     () => tagStatus[tagMissionIndex][tagStatusIndex] || tagStatus[0][0],
     [tagMissionIndex, tagStatusIndex]
   )
-  const checkTagOwner = useCallback(() => {
+  const checkTagOwner = () => {
     if (userAddTags) {
       return userAddTags.find((userAddTag) => userAddTag.id === activeTag.id)
     }
     return false
-  }, [activeTag.id, userAddTags])
+  }
   useEffect(() => {
     if (!isGuest) {
       incrementViewCount(activeTag.id)

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import * as firebase from 'firebase/app'
@@ -69,12 +69,12 @@ const useUserTags = () => {
     }
   })
 
-  const refetchUserAddTags = useCallback(() => {
+  const refetchUserAddTags = () => {
     // refetch
     refetch({ fetchPolicy: 'no-cache' }).then((d) => {
       setUserAddTags(reformatTagList(d.data))
     })
-  }, [refetch])
+  }
 
   return { userAddTags, setUserAddTags, refetchUserAddTags }
 }

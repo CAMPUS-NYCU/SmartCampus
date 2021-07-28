@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
@@ -60,7 +60,7 @@ const DetailPart = (props) => {
       )
     }
   }, [tagDetail, enqueueSnackbar, threshold])
-  const handleUopVote = useCallback(() => {
+  const handleUopVote = () => {
     if (isGuest) {
       signOut()
       return
@@ -70,7 +70,7 @@ const DetailPart = (props) => {
     )
     upVote(tagDetail.id, !hasUpVote)
     setHasUpVote((prevHasUpVote) => !prevHasUpVote)
-  }, [signOut, isGuest, tagDetail.id, hasUpVote, upVote])
+  }
 
   return (
     <>

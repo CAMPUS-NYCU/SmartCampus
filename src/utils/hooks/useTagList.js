@@ -1,7 +1,7 @@
-import { useCallback, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 
-// import useTagSubscription from './useTagsSubscription'
+import useTagSubscription from './useTagsSubscription'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList {
@@ -33,25 +33,25 @@ function useTagList() {
       setTagList(tags)
     }
   })
-  // const newTag = useTagSubscription()
+  const newTag = useTagSubscription()
   const [tagList, setTagList] = useState(null)
-  const updateTagList = useCallback(() => {
+  const updateTagList = () => {
     setTimeout(async () => {
       refetch()
       updateTagList()
     }, 30000)
-  }, [refetch])
-  // useEffect(() => {
-  //   console.log('hihhih')
-  //   if (newTag.changeType === 'added') {
-  //     setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
-  //   }
-  //   if (newTag.changeType === 'archived') {
-  //     setTagList((prevTagList) =>
-  //       prevTagList.filter((tag) => tag.id !== newTag.tagContent.id)
-  //     )
-  //   }
-  // }, [newTag])
+  }
+  useEffect(() => {
+    console.log('hihhih')
+    if (newTag.changeType === 'added') {
+      setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
+    }
+    if (newTag.changeType === 'archived') {
+      setTagList((prevTagList) =>
+        prevTagList.filter((tag) => tag.id !== newTag.tagContent.id)
+      )
+    }
+  }, [newTag])
   return { tags: tagList, refetch, updateTagList }
 }
 

@@ -449,7 +449,7 @@ export const MissionContextProvider = ({ children }) => {
     [imageFiles]
   )
 
-  const handleCompleteMission = useCallback(async () => {
+  const handleCompleteMission = async () => {
     setLoading(true)
     let floorNumber = 0
     floorNumber = floor
@@ -523,29 +523,7 @@ export const MissionContextProvider = ({ children }) => {
       setMissionType(null)
       enqueueSnackbar('錯誤', { variant: 'error' })
     }
-  }, [
-    activeTag,
-    clearMissionData,
-    enqueueSnackbar,
-    floor,
-    status,
-    imageDeleteUrls,
-    imageFiles,
-    isInEdit,
-    markerPosition,
-    missionType,
-    moreDescriptionText,
-    selectedMissionId,
-    selectedSubOptionId,
-    streetViewPOV,
-    streetViewPosition,
-    streetViewUpload,
-    tagAdd,
-    tagUpdate,
-    textLocation,
-    token,
-    handleUploadImages
-  ])
+  }
 
   const contextValues = {
     missionType,
