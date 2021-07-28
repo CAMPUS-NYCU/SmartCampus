@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useLazyQuery } from '@apollo/client'
 
 export const GET_USER_DETAIL_QUERY = gql`
   query getUserDetail($uid: ID!) {
@@ -21,12 +21,13 @@ const userDetailInitial = {
   userAddTagNumber: 0
 }
 
-function useUserDetail(props) {
-  const { userId } = props
-  const { data: { getUserData = {} } = {} } = useQuery(GET_USER_DETAIL_QUERY, {
-    fetchPolicy: 'no-cache',
-    variables: { uid: userId }
-  })
+function useUserDetail() {
+  const [getUserDetail, { data: { getUserData = {} } = {} }] = useLazyQuery(
+    GET_USER_DETAIL_QUERY,
+    {
+      fetchPolicy: 'no-cache'
+    }
+  )
   const userDetail = useMemo(
     () => ({
       ...userDetailInitial,
@@ -34,7 +35,7 @@ function useUserDetail(props) {
     }),
     [getUserData]
   )
-  return { userDetail }
+  return { userDetail, getUserDetail }
 }
 
 export default useUserDetail
