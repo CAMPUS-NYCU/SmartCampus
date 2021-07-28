@@ -26,9 +26,13 @@ export const GET_TAG_LIST_QUERY = gql`
 function useTagList() {
   const {
     data: { unarchivedTagList: { tags = [] } = {} } = {},
-    refetch,
-    loading
-  } = useQuery(GET_TAG_LIST_QUERY, {})
+    refetch
+  } = useQuery(GET_TAG_LIST_QUERY, {
+    onCompleted: () => {
+      console.log('hi')
+      setTagList(tags)
+    }
+  })
   const newTag = useTagSubscription()
   const [tagList, setTagList] = useState(null)
   const updateTagList = useCallback(() => {
@@ -37,9 +41,6 @@ function useTagList() {
       updateTagList()
     }, 30000)
   }, [refetch])
-  useEffect(() => {
-    if (!loading) setTagList(tags)
-  }, [tags, loading])
   useEffect(() => {
     if (newTag.changeType === 'added') {
       setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
