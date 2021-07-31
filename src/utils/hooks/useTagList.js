@@ -29,7 +29,6 @@ function useTagList() {
     refetch
   } = useQuery(GET_TAG_LIST_QUERY, {
     onCompleted: () => {
-      console.log('hi')
       setTagList(tags)
     }
   })
@@ -42,7 +41,6 @@ function useTagList() {
     }, 30000)
   }
   useEffect(() => {
-    console.log('hihhih')
     if (newTag.changeType === 'added') {
       setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
     }
