@@ -140,7 +140,7 @@ export const MissionContextProvider = ({ children }) => {
     maxStep: MISSION_MAX_STEP,
     minStep: MISSION_MIN_STEP
   })
-  const { activeTag, tagDetail } = useTagValue()
+  const { activeTag, tagDetail, refetchUserAddTags } = useTagValue()
   const handleBack = useCallback(() => {
     setSelectedMissionId(InitialMissionValue.selectedMissionId)
     setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
@@ -436,17 +436,21 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleUploadImages = useCallback(
     async (imageUrlList) => {
-      const requests = imageUrlList.map((url, index) => {
-        const options = {
-          headers: {
-            'Content-Type': 'application/octet-stream'
+      try {
+        const requests = imageUrlList.map((url, index) => {
+          const options = {
+            headers: {
+              'Content-Type': 'application/octet-stream'
+            }
           }
-        }
-        return axios.put(url, imageFiles[index], options)
-      })
-      await Promise.all(requests)
+          return axios.put(url, imageFiles[index], options)
+        })
+        await Promise.all(requests)
+      } catch (err) {
+        enqueueSnackbar('圖片上傳失敗', { variant: 'error' })
+      }
     },
-    [imageFiles]
+    [imageFiles, enqueueSnackbar]
   )
 
   const handleCompleteMission = async () => {
@@ -512,10 +516,11 @@ export const MissionContextProvider = ({ children }) => {
         })
         await handleUploadImages(imageUploadUrls)
       }
+      refetchUserAddTags()
       setLoading(false)
       clearMissionData()
       setMissionType(null)
-      enqueueSnackbar('更改完成', { variant: 'success' })
+      enqueueSnackbar('地圖標籤上傳完成', { variant: 'success' })
     } catch (err) {
       console.error(err)
       setLoading(false)
