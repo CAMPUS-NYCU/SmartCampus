@@ -128,6 +128,11 @@ function Map(props) {
             height: '100%',
             width: '100%'
           }}
+          onCenterChanged={() => {
+            if (isInMission && currentStep === MissionStep.PlaceFlagOnMap) {
+              handleSetMarkerPosition()
+            }
+          }}
         >
           {!userPositionError && (
             <Marker
@@ -199,9 +204,6 @@ function Map(props) {
           )}
           {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
             <Marker
-              draggable
-              // draggable={currentStep === MissionStep.PlaceFlagOnMap}
-              onDragEnd={handleSetMarkerPosition}
               position={{
                 lat: markerPosition.latitude,
                 lng: markerPosition.longitude

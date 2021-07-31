@@ -16,7 +16,7 @@ import DescriptionIcon from '@material-ui/icons/Description'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import Picker from 'react-mobile-picker-scroll'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
-import tagData from 'constants/tagData'
+import tagData from '../../../../../../constants/tagData'
 import {
   useMissionValue,
   MissionStep,

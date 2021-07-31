@@ -1,6 +1,6 @@
 import React from 'react'
 
-import flagImg from 'assets/images/pin.svg'
+import flagImg from '../../../../assets/images/pin.svg'
 
 function PinTarget() {
   return (

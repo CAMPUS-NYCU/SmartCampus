@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { gql, useMutation } from '@apollo/client'
 import axios from 'axios'
-import debounce from 'utils/debounce'
+import debounce from '../debounce'
 import useStep from '../hooks/useStep'
 import { missionInfo } from '../../constants/missionInfo'
 import { useTagValue } from './TagContext'
@@ -175,17 +175,17 @@ export const MissionContextProvider = ({ children }) => {
   const [markerPosition, setMarkerPosition] = useState(
     InitialMissionValue.markerPosition
   )
-  const handleSetMarkerPosition = useCallback((event) => {
+  const handleSetMarkerPosition = useCallback(() => {
     setMarkerPosition({
-      longitude: event.latLng.lng(),
-      latitude: event.latLng.lat()
+      longitude: mapInstance.getCenter().lng(),
+      latitude: mapInstance.getCenter().lat()
     })
     // ? marker改地點，street view也要重設？
     setStreetViewPosition({
-      longitude: event.latLng.lng(),
-      latitude: event.latLng.lat()
+      longitude: mapInstance.getCenter().lng(),
+      latitude: mapInstance.getCenter().lat()
     })
-  }, [])
+  }, [mapInstance])
 
   // ==================== Street View control ====================
   const [streetViewUpload, setStreetViewUpload] = useState(false)

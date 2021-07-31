@@ -1,7 +1,7 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import useTagSubscription from 'utils/hooks/useTagsSubscription'
+import useTagSubscription from '../hooks/useTagsSubscription'
 import useTagList from '../hooks/useTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
