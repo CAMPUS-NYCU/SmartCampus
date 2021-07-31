@@ -62,7 +62,7 @@ function App() {
       <WindowHeightProvider />
       <ApolloProvider client={apolloClient}>
         <SnackbarProvider
-          maxSnack={1}
+          maxSnack={3}
           autoHideDuration={2000}
           anchorOrigin={{
             vertical: 'bottom',
