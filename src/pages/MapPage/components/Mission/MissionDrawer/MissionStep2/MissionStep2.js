@@ -138,7 +138,7 @@ function MissionStep2() {
             display='flex'
             flexDirection='row'
             alignItems='center'
-            width='70vw'
+            width='100vw'
             justifyContent='flex-start'
           >
             <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
@@ -147,7 +147,7 @@ function MissionStep2() {
               native='true'
               onChange={handleChangeFloor}
               style={{
-                marginLeft: '160px',
+                marginLeft: '165px',
                 direction: 'rtl',
                 borderRadius: '5px',
                 boxShadow: (() => {
