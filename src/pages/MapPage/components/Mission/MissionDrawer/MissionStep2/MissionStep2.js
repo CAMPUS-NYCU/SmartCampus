@@ -160,7 +160,7 @@ function MissionStep2() {
             justifyContent='flex-start'
           >
             <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-            <Typography>請選擇目標樓層{floor}</Typography>
+            <Typography>請選擇目標樓層</Typography>
             <NativeSelect native='true' onChange={handleChangeFloor}>
               <option value={0}>無</option>
               <option value={-1}>B1</option>
