@@ -1,6 +1,7 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react'
 
 import Typography from '@material-ui/core/Typography'
+import NativeSelect from '@material-ui/core/NativeSelect'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -57,6 +58,9 @@ function MissionStep2() {
   const [floorChoose, setFloorChoose] = useState(false)
   const [statusChoose, setStatusChoose] = useState(false)
   const focusInput = useRef(null)
+  const handleChangeFloor = (event) => {
+    setFloor(event.target.value)
+  }
   const { target = [] } = useMemo(
     () =>
       facilitySubType[missionType].find(
@@ -64,12 +68,12 @@ function MissionStep2() {
       ) || {},
     [missionType, selectedMissionId]
   )
-  useEffect(() => {
-    if (floor !== 0) setFloorChoose(true)
-    else {
-      setFloorChoose(false)
-    }
-  }, [floor])
+  // useEffect(() => {
+  //   if (floor !== 0) setFloorChoose(true)
+  //   else {
+  //     setFloorChoose(false)
+  //   }
+  // }, [floor])
   useEffect(() => {
     setStatusChoose(false)
   }, [selectedMissionId])
@@ -156,8 +160,23 @@ function MissionStep2() {
             justifyContent='flex-start'
           >
             <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-            <Typography>請選擇目標樓層</Typography>
-            <Button
+            <Typography>請選擇目標樓層{floor}</Typography>
+            <NativeSelect native='true' onChange={handleChangeFloor}>
+              <option value={0}>無</option>
+              <option value={-1}>B1</option>
+              <option value={-2}>B2</option>
+              <option value={1}>1樓</option>
+              <option value={2}>2樓</option>
+              <option value={3}>3樓</option>
+              <option value={4}>4樓</option>
+              <option value={5}>5樓</option>
+              <option value={6}>6樓</option>
+              <option value={7}>7樓</option>
+              <option value={8}>8樓</option>
+              <option value={9}>9樓</option>
+              <option value={10}>10樓</option>
+            </NativeSelect>
+            {/* <Button
               onClick={() => setFloorDrawer(true)}
               variant={floorChoose ? 'contained' : 'text'}
               color='primary'
@@ -170,7 +189,7 @@ function MissionStep2() {
             >
               {floorMapping[floor] || floor}
               <UnfoldMoreIcon size='small' />
-            </Button>
+            </Button> */}
           </Box>
         </Grid>
 
@@ -376,7 +395,7 @@ function MissionStep2() {
           setPreviewImages={setPreviewImages}
         />
       </Grid>
-      <Drawer
+      {/* <Drawer
         anchor='bottom'
         open={floorDrawer}
         onClose={() => {
@@ -420,7 +439,7 @@ function MissionStep2() {
             setFloor(floorMapping.indexOf(value))
           }}
         />
-      </Drawer>
+      </Drawer> */}
       <Drawer
         anchor='bottom'
         open={statusDrawer}
