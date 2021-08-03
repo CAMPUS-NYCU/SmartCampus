@@ -457,7 +457,6 @@ export const MissionContextProvider = ({ children }) => {
     setLoading(true)
     let floorNumber = 0
     floorNumber = Number(floor)
-    console.log(floor)
     const payload = {
       locationName: textLocation,
       category: {
