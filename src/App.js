@@ -21,10 +21,11 @@ import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
 
 const Pages = () => {
   const { tags } = useTagValue()
-  const { token } = useUserValue()
+  const { token, isLoadingToken } = useUserValue()
+  console.log(token)
   return (
     <>
-      {!tags ? (
+      {!tags || isLoadingToken ? (
         <MainPage />
       ) : (
         <BrowserRouter>
