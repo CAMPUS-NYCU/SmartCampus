@@ -142,12 +142,13 @@ function MissionStep2() {
             justifyContent='flex-start'
           >
             <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-            <Typography>請選擇目標樓層</Typography>
+            <Box flexGrow={1}>
+              <Typography>請選擇目標樓層</Typography>
+            </Box>
             <NativeSelect
               native='true'
               onChange={handleChangeFloor}
               style={{
-                marginLeft: '165px',
                 direction: 'rtl',
                 borderRadius: '5px',
                 boxShadow: (() => {
@@ -241,17 +242,16 @@ function MissionStep2() {
                       display='flex'
                       flexDirection='row'
                       alignItems='center'
-                      width='1/2'
                       justifyContent='flex-start'
                       border={1}
                       borderColor='error.main'
                       borderRadius={6}
+                      flexGrow={1}
                     >
                       <ApartmentIcon
                         style={{ color: 'FDCC4F', marginRight: '5px' }}
                       />
-                      <Typography>請選擇目前狀態</Typography>
-                      <Typography>（必填選項）</Typography>
+                      <Typography>請選擇目前狀態（必填選項）</Typography>
                     </Box>
                   </>
                 ) : (
@@ -259,7 +259,9 @@ function MissionStep2() {
                     <ApartmentIcon
                       style={{ color: 'FDCC4F', marginRight: '5px' }}
                     />
-                    <Typography>請選擇目前狀態</Typography>
+                    <Box flexGrow={1}>
+                      <Typography>請選擇目前狀態</Typography>
+                    </Box>
                   </>
                 )}
                 <NativeSelect
@@ -267,12 +269,6 @@ function MissionStep2() {
                   value={status}
                   onChange={handleChangeStatus}
                   style={{
-                    marginLeft: (() => {
-                      if (remindOpen === true && status === '請選擇') {
-                        return '50px'
-                      }
-                      return '150px'
-                    })(),
                     direction: 'rtl',
                     borderRadius: '5px',
                     boxShadow: (() => {
