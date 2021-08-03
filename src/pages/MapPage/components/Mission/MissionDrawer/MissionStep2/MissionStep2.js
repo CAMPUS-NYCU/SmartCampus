@@ -1,10 +1,10 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react'
 
 import Typography from '@material-ui/core/Typography'
+import NativeSelect from '@material-ui/core/NativeSelect'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import { Input, Drawer, Toolbar } from '@material-ui/core'
+import { Input } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
@@ -14,13 +14,10 @@ import BusinessIcon from '@material-ui/icons/Business'
 import ApartmentIcon from '@material-ui/icons/Apartment'
 import DescriptionIcon from '@material-ui/icons/Description'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
-import Picker from 'react-mobile-picker-scroll'
-import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import tagData from '../../../../../../constants/tagData'
 import {
   useMissionValue,
-  MissionStep,
-  floorMapping
+  MissionStep
 } from '../../../../../../utils/contexts/MissionContext'
 import ImageUpload from '../../../../../../utils/functions/ImageUpload'
 import {
@@ -52,11 +49,13 @@ function MissionStep2() {
     remindOpen
   } = useMissionValue()
   const [locationFocus, setLocationFocus] = useState(true)
-  const [floorDrawer, setFloorDrawer] = useState(false)
-  const [statusDrawer, setStatusDrawer] = useState(false)
-  const [floorChoose, setFloorChoose] = useState(false)
-  const [statusChoose, setStatusChoose] = useState(false)
   const focusInput = useRef(null)
+  const handleChangeFloor = (event) => {
+    setFloor(event.target.value)
+  }
+  const handleChangeStatus = (event) => {
+    setStatus(event.target.value)
+  }
   const { target = [] } = useMemo(
     () =>
       facilitySubType[missionType].find(
@@ -64,19 +63,6 @@ function MissionStep2() {
       ) || {},
     [missionType, selectedMissionId]
   )
-  useEffect(() => {
-    if (floor !== 0) setFloorChoose(true)
-    else {
-      setFloorChoose(false)
-    }
-  }, [floor])
-  useEffect(() => {
-    setStatusChoose(false)
-  }, [selectedMissionId])
-  useEffect(() => {
-    if (status !== '請選擇') setStatusChoose(true)
-    else setStatusChoose(false)
-  }, [status])
   useEffect(() => {
     if (missionType !== 2) {
       setStatus(tagData[missionType][0].statusName)
@@ -152,25 +138,47 @@ function MissionStep2() {
             display='flex'
             flexDirection='row'
             alignItems='center'
-            width='70vw'
+            width='100vw'
             justifyContent='flex-start'
           >
             <LocationOnIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
-            <Typography>請選擇目標樓層</Typography>
-            <Button
-              onClick={() => setFloorDrawer(true)}
-              variant={floorChoose ? 'contained' : 'text'}
-              color='primary'
+            <Box flexGrow={1}>
+              <Typography>請選擇目標樓層</Typography>
+            </Box>
+            <NativeSelect
+              native='true'
+              onChange={handleChangeFloor}
               style={{
-                borderBottom: floorChoose ? '' : 'solid 1px',
-                borderRadius: '0',
-                marginLeft: '10px',
-                color: 'black'
+                direction: 'rtl',
+                borderRadius: '5px',
+                boxShadow: (() => {
+                  if (floor !== 0) {
+                    return '0px 2px 4px rgba(0, 0, 0, 0.12)'
+                  }
+                  return ''
+                })(),
+                backgroundColor: (() => {
+                  if (floor !== 0) {
+                    return '#FDCC4F'
+                  }
+                  return ''
+                })()
               }}
             >
-              {floorMapping[floor] || floor}
-              <UnfoldMoreIcon size='small' />
-            </Button>
+              <option value={0}>無</option>
+              <option value={-1}>B1</option>
+              <option value={-2}>B2</option>
+              <option value={1}>1樓</option>
+              <option value={2}>2樓</option>
+              <option value={3}>3樓</option>
+              <option value={4}>4樓</option>
+              <option value={5}>5樓</option>
+              <option value={6}>6樓</option>
+              <option value={7}>7樓</option>
+              <option value={8}>8樓</option>
+              <option value={9}>9樓</option>
+              <option value={10}>10樓</option>
+            </NativeSelect>
           </Box>
         </Grid>
 
@@ -229,44 +237,70 @@ function MissionStep2() {
                 justifyContent='flex-start'
               >
                 {remindOpen === true && status === '請選擇' ? (
-                  <Box
-                    display='flex'
-                    flexDirection='row'
-                    alignItems='center'
-                    width='1/2'
-                    justifyContent='flex-start'
-                    border={1}
-                    borderColor='error.main'
-                    borderRadius={6}
-                  >
-                    <ApartmentIcon
-                      style={{ color: 'FDCC4F', marginRight: '5px' }}
-                    />
-                    <Typography>請選擇目前狀態</Typography>
-                    <Typography>（必填選項）</Typography>
-                  </Box>
+                  <>
+                    <Box
+                      display='flex'
+                      flexDirection='row'
+                      alignItems='center'
+                      justifyContent='flex-start'
+                      border={1}
+                      borderColor='error.main'
+                      borderRadius={6}
+                      flexGrow={1}
+                    >
+                      <ApartmentIcon
+                        style={{ color: 'FDCC4F', marginRight: '5px' }}
+                      />
+                      <Typography>請選擇目前狀態（必填選項）</Typography>
+                    </Box>
+                  </>
                 ) : (
                   <>
                     <ApartmentIcon
                       style={{ color: 'FDCC4F', marginRight: '5px' }}
                     />
-                    <Typography>請選擇目前狀態</Typography>
+                    <Box flexGrow={1}>
+                      <Typography>請選擇目前狀態</Typography>
+                    </Box>
                   </>
                 )}
-                <Button
-                  onClick={() => setStatusDrawer(true)}
-                  variant={statusChoose ? 'contained' : 'text'}
-                  color='primary'
+                <NativeSelect
+                  native='true'
+                  value={status}
+                  onChange={handleChangeStatus}
                   style={{
-                    borderBottom: statusChoose ? '' : 'solid 1px',
-                    borderRadius: '0',
-                    marginLeft: '10px',
-                    color: 'black'
+                    direction: 'rtl',
+                    borderRadius: '5px',
+                    boxShadow: (() => {
+                      if (status !== '請選擇') {
+                        return '0px 2px 4px rgba(0, 0, 0, 0.12)'
+                      }
+                      return ''
+                    })(),
+                    backgroundColor: (() => {
+                      if (status !== '請選擇') {
+                        return '#FDCC4F'
+                      }
+                      return ''
+                    })()
                   }}
                 >
-                  {status}
-                  <UnfoldMoreIcon size='small' />
-                </Button>
+                  {selectedMissionId === 'Wi-Fi 訊號' ? (
+                    <>
+                      <option value='請選擇'>請選擇</option>
+                      <option value='良好'>良好</option>
+                      <option value='正常'>正常</option>
+                      <option value='微弱'>微弱</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value='請選擇'>請選擇</option>
+                      <option value='人少'>人少</option>
+                      <option value='人稍多'>人稍多</option>
+                      <option value='擁擠'>擁擠</option>
+                    </>
+                  )}
+                </NativeSelect>
               </Box>
             ) : (
               <>
@@ -376,110 +410,6 @@ function MissionStep2() {
           setPreviewImages={setPreviewImages}
         />
       </Grid>
-      <Drawer
-        anchor='bottom'
-        open={floorDrawer}
-        onClose={() => {
-          setFloorDrawer(false)
-        }}
-        PaperProps={{
-          style: {
-            borderRadius: '20px 20px 0 0',
-            backgroundColor: '#FAFAFA',
-            height: '50vh'
-          }
-        }}
-      >
-        <Toolbar
-          style={{
-            position: 'sticky',
-            top: '0',
-            zIndex: '100',
-            backgroundColor: '#FAFAFA'
-          }}
-        >
-          <Typography variant='h6'>選擇樓層</Typography>
-          <Button
-            color='primary'
-            onClick={() => {
-              setFloorDrawer(false)
-            }}
-            style={{ position: 'absolute', right: '10px' }}
-          >
-            確定
-          </Button>
-        </Toolbar>
-        <Picker
-          valueGroups={{
-            floor: floorMapping[floor]
-          }}
-          optionGroups={{
-            floor: floorMapping
-          }}
-          onChange={(name, value) => {
-            setFloor(floorMapping.indexOf(value))
-          }}
-        />
-      </Drawer>
-      <Drawer
-        anchor='bottom'
-        open={statusDrawer}
-        onClose={() => {
-          setStatusDrawer(false)
-        }}
-        PaperProps={{
-          style: {
-            borderRadius: '20px 20px 0 0',
-            backgroundColor: '#FAFAFA',
-            height: '50vh'
-          }
-        }}
-      >
-        <Toolbar
-          style={{
-            position: 'sticky',
-            top: '0',
-            zIndex: '100',
-            backgroundColor: '#FAFAFA'
-          }}
-        >
-          <Typography variant='h6'>選擇狀態</Typography>
-          <Button
-            color='primary'
-            onClick={() => {
-              setStatusDrawer(false)
-            }}
-            style={{ position: 'absolute', right: '10px' }}
-          >
-            確定
-          </Button>
-        </Toolbar>
-        {selectedMissionId === 'Wi-Fi 訊號' ? (
-          <Picker
-            valueGroups={{
-              status
-            }}
-            optionGroups={{
-              status: ['良好', '正常', '微弱']
-            }}
-            onChange={(name, value) => {
-              setStatus(value)
-            }}
-          />
-        ) : (
-          <Picker
-            valueGroups={{
-              status
-            }}
-            optionGroups={{
-              status: ['人少', '人稍多', '擁擠']
-            }}
-            onChange={(name, value) => {
-              setStatus(value)
-            }}
-          />
-        )}
-      </Drawer>
     </>
   )
 }

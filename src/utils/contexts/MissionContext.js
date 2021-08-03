@@ -456,7 +456,7 @@ export const MissionContextProvider = ({ children }) => {
   const handleCompleteMission = async () => {
     setLoading(true)
     let floorNumber = 0
-    floorNumber = floor
+    floorNumber = Number(floor)
     const payload = {
       locationName: textLocation,
       category: {
