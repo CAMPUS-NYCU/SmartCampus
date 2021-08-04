@@ -22,12 +22,12 @@ const userDetailInitial = {
 }
 
 function useUserDetail() {
-  const [getUserDetail, { data: { getUserData = {} } = {} }] = useLazyQuery(
-    GET_USER_DETAIL_QUERY,
-    {
-      fetchPolicy: 'no-cache'
-    }
-  )
+  const [
+    getUserDetail,
+    { data: { getUserData = {} } = {}, loading }
+  ] = useLazyQuery(GET_USER_DETAIL_QUERY, {
+    fetchPolicy: 'no-cache'
+  })
   const userDetail = useMemo(
     () => ({
       ...userDetailInitial,
@@ -35,7 +35,7 @@ function useUserDetail() {
     }),
     [getUserData]
   )
-  return { userDetail, getUserDetail }
+  return { userDetail, getUserDetail, loading }
 }
 
 export default useUserDetail
