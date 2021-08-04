@@ -3,7 +3,8 @@ import React, {
   createContext,
   useReducer,
   useEffect,
-  useCallback
+  useCallback,
+  useState
 } from 'react'
 import 'firebase/auth'
 import * as firebase from 'firebase/app'
@@ -78,7 +79,9 @@ export const UserContextProvider = withFirebaseAuth({
       payload: 'guest'
     })
   }
+  const [isLoadingToken, setIsLoadingToken] = useState(true)
   const handleGetUserInfo = useCallback(async () => {
+    if (user === null) setIsLoadingToken(false)
     if (user) {
       dispatch({
         type: actionTypes.setUserName,
@@ -92,10 +95,12 @@ export const UserContextProvider = withFirebaseAuth({
         type: actionTypes.setUserPicture,
         payload: user.photoURL
       })
+      const token = await user.getIdToken()
       dispatch({
         type: actionTypes.setToken,
-        payload: await user.getIdToken()
+        payload: token
       })
+      setIsLoadingToken(false)
       dispatch({
         type: actionTypes.setUid,
         payload: user.uid
@@ -119,7 +124,8 @@ export const UserContextProvider = withFirebaseAuth({
     signInWithGuest,
     signInWithGoogle,
     signOut: handleSignOut,
-    isGuest: userInfo.token === 'guest'
+    isGuest: userInfo.token === 'guest',
+    isLoadingToken
   }
   return (
     <UserContext.Provider value={contextValues}>
