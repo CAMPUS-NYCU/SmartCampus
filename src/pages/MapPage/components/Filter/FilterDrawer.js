@@ -87,45 +87,47 @@ const FilterDrawer = (props) => {
             <Grid container item xs={12} direction='row'>
               <Typography variant='h6'>標註類型</Typography>
             </Grid>
-            {missionInfo.map((mission) => (
-              <Grid key={mission.missionName} item xs={4}>
-                <CustomButton
-                  fullWidth
-                  buttonType={
-                    currentMission !== mission
-                      ? 'boxButton_inactivated'
-                      : 'boxButton_activated'
-                  }
-                  variant='contained'
-                  size='small'
-                  onClick={() => changeCurrentMission(mission)}
-                >
-                  {mission.missionName}
-                </CustomButton>
-              </Grid>
-            ))}
+            {Array.isArray(missionInfo) &&
+              missionInfo.map((mission) => (
+                <Grid key={mission.missionName} item xs={4}>
+                  <CustomButton
+                    fullWidth
+                    buttonType={
+                      currentMission !== mission
+                        ? 'boxButton_inactivated'
+                        : 'boxButton_activated'
+                    }
+                    variant='contained'
+                    size='small'
+                    onClick={() => changeCurrentMission(mission)}
+                  >
+                    {mission.missionName}
+                  </CustomButton>
+                </Grid>
+              ))}
             <Grid container item xs={12} direction='row'>
               <Typography variant='h6'>設施類型</Typography>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                {subMission.map((discovery) => (
-                  <Grid key={discovery.subTypeName} item xs={4}>
-                    <CustomButton
-                      fullWidth
-                      buttonType={
-                        currentSubmission !== discovery
-                          ? 'boxButton_inactivated'
-                          : 'boxButton_activated'
-                      }
-                      variant='contained'
-                      size='small'
-                      onClick={() => changeCurrentSubmission(discovery)}
-                    >
-                      {discovery.subTypeName}
-                    </CustomButton>
-                  </Grid>
-                ))}
+                {Array.isArray(subMission) &&
+                  subMission.map((discovery) => (
+                    <Grid key={discovery.subTypeName} item xs={4}>
+                      <CustomButton
+                        fullWidth
+                        buttonType={
+                          currentSubmission !== discovery
+                            ? 'boxButton_inactivated'
+                            : 'boxButton_activated'
+                        }
+                        variant='contained'
+                        size='small'
+                        onClick={() => changeCurrentSubmission(discovery)}
+                      >
+                        {discovery.subTypeName}
+                      </CustomButton>
+                    </Grid>
+                  ))}
               </Grid>
             </Grid>
             <Grid container item xs={12} direction='row'>
@@ -133,23 +135,26 @@ const FilterDrawer = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                {target.map((discovery) => (
-                  <Grid key={discovery.targetName} item xs={4}>
-                    <CustomButton
-                      fullWidth
-                      buttonType={
-                        currentTarget !== discovery.targetName
-                          ? 'boxButton_inactivated'
-                          : 'boxButton_activated'
-                      }
-                      variant='contained'
-                      size='small'
-                      onClick={() => changeCurrentTarget(discovery.targetName)}
-                    >
-                      {discovery.targetName}
-                    </CustomButton>
-                  </Grid>
-                ))}
+                {Array.isArray(target) &&
+                  target?.map((discovery) => (
+                    <Grid key={discovery.targetName} item xs={4}>
+                      <CustomButton
+                        fullWidth
+                        buttonType={
+                          currentTarget !== discovery.targetName
+                            ? 'boxButton_inactivated'
+                            : 'boxButton_activated'
+                        }
+                        variant='contained'
+                        size='small'
+                        onClick={() =>
+                          changeCurrentTarget(discovery.targetName)
+                        }
+                      >
+                        {discovery.targetName}
+                      </CustomButton>
+                    </Grid>
+                  ))}
               </Grid>
             </Grid>
           </Grid>

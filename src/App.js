@@ -22,7 +22,6 @@ import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
 const Pages = () => {
   const { tags } = useTagValue()
   const { token, isLoadingToken } = useUserValue()
-  console.log(token)
   return (
     <>
       {!tags || isLoadingToken ? (
