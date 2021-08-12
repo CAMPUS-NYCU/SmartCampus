@@ -415,7 +415,7 @@ export const MissionContextProvider = ({ children }) => {
       setPreviewImages(tagDetail.imageUrl)
       setImageFiles([])
       setImageDeleteUrls([])
-      setTextLocation(startTag.locationName)
+      setTextLocation(startTag.locationName || '')
       setIsInEdit(true)
     },
     [setStep, tagDetail.description, tagDetail.imageUrl, tagDetail.floor]
