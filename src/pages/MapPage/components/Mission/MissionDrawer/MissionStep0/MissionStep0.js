@@ -16,7 +16,7 @@ import { useMissionValue } from '../../../../../../utils/contexts/MissionContext
 
 const useStyles = makeStyles(() => ({
   secondaryText: {
-    fontSize: '0.15em'
+    fontSize: '10px'
   }
 }))
 
@@ -40,6 +40,7 @@ const MissionStep0 = () => {
             />
           </ListItemIcon>
           <ListItemText
+            style={{ maxWidth: '65%' }}
             classes={{ secondary: classes.secondaryText }}
             primary={item.missionName}
             secondary={item.missionDescription}
