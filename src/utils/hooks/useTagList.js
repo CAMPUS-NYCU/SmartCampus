@@ -41,6 +41,17 @@ function useTagList() {
     }, 30000)
   }
   useEffect(() => {
+    if (newTag.changeType === 'updated') {
+      setTagList((prevTagList) => {
+        const target = prevTagList.find(
+          (tag) => tag.id === newTag.tagContent.id
+        )
+        return [
+          ...prevTagList.filter((tag) => tag.id !== newTag.tagContent.id),
+          { ...target, ...newTag.tagContent }
+        ]
+      })
+    }
     if (newTag.changeType === 'added') {
       setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
     }
