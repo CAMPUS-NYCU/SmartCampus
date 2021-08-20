@@ -180,7 +180,7 @@ const DetailPart = (props) => {
                 >
                   {tagDetail.createUser.displayName}
                 </Box>
-                編輯於 {tagDetail.newLastUpdateTime}
+                編輯於 {tagDetail.newCreateTime}
               </Box>
             </Box>
           </Box>
@@ -209,7 +209,7 @@ const DetailPart = (props) => {
             )}
             <Box display='flex' justifyContent='flex-end'>
               <Box className={classes.clickableFont} m={0.5}>
-                {tagDetail.newCreateTime}
+                {tagDetail.newLastUpdateTime}
               </Box>
             </Box>
           </div>
