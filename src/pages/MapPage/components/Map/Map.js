@@ -94,35 +94,35 @@ function Map(props) {
             fullscreenControl: false,
             mapTypeControl: false,
             streetViewControl: false,
-            styles: [
-              {
-                featureType: 'poi',
-                elementType: 'labels.icon',
-                stylers: [
-                  {
-                    visibility: 'off'
-                  }
-                ]
-              },
-              {
-                featureType: 'poi.school',
-                elementType: 'labels.icon',
-                stylers: [
-                  {
-                    visibility: 'on'
-                  }
-                ]
-              },
-              {
-                featureType: 'poi.sports_complex',
-                elementType: 'labels.icon',
-                stylers: [
-                  {
-                    visibility: 'on'
-                  }
-                ]
-              }
-            ]
+            // styles: [
+            //   {
+            //     featureType: 'poi',
+            //     elementType: 'labels.icon',
+            //     stylers: [
+            //       {
+            //         visibility: 'off'
+            //       }
+            //     ]
+            //   },
+            //   {
+            //     featureType: 'poi.school',
+            //     elementType: 'labels.icon',
+            //     stylers: [
+            //       {
+            //         visibility: 'on'
+            //       }
+            //     ]
+            //   },
+            //   {
+            //     featureType: 'poi.sports_complex',
+            //     elementType: 'labels.icon',
+            //     stylers: [
+            //       {
+            //         visibility: 'on'
+            //       }
+            //     ]
+            //   }
+            // ]
           }}
           mapContainerStyle={{
             height: '100%',
