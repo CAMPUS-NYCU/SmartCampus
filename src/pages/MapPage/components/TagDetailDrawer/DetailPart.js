@@ -106,7 +106,7 @@ const DetailPart = (props) => {
                     key={url}
                     onClick={() => setLargeImg(`${url}`)}
                     style={{
-                      width: '80%',
+                      width: '100%',
                       flexShrink: '0',
                       overflowY: 'hidden',
                       backgroundSize: 'cover',
@@ -116,18 +116,6 @@ const DetailPart = (props) => {
                   />
                 )
               })
-            )}
-            {tagDetail.imageUrl.length === 1 && (
-              <div
-                style={{
-                  width: '80%',
-                  flexShrink: '0',
-                  overflow: 'hidden',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundImage: `url(${noImage})`
-                }}
-              />
             )}
           </div>
           <Box
