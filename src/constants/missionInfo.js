@@ -76,7 +76,7 @@ export const facilitySubType = [
       subTypeName: 'Wi-Fi',
       target: [
         {
-          targetName: 'NCTU'
+          targetName: 'NYCU'
         }
       ]
     }
