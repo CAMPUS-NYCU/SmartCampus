@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { useUserValue } from '../contexts/UserContext'
 
@@ -12,21 +13,24 @@ export const useViewCount = () => {
     INCREMENT_VIEW_COUNT_MUTATION
   )
   const { token } = useUserValue()
-  const incrementViewCount = async (id) => {
-    try {
-      incrementViewCountMutation({
-        context: {
-          headers: {
-            authorization: token ? `Bearer ${token}` : ''
+  const incrementViewCount = useCallback(
+    async (id) => {
+      try {
+        incrementViewCountMutation({
+          context: {
+            headers: {
+              authorization: token ? `Bearer ${token}` : ''
+            }
+          },
+          variables: {
+            tagId: id
           }
-        },
-        variables: {
-          tagId: id
-        }
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  }
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    [incrementViewCountMutation, token]
+  )
   return { incrementViewCount }
 }
