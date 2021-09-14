@@ -16,6 +16,8 @@ import {
   REACT_APP_FIREBASE_EMULATER_URL
 } from '../../constants/envValues'
 
+const REFRESH_TOKEN_TIMEOUT = 15 * 60 * 1000 // 15 minutes
+
 // Firebase Google authentication settings
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 const firebaseAppAuth = firebaseApp.auth()
@@ -107,6 +109,20 @@ export const UserContextProvider = withFirebaseAuth({
       })
     }
   }, [user])
+  const handleRefreshToken = useCallback(async () => {
+    setTimeout(async () => {
+      if (user) {
+        const token = await user.getIdToken()
+        console.log(token)
+        dispatch({
+          type: actionTypes.setToken,
+          payload: token
+        })
+      }
+      handleRefreshToken()
+    }, REFRESH_TOKEN_TIMEOUT)
+    // every 15 minutes, refresh token
+  }, [user])
   const handleSignOut = () => {
     dispatch({ type: actionTypes.cleanUser })
     signOut()
@@ -114,6 +130,9 @@ export const UserContextProvider = withFirebaseAuth({
   useEffect(() => {
     handleGetUserInfo()
   }, [handleGetUserInfo])
+  useEffect(() => {
+    handleRefreshToken()
+  }, [handleRefreshToken])
   useEffect(() => {
     if (REACT_APP_FIREBASE_LOCAL_SERVER) {
       firebaseAppAuth.useEmulator(REACT_APP_FIREBASE_EMULATER_URL)
@@ -125,7 +144,8 @@ export const UserContextProvider = withFirebaseAuth({
     signInWithGoogle,
     signOut: handleSignOut,
     isGuest: userInfo.token === 'guest',
-    isLoadingToken
+    isLoadingToken,
+    handleRefreshToken
   }
   return (
     <UserContext.Provider value={contextValues}>
