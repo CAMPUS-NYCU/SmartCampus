@@ -93,7 +93,7 @@ function Map(props) {
           options={{
             fullscreenControl: false,
             mapTypeControl: false,
-            streetViewControl: false,
+            streetViewControl: false
             // styles: [
             //   {
             //     featureType: 'poi',

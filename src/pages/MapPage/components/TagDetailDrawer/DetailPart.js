@@ -101,7 +101,7 @@ const DetailPart = (props) => {
               />
             ) : (
               tagDetail.imageUrl.map((url) => {
-                if (tagDetail.imageUrl.length===1) {
+                if (tagDetail.imageUrl.length === 1) {
                   return (
                     <Button
                       key={url}
@@ -116,22 +116,21 @@ const DetailPart = (props) => {
                       }}
                     />
                   )
-                } else {
-                  return (
-                    <Button
-                      key={url}
-                      onClick={() => setLargeImg(`${url}`)}
-                      style={{
-                        width: '80%',
-                        flexShrink: '0',
-                        overflowY: 'hidden',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundImage: `url(${url})`
-                      }}
-                    />
-                  ) 
                 }
+                return (
+                  <Button
+                    key={url}
+                    onClick={() => setLargeImg(`${url}`)}
+                    style={{
+                      width: '80%',
+                      flexShrink: '0',
+                      overflowY: 'hidden',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundImage: `url(${url})`
+                    }}
+                  />
+                )
               })
             )}
           </div>
