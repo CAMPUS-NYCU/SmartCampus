@@ -134,18 +134,6 @@ const DetailPart = (props) => {
                 }
               })
             )}
-            {tagDetail.imageUrl.length === 1 && (
-              <div
-                style={{
-                  width: '80%',
-                  flexShrink: '0',
-                  overflow: 'hidden',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundImage: `url(${noImage})`
-                }}
-              />
-            )}
           </div>
           <Box
             display='flex'
