@@ -101,21 +101,50 @@ const DetailPart = (props) => {
               />
             ) : (
               tagDetail.imageUrl.map((url) => {
-                return (
-                  <Button
-                    key={url}
-                    onClick={() => setLargeImg(`${url}`)}
-                    style={{
-                      width: '100%',
-                      flexShrink: '0',
-                      overflowY: 'hidden',
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      backgroundImage: `url(${url})`
-                    }}
-                  />
-                )
+                if (tagDetail.imageUrl.length===1) {
+                  return (
+                    <Button
+                      key={url}
+                      onClick={() => setLargeImg(`${url}`)}
+                      style={{
+                        width: '100%',
+                        flexShrink: '0',
+                        overflowY: 'hidden',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundImage: `url(${url})`
+                      }}
+                    />
+                  )
+                } else {
+                  return (
+                    <Button
+                      key={url}
+                      onClick={() => setLargeImg(`${url}`)}
+                      style={{
+                        width: '80%',
+                        flexShrink: '0',
+                        overflowY: 'hidden',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundImage: `url(${url})`
+                      }}
+                    />
+                  ) 
+                }
               })
+            )}
+            {tagDetail.imageUrl.length === 1 && (
+              <div
+                style={{
+                  width: '80%',
+                  flexShrink: '0',
+                  overflow: 'hidden',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundImage: `url(${noImage})`
+                }}
+              />
             )}
           </div>
           <Box
