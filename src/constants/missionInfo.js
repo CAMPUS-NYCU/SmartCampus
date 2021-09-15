@@ -127,6 +127,9 @@ export const facilitySubType = [
       subTypeName: '車站排隊人潮'
     },
     {
+      subTypeName: '運動場館人潮'
+    },
+    {
       subTypeName: 'Wi-Fi 訊號'
     }
   ]
