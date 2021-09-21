@@ -86,15 +86,25 @@ const ReportHistory = (props) => {
                       </Box>
                     </Grid>
                   </Grid>
-
-                  <CustomButton
-                    buttonType='roundButton_activated'
-                    variant='contained'
-                    size='small'
-                    onClick={() => setActiveTagId(item.id)}
-                  >
-                    檢視
-                  </CustomButton>
+                  {item.archived === true ? (
+                    <CustomButton
+                      buttonType='roundButton_inactivated'
+                      variant='contained'
+                      size='small'
+                      onClick={() => setActiveTagId(item.id)}
+                    >
+                      已封存
+                    </CustomButton>
+                  ) : (
+                    <CustomButton
+                      buttonType='roundButton_activated'
+                      variant='contained'
+                      size='small'
+                      onClick={() => setActiveTagId(item.id)}
+                    >
+                      檢視
+                    </CustomButton>
+                  )}
                 </ListItem>
                 <Divider variant='middle' />
               </div>
