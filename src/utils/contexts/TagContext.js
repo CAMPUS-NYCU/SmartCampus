@@ -29,7 +29,7 @@ function findTagById(id, tags) {
 
 export const TagContextProvider = ({ children }) => {
   const { tags, refetch, updateTagList } = useTagList()
-  const { userAddTags, refetchUserAddTags } = useUserTags()
+  const { userAddTags, getUserTagList } = useUserTags()
   const threshold = useThreshold()
 
   // ! TEMP: 之後會串接 API 拿category列表？
@@ -96,7 +96,7 @@ export const TagContextProvider = ({ children }) => {
     resetFilterTags,
     tagDetail,
     userAddTags,
-    refetchUserAddTags,
+    getUserTagList,
     fetchTagDetail,
     threshold,
     updateTagList
