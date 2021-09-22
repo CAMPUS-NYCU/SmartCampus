@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Typography,
   List,
@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
+import { useUserValue } from 'utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
@@ -33,10 +34,20 @@ const ReportHistory = (props) => {
   const {
     control: { open, setClose }
   } = props
-  const { setActiveTagId, activeTag, userAddTags } = useTagValue()
+  const {
+    setActiveTagId,
+    activeTag,
+    userAddTags,
+    getUserTagList
+  } = useTagValue()
+  const { uid } = useUserValue()
+
   const { isInMission } = useMissionValue()
   const missionImages = [Mission1, Mission2, Mission3]
   const classes = useStyle()
+  useEffect(() => {
+    if (uid) getUserTagList({ variables: { uid } })
+  }, [uid, getUserTagList])
   return (
     <CustomDrawer
       open={open && !isInMission && !activeTag}

@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useLazyQuery } from '@apollo/client'
 
-import * as firebase from 'firebase/app'
 import { generateTime } from './useTagDetail'
 
 const GET_USER_TAGS_QUERY = gql`
@@ -60,26 +59,15 @@ const reformatTagList = (data) => {
 }
 
 const useUserTags = () => {
-  const uid = firebase.auth().currentUser ? firebase.auth().currentUser.uid : ''
   const [userAddTags, setUserAddTags] = useState(null)
-  const { data, refetch } = useQuery(GET_USER_TAGS_QUERY, {
+  const [getUserTagList, { data }] = useLazyQuery(GET_USER_TAGS_QUERY, {
     fetchPolicy: 'no-cache',
-    variables: {
-      uid
-    },
     onCompleted: () => {
       setUserAddTags(reformatTagList(data))
     }
   })
 
-  const refetchUserAddTags = () => {
-    // refetch
-    refetch({ fetchPolicy: 'no-cache' }).then((d) => {
-      setUserAddTags(reformatTagList(d.data))
-    })
-  }
-
-  return { userAddTags, setUserAddTags, refetchUserAddTags }
+  return { userAddTags, setUserAddTags, getUserTagList }
 }
 
 export default useUserTags

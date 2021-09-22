@@ -119,7 +119,7 @@ export const MissionContext = React.createContext({
 export const MissionContextProvider = ({ children }) => {
   const [tagAdd] = useMutation(TAG_ADD_MUTATION)
   const [tagUpdate] = useMutation(TAG_UPDATE_MUTATION)
-  const { token } = useUserValue()
+  const { token, uid } = useUserValue()
 
   const [isInEdit, setIsInEdit] = useState(false)
 
@@ -140,7 +140,7 @@ export const MissionContextProvider = ({ children }) => {
     maxStep: MISSION_MAX_STEP,
     minStep: MISSION_MIN_STEP
   })
-  const { activeTag, tagDetail, refetchUserAddTags } = useTagValue()
+  const { activeTag, tagDetail, getUserTagList } = useTagValue()
   const handleBack = useCallback(() => {
     setSelectedMissionId(InitialMissionValue.selectedMissionId)
     setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
@@ -516,7 +516,7 @@ export const MissionContextProvider = ({ children }) => {
         })
         await handleUploadImages(imageUploadUrls)
       }
-      refetchUserAddTags()
+      getUserTagList({ variables: { uid } })
       setLoading(false)
       clearMissionData()
       setMissionType(null)
