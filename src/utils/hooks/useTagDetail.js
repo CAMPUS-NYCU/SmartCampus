@@ -2,6 +2,8 @@ import { useMemo } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
 import moment from 'moment'
 
+import { useUserValue } from 'utils/contexts/UserContext'
+
 export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
     tag(tagId: $id) {
@@ -58,11 +60,14 @@ const tagDetailInitial = {
 }
 
 function useTagDetail() {
-  // const [tagDetail, setTagDetail] = useState(null)
+  const { token, uid } = useUserValue()
   const [getTagDetail, { data: { tag = {} } = {} }] = useLazyQuery(
     GET_TAG_DETAIL_QUERY,
     {
-      fetchPolicy: 'no-cache'
+      fetchPolicy: 'no-cache',
+      ...(uid && {
+        context: { headers: { authorization: `Bearer ${token}` } }
+      })
     }
   )
   const tagDetail = useMemo(
