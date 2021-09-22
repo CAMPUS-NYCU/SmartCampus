@@ -10,6 +10,7 @@ const GET_USER_TAGS_QUERY = gql`
       tags {
         id
         locationName
+        archived
         category {
           missionName
           subTypeName
@@ -36,6 +37,7 @@ const reformatTagList = (data) => {
     const {
       id,
       locationName,
+      archived,
       category: { missionName, subTypeName, targetName },
       status: { statusName, numberOfUpVote }
     } = tag
@@ -48,6 +50,7 @@ const reformatTagList = (data) => {
     return {
       id,
       locationName,
+      archived,
       category: { missionName, subTypeName, targetName },
       status: { statusName, numberOfUpVote },
       statusHistory
