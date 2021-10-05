@@ -15,6 +15,7 @@ import {
   REACT_APP_FIREBASE_LOCAL_SERVER,
   REACT_APP_FIREBASE_EMULATER_URL
 } from '../../constants/envValues'
+import { getItem, setItem, TOKEN_EXPIRE_INFO } from '../functions/localStorage'
 
 const REFRESH_TOKEN_TIMEOUT = 15 * 60 * 1000 // 15 minutes
 
@@ -109,18 +110,22 @@ export const UserContextProvider = withFirebaseAuth({
       })
     }
   }, [user])
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms))
   const handleRefreshToken = useCallback(async () => {
-    setTimeout(async () => {
-      if (user) {
-        const token = await user.getIdToken()
-        console.log(token)
-        dispatch({
-          type: actionTypes.setToken,
-          payload: token
-        })
-      }
-      handleRefreshToken()
-    }, REFRESH_TOKEN_TIMEOUT)
+    const expireTime = getItem(TOKEN_EXPIRE_INFO)
+    if (expireTime) {
+      const timeout = REFRESH_TOKEN_TIMEOUT - (Date.now() - expireTime)
+      await delay(timeout)
+    }
+    if (user) {
+      const token = await user.getIdToken()
+      dispatch({
+        type: actionTypes.setToken,
+        payload: token
+      })
+      setItem(TOKEN_EXPIRE_INFO, Date.now())
+    }
+    handleRefreshToken()
     // every 15 minutes, refresh token
   }, [user])
   const handleSignOut = () => {
