@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-
+import { usePlacesWidget } from 'react-google-autocomplete'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+
 import { useSnackbar } from 'notistack'
 // import MuiAlert from '@material-ui/lab/Alert'
 import useMenu from '../../../../utils/hooks/useMenu'
@@ -49,6 +50,15 @@ const SearchBar = React.forwardRef((props, ref) => {
   const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
   const { currentStep } = useMissionValue()
+  const { ref: materialRef } = usePlacesWidget({
+    onPlaceSelected: (place) => {
+      console.log(place)
+    },
+    options: {
+      types: ['establishment'],
+      componentRestrictions: { country: 'tw' }
+    }
+  })
   return (
     <div ref={ref} {...otherProps}>
       <Paper className={classes.root}>
@@ -69,6 +79,11 @@ const SearchBar = React.forwardRef((props, ref) => {
           onClick={() => {
             enqueueSnackbar('尚未開放', { variant: 'error' })
           }}
+        />
+        <InputBase
+          inputRef={materialRef}
+          style={{ width: '90%' }}
+          placeholder='開始輸入'
         />
 
         <Divider className={classes.divider} orientation='vertical' />
