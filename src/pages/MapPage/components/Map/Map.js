@@ -1,13 +1,11 @@
 import React, { useMemo } from 'react'
 import {
   GoogleMap,
-  LoadScript,
   Marker,
   StreetViewPanorama,
   MarkerClusterer
 } from '@react-google-maps/api'
 import moment from 'moment'
-import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../constants/envValues'
 import {
   useMissionValue,
   MissionStep
@@ -94,170 +92,168 @@ function Map(props) {
         position: 'fixed'
       }}
     >
-      <LoadScript googleMapsApiKey={REACT_APP_GOOGLE_MAP_API_KEY}>
-        <GoogleMap
-          clickableIcons={false}
-          center={mapCenter}
-          zoom={DefaultZoom}
-          onClick={handleToggleShowControl}
-          onLoad={handleMapOnLoad}
-          options={{
-            fullscreenControl: false,
-            mapTypeControl: false,
-            streetViewControl: false
-            // styles: [
-            //   {
-            //     featureType: 'poi',
-            //     elementType: 'labels.icon',
-            //     stylers: [
-            //       {
-            //         visibility: 'off'
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     featureType: 'poi.school',
-            //     elementType: 'labels.icon',
-            //     stylers: [
-            //       {
-            //         visibility: 'on'
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     featureType: 'poi.sports_complex',
-            //     elementType: 'labels.icon',
-            //     stylers: [
-            //       {
-            //         visibility: 'on'
-            //       }
-            //     ]
-            //   }
-            // ]
-          }}
-          mapContainerStyle={{
-            height: '100%',
-            width: '100%'
-          }}
-          onCenterChanged={() => {
-            if (isInMission && currentStep === MissionStep.PlaceFlagOnMap) {
-              handleSetMarkerPosition()
-            }
-          }}
-        >
-          {!userPositionError && (
-            <Marker
-              clickable={false}
-              position={userPosition}
-              icon={{
-                url: myLocationImg,
-                scaledSize: { width: 20, height: 20 }
-              }}
-            />
-          )}
-          {!isInMission && (
-            <MarkerClusterer
-              option={{
-                imagePath:
-                  'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-              }}
-            >
-              {(clusterer) =>
-                showTags.map((tag) => (
-                  <Marker
-                    key={tag.id}
-                    position={{
-                      lat: parseFloat(tag.coordinates.latitude),
-                      lng: parseFloat(tag.coordinates.longitude)
-                    }}
-                    icon={(() => {
-                      if (activeTagId === tag.id) {
-                        return {
-                          url:
-                            missionredImage[
-                              missionName.findIndex(
-                                (mission) =>
-                                  mission === tag.category.missionName
-                              )
-                            ],
-                          scaledSize: { width: 28, height: 30 }
-                        }
-                      }
-                      if (tag.category.missionName === '動態任務') {
-                        if (compareTime(tag.lastUpdateTime)) {
-                          return {
-                            url:
-                              missionActiveImage[
-                                StatusName.findIndex(
-                                  (statusName) =>
-                                    statusName === tag.status.statusName
-                                ) % 3
-                              ],
-                            scaledSize: { width: 28, height: 30 }
-                          }
-                        }
-                        return {
-                          url: missionImage[2],
-                          scaledSize: { width: 28, height: 30 }
-                        }
-                      }
+      <GoogleMap
+        clickableIcons={false}
+        center={mapCenter}
+        zoom={DefaultZoom}
+        onClick={handleToggleShowControl}
+        onLoad={handleMapOnLoad}
+        options={{
+          fullscreenControl: false,
+          mapTypeControl: false,
+          streetViewControl: false
+          // styles: [
+          //   {
+          //     featureType: 'poi',
+          //     elementType: 'labels.icon',
+          //     stylers: [
+          //       {
+          //         visibility: 'off'
+          //       }
+          //     ]
+          //   },
+          //   {
+          //     featureType: 'poi.school',
+          //     elementType: 'labels.icon',
+          //     stylers: [
+          //       {
+          //         visibility: 'on'
+          //       }
+          //     ]
+          //   },
+          //   {
+          //     featureType: 'poi.sports_complex',
+          //     elementType: 'labels.icon',
+          //     stylers: [
+          //       {
+          //         visibility: 'on'
+          //       }
+          //     ]
+          //   }
+          // ]
+        }}
+        mapContainerStyle={{
+          height: '100%',
+          width: '100%'
+        }}
+        onCenterChanged={() => {
+          if (isInMission && currentStep === MissionStep.PlaceFlagOnMap) {
+            handleSetMarkerPosition()
+          }
+        }}
+      >
+        {!userPositionError && (
+          <Marker
+            clickable={false}
+            position={userPosition}
+            icon={{
+              url: myLocationImg,
+              scaledSize: { width: 20, height: 20 }
+            }}
+          />
+        )}
+        {!isInMission && (
+          <MarkerClusterer
+            option={{
+              imagePath:
+                'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+            }}
+          >
+            {(clusterer) =>
+              showTags.map((tag) => (
+                <Marker
+                  key={tag.id}
+                  position={{
+                    lat: parseFloat(tag.coordinates.latitude),
+                    lng: parseFloat(tag.coordinates.longitude)
+                  }}
+                  icon={(() => {
+                    if (activeTagId === tag.id) {
                       return {
                         url:
-                          missionImage[
+                          missionredImage[
                             missionName.findIndex(
                               (mission) => mission === tag.category.missionName
                             )
                           ],
                         scaledSize: { width: 28, height: 30 }
                       }
-                    })()}
-                    clickable
-                    onClick={() => setActiveTagId(tag.id)}
-                    clusterer={clusterer}
-                  />
-                ))
-              }
-            </MarkerClusterer>
-          )}
-          {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
-            <Marker
+                    }
+                    if (tag.category.missionName === '動態任務') {
+                      if (compareTime(tag.lastUpdateTime)) {
+                        return {
+                          url:
+                            missionActiveImage[
+                              StatusName.findIndex(
+                                (statusName) =>
+                                  statusName === tag.status.statusName
+                              ) % 3
+                            ],
+                          scaledSize: { width: 28, height: 30 }
+                        }
+                      }
+                      return {
+                        url: missionImage[2],
+                        scaledSize: { width: 28, height: 30 }
+                      }
+                    }
+                    return {
+                      url:
+                        missionredImage[
+                          missionName.findIndex(
+                            (mission) => mission === tag.category.missionName
+                          )
+                        ],
+                      scaledSize: { width: 28, height: 30 }
+                    }
+                  })()}
+                  clickable
+                  onClick={() => setActiveTagId(tag.id)}
+                  clusterer={clusterer}
+                />
+              ))
+            }
+          </MarkerClusterer>
+        )}
+        {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
+          <Marker
+            position={{
+              lat: markerPosition.latitude,
+              lng: markerPosition.longitude
+            }}
+            icon={{ url: flagImg, scaledSize: { width: 30, height: 30 } }}
+          />
+        )}
+        {currentStep === MissionStep.PlaceFlagOnStreet && (
+          <>
+            <PinTarget />
+            <StreetViewPanorama
               position={{
-                lat: markerPosition.latitude,
-                lng: markerPosition.longitude
+                lat: streetViewPosition.latitude,
+                lng: streetViewPosition.longitude
               }}
-              icon={{ url: flagImg, scaledSize: { width: 30, height: 30 } }}
+              pov={{
+                heading: !povChanged && streetViewPOV.heading,
+                pitch: !povChanged && streetViewPOV.pitch
+              }}
+              visible={currentStep === MissionStep.PlaceFlagOnStreet}
+              onLoad={handleStreetViewOnLoad}
+              onPanoChanged={handleChangeStreetViewPosition}
+              onPovChanged={handleChangeStreetViewPOV}
+              options={{
+                fullscreenControl: false,
+                zoomControl: false,
+                mapTypeControl: false,
+                // disableDefaultUI: true,
+                enableCloseButton: false,
+                clickToGo: true,
+                addressControl: false
+              }}
             />
-          )}
-          {currentStep === MissionStep.PlaceFlagOnStreet && (
-            <>
-              <PinTarget />
-              <StreetViewPanorama
-                position={{
-                  lat: streetViewPosition.latitude,
-                  lng: streetViewPosition.longitude
-                }}
-                pov={{
-                  heading: !povChanged && streetViewPOV.heading,
-                  pitch: !povChanged && streetViewPOV.pitch
-                }}
-                visible={currentStep === MissionStep.PlaceFlagOnStreet}
-                onLoad={handleStreetViewOnLoad}
-                onPanoChanged={handleChangeStreetViewPosition}
-                onPovChanged={handleChangeStreetViewPOV}
-                options={{
-                  fullscreenControl: false,
-                  zoomControl: false,
-                  mapTypeControl: false,
-                  // disableDefaultUI: true,
-                  enableCloseButton: false,
-                  clickToGo: true,
-                  addressControl: false
-                }}
-              />
-            </>
-          )}
-        </GoogleMap>
-      </LoadScript>
+          </>
+        )}
+      </GoogleMap>
+      {/* </LoadScript> */}
     </div>
   )
 }

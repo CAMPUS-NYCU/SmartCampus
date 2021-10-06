@@ -18,6 +18,7 @@
     "react/require-default-props": "warn",
     "react/prop-types": "off",
     "no-empty": "warn",
+    "no-alert": "off",
     "no-param-reassign": "warn",
     "react/jsx-wrap-multilines": [  //多行的 jsx code 不一定要 '()'
       "error",

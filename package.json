@@ -23,6 +23,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-google-autocomplete": "^2.4.2",
     "react-map-gl": "^5.0.12",
     "react-mobile-picker-scroll": "^0.2.14",
     "react-modal-image": "^2.5.0",
