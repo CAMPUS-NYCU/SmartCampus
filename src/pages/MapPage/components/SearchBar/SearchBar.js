@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+<<<<<<< HEAD
+=======
+import { usePlacesWidget } from 'react-google-autocomplete'
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
 import { makeStyles } from '@material-ui/core/styles'
 import { usePlacesWidget } from 'react-google-autocomplete'
 import Paper from '@material-ui/core/Paper'
@@ -8,8 +12,12 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+<<<<<<< HEAD
 import CloseIcon from '@material-ui/icons/Close'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
+=======
+
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
 import { useSnackbar } from 'notistack'
 // import MuiAlert from '@material-ui/lab/Alert'
 import useMenu from '../../../../utils/hooks/useMenu'
@@ -57,6 +65,7 @@ const SearchBar = React.forwardRef((props, ref) => {
   const [open, changeOpen] = useState(false)
   const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
+<<<<<<< HEAD
   const { currentStep, setMapCenter } = useMissionValue()
   const bounds = {
     north: 24.791768,
@@ -94,6 +103,14 @@ const SearchBar = React.forwardRef((props, ref) => {
     },
     options: {
       bounds,
+=======
+  const { currentStep } = useMissionValue()
+  const { ref: materialRef } = usePlacesWidget({
+    onPlaceSelected: (place) => {
+      console.log(place)
+    },
+    options: {
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
       types: ['establishment'],
       componentRestrictions: { country: 'tw' }
     }
@@ -135,6 +152,7 @@ const SearchBar = React.forwardRef((props, ref) => {
             setSearch(true)
           }}
         />
+<<<<<<< HEAD
         {search === true ? (
           <>
             <IconButton
@@ -152,6 +170,14 @@ const SearchBar = React.forwardRef((props, ref) => {
         ) : (
           ''
         )}
+=======
+        <InputBase
+          inputRef={materialRef}
+          style={{ width: '90%' }}
+          placeholder='開始輸入'
+        />
+
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
           className={classes.iconButton}

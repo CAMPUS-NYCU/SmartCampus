@@ -100,6 +100,13 @@ function Map(props) {
         position: 'fixed'
       }}
     >
+<<<<<<< HEAD
+=======
+      {/* <LoadScript
+        googleMapsApiKey={REACT_APP_GOOGLE_MAP_API_KEY}
+        libraries={libraries}
+      > */}
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
       <GoogleMap
         clickableIcons={false}
         center={mapCenter}
@@ -205,14 +212,36 @@ function Map(props) {
                         scaledSize: { width: 28, height: 30 }
                       }
                     }
+<<<<<<< HEAD
                     return {
                       url:
                         missionredImage[
+=======
+                    if (tag.category.missionName === '動態任務') {
+                      if (compareTime(tag.lastUpdateTime)) {
+                        return {
+                          url: missionImage[3],
+                          scaledSize: { width: 20, height: 20 }
+                        }
+                      }
+                      return {
+                        url: missionImage[2],
+                        scaledSize: { width: 20, height: 20 }
+                      }
+                    }
+                    return {
+                      url:
+                        missionImage[
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
                           missionName.findIndex(
                             (mission) => mission === tag.category.missionName
                           )
                         ],
+<<<<<<< HEAD
                       scaledSize: { width: 28, height: 30 }
+=======
+                      scaledSize: { width: 20, height: 20 }
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
                     }
                   })()}
                   clickable
@@ -260,6 +289,7 @@ function Map(props) {
             />
           </>
         )}
+<<<<<<< HEAD
         {placeName !== '' && search === true ? (
           <Marker
             clickable
@@ -279,6 +309,8 @@ function Map(props) {
         ) : (
           ''
         )}
+=======
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
       </GoogleMap>
       {/* </LoadScript> */}
     </div>

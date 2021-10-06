@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
+=======
+import React, { useEffect } from 'react'
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 import { usePosition } from 'use-position'
@@ -65,15 +69,19 @@ const MapPageContent = (props) => {
   } = usePosition(false)
   useEffect(() => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (positionError) {
       console.error(positionError)
     }
   }, [positionError])
 =======
+=======
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
     if (loadError) {
       alert('Google map load error')
     }
   }, [loadError])
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 362b15d (Add default google map autocomplete api)
 =======
@@ -81,6 +89,8 @@ const MapPageContent = (props) => {
   const [placeName, setPlaceName] = useState('')
   const [search, setSearch] = useState(false)
 >>>>>>> d90b176 (Open search function)
+=======
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
   return (
     <div>
       {isLoaded && (
@@ -89,9 +99,12 @@ const MapPageContent = (props) => {
             mapCenter={mapCenter}
             userPositionError={positionError}
             userPosition={{ lat: positionLat, lng: positionLng }}
+<<<<<<< HEAD
             place={placePosition}
             search={search}
             placeName={placeName}
+=======
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
           />
           <Fade in={showControl}>
             <div>
@@ -105,10 +118,13 @@ const MapPageContent = (props) => {
                   },
                   handleOpenTerms: userDialogControl.setOpen
                 }}
+<<<<<<< HEAD
                 setPlacePosition={setPlacePosition}
                 search={search}
                 setSearch={setSearch}
                 setPlaceName={setPlaceName}
+=======
+>>>>>>> 9a309b3 (Add default google map autocomplete api)
               />
               <MissionFab />
               <FilterFab />
