@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { usePlacesWidget } from 'react-google-autocomplete'
 import { makeStyles } from '@material-ui/core/styles'
+import { usePlacesWidget } from 'react-google-autocomplete'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-
+import CloseIcon from '@material-ui/icons/Close'
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 import { useSnackbar } from 'notistack'
 // import MuiAlert from '@material-ui/lab/Alert'
 import useMenu from '../../../../utils/hooks/useMenu'
@@ -43,18 +44,49 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 const SearchBar = React.forwardRef((props, ref) => {
-  const { menuControls, ...otherProps } = props
+  const {
+    menuControls,
+    setPlacePosition,
+    search,
+    setSearch,
+    setPlaceName,
+    ...otherProps
+  } = props
   const classes = useStyles()
   const menuControl = useMenu()
   const [open, changeOpen] = useState(false)
   const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
-  const { currentStep } = useMissionValue()
+  const { currentStep, setMapCenter } = useMissionValue()
+  const bounds = {
+    north: 24.791768,
+    south: 24.782687,
+    east: 121.000443,
+    west: 120.995352
+  }
   const { ref: materialRef } = usePlacesWidget({
-    onPlaceSelected: (place) => {
-      console.log(place)
+    onPlaceSelected: (Place) => {
+      if (Place.place_id !== undefined) {
+        setSearch(true)
+        const placeName = document
+          .getElementById('inputBase')
+          .value.split('新竹市東區')[1]
+        if (placeName === undefined) {
+          enqueueSnackbar('地址超過搜尋範圍', { variant: 'error' })
+        } else {
+          if (placeName.split('路')[1] === undefined) {
+            setPlaceName(placeName)
+          }
+          setPlaceName(placeName.split('路')[1])
+          setPlacePosition(Place.geometry.location)
+          setMapCenter(Place.geometry.location)
+        }
+      } else {
+        document.getElementById('inputBase').value = ''
+      }
     },
     options: {
+      bounds,
       types: ['establishment'],
       componentRestrictions: { country: 'tw' }
     }
@@ -62,30 +94,57 @@ const SearchBar = React.forwardRef((props, ref) => {
   return (
     <div ref={ref} {...otherProps}>
       <Paper className={classes.root}>
-        <IconButton
-          className={classes.iconButton}
-          aria-label='search'
-          onClick={() => {
-            enqueueSnackbar('尚未開放', { variant: 'error' })
-          }}
-        >
-          <SearchIcon />
-        </IconButton>
+        {search === false ? (
+          <IconButton
+            className={classes.iconButton}
+            aria-label='search'
+            onClick={() => {
+              document.getElementById('inputBase').focus()
+              setSearch(true)
+            }}
+          >
+            <SearchIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className={classes.iconButton}
+            aria-label='search'
+            onClick={() => {
+              document.getElementById('inputBase').blur()
+              setSearch(false)
+              setPlaceName('')
+            }}
+          >
+            <KeyboardReturnIcon />
+          </IconButton>
+        )}
+
         <InputBase
-          className={classes.input}
-          placeholder='Search'
-          inputProps={{ 'aria-label': 'search' }}
-          disabled
-          onClick={() => {
-            enqueueSnackbar('尚未開放', { variant: 'error' })
-          }}
-        />
-        <InputBase
+          id='inputBase'
           inputRef={materialRef}
           style={{ width: '90%' }}
           placeholder='開始輸入'
+          onClick={() => {
+            setSearch(true)
+          }}
         />
-
+        {search === true ? (
+          <>
+            <IconButton
+              className={classes.iconButton}
+              aria-label='search'
+              onClick={() => {
+                document.getElementById('inputBase').value = ''
+                setSearch(false)
+                setPlaceName('')
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </>
+        ) : (
+          ''
+        )}
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
           className={classes.iconButton}
@@ -116,5 +175,4 @@ const SearchBar = React.forwardRef((props, ref) => {
 SearchBar.propTypes = {
   menuControls: PropTypes.object.isRequired
 }
-
 export default SearchBar

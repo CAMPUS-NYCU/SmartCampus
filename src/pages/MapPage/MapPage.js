@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 import { usePosition } from 'use-position'
@@ -68,6 +68,9 @@ const MapPageContent = (props) => {
       alert('Google map load error')
     }
   }, [loadError])
+  const [placePosition, setPlacePosition] = useState('')
+  const [placeName, setPlaceName] = useState('')
+  const [search, setSearch] = useState(false)
   return (
     <div>
       {isLoaded && (
@@ -76,6 +79,9 @@ const MapPageContent = (props) => {
             mapCenter={mapCenter}
             userPositionError={positionError}
             userPosition={{ lat: positionLat, lng: positionLng }}
+            place={placePosition}
+            search={search}
+            placeName={placeName}
           />
           <Fade in={showControl}>
             <div>
@@ -89,6 +95,10 @@ const MapPageContent = (props) => {
                   },
                   handleOpenTerms: userDialogControl.setOpen
                 }}
+                setPlacePosition={setPlacePosition}
+                search={search}
+                setSearch={setSearch}
+                setPlaceName={setPlaceName}
               />
               <MissionFab />
               <FilterFab />
