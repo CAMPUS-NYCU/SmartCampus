@@ -22,10 +22,18 @@ import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
 import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
 import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
 import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
+import Searchposition from '../../../../assets/images/searchPositionIcon.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
 
 function Map(props) {
-  const { mapCenter, userPosition, userPositionError } = props
+  const {
+    mapCenter,
+    userPosition,
+    userPositionError,
+    place,
+    search,
+    placeName
+  } = props
   const {
     handleToggleShowControl,
     isInMission,
@@ -238,6 +246,24 @@ function Map(props) {
               }}
             />
           </>
+        )}
+        {placeName !== '' && search === true ? (
+          <Marker
+            clickable
+            position={place}
+            // label={{
+            //   fontWeight: 'bold',
+            //   fontSize: '14px',
+            //   color: '#E25D33',
+            //   text: placeName
+            // }}
+            icon={{
+              url: Searchposition,
+              scaledSize: { width: 30, height: 30 }
+            }}
+          />
+        ) : (
+          ''
         )}
       </GoogleMap>
       {/* </LoadScript> */}
