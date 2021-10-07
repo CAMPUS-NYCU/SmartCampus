@@ -135,7 +135,6 @@ const SearchBar = React.forwardRef((props, ref) => {
               aria-label='search'
               onClick={() => {
                 document.getElementById('inputBase').value = ''
-                setSearch(false)
                 setPlaceName('')
               }}
             >
