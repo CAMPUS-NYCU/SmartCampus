@@ -15,6 +15,7 @@ import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.svg'
 import { DefaultZoom } from '../../../../constants/mapConstants'
 import PinTarget from '../PinTarget'
+<<<<<<< HEAD
 import Mission2 from '../../../../assets/images/mission2_pin_voting.svg'
 import Mission1 from '../../../../assets/images/mission1_pin.svg'
 import Mission3 from '../../../../assets/images/mission3_pin.svg'
@@ -24,6 +25,15 @@ import Missionred3 from '../../../../assets/images/mission3_pin_activated.svg'
 import Missiongreen3 from '../../../../assets/images/mission3_pin_statusGreen.svg'
 import Missionyellow3 from '../../../../assets/images/mission3_pin_statusYellow.svg'
 import Missionnewred3 from '../../../../assets/images/mission3_pin_statusRed.svg'
+=======
+import Mission2 from '../../../../assets/images/mission2circle.svg'
+import Mission1 from '../../../../assets/images/mission1circle.svg'
+import Mission3 from '../../../../assets/images/mission3circle.svg'
+import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
+import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
+import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
+import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
+>>>>>>> 49e2e8b (Open search function)
 import Searchposition from '../../../../assets/images/searchPositionIcon.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
 import tagData from '../../../../constants/tagData'
@@ -290,6 +300,9 @@ function Map(props) {
           </>
         )}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 49e2e8b (Open search function)
         {placeName !== '' && search === true ? (
           <Marker
             clickable
@@ -302,15 +315,23 @@ function Map(props) {
             // }}
             icon={{
               url: Searchposition,
+<<<<<<< HEAD
               scaledSize: { width: 40, height: 40 }
             }}
             animation={1}
+=======
+              scaledSize: { width: 30, height: 30 }
+            }}
+>>>>>>> 49e2e8b (Open search function)
           />
         ) : (
           ''
         )}
+<<<<<<< HEAD
 =======
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+>>>>>>> 49e2e8b (Open search function)
       </GoogleMap>
       {/* </LoadScript> */}
     </div>

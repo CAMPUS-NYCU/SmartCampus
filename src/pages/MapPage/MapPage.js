@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 =======
 import React, { useEffect } from 'react'
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+import React, { useEffect, useState } from 'react'
+>>>>>>> 49e2e8b (Open search function)
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 import { usePosition } from 'use-position'
@@ -83,6 +87,7 @@ const MapPageContent = (props) => {
   }, [loadError])
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 362b15d (Add default google map autocomplete api)
 =======
   const [placePosition, setPlacePosition] = useState('')
@@ -91,6 +96,11 @@ const MapPageContent = (props) => {
 >>>>>>> d90b176 (Open search function)
 =======
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+  const [placePosition, setPlacePosition] = useState('')
+  const [placeName, setPlaceName] = useState('')
+  const [search, setSearch] = useState(false)
+>>>>>>> 49e2e8b (Open search function)
   return (
     <div>
       {isLoaded && (
@@ -100,11 +110,17 @@ const MapPageContent = (props) => {
             userPositionError={positionError}
             userPosition={{ lat: positionLat, lng: positionLng }}
 <<<<<<< HEAD
+<<<<<<< HEAD
             place={placePosition}
             search={search}
             placeName={placeName}
 =======
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+            place={placePosition}
+            search={search}
+            placeName={placeName}
+>>>>>>> 49e2e8b (Open search function)
           />
           <Fade in={showControl}>
             <div>
@@ -119,12 +135,18 @@ const MapPageContent = (props) => {
                   handleOpenTerms: userDialogControl.setOpen
                 }}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 49e2e8b (Open search function)
                 setPlacePosition={setPlacePosition}
                 search={search}
                 setSearch={setSearch}
                 setPlaceName={setPlaceName}
+<<<<<<< HEAD
 =======
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+>>>>>>> 49e2e8b (Open search function)
               />
               <MissionFab />
               <FilterFab />
