@@ -18,6 +18,10 @@ export const GET_TAG_LIST_QUERY = gql`
           longitude
         }
         lastUpdateTime
+        status {
+          statusName
+          numberOfUpVote
+        }
       }
     }
   }

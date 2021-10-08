@@ -44,13 +44,7 @@ function Map(props) {
     handleChangeStreetViewPOV,
     povChanged
   } = useMissionValue()
-  const {
-    tags,
-    setActiveTagId,
-    activeTagId,
-    filterTags,
-    tagDetail
-  } = useTagValue()
+  const { tags, setActiveTagId, activeTagId, filterTags } = useTagValue()
   const showTags = useMemo(
     () =>
       filterTags.length === 0
@@ -190,8 +184,8 @@ function Map(props) {
                       if (tag.category.missionName === '動態任務') {
                         if (compareTime(tag.lastUpdateTime)) {
                           if (
-                            tagDetail.status.statusName === '人少' ||
-                            tagDetail.status.statusName === '良好'
+                            tag.status.statusName === '人少' ||
+                            tag.status.statusName === '良好'
                           ) {
                             return {
                               url: missionImage[3],
@@ -199,8 +193,8 @@ function Map(props) {
                             }
                           }
                           if (
-                            tagDetail.status.statusName === '人稍多' ||
-                            tagDetail.status.statusName === '正常'
+                            tag.status.statusName === '人稍多' ||
+                            tag.status.statusName === '正常'
                           ) {
                             return {
                               url: missionImage[4],
@@ -208,8 +202,8 @@ function Map(props) {
                             }
                           }
                           if (
-                            tagDetail.status.statusName === '擁擠' ||
-                            tagDetail.status.statusName === '微弱'
+                            tag.status.statusName === '擁擠' ||
+                            tag.status.statusName === '微弱'
                           ) {
                             return {
                               url: missionImage[5],

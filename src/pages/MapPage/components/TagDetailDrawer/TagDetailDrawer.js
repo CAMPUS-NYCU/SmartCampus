@@ -117,7 +117,7 @@ function TagDetailDialog(props) {
               >
                 <img src={missionImage[tagMissionIndex]} alt='' />
                 <Typography>
-                  {tagMissionIndex === 2 ? '' : activeTag.category.subTypeName}
+                  {tagMissionIndex !== 2 ? activeTag.category.subTypeName : ''}
                 </Typography>
                 <Typography>{tagDetail.locationName}</Typography>
                 {tagDetail.floor === 0 ? (
