@@ -136,8 +136,8 @@ export const UserContextProvider = withFirebaseAuth({
     handleGetUserInfo()
   }, [handleGetUserInfo])
   useEffect(() => {
-    handleRefreshToken()
-  }, [handleRefreshToken])
+    if (user) handleRefreshToken()
+  }, [handleRefreshToken, user])
   useEffect(() => {
     if (REACT_APP_FIREBASE_LOCAL_SERVER) {
       firebaseAppAuth.useEmulator(REACT_APP_FIREBASE_EMULATER_URL)
