@@ -189,19 +189,28 @@ function Map(props) {
                       }
                       if (tag.category.missionName === '動態任務') {
                         if (compareTime(tag.lastUpdateTime)) {
-                          if (tagDetail.status.statusName === '人少') {
+                          if (
+                            tagDetail.status.statusName === '人少' ||
+                            tagDetail.status.statusName === '良好'
+                          ) {
                             return {
                               url: missionImage[3],
                               scaledSize: { width: 28, height: 30 }
                             }
                           }
-                          if (tagDetail.status.statusName === '人稍多') {
+                          if (
+                            tagDetail.status.statusName === '人稍多' ||
+                            tagDetail.status.statusName === '正常'
+                          ) {
                             return {
                               url: missionImage[4],
                               scaledSize: { width: 28, height: 30 }
                             }
                           }
-                          if (tagDetail.status.statusName === '擁擠') {
+                          if (
+                            tagDetail.status.statusName === '擁擠' ||
+                            tagDetail.status.statusName === '微弱'
+                          ) {
                             return {
                               url: missionImage[5],
                               scaledSize: { width: 28, height: 30 }
