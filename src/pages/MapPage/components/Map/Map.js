@@ -24,6 +24,8 @@ import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
 import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
 import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
 import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
+import Missionyellow3 from '../../../../assets/images/mission3yellowcircle.svg'
+import Missionnewred3 from '../../../../assets/images/mission3newredcircle.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
 
 function Map(props) {
@@ -42,7 +44,13 @@ function Map(props) {
     handleChangeStreetViewPOV,
     povChanged
   } = useMissionValue()
-  const { tags, setActiveTagId, activeTagId, filterTags } = useTagValue()
+  const {
+    tags,
+    setActiveTagId,
+    activeTagId,
+    filterTags,
+    tagDetail
+  } = useTagValue()
   const showTags = useMemo(
     () =>
       filterTags.length === 0
@@ -56,7 +64,14 @@ function Map(props) {
     [filterTags, tags]
   )
   const missionImage = useMemo(
-    () => [Mission1, Mission2, Mission3, Missiongreen3],
+    () => [
+      Mission1,
+      Mission2,
+      Mission3,
+      Missiongreen3,
+      Missionyellow3,
+      Missionnewred3
+    ],
     []
   )
   const missionredImage = useMemo(
@@ -174,14 +189,28 @@ function Map(props) {
                       }
                       if (tag.category.missionName === '動態任務') {
                         if (compareTime(tag.lastUpdateTime)) {
-                          return {
-                            url: missionImage[3],
-                            scaledSize: { width: 20, height: 20 }
+                          if (tagDetail.status.statusName === '人少') {
+                            return {
+                              url: missionImage[3],
+                              scaledSize: { width: 28, height: 30 }
+                            }
+                          }
+                          if (tagDetail.status.statusName === '人稍多') {
+                            return {
+                              url: missionImage[4],
+                              scaledSize: { width: 28, height: 30 }
+                            }
+                          }
+                          if (tagDetail.status.statusName === '擁擠') {
+                            return {
+                              url: missionImage[5],
+                              scaledSize: { width: 28, height: 30 }
+                            }
                           }
                         }
                         return {
                           url: missionImage[2],
-                          scaledSize: { width: 20, height: 20 }
+                          scaledSize: { width: 28, height: 30 }
                         }
                       }
                       return {

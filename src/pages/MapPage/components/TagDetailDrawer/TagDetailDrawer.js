@@ -71,7 +71,17 @@ function TagDetailDialog(props) {
         handleClose={onClose}
         fullHeight
         closeButton={false}
-        title={activeTag ? activeTag.category.targetName : '詳細資訊'}
+        title={
+          activeTag ? (
+            <>
+              {tagMissionIndex === 2
+                ? activeTag.category.subTypeName
+                : activeTag.category.targetName}
+            </>
+          ) : (
+            '詳細資訊'
+          )
+        }
         titleActions={
           checkTagOwner()
             ? [
@@ -106,7 +116,9 @@ function TagDetailDialog(props) {
                 width='70%'
               >
                 <img src={missionImage[tagMissionIndex]} alt='' />
-                <Typography>{activeTag.category.subTypeName}</Typography>
+                <Typography>
+                  {tagMissionIndex === 2 ? '' : activeTag.category.subTypeName}
+                </Typography>
                 <Typography>{tagDetail.locationName}</Typography>
                 {tagDetail.floor === 0 ? (
                   ''
