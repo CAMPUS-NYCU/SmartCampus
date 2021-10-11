@@ -9,6 +9,8 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.36",
     "@react-google-maps/api": "^1.8.5",
+    "@sentry/react": "^6.13.3",
+    "@sentry/tracing": "^6.13.3",
     "apollo-boost": "^0.4.7",
     "axios": "^0.21.1",
     "babel-eslint": "10.0.3",
