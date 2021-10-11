@@ -24,7 +24,10 @@ import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
 import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
 import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
 import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
+import Missionyellow3 from '../../../../assets/images/mission3yellowcircle.svg'
+import Missionnewred3 from '../../../../assets/images/mission3newredcircle.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
+import tagData from '../../../../constants/tagData'
 
 function Map(props) {
   const { mapCenter, userPosition, userPositionError } = props
@@ -55,18 +58,26 @@ function Map(props) {
           ),
     [filterTags, tags]
   )
-  const missionImage = useMemo(
-    () => [Mission1, Mission2, Mission3, Missiongreen3],
-    []
-  )
+  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const missionredImage = useMemo(
     () => [Missionred1, Missionred2, Missionred3],
+    []
+  )
+  const missionActiveImage = useMemo(
+    () => [Missiongreen3, Missionyellow3, Missionnewred3],
     []
   )
   const missionName = useMemo(
     () =>
       missionInfo.map((mission) => {
         return mission.missionName
+      }),
+    []
+  )
+  const StatusName = useMemo(
+    () =>
+      tagData[2].map((tagdata) => {
+        return tagdata.statusName
       }),
     []
   )
@@ -175,13 +186,19 @@ function Map(props) {
                       if (tag.category.missionName === '動態任務') {
                         if (compareTime(tag.lastUpdateTime)) {
                           return {
-                            url: missionImage[3],
-                            scaledSize: { width: 20, height: 20 }
+                            url:
+                              missionActiveImage[
+                                StatusName.findIndex(
+                                  (statusName) =>
+                                    statusName === tag.status.statusName
+                                ) % 3
+                              ],
+                            scaledSize: { width: 28, height: 30 }
                           }
                         }
                         return {
                           url: missionImage[2],
-                          scaledSize: { width: 20, height: 20 }
+                          scaledSize: { width: 28, height: 30 }
                         }
                       }
                       return {
