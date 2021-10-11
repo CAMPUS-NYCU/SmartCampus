@@ -272,8 +272,9 @@ function Map(props) {
             // }}
             icon={{
               url: Searchposition,
-              scaledSize: { width: 30, height: 30 }
+              scaledSize: { width: 40, height: 40 }
             }}
+            animation={1}
           />
         ) : (
           ''
