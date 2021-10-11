@@ -316,6 +316,7 @@ function Map(props) {
             icon={{
               url: Searchposition,
 <<<<<<< HEAD
+<<<<<<< HEAD
               scaledSize: { width: 40, height: 40 }
             }}
             animation={1}
@@ -323,6 +324,11 @@ function Map(props) {
               scaledSize: { width: 30, height: 30 }
             }}
 >>>>>>> 49e2e8b (Open search function)
+=======
+              scaledSize: { width: 40, height: 40 }
+            }}
+            animation={1}
+>>>>>>> 89e2afa (Change Search position Icon animation)
           />
         ) : (
           ''
