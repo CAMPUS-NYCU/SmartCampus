@@ -27,7 +27,7 @@ import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
 import Missionyellow3 from '../../../../assets/images/mission3yellowcircle.svg'
 import Missionnewred3 from '../../../../assets/images/mission3newredcircle.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
-import { tagData } from '../../../../constants/tagData'
+import tagData from '../../../../constants/tagData'
 
 function Map(props) {
   const { mapCenter, userPosition, userPositionError } = props
@@ -76,7 +76,7 @@ function Map(props) {
   )
   const StatusName = useMemo(
     () =>
-      tagData.map((tagdata) => {
+      tagData[2].map((tagdata) => {
         return tagdata.statusName
       }),
     []

@@ -15,17 +15,6 @@ import OnWiFiGoodIcon from '../assets/images/statusOnWi-FiGoodIcon.svg'
 import OnWiFiNormalIcon from '../assets/images/statusOnWi-FiNormalIcon.svg'
 import OnWiFiBadIcon from '../assets/images/statusOnWi-FiBadIcon.svg'
 
-export const tagData = [
-  {
-    statusName: '人少',
-    statusColor: '#dce775'
-  },
-  { statusName: '人稍多', statusColor: '#FFCC80' },
-  { statusName: '擁擠', statusColor: '#FFB59F' },
-  { statusName: '良好', statusColor: '#dce775' },
-  { statusName: '正常', statusColor: '#FFCC80' },
-  { statusName: '微弱', statusColor: '#FFB59F' }
-]
 export default [
   [
     {
