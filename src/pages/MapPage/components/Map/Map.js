@@ -180,7 +180,7 @@ function Map(props) {
                                   mission === tag.category.missionName
                               )
                             ],
-                          scaledSize: { width: 20, height: 20 }
+                          scaledSize: { width: 28, height: 30 }
                         }
                       }
                       if (tag.category.missionName === '動態任務') {
@@ -208,7 +208,7 @@ function Map(props) {
                               (mission) => mission === tag.category.missionName
                             )
                           ],
-                        scaledSize: { width: 20, height: 20 }
+                        scaledSize: { width: 28, height: 30 }
                       }
                     })()}
                     clickable
