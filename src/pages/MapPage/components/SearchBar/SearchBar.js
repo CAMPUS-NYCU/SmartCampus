@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { usePlacesWidget } from 'react-google-autocomplete'
@@ -64,6 +64,12 @@ const SearchBar = React.forwardRef((props, ref) => {
     east: 121.000443,
     west: 120.995352
   }
+  const [positionName, setPositionName] = useState('')
+  useEffect(() => {
+    setPlaceName(positionName)
+    document.getElementById('inputBase').value = positionName
+  }, [positionName, setPlaceName])
+
   const { ref: materialRef } = usePlacesWidget({
     onPlaceSelected: (Place) => {
       if (Place.place_id !== undefined) {
@@ -75,9 +81,10 @@ const SearchBar = React.forwardRef((props, ref) => {
           enqueueSnackbar('地址超過搜尋範圍', { variant: 'error' })
         } else {
           if (placeName.split('路')[1] === undefined) {
-            setPlaceName(placeName)
+            setPositionName(placeName)
+          } else {
+            setPositionName(placeName.split('路')[1])
           }
-          setPlaceName(placeName.split('路')[1])
           setPlacePosition(Place.geometry.location)
           setMapCenter(Place.geometry.location)
         }
@@ -135,6 +142,7 @@ const SearchBar = React.forwardRef((props, ref) => {
               aria-label='search'
               onClick={() => {
                 document.getElementById('inputBase').value = ''
+                document.getElementById('inputBase').focus()
                 setPlaceName('')
               }}
             >
