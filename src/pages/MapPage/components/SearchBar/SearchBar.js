@@ -85,12 +85,16 @@ const SearchBar = React.forwardRef((props, ref) => {
     west: 120.995352
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e7525f0 (The search result will present in searchBar)
   const [positionName, setPositionName] = useState('')
   useEffect(() => {
     setPlaceName(positionName)
     document.getElementById('inputBase').value = positionName
   }, [positionName, setPlaceName])
 
+<<<<<<< HEAD
   const { ref: materialRef } = usePlacesWidget({
     onPlaceSelected: (Place) => {
       if (Place.place_id !== undefined) {
@@ -119,6 +123,8 @@ const SearchBar = React.forwardRef((props, ref) => {
   const { currentStep } = useMissionValue()
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> e7525f0 (The search result will present in searchBar)
   const { ref: materialRef } = usePlacesWidget({
     onPlaceSelected: (Place) => {
       if (Place.place_id !== undefined) {
@@ -130,9 +136,10 @@ const SearchBar = React.forwardRef((props, ref) => {
           enqueueSnackbar('地址超過搜尋範圍', { variant: 'error' })
         } else {
           if (placeName.split('路')[1] === undefined) {
-            setPlaceName(placeName)
+            setPositionName(placeName)
+          } else {
+            setPositionName(placeName.split('路')[1])
           }
-          setPlaceName(placeName.split('路')[1])
           setPlacePosition(Place.geometry.location)
           setMapCenter(Place.geometry.location)
         }
@@ -229,6 +236,7 @@ const SearchBar = React.forwardRef((props, ref) => {
               aria-label='search'
               onClick={() => {
                 document.getElementById('inputBase').value = ''
+                document.getElementById('inputBase').focus()
                 setPlaceName('')
               }}
             >
