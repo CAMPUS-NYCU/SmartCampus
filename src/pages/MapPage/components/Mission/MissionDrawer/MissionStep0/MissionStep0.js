@@ -35,16 +35,19 @@ const MissionStep0 = () => {
           key={item.missionName}
           style={{
             borderRadius: '8px',
-            backgroundColor: listBackgroundColor[index],
+            borderWidth: '2px',
+            borderStyle: 'solid',
+            borderColor: listBackgroundColor[index],
             marginBottom: '20px',
-            color: 'white'
+            padding: '6px',
+            color: listBackgroundColor[index]
           }}
         >
           <ListItemIcon>
             <img
               src={missionImage[index]}
               alt=''
-              style={{ height: '40px', width: '40px' }}
+              style={{ marginLeft: '6px', height: '40px', width: '40px' }}
             />
           </ListItemIcon>
           <ListItemText
