@@ -6,8 +6,9 @@ import {
   ListItemText,
   makeStyles
 } from '@material-ui/core'
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
+// import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
+// import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
+// import { BorderAllRounded } from '@material-ui/icons'
 import { missionInfo } from '../../../../../../constants/missionInfo'
 import Mission1 from '../../../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../../../assets/images/mission2.svg'
@@ -22,7 +23,8 @@ const useStyles = makeStyles(() => ({
 
 const MissionStep0 = () => {
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
-  const { missionType, handleChangeMissionType } = useMissionValue()
+  const { handleChangeMissionType } = useMissionValue()
+  const listBackgroundColor = ['#42A5F5', '#AB47BC', '#FFC107']
   const classes = useStyles()
   return (
     <List>
@@ -31,6 +33,12 @@ const MissionStep0 = () => {
           onClick={() => handleChangeMissionType(index)}
           button
           key={item.missionName}
+          style={{
+            borderRadius: '8px',
+            backgroundColor: listBackgroundColor[index],
+            marginBottom: '20px',
+            color: 'white'
+          }}
         >
           <ListItemIcon>
             <img
@@ -40,18 +48,11 @@ const MissionStep0 = () => {
             />
           </ListItemIcon>
           <ListItemText
-            style={{ maxWidth: '65%' }}
+            style={{ maxWidth: '85%' }}
             classes={{ secondary: classes.secondaryText }}
             primary={item.missionName}
             secondary={item.missionDescription}
           />
-          <ListItemIcon style={{ position: 'absolute', right: '-5px' }}>
-            {index === missionType ? (
-              <RadioButtonCheckedIcon style={{ color: '#FFC841' }} />
-            ) : (
-              <RadioButtonUncheckedIcon style={{ color: '#FFC841' }} />
-            )}
-          </ListItemIcon>
         </ListItem>
       ))}
     </List>

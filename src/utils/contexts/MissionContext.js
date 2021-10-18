@@ -367,11 +367,15 @@ export const MissionContextProvider = ({ children }) => {
     }
   }, [currentStep, handleNextStep, isInEdit])
 
-  const handleChangeMissionType = useCallback((target) => {
-    setMissionType(target)
-    setSelectedMissionId('')
-    setSelectedSubOptionId('')
-  }, [])
+  const handleChangeMissionType = useCallback(
+    (target) => {
+      setMissionType(target)
+      setSelectedMissionId('')
+      setSelectedSubOptionId('')
+      handleNext()
+    },
+    [handleNext]
+  )
   const handleStartMission = useCallback(() => {
     setShowControl(true)
     const center = mapInstance.getCenter()
