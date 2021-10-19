@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
 import moment from 'moment'
 
@@ -61,6 +61,7 @@ const tagDetailInitial = {
 
 function useTagDetail() {
   const { token, uid } = useUserValue()
+  const [tagDetail, setTagDetail] = useState(tagDetailInitial)
   const [getTagDetail, { data: { tag = {} } = {} }] = useLazyQuery(
     GET_TAG_DETAIL_QUERY,
     {
@@ -70,16 +71,20 @@ function useTagDetail() {
       })
     }
   )
-  const tagDetail = useMemo(
-    () => ({
-      ...tagDetailInitial,
-      ...tag,
-      newCreateTime: generateTime(tag.createTime) || '0',
-      newLastUpdateTime: generateTime(tag.lastUpdateTime) || '0'
-    }),
-    [tag]
-  )
-  return { tagDetail, getTagDetail }
+  useEffect(() => {
+    if (tag.id) {
+      setTagDetail({
+        ...tagDetailInitial,
+        ...tag,
+        newCreateTime: generateTime(tag.createTime) || '0',
+        newLastUpdateTime: generateTime(tag.lastUpdateTime) || '0'
+      })
+    }
+  }, [tag])
+  const resetTagDetail = useCallback(() => {
+    setTagDetail(tagDetailInitial)
+  }, [])
+  return { tagDetail, getTagDetail, resetTagDetail }
 }
 
 export default useTagDetail

@@ -56,8 +56,8 @@ const EditHistory = (props) => {
             }
           })
           const color = tagStatusIndex
-            ? tagStatus[tagMissionIndex][tagStatusIndex].statusColor
-            : tagStatus[0][0].statusColor
+            ? tagStatus[tagMissionIndex][tagStatusIndex]?.statusColor
+            : tagStatus[0][0]?.statusColor
           return (
             <div key={history.statusName + history.createTime}>
               <ListItem style={{ marginTop: '10px' }}>

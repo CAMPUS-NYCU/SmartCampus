@@ -49,10 +49,11 @@ export const TagContextProvider = ({ children }) => {
   ]
   const [activeTagId, setActiveTagId] = useState(null)
   const activeTag = findTagById(activeTagId, tags)
-  const { tagDetail, getTagDetail } = useTagDetail()
+  const { tagDetail, getTagDetail, resetTagDetail } = useTagDetail()
   const newTag = useTagSubscription()
   const resetActiveTag = () => {
     setActiveTagId(null)
+    resetTagDetail()
   }
   const fetchTagDetail = useCallback(async () => {
     getTagDetail({
