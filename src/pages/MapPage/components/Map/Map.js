@@ -22,12 +22,9 @@ import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
 import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
 import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
 import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
-<<<<<<< HEAD
 import Missionyellow3 from '../../../../assets/images/mission3yellowcircle.svg'
 import Missionnewred3 from '../../../../assets/images/mission3newredcircle.svg'
-=======
 import Searchposition from '../../../../assets/images/searchPositionIcon.svg'
->>>>>>> 49e2e8b (Open search function)
 import { missionInfo } from '../../../../constants/missionInfo'
 import tagData from '../../../../constants/tagData'
 
@@ -103,6 +100,10 @@ function Map(props) {
         position: 'fixed'
       }}
     >
+      {/* <LoadScript
+        googleMapsApiKey={REACT_APP_GOOGLE_MAP_API_KEY}
+        libraries={libraries}
+      > */}
       <GoogleMap
         clickableIcons={false}
         center={mapCenter}
