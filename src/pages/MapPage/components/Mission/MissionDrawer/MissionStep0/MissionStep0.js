@@ -16,15 +16,20 @@ import Mission3 from '../../../../../../assets/images/mission3.svg'
 import { useMissionValue } from '../../../../../../utils/contexts/MissionContext'
 
 const useStyles = makeStyles(() => ({
+  primaryText: {
+    fontSize: '18px',
+    color: 'black'
+  },
   secondaryText: {
-    fontSize: '10px'
+    fontSize: '10px',
+    color: 'black'
   }
 }))
 
 const MissionStep0 = () => {
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const { handleChangeMissionType } = useMissionValue()
-  const listBackgroundColor = ['#42A5F5', '#AB47BC', '#FFC107']
+  const listBackgroundColor = ['#90CAF9', '#CE93D8', '#FDCC4F']
   const classes = useStyles()
   return (
     <List>
@@ -35,12 +40,9 @@ const MissionStep0 = () => {
           key={item.missionName}
           style={{
             borderRadius: '8px',
-            borderWidth: '2px',
-            borderStyle: 'solid',
-            borderColor: listBackgroundColor[index],
+            backgroundColor: listBackgroundColor[index],
             marginBottom: '20px',
-            padding: '6px',
-            color: listBackgroundColor[index]
+            padding: '4px'
           }}
         >
           <ListItemIcon>
@@ -52,7 +54,10 @@ const MissionStep0 = () => {
           </ListItemIcon>
           <ListItemText
             style={{ maxWidth: '85%' }}
-            classes={{ secondary: classes.secondaryText }}
+            classes={{
+              primary: classes.primaryText,
+              secondary: classes.secondaryText
+            }}
             primary={item.missionName}
             secondary={item.missionDescription}
           />
