@@ -56,6 +56,14 @@ function MissionStepper(props) {
   } = useMissionValue()
   const { PlaceFlagOnStreet } = MissionStep
   const [finishOpen, setFinishOpen] = useState(false)
+  let nextStepButtonName = ''
+  if (currentStep === 0) {
+    nextStepButtonName = ''
+  } else if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
+    nextStepButtonName = '確定'
+  } else {
+    nextStepButtonName = '下一步'
+  }
   return (
     <>
       {currentStep === PlaceFlagOnStreet ? (
@@ -117,9 +125,7 @@ function MissionStepper(props) {
                 onClick={handleNext}
                 style={{ minWidth: 80 }}
               >
-                {isInEdit && currentStep === MissionStep.PlaceFlagOnMap
-                  ? ' 確定'
-                  : '下一步'}
+                {nextStepButtonName}
               </CustomButton>
             )
           }

@@ -6,8 +6,9 @@ import {
   ListItemText,
   makeStyles
 } from '@material-ui/core'
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
+// import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
+// import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
+// import { BorderAllRounded } from '@material-ui/icons'
 import { missionInfo } from '../../../../../../constants/missionInfo'
 import Mission1 from '../../../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../../../assets/images/mission2.svg'
@@ -15,14 +16,20 @@ import Mission3 from '../../../../../../assets/images/mission3.svg'
 import { useMissionValue } from '../../../../../../utils/contexts/MissionContext'
 
 const useStyles = makeStyles(() => ({
+  primaryText: {
+    fontSize: '18px',
+    color: 'black'
+  },
   secondaryText: {
-    fontSize: '10px'
+    fontSize: '10px',
+    color: 'black'
   }
 }))
 
 const MissionStep0 = () => {
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
-  const { missionType, handleChangeMissionType } = useMissionValue()
+  const { handleChangeMissionType } = useMissionValue()
+  const listBackgroundColor = ['#90CAF9', '#CE93D8', '#FDCC4F']
   const classes = useStyles()
   return (
     <List>
@@ -31,27 +38,29 @@ const MissionStep0 = () => {
           onClick={() => handleChangeMissionType(index)}
           button
           key={item.missionName}
+          style={{
+            borderRadius: '8px',
+            backgroundColor: listBackgroundColor[index],
+            marginBottom: '20px',
+            padding: '4px'
+          }}
         >
           <ListItemIcon>
             <img
               src={missionImage[index]}
               alt=''
-              style={{ height: '40px', width: '40px' }}
+              style={{ marginLeft: '6px', height: '40px', width: '40px' }}
             />
           </ListItemIcon>
           <ListItemText
-            style={{ maxWidth: '65%' }}
-            classes={{ secondary: classes.secondaryText }}
+            style={{ maxWidth: '85%' }}
+            classes={{
+              primary: classes.primaryText,
+              secondary: classes.secondaryText
+            }}
             primary={item.missionName}
             secondary={item.missionDescription}
           />
-          <ListItemIcon style={{ position: 'absolute', right: '-5px' }}>
-            {index === missionType ? (
-              <RadioButtonCheckedIcon style={{ color: '#FFC841' }} />
-            ) : (
-              <RadioButtonUncheckedIcon style={{ color: '#FFC841' }} />
-            )}
-          </ListItemIcon>
         </ListItem>
       ))}
     </List>
