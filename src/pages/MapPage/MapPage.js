@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 import { usePosition } from 'use-position'
@@ -55,6 +55,11 @@ const MapPageContent = (props) => {
     longitude: positionLng,
     error: positionError
   } = usePosition(false)
+  useEffect(() => {
+    if (positionError) {
+      console.error(positionError)
+    }
+  }, [positionError])
   return (
     <div>
       <Map
