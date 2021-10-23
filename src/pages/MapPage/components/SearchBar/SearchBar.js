@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { usePlacesWidget } from 'react-google-autocomplete'
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
 import { makeStyles } from '@material-ui/core/styles'
 import { usePlacesWidget } from 'react-google-autocomplete'
 import Paper from '@material-ui/core/Paper'
@@ -15,6 +18,7 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 import CloseIcon from '@material-ui/icons/Close'
@@ -26,6 +30,10 @@ import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 import CloseIcon from '@material-ui/icons/Close'
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 >>>>>>> 49e2e8b (Open search function)
+=======
+import CloseIcon from '@material-ui/icons/Close'
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
 import { useSnackbar } from 'notistack'
 // import MuiAlert from '@material-ui/lab/Alert'
 import useMenu from '../../../../utils/hooks/useMenu'
@@ -75,8 +83,11 @@ const SearchBar = React.forwardRef((props, ref) => {
   const { enqueueSnackbar } = useSnackbar()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
   const { currentStep, setMapCenter } = useMissionValue()
   const bounds = {
     north: 24.791768,
@@ -86,8 +97,11 @@ const SearchBar = React.forwardRef((props, ref) => {
   }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> e7525f0 (The search result will present in searchBar)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
   const [positionName, setPositionName] = useState('')
   useEffect(() => {
     setPlaceName(positionName)
@@ -95,6 +109,9 @@ const SearchBar = React.forwardRef((props, ref) => {
   }, [positionName, setPlaceName])
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
   const { ref: materialRef } = usePlacesWidget({
     onPlaceSelected: (Place) => {
       if (Place.place_id !== undefined) {
@@ -119,6 +136,7 @@ const SearchBar = React.forwardRef((props, ref) => {
     },
     options: {
       bounds,
+<<<<<<< HEAD
 =======
   const { currentStep } = useMissionValue()
 =======
@@ -153,6 +171,8 @@ const SearchBar = React.forwardRef((props, ref) => {
 =======
       bounds,
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
       types: ['establishment'],
       componentRestrictions: { country: 'tw' }
     }
@@ -186,6 +206,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         )}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         <InputBase
           id='inputBase'
           inputRef={materialRef}
@@ -216,6 +237,8 @@ const SearchBar = React.forwardRef((props, ref) => {
 =======
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
         <InputBase
           id='inputBase'
           inputRef={materialRef}
@@ -225,10 +248,13 @@ const SearchBar = React.forwardRef((props, ref) => {
             setSearch(true)
           }}
         />
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
 =======
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
         {search === true ? (
           <>
             <IconButton
@@ -246,7 +272,10 @@ const SearchBar = React.forwardRef((props, ref) => {
         ) : (
           ''
         )}
+<<<<<<< HEAD
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
           className={classes.iconButton}

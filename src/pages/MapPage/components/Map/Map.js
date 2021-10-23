@@ -33,7 +33,12 @@ import Missionred2 from '../../../../assets/images/mission2redcircle.svg'
 import Missionred1 from '../../../../assets/images/mission1redcircle.svg'
 import Missionred3 from '../../../../assets/images/mission3redcircle.svg'
 import Missiongreen3 from '../../../../assets/images/mission3greencircle.svg'
+<<<<<<< HEAD
 >>>>>>> 49e2e8b (Open search function)
+=======
+import Missionyellow3 from '../../../../assets/images/mission3yellowcircle.svg'
+import Missionnewred3 from '../../../../assets/images/mission3newredcircle.svg'
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
 import Searchposition from '../../../../assets/images/searchPositionIcon.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
 import tagData from '../../../../constants/tagData'
@@ -111,12 +116,18 @@ function Map(props) {
       }}
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
       {/* <LoadScript
         googleMapsApiKey={REACT_APP_GOOGLE_MAP_API_KEY}
         libraries={libraries}
       > */}
+<<<<<<< HEAD
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
       <GoogleMap
         clickableIcons={false}
         center={mapCenter}
@@ -194,6 +205,7 @@ function Map(props) {
                   }}
                   icon={(() => {
                     if (activeTagId === tag.id) {
+<<<<<<< HEAD
                       return {
                         url:
                           missionredImage[
@@ -243,15 +255,52 @@ function Map(props) {
                       url:
                         missionImage[
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+                      return {
+                        url:
+                          missionredImage[
+                            missionName.findIndex(
+                              (mission) => mission === tag.category.missionName
+                            )
+                          ],
+                        scaledSize: { width: 20, height: 20 }
+                      }
+                    }
+                    if (tag.category.missionName === '動態任務') {
+                      if (compareTime(tag.lastUpdateTime)) {
+                        return {
+                          url:
+                            missionActiveImage[
+                              StatusName.findIndex(
+                                (statusName) =>
+                                  statusName === tag.status.statusName
+                              ) % 3
+                            ],
+                          scaledSize: { width: 28, height: 30 }
+                        }
+                      }
+                      return {
+                        url: missionImage[2],
+                        scaledSize: { width: 28, height: 30 }
+                      }
+                    }
+                    return {
+                      url:
+                        missionredImage[
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
                           missionName.findIndex(
                             (mission) => mission === tag.category.missionName
                           )
                         ],
 <<<<<<< HEAD
+<<<<<<< HEAD
                       scaledSize: { width: 28, height: 30 }
 =======
                       scaledSize: { width: 20, height: 20 }
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+                      scaledSize: { width: 20, height: 20 }
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
                     }
                   })()}
                   clickable
@@ -301,8 +350,11 @@ function Map(props) {
         )}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
         {placeName !== '' && search === true ? (
           <Marker
             clickable
@@ -317,6 +369,7 @@ function Map(props) {
               url: Searchposition,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               scaledSize: { width: 40, height: 40 }
             }}
             animation={1}
@@ -329,15 +382,23 @@ function Map(props) {
             }}
             animation={1}
 >>>>>>> 89e2afa (Change Search position Icon animation)
+=======
+              scaledSize: { width: 40, height: 40 }
+            }}
+            animation={1}
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
           />
         ) : (
           ''
         )}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
       </GoogleMap>
       {/* </LoadScript> */}
     </div>

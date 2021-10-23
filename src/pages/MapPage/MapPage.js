@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 =======
 import React, { useEffect } from 'react'
@@ -7,6 +8,9 @@ import React, { useEffect } from 'react'
 =======
 import React, { useEffect, useState } from 'react'
 >>>>>>> 49e2e8b (Open search function)
+=======
+import React, { useEffect, useState } from 'react'
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 import { usePosition } from 'use-position'
@@ -74,6 +78,7 @@ const MapPageContent = (props) => {
   useEffect(() => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (positionError) {
       console.error(positionError)
     }
@@ -81,10 +86,13 @@ const MapPageContent = (props) => {
 =======
 =======
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
     if (loadError) {
       alert('Google map load error')
     }
   }, [loadError])
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -101,6 +109,11 @@ const MapPageContent = (props) => {
   const [placeName, setPlaceName] = useState('')
   const [search, setSearch] = useState(false)
 >>>>>>> 49e2e8b (Open search function)
+=======
+  const [placePosition, setPlacePosition] = useState('')
+  const [placeName, setPlaceName] = useState('')
+  const [search, setSearch] = useState(false)
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
   return (
     <div>
       {isLoaded && (
@@ -109,6 +122,7 @@ const MapPageContent = (props) => {
             mapCenter={mapCenter}
             userPositionError={positionError}
             userPosition={{ lat: positionLat, lng: positionLng }}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             place={placePosition}
@@ -121,6 +135,11 @@ const MapPageContent = (props) => {
             search={search}
             placeName={placeName}
 >>>>>>> 49e2e8b (Open search function)
+=======
+            place={placePosition}
+            search={search}
+            placeName={placeName}
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
           />
           <Fade in={showControl}>
             <div>
@@ -136,17 +155,23 @@ const MapPageContent = (props) => {
                 }}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
                 setPlacePosition={setPlacePosition}
                 search={search}
                 setSearch={setSearch}
                 setPlaceName={setPlaceName}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 9a309b3 (Add default google map autocomplete api)
 =======
 >>>>>>> 49e2e8b (Open search function)
+=======
+>>>>>>> 9c54d8a2a07f4ccdd42cc7128df624b8a46bb3ab
               />
               <MissionFab />
               <FilterFab />
