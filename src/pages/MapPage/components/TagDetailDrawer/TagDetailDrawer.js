@@ -72,15 +72,9 @@ function TagDetailDialog(props) {
         fullHeight
         closeButton={false}
         title={
-          activeTag ? (
-            <>
-              {tagMissionIndex === 2
-                ? activeTag.category.subTypeName
-                : activeTag.category.targetName}
-            </>
-          ) : (
-            '詳細資訊'
-          )
+          activeTag && tagMissionIndex === 2
+            ? activeTag.category.subTypeName
+            : activeTag.category.targetName || '詳細資訊'
         }
         titleActions={
           checkTagOwner()
