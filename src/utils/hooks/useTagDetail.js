@@ -72,7 +72,7 @@ function useTagDetail() {
     }
   )
   useEffect(() => {
-    if (tag.id) {
+    if (tag?.id) {
       setTagDetail({
         ...tagDetailInitial,
         ...tag,

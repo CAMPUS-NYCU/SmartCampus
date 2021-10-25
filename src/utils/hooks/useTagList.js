@@ -59,7 +59,7 @@ function useTagList() {
     if (newTag.changeType === 'added') {
       setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
     }
-    if (newTag.changeType === 'archived') {
+    if (newTag.changeType === 'archived' || newTag.changeType === 'deleted') {
       setTagList((prevTagList) =>
         prevTagList.filter((tag) => tag.id !== newTag.tagContent.id)
       )

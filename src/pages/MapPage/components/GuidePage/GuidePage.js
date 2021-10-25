@@ -39,7 +39,7 @@ const SET_HAS_READ_GUIDE_MUTATION = gql`
 
 const GuidePage = (props) => {
   const { step, setStep, handleNext, handleBack, width } = props
-  const { token, isGuest } = useUserValue()
+  const { token, isGuest, signOut } = useUserValue()
   const [setHasReadGuideMutation] = useMutation(SET_HAS_READ_GUIDE_MUTATION)
   const { enqueueSnackbar } = useSnackbar()
 
@@ -62,9 +62,14 @@ const GuidePage = (props) => {
   }, [setStep, enqueueSnackbar, width])
   useEffect(() => {
     if (token && !isGuest) {
-      loadHasReadGuide()
+      try {
+        loadHasReadGuide()
+      } catch (e) {
+        console.error(e)
+        signOut()
+      }
     }
-  }, [token, loadHasReadGuide, isGuest])
+  }, [token, loadHasReadGuide, isGuest, signOut])
   useEffect(() => {
     if (data && !data.hasReadGuide && step === 3) {
       setHasReadGuideMutation({
