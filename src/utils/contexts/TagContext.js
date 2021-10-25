@@ -49,12 +49,14 @@ export const TagContextProvider = ({ children }) => {
   ]
   const [activeTagId, setActiveTagId] = useState(null)
   const activeTag = findTagById(activeTagId, tags)
-  const { tagDetail, getTagDetail, resetTagDetail } = useTagDetail()
+  const { tagDetail, getTagDetail, resetTagDetail } = useTagDetail(
+    setActiveTagId
+  )
   const newTag = useTagSubscription()
-  const resetActiveTag = () => {
+  const resetActiveTag = useCallback(() => {
     setActiveTagId(null)
     resetTagDetail()
-  }
+  }, [setActiveTagId, resetTagDetail])
   const fetchTagDetail = useCallback(async () => {
     getTagDetail({
       variables: { id: activeTagId }
@@ -64,7 +66,13 @@ export const TagContextProvider = ({ children }) => {
     if (newTag.changeType === 'updated' && activeTagId) {
       fetchTagDetail()
     }
-  }, [newTag, fetchTagDetail, activeTagId])
+    if (
+      newTag.changeType === 'deleted' &&
+      newTag.tagContent.id === activeTagId
+    ) {
+      resetActiveTag()
+    }
+  }, [newTag, fetchTagDetail, activeTagId, resetTagDetail, resetActiveTag])
   const [filterTags, setFilterTags] = useState([])
   const addFilterTags = (tag) => {
     if (filterTags.indexOf(tag) !== -1) {
