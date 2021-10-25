@@ -66,7 +66,7 @@ const GuidePage = (props) => {
     }
   }, [token, loadHasReadGuide, isGuest])
   useEffect(() => {
-    if (data && !data.hasReadGuide) {
+    if (data && !data.hasReadGuide && step === 3) {
       setHasReadGuideMutation({
         context: {
           headers: {
@@ -77,7 +77,7 @@ const GuidePage = (props) => {
     } else if (data && data.hasReadGuide) {
       setStep(3)
     }
-  }, [data, token, setHasReadGuideMutation, setStep])
+  }, [data, token, setHasReadGuideMutation, setStep, step])
   return data === null && !isGuest ? (
     <LoadingPage />
   ) : (
