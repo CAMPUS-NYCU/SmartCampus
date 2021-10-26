@@ -145,7 +145,7 @@ function Map(props) {
             }
           }}
         >
-          {!userPositionError && (
+          {!userPositionError && userPosition.lat && userPosition.lng && (
             <Marker
               clickable={false}
               position={userPosition}
