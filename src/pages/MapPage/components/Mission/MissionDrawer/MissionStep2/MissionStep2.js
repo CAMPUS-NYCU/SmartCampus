@@ -372,26 +372,18 @@ function MissionStep2() {
           </Grid>
         </Grid>
         {!isInEdit && (
-          <>
-            {missionType === 2 ? (
-              ''
-            ) : (
-              <Grid container item xs={12} direction='row'>
-                <DescriptionIcon
-                  style={{ color: 'FDCC4F', marginRight: '5px' }}
-                />
-                <TextField
-                  name='moreDescriptionText'
-                  multiline
-                  id='standard-basic'
-                  style={{ width: '80vw' }}
-                  placeholder='詳細說明'
-                  value={moreDescriptionText}
-                  onChange={handleChangeMoreDescriptionText}
-                />
-              </Grid>
-            )}
-          </>
+          <Grid container item xs={12} direction='row'>
+            <DescriptionIcon style={{ color: 'FDCC4F', marginRight: '5px' }} />
+            <TextField
+              name='moreDescriptionText'
+              multiline
+              id='standard-basic'
+              style={{ width: '80vw' }}
+              placeholder='詳細說明'
+              value={moreDescriptionText}
+              onChange={handleChangeMoreDescriptionText}
+            />
+          </Grid>
         )}
 
         {/* * ==================== 7.上傳照片 ==================== */}
