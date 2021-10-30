@@ -3,3 +3,5 @@ export const DefaultCenter = {
   lng: 120.9969249
 }
 export const DefaultZoom = 17
+
+export const LOADED_LIBRARIES = ['places']

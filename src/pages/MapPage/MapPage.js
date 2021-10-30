@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 import { usePosition } from 'use-position'
+import { useJsApiLoader } from '@react-google-maps/api'
 
 import SearchBar from './components/SearchBar'
 import Map from './components/Map'
@@ -22,6 +23,8 @@ import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
 import UserDialog from './components/UserDialog/UserDialog'
+import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
+import { LOADED_LIBRARIES } from '../../constants/mapConstants'
 
 export default function MapPage() {
   const { step: guideStep, setStep, handleNext, handleBack } = useStep({
@@ -45,6 +48,11 @@ export default function MapPage() {
 
 const MapPageContent = (props) => {
   const { setGuideStep } = props
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: REACT_APP_GOOGLE_MAP_API_KEY,
+    libraries: LOADED_LIBRARIES,
+    language: 'zh-TW'
+  })
   const userDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
@@ -56,52 +64,66 @@ const MapPageContent = (props) => {
     error: positionError
   } = usePosition(false)
   useEffect(() => {
-    if (positionError) {
-      console.error(positionError)
+    if (loadError) {
+      alert('Google map load error')
     }
-  }, [positionError])
+  }, [loadError])
+  const [placePosition, setPlacePosition] = useState('')
+  const [placeName, setPlaceName] = useState('')
+  const [search, setSearch] = useState(false)
   return (
     <div>
-      <Map
-        mapCenter={mapCenter}
-        userPositionError={positionError}
-        userPosition={{ lat: positionLat, lng: positionLng }}
-      />
-      <Fade in={showControl}>
-        <div>
-          <SearchBar
-            menuControls={{
-              handleOpenUser: userDialogControl.setOpen,
-              handleOpenHistory: ReportHistoryControl.setOpen,
-              handleOpenSetting: userDialogControl.setOpen,
-              handleOpenHowToUse: () => {
-                setGuideStep(0)
-              },
-              handleOpenTerms: userDialogControl.setOpen
-            }}
+      {isLoaded && (
+        <>
+          <Map
+            mapCenter={mapCenter}
+            userPositionError={positionError}
+            userPosition={{ lat: positionLat, lng: positionLng }}
+            place={placePosition}
+            search={search}
+            placeName={placeName}
           />
-          <MissionFab />
-          <FilterFab />
-          <LocationFab
-            setMapCenter={() => {
-              if (!positionError)
-                setMapCenter({ lat: positionLat, lng: positionLng })
-            }}
-          />
-        </div>
-      </Fade>
-      <MissionDrawer />
-      <ReportHistory control={ReportHistoryControl} />
-      <UserDialog userId={uid} control={userDialogControl} />
-      {activeTag && (
-        <TagDetailDrawer
-          activeTag={activeTag}
-          tagDetail={tagDetail}
-          onClose={resetActiveTag}
-        />
+          <Fade in={showControl}>
+            <div>
+              <SearchBar
+                menuControls={{
+                  handleOpenUser: userDialogControl.setOpen,
+                  handleOpenHistory: ReportHistoryControl.setOpen,
+                  handleOpenSetting: userDialogControl.setOpen,
+                  handleOpenHowToUse: () => {
+                    setGuideStep(0)
+                  },
+                  handleOpenTerms: userDialogControl.setOpen
+                }}
+                setPlacePosition={setPlacePosition}
+                search={search}
+                setSearch={setSearch}
+                setPlaceName={setPlaceName}
+              />
+              <MissionFab />
+              <FilterFab />
+              <LocationFab
+                setMapCenter={() => {
+                  if (!positionError)
+                    setMapCenter({ lat: positionLat, lng: positionLng })
+                }}
+              />
+            </div>
+          </Fade>
+          <MissionDrawer />
+          <ReportHistory control={ReportHistoryControl} />
+          <UserDialog userId={uid} control={userDialogControl} />
+          {activeTag && (
+            <TagDetailDrawer
+              activeTag={activeTag}
+              tagDetail={tagDetail}
+              onClose={resetActiveTag}
+            />
+          )}
+        </>
       )}
       <Dialog
-        open={loading}
+        open={loading || !isLoaded}
         PaperProps={{
           style: {
             backgroundColor: 'transparent',
