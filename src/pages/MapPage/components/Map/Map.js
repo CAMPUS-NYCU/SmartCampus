@@ -260,9 +260,8 @@ function Map(props) {
             />
           </>
         )}
-        {placeName !== '' && search === true ? (
+        {placeName !== '' && search === true && (
           <Marker
-            clickable
             position={place}
             icon={{
               url: Searchposition,
@@ -270,8 +269,6 @@ function Map(props) {
             }}
             animation={1}
           />
-        ) : (
-          ''
         )}
       </GoogleMap>
     </div>

@@ -59,10 +59,10 @@ const SearchBar = React.forwardRef((props, ref) => {
   const { enqueueSnackbar } = useSnackbar()
   const { currentStep, setMapCenter } = useMissionValue()
   const bounds = {
-    north: 24.791768,
-    south: 24.782687,
-    east: 121.000443,
-    west: 120.995352
+    north: 24.7917689,
+    south: 24.7826879,
+    east: 121.0004439,
+    west: 120.9953529
   }
   const [positionName, setPositionName] = useState('')
   useEffect(() => {
@@ -73,16 +73,17 @@ const SearchBar = React.forwardRef((props, ref) => {
     onPlaceSelected: (Place) => {
       if (Place.place_id !== undefined) {
         setSearch(true)
-        const placeName = document
+        const searchplaceName = document
           .getElementById('inputBase')
           .value.split('新竹市東區')[1]
-        if (placeName === undefined) {
+        if (searchplaceName === undefined) {
           enqueueSnackbar('地址超過搜尋範圍', { varient: 'error' })
         } else {
-          if (placeName.split('路')[1] === undefined) {
-            setPositionName(placeName)
+          // 地名有時候會多大學路 因此要多一個 split
+          if (searchplaceName.split('路')[1] === undefined) {
+            setPositionName(searchplaceName)
           } else {
-            setPositionName(placeName.split('路')[1])
+            setPositionName(searchplaceName.split('路')[1])
           }
           setPlacePosition(Place.geometry.location)
           setMapCenter(Place.geometry.location)
@@ -134,7 +135,7 @@ const SearchBar = React.forwardRef((props, ref) => {
             setSearch(true)
           }}
         />
-        {search === true ? (
+        {search === true && (
           <IconButton
             className={classes.iconButton}
             aria-label='closeIcon'
@@ -142,12 +143,11 @@ const SearchBar = React.forwardRef((props, ref) => {
               document.getElementById('inputBase').value = ''
               document.getElementById('inputBase').focus()
               setPlaceName('')
+              setPositionName('')
             }}
           >
             <CloseIcon />
           </IconButton>
-        ) : (
-          ''
         )}
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
