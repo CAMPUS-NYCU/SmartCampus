@@ -5,6 +5,7 @@ import {
   StreetViewPanorama,
   MarkerClusterer
 } from '@react-google-maps/api'
+import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import {
   useMissionValue,
@@ -37,6 +38,7 @@ function Map(props) {
     search,
     placeName
   } = props
+  const history = useHistory()
   const {
     handleToggleShowControl,
     isInMission,
@@ -51,7 +53,7 @@ function Map(props) {
     handleChangeStreetViewPOV,
     povChanged
   } = useMissionValue()
-  const { tags, setActiveTagId, activeTagId, filterTags } = useTagValue()
+  const { tags, activeTagId, filterTags } = useTagValue()
   const showTags = useMemo(
     () =>
       filterTags.length === 0
@@ -216,7 +218,9 @@ function Map(props) {
                     }
                   })()}
                   clickable
-                  onClick={() => setActiveTagId(tag.id)}
+                  onClick={() =>
+                    history.push(`${history.location.pathname}${tag.id}`)
+                  }
                   clusterer={clusterer}
                 />
               ))

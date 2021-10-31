@@ -1,9 +1,7 @@
 import React from 'react'
-import { useTagValue } from './contexts/TagContext'
 import { useMissionValue } from './contexts/MissionContext'
 
 export default function WindowBackProvider() {
-  const { activeTag, resetActiveTag } = useTagValue()
   const { isInMission, handleCloseMission } = useMissionValue()
   React.useEffect(() => {
     window.history.pushState(null, null, window.location.pathname)
@@ -19,9 +17,6 @@ export default function WindowBackProvider() {
       'popstate',
       () => {
         console.log('back')
-        if (activeTag) {
-          resetActiveTag()
-        }
         if (isInMission) {
           console.log('hi')
           handleCloseMission()
@@ -33,9 +28,6 @@ export default function WindowBackProvider() {
       'popstate',
       () => {
         console.log('back')
-        if (activeTag) {
-          resetActiveTag()
-        }
         if (isInMission) {
           console.log('hi')
           handleCloseMission()
@@ -43,7 +35,7 @@ export default function WindowBackProvider() {
       },
       false
     )
-  }, [activeTag, resetActiveTag, isInMission, handleCloseMission])
+  }, [isInMission, handleCloseMission])
 
   return null
 }

@@ -11,6 +11,7 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 
 import { useUserValue } from 'utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
@@ -34,12 +35,8 @@ const ReportHistory = (props) => {
   const {
     control: { open, setClose }
   } = props
-  const {
-    setActiveTagId,
-    activeTag,
-    userAddTags,
-    getUserTagList
-  } = useTagValue()
+  const history = useHistory()
+  const { activeTag, userAddTags, getUserTagList } = useTagValue()
   const { uid } = useUserValue()
 
   const { isInMission } = useMissionValue()
@@ -102,7 +99,9 @@ const ReportHistory = (props) => {
                       buttonType='roundButton_inactivated'
                       variant='contained'
                       size='small'
-                      onClick={() => setActiveTagId(item.id)}
+                      onClick={() =>
+                        history.push(`${history.location.pathname}${item.id}`)
+                      }
                     >
                       已封存
                     </CustomButton>
@@ -111,7 +110,9 @@ const ReportHistory = (props) => {
                       buttonType='roundButton_activated'
                       variant='contained'
                       size='small'
-                      onClick={() => setActiveTagId(item.id)}
+                      onClick={() =>
+                        history.push(`${history.location.pathname}${item.id}`)
+                      }
                     >
                       檢視
                     </CustomButton>
