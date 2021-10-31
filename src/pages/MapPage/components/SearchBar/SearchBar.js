@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-
+import { usePlacesWidget } from 'react-google-autocomplete'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
@@ -8,6 +8,8 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+import CloseIcon from '@material-ui/icons/Close'
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 import { useSnackbar } from 'notistack'
 // import MuiAlert from '@material-ui/lab/Alert'
 import useMenu from '../../../../utils/hooks/useMenu'
@@ -42,35 +44,111 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 const SearchBar = React.forwardRef((props, ref) => {
-  const { menuControls, ...otherProps } = props
+  const {
+    menuControls,
+    setPlacePosition,
+    search,
+    setSearch,
+    setPlaceName,
+    ...otherProps
+  } = props
   const classes = useStyles()
   const menuControl = useMenu()
   const [open, changeOpen] = useState(false)
   const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
-  const { currentStep } = useMissionValue()
+  const { currentStep, setMapCenter } = useMissionValue()
+  const bounds = {
+    north: 24.7917689,
+    south: 24.7826879,
+    east: 121.0004439,
+    west: 120.9953529
+  }
+  const [positionName, setPositionName] = useState('')
+  useEffect(() => {
+    setPlaceName(positionName)
+    document.getElementById('inputBase').value = positionName
+  }, [positionName, setPlaceName])
+  const { ref: materialRef } = usePlacesWidget({
+    onPlaceSelected: (Place) => {
+      if (Place.place_id !== undefined) {
+        setSearch(true)
+        const searchplaceName = document
+          .getElementById('inputBase')
+          .value.split('新竹市東區')[1]
+        if (searchplaceName === undefined) {
+          enqueueSnackbar('地址超過搜尋範圍', { varient: 'error' })
+        } else {
+          // 地名有時候會多大學路 因此要多一個 split
+          if (searchplaceName.split('路')[1] === undefined) {
+            setPositionName(searchplaceName)
+          } else {
+            setPositionName(searchplaceName.split('路')[1])
+          }
+          setPlacePosition(Place.geometry.location)
+          setMapCenter(Place.geometry.location)
+        }
+      } else {
+        document.getElementById('inputBase').value = ''
+      }
+    },
+    options: {
+      bounds,
+      types: ['establishment'],
+      componentRestrictions: { country: 'tw' }
+    }
+  })
   return (
     <div ref={ref} {...otherProps}>
       <Paper className={classes.root}>
-        <IconButton
-          className={classes.iconButton}
-          aria-label='search'
-          onClick={() => {
-            enqueueSnackbar('尚未開放', { variant: 'error' })
-          }}
-        >
-          <SearchIcon />
-        </IconButton>
+        {search === false ? (
+          <IconButton
+            className={classes.iconButton}
+            aria-label='search'
+            onClick={() => {
+              document.getElementById('inputBase').focus()
+              setSearch(true)
+            }}
+          >
+            <SearchIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className={classes.iconButton}
+            aria-label='search'
+            onClick={() => {
+              document.getElementById('inputBase').blur()
+              document.getElementById('inputBase').value = ''
+              setSearch(false)
+              setPlaceName('')
+            }}
+          >
+            <KeyboardReturnIcon />
+          </IconButton>
+        )}
         <InputBase
-          className={classes.input}
-          placeholder='Search'
-          inputProps={{ 'aria-label': 'search' }}
-          disabled
+          id='inputBase'
+          inputRef={materialRef}
+          style={{ width: '90%' }}
+          placeholder='開始輸入'
           onClick={() => {
-            enqueueSnackbar('尚未開放', { variant: 'error' })
+            setSearch(true)
           }}
         />
-
+        {search === true && (
+          <IconButton
+            className={classes.iconButton}
+            aria-label='closeIcon'
+            onClick={() => {
+              document.getElementById('inputBase').value = ''
+              document.getElementById('inputBase').focus()
+              setPlaceName('')
+              setPositionName('')
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        )}
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
           className={classes.iconButton}
