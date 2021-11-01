@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useState, useEffect, useCallback } from 'react'
+import { gql, useLazyQuery } from '@apollo/client'
 
 import useTagSubscription from './useTagsSubscription'
 
 export const GET_TAG_LIST_QUERY = gql`
-  query getTagList {
-    unarchivedTagList {
+  query getTagList($cursor: String!) {
+    unarchivedTagList(pageParams: { cursor: $cursor }) {
+      cursor
+      empty
       tags {
         id
         category {
@@ -28,22 +30,34 @@ export const GET_TAG_LIST_QUERY = gql`
 `
 
 function useTagList() {
-  const {
-    data: { unarchivedTagList: { tags = [] } = {} } = {},
-    refetch
-  } = useQuery(GET_TAG_LIST_QUERY, {
-    onCompleted: () => {
-      setTagList(tags)
+  const [
+    getTagList,
+    {
+      data: {
+        unarchivedTagList: { tags = [], empty = false, cursor = '' } = {}
+      } = {}
     }
-  })
+  ] = useLazyQuery(GET_TAG_LIST_QUERY)
   const newTag = useTagSubscription()
   const [tagList, setTagList] = useState(null)
-  const updateTagList = () => {
-    setTimeout(async () => {
-      refetch()
-      updateTagList()
-    }, 30000)
-  }
+  const fetchTagList = useCallback(
+    (currentCursor) => {
+      getTagList({ variables: { cursor: currentCursor || '' } })
+    },
+    [getTagList]
+  )
+  useEffect(() => {
+    fetchTagList('')
+  }, [fetchTagList])
+  useEffect(() => {
+    if (!empty && cursor) {
+      fetchTagList(cursor)
+    }
+  }, [fetchTagList, empty, cursor])
+  useEffect(() => {
+    if (Array.isArray(tags) && tags.length !== 0)
+      setTagList((prevState) => [...(prevState || []), ...tags])
+  }, [tags])
   useEffect(() => {
     if (newTag.changeType === 'updated') {
       setTagList((prevTagList) => {
@@ -65,7 +79,7 @@ function useTagList() {
       )
     }
   }, [newTag])
-  return { tags: tagList, refetch, updateTagList }
+  return { tags: tagList }
 }
 
 export default useTagList

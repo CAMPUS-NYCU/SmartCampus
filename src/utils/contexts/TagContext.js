@@ -14,11 +14,9 @@ export const TagContext = React.createContext({
   setActiveTagId: () => {},
   resetActiveTag: () => {},
   categoryList: [],
-  refetch: () => {},
   upVote: () => {},
   userAddTags: null,
-  refetchUserAddTags: () => {},
-  updateTagList: () => {}
+  refetchUserAddTags: () => {}
 })
 
 function findTagById(id, tags) {
@@ -28,7 +26,7 @@ function findTagById(id, tags) {
 }
 
 export const TagContextProvider = ({ children }) => {
-  const { tags, refetch, updateTagList } = useTagList()
+  const { tags } = useTagList()
   const { userAddTags, getUserTagList } = useUserTags()
   const threshold = useThreshold()
 
@@ -99,7 +97,6 @@ export const TagContextProvider = ({ children }) => {
     setActiveTagId,
     resetActiveTag,
     categoryList,
-    refetch,
     filterTags,
     addFilterTags,
     resetFilterTags,
@@ -107,8 +104,7 @@ export const TagContextProvider = ({ children }) => {
     userAddTags,
     getUserTagList,
     fetchTagDetail,
-    threshold,
-    updateTagList
+    threshold
   }
 
   return (
