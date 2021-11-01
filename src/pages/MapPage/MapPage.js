@@ -14,6 +14,7 @@ import {
   MissionContextProvider,
   useMissionValue
 } from '../../utils/contexts/MissionContext'
+import { MAP_PATH } from '../../constants/pageUrls'
 import ReportHistory from './components/ReportHistory'
 import GuidePage from './components/GuidePage'
 import { useTagValue } from '../../utils/contexts/TagContext'
@@ -124,7 +125,7 @@ const MapPageContent = (props) => {
             <TagDetailDrawer
               activeTag={activeTag}
               tagDetail={tagDetail}
-              onClose={() => history.goBack()}
+              onClose={() => history.push(MAP_PATH)}
             />
           )}
         </>

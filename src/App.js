@@ -1,5 +1,11 @@
-import React, { useState } from 'react'
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  useParams
+} from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 
 import { ApolloProvider } from '@apollo/client'
@@ -18,6 +24,18 @@ import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
 import { TagContextProvider, useTagValue } from './utils/contexts/TagContext'
 import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
+
+const CacheTagId = (props) => {
+  const { setTagIdCache } = props
+  const params = useParams()
+  useEffect(() => {
+    const tagId = params?.activeTagId
+    if (tagId) {
+      setTagIdCache(tagId)
+    }
+  })
+  return <Redirect to={LOGIN_PATH} />
+}
 
 const Pages = () => {
   const { tags } = useTagValue()
@@ -41,13 +59,7 @@ const Pages = () => {
               {token ? (
                 <MapPage />
               ) : (
-                (props) => {
-                  const tagId = props?.match?.params?.activeTagId
-                  if (tagId) {
-                    setTagIdCache(tagId)
-                  }
-                  return <Redirect to={LOGIN_PATH} />
-                }
+                <CacheTagId setTagIdCache={setTagIdCache} />
               )}
             </Route>
             <Route path={LOGIN_PATH} exact>

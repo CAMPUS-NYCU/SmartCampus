@@ -12,6 +12,7 @@ import {
   MissionStep
 } from '../../../../utils/contexts/MissionContext'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
+import { MAP_PATH } from '../../../../constants/pageUrls'
 import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.svg'
 import { DefaultZoom } from '../../../../constants/mapConstants'
@@ -218,9 +219,7 @@ function Map(props) {
                     }
                   })()}
                   clickable
-                  onClick={() =>
-                    history.push(`${history.location.pathname}${tag.id}`)
-                  }
+                  onClick={() => history.push(`${MAP_PATH}/${tag.id}`)}
                   clusterer={clusterer}
                 />
               ))

@@ -17,6 +17,7 @@ import { useUserValue } from 'utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
+import { MAP_PATH } from '../../../../constants/pageUrls'
 import Mission1 from '../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../assets/images/mission3.svg'
@@ -99,9 +100,7 @@ const ReportHistory = (props) => {
                       buttonType='roundButton_inactivated'
                       variant='contained'
                       size='small'
-                      onClick={() =>
-                        history.push(`${history.location.pathname}${item.id}`)
-                      }
+                      onClick={() => history.push(`${MAP_PATH}/${item.id}`)}
                     >
                       已封存
                     </CustomButton>
@@ -110,9 +109,7 @@ const ReportHistory = (props) => {
                       buttonType='roundButton_activated'
                       variant='contained'
                       size='small'
-                      onClick={() =>
-                        history.push(`${history.location.pathname}${item.id}`)
-                      }
+                      onClick={() => history.push(`${MAP_PATH}/${item.id}`)}
                     >
                       檢視
                     </CustomButton>
