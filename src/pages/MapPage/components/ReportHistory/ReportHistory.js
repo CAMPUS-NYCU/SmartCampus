@@ -11,11 +11,13 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 
 import { useUserValue } from 'utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
+import { MAP_PATH } from '../../../../constants/pageUrls'
 import Mission1 from '../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../assets/images/mission2.svg'
 import Mission3 from '../../../../assets/images/mission3.svg'
@@ -34,12 +36,8 @@ const ReportHistory = (props) => {
   const {
     control: { open, setClose }
   } = props
-  const {
-    setActiveTagId,
-    activeTag,
-    userAddTags,
-    getUserTagList
-  } = useTagValue()
+  const history = useHistory()
+  const { activeTag, userAddTags, getUserTagList } = useTagValue()
   const { uid } = useUserValue()
 
   const { isInMission } = useMissionValue()
@@ -102,7 +100,7 @@ const ReportHistory = (props) => {
                       buttonType='roundButton_inactivated'
                       variant='contained'
                       size='small'
-                      onClick={() => setActiveTagId(item.id)}
+                      onClick={() => history.push(`${MAP_PATH}/${item.id}`)}
                     >
                       已封存
                     </CustomButton>
@@ -111,7 +109,7 @@ const ReportHistory = (props) => {
                       buttonType='roundButton_activated'
                       variant='contained'
                       size='small'
-                      onClick={() => setActiveTagId(item.id)}
+                      onClick={() => history.push(`${MAP_PATH}/${item.id}`)}
                     >
                       檢視
                     </CustomButton>

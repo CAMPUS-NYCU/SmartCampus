@@ -1,5 +1,11 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  useParams
+} from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 
 import { ApolloProvider } from '@apollo/client'
@@ -19,9 +25,22 @@ import { apolloClient } from './utils/grahpql'
 import { TagContextProvider, useTagValue } from './utils/contexts/TagContext'
 import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
 
+const CacheTagId = (props) => {
+  const { setTagIdCache } = props
+  const params = useParams()
+  useEffect(() => {
+    const tagId = params?.activeTagId
+    if (tagId) {
+      setTagIdCache(tagId)
+    }
+  })
+  return <Redirect to={LOGIN_PATH} />
+}
+
 const Pages = () => {
   const { tags } = useTagValue()
   const { token, isLoadingToken } = useUserValue()
+  const [tagIdCache, setTagIdCache] = useState(null)
   return (
     <>
       {!tags || isLoadingToken ? (
@@ -31,16 +50,27 @@ const Pages = () => {
           <Switch>
             <Route path={INDEX_PATH} exact>
               {token ? (
-                <Redirect to={MAP_PATH} />
+                <Redirect to={`${MAP_PATH}/${tagIdCache || ''}`} />
               ) : (
                 <Redirect to={LOGIN_PATH} />
               )}
             </Route>
-            <Route path={MAP_PATH} exact>
-              {token ? <MapPage /> : <Redirect to={LOGIN_PATH} />}
+            <Route path={`${MAP_PATH}/:activeTagId?`} exact>
+              {token ? (
+                <MapPage />
+              ) : (
+                <CacheTagId setTagIdCache={setTagIdCache} />
+              )}
             </Route>
             <Route path={LOGIN_PATH} exact>
-              {token ? <Redirect to={MAP_PATH} /> : <LoginPage />}
+              {token ? (
+                <Redirect to={`${MAP_PATH}/${tagIdCache || ''}`} />
+              ) : (
+                <LoginPage />
+              )}
+            </Route>
+            <Route path='/'>
+              <Redirect to={LOGIN_PATH} />
             </Route>
           </Switch>
         </BrowserRouter>

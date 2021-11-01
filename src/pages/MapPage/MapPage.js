@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Fade, Dialog, CircularProgress } from '@material-ui/core'
 import { usePosition } from 'use-position'
 import { useJsApiLoader } from '@react-google-maps/api'
+import { useParams, useHistory } from 'react-router-dom'
 
 import SearchBar from './components/SearchBar'
 import Map from './components/Map'
@@ -13,6 +14,7 @@ import {
   MissionContextProvider,
   useMissionValue
 } from '../../utils/contexts/MissionContext'
+import { MAP_PATH } from '../../constants/pageUrls'
 import ReportHistory from './components/ReportHistory'
 import GuidePage from './components/GuidePage'
 import { useTagValue } from '../../utils/contexts/TagContext'
@@ -53,19 +55,25 @@ const MapPageContent = (props) => {
     libraries: LOADED_LIBRARIES,
     language: 'zh-TW'
   })
+  const history = useHistory()
   const userDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
-  const { activeTag, resetActiveTag, tagDetail } = useTagValue()
+  const { activeTag, resetActiveTag, tagDetail, setActiveTagId } = useTagValue()
   const { uid } = useUserValue()
+  const { activeTagId } = useParams()
   const {
     latitude: positionLat,
     longitude: positionLng,
     error: positionError
   } = usePosition(false)
   useEffect(() => {
+    if (activeTagId) setActiveTagId(activeTagId)
+    else resetActiveTag()
+  }, [activeTagId, resetActiveTag, setActiveTagId])
+  useEffect(() => {
     if (loadError) {
-      alert('Google map load error')
+      console.error('Google map load error')
     }
   }, [loadError])
   const [placePosition, setPlacePosition] = useState('')
@@ -117,7 +125,7 @@ const MapPageContent = (props) => {
             <TagDetailDrawer
               activeTag={activeTag}
               tagDetail={tagDetail}
-              onClose={resetActiveTag}
+              onClose={() => history.push(MAP_PATH)}
             />
           )}
         </>
