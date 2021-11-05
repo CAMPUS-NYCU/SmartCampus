@@ -57,7 +57,7 @@ const SearchBar = React.forwardRef((props, ref) => {
   const [open, changeOpen] = useState(false)
   const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
-  const { currentStep, setMapCenter } = useMissionValue()
+  const { currentStep, setMapCenter, showControl } = useMissionValue()
   const bounds = {
     north: 24.7917689,
     south: 24.7826879,
@@ -73,6 +73,7 @@ const SearchBar = React.forwardRef((props, ref) => {
     onPlaceSelected: (Place) => {
       if (Place.place_id !== undefined) {
         setSearch(true)
+        setPositionName('')
         const searchplaceName = document
           .getElementById('inputBase')
           .value.split('新竹市東區')[1]
@@ -128,7 +129,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         )}
         <InputBase
           id='inputBase'
-          inputRef={materialRef}
+          inputRef={showControl === true ? materialRef : ''}
           style={{ width: '90%' }}
           placeholder='開始輸入'
           onClick={() => {
