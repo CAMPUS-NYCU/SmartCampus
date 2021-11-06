@@ -17,7 +17,8 @@ import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.svg'
 import { DefaultZoom } from '../../../../constants/mapConstants'
 import PinTarget from '../PinTarget'
-import Mission2 from '../../../../assets/images/mission2_pin_voting.svg'
+import Mission2Voting from '../../../../assets/images/mission2_pin_voting.svg'
+import Mission2 from '../../../../assets/images/mission2_pin.svg'
 import Mission1 from '../../../../assets/images/mission1_pin.svg'
 import Mission3 from '../../../../assets/images/mission3_pin.svg'
 import Missionred2 from '../../../../assets/images/mission2_pin_activated.svg'
@@ -68,6 +69,7 @@ function Map(props) {
     [filterTags, tags]
   )
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
+  const mission2ImageVoting = useMemo(() => [Mission2Voting], [])
   const missionredImage = useMemo(
     () => [Missionred1, Missionred2, Missionred3],
     []
@@ -205,6 +207,13 @@ function Map(props) {
                       }
                       return {
                         url: missionImage[2],
+                        scaledSize: { width: 28, height: 30 }
+                      }
+                    }
+                    if (tag.status.statusName === '已解決') {
+                      console.log('hello')
+                      return {
+                        url: mission2ImageVoting[0],
                         scaledSize: { width: 28, height: 30 }
                       }
                     }

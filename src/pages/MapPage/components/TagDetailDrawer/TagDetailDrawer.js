@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { Box, Typography } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
 
-import Mission2 from '../../../../assets/images/mission2_round_voting.svg'
+import Mission2 from '../../../../assets/images/mission2_round.svg'
 import Mission1 from '../../../../assets/images/mission1_round.svg'
 import Mission3 from '../../../../assets/images/mission3_round.svg'
+import Mission2Voting from '../../../../assets/images/mission2_round_voting.svg'
 import { missionInfo } from '../../../../constants/missionInfo'
 import tagStatus from '../../../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
@@ -25,6 +26,7 @@ function TagDetailDialog(props) {
   const [stateDrawer, setStateDrawer] = useState(false)
   const { incrementViewCount } = useViewCount()
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
+  const mission2ImageVoting = useMemo(() => [Mission2Voting], [])
   const missionName = useMemo(
     () =>
       missionInfo.map((mission) => {
@@ -109,7 +111,14 @@ function TagDetailDialog(props) {
                 justifyContent='space-around'
                 width='70%'
               >
-                <img src={missionImage[tagMissionIndex]} alt='' />
+                <img
+                  src={
+                    tagDetail.status.statusName === '已解決'
+                      ? mission2ImageVoting[0]
+                      : missionImage[tagMissionIndex]
+                  }
+                  alt=''
+                />
                 <Typography>
                   {tagMissionIndex !== 2 ? activeTag.category.subTypeName : ''}
                 </Typography>
