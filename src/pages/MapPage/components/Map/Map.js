@@ -210,8 +210,7 @@ function Map(props) {
                         scaledSize: { width: 28, height: 30 }
                       }
                     }
-                    if (tag.status.statusName === '已解決') {
-                      console.log('hello')
+                    if (tag?.status?.statusName === '已解決') {
                       return {
                         url: mission2ImageVoting[0],
                         scaledSize: { width: 28, height: 30 }
