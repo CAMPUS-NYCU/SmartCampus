@@ -66,7 +66,7 @@ const MapPageContent = (props) => {
     latitude: positionLat,
     longitude: positionLng,
     error: positionError
-  } = usePosition(false)
+  } = usePosition(true, { timeout: 30000 }) // every 0.5 minute will update position
   useEffect(() => {
     if (activeTagId) setActiveTagId(activeTagId)
     else resetActiveTag()
