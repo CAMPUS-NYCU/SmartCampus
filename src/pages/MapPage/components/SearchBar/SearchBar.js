@@ -129,7 +129,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         )}
         <InputBase
           id='inputBase'
-          inputRef={showControl === true ? materialRef : ''}
+          inputRef={showControl === true ? materialRef : null}
           style={{ width: '90%' }}
           placeholder='開始輸入'
           onClick={() => {
