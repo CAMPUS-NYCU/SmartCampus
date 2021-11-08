@@ -15,6 +15,11 @@ export const TAG_CHANGE_SUBSCRIPTION = gql`
           latitude
           longitude
         }
+        lastUpdateTime
+        status {
+          statusName
+          numberOfUpVote
+        }
       }
     }
   }

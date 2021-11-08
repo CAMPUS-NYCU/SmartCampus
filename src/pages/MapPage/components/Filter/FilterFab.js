@@ -95,7 +95,10 @@ function FilterFab(props) {
                 }}
               >
                 {item}
-                <CloseIcon className={classes.addIcon} />
+                <CloseIcon
+                  className={classes.addIcon}
+                  style={{ width: '15px' }}
+                />
               </CustomButton>
             )
           })}
