@@ -53,7 +53,8 @@ function Map(props) {
     streetViewPOV,
     handleChangeStreetViewPosition,
     handleChangeStreetViewPOV,
-    povChanged
+    povChanged,
+    showControl
   } = useMissionValue()
   const { tags, activeTagId, filterTags } = useTagValue()
   const showTags = useMemo(
@@ -271,7 +272,7 @@ function Map(props) {
             />
           </>
         )}
-        {placeName !== '' && search === true && (
+        {placeName !== '' && search === true && showControl && (
           <Marker
             position={place}
             icon={{
