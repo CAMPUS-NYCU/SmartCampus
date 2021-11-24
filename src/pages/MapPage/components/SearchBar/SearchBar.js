@@ -54,7 +54,7 @@ const SearchBar = React.forwardRef((props, ref) => {
   } = props
   const classes = useStyles()
   const menuControl = useMenu()
-  const [open, changeOpen] = useState(false)
+  const [open, changeOpen] = useState(true)
   const toggle = () => changeOpen(!open)
   const { enqueueSnackbar } = useSnackbar()
   const { currentStep, setMapCenter, showControl } = useMissionValue()
