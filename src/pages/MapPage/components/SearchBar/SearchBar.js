@@ -64,7 +64,16 @@ const SearchBar = React.forwardRef((props, ref) => {
     east: 121.0004439,
     west: 120.9953529
   }
+  // 24.787808334251203, 120.99299198044952
   const [positionName, setPositionName] = useState('')
+  const checkRange = (lat, lng) => {
+    if (lat < 24.790953568920005 && lat > 24.78259189570934) {
+      if (lng < 121.00204344319231 && lng > 120.99299198044952) {
+        return true
+      }
+    } // 利用經緯度判斷是否在光復校區 目前以 西區滯洪池 電子資訊中心 研三 交清小徑 作為判斷依據
+    return false
+  }
   useEffect(() => {
     setPlaceName(positionName)
     document.getElementById('inputBase').value = positionName
@@ -76,8 +85,13 @@ const SearchBar = React.forwardRef((props, ref) => {
         const searchplaceName = document
           .getElementById('inputBase')
           .value.split('新竹市東區')[1]
-        if (searchplaceName === undefined) {
+        const inRange = checkRange(
+          Place.geometry.location.lat(),
+          Place.geometry.location.lng()
+        )
+        if (!inRange) {
           enqueueSnackbar('地址超過搜尋範圍', { varient: 'error' })
+          document.getElementById('inputBase').value = ''
         } else {
           // 地名有時候會多大學路 因此要多一個 split
           if (searchplaceName.split('路')[1] === undefined) {
