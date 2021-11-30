@@ -34,6 +34,7 @@ export default function MapPage() {
     maxStep: 3,
     minStep: 0
   })
+  const [skip, setSkip] = useState(true) // use to determine whether to skip the guide page
   return (
     <MissionContextProvider>
       <WindowBackProvider />
@@ -42,14 +43,15 @@ export default function MapPage() {
         setStep={setStep}
         handleNext={() => handleNext(1)}
         handleBack={() => handleBack(1)}
+        skip={skip}
       />
-      <MapPageContent setGuideStep={setStep} />
+      <MapPageContent setGuideStep={setStep} setSkip={setSkip} />
     </MissionContextProvider>
   )
 }
 
 const MapPageContent = (props) => {
-  const { setGuideStep } = props
+  const { setGuideStep, setSkip } = props
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: REACT_APP_GOOGLE_MAP_API_KEY,
     libraries: LOADED_LIBRARIES,
@@ -99,6 +101,7 @@ const MapPageContent = (props) => {
                   handleOpenHistory: ReportHistoryControl.setOpen,
                   handleOpenSetting: userDialogControl.setOpen,
                   handleOpenHowToUse: () => {
+                    setSkip(false)
                     setGuideStep(0)
                   },
                   handleOpenTerms: userDialogControl.setOpen
