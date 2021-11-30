@@ -55,7 +55,7 @@ function FilterFab(props) {
     setFilterDrawer(false)
   }
   const { filterTags, addFilterTags, resetFilterTags } = useTagValue()
-  const filterInfo = ['設施任務', '排隊情況']
+  const filterInfo = ['設施任務', '問題任務', '動態任務']
   const { open } = props
   return (
     <>
