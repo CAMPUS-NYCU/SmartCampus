@@ -38,7 +38,7 @@ const SET_HAS_READ_GUIDE_MUTATION = gql`
 `
 
 const GuidePage = (props) => {
-  const { step, setStep, handleNext, handleBack, width } = props
+  const { step, setStep, handleNext, handleBack, width, skip } = props
   const { token, isGuest, signOut } = useUserValue()
   const [setHasReadGuideMutation] = useMutation(SET_HAS_READ_GUIDE_MUTATION)
   const { enqueueSnackbar } = useSnackbar()
@@ -79,10 +79,10 @@ const GuidePage = (props) => {
           }
         }
       })
-    } else if (data && data.hasReadGuide) {
+    } else if (data?.hasReadGuide && skip) {
       setStep(3)
     }
-  }, [data, token, setHasReadGuideMutation, setStep, step])
+  }, [data, token, setHasReadGuideMutation, setStep, step, skip])
   return data === null && !isGuest ? (
     <LoadingPage />
   ) : (
