@@ -7,6 +7,7 @@ import {
   IconButton,
   makeStyles
 } from '@material-ui/core'
+import moment from 'moment'
 import { useSnackbar } from 'notistack'
 import noImage from '../../../../assets/images/no-image.svg'
 import EditIcon from '../../../../assets/images/edit.svg'
@@ -182,9 +183,15 @@ const DetailPart = (props) => {
                   onClick={() => userDialogControl.setOpen(true)}
                   mr={1}
                 >
-                  {tagDetail.createUser.displayName}
+                  {
+                    tagDetail?.statusHistory?.statusList?.[0]?.createUser
+                      ?.displayName
+                  }
                 </Box>
-                編輯於 {tagDetail.newCreateTime}
+                編輯於{' '}
+                {moment(
+                  tagDetail?.statusHistory?.statusList?.[0]?.createTime
+                ).format('YYYY-MM-DD h:mm')}
               </Box>
             </Box>
           </Box>
@@ -213,7 +220,7 @@ const DetailPart = (props) => {
             )}
             <Box display='flex' justifyContent='flex-end'>
               <Box className={classes.clickableFont} m={0.5}>
-                {tagDetail.newLastUpdateTime}
+                {tagDetail?.newCreateTime}
               </Box>
             </Box>
           </div>
