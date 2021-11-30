@@ -59,16 +59,15 @@ const SearchBar = React.forwardRef((props, ref) => {
   const { enqueueSnackbar } = useSnackbar()
   const { currentStep, setMapCenter } = useMissionValue()
   const bounds = {
-    north: 24.7917689,
-    south: 24.7826879,
-    east: 121.0004439,
-    west: 120.9953529
+    north: 24.790953568920005,
+    south: 24.78259189570934,
+    east: 121.00204344319231,
+    west: 120.99299198044952
   }
-  // 24.787808334251203, 120.99299198044952
   const [positionName, setPositionName] = useState('')
   const checkRange = (lat, lng) => {
-    if (lat < 24.790953568920005 && lat > 24.78259189570934) {
-      if (lng < 121.00204344319231 && lng > 120.99299198044952) {
+    if (lat < bounds.north && lat > bounds.south) {
+      if (lng < bounds.east && lng > bounds.west) {
         return true
       }
     } // 利用經緯度判斷是否在光復校區 目前以 西區滯洪池 電子資訊中心 研三 交清小徑 作為判斷依據
