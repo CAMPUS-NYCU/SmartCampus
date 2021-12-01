@@ -77,6 +77,9 @@ const SearchBar = React.forwardRef((props, ref) => {
     setPlaceName(positionName)
     document.getElementById('inputBase').value = positionName
   }, [positionName, setPlaceName])
+  useEffect(() => {
+    document.getElementById('inputBase').blur()
+  }, [showControl])
   const { ref: materialRef } = usePlacesWidget({
     onPlaceSelected: (Place) => {
       if (Place.place_id !== undefined) {
@@ -103,7 +106,13 @@ const SearchBar = React.forwardRef((props, ref) => {
           setMapCenter(Place.geometry.location)
         }
       } else {
-        document.getElementById('inputBase').value = ''
+        onkeydown = (e) => {
+          if (e.key === 'Enter') {
+            enqueueSnackbar('請點擊下方建議列表', { varient: 'error' })
+            document.getElementById('inputBase').focus()
+          }
+        }
+        // document.getElementById('inputBase').value = ''
       }
     },
     options: {
@@ -142,7 +151,7 @@ const SearchBar = React.forwardRef((props, ref) => {
         )}
         <InputBase
           id='inputBase'
-          inputRef={showControl === true ? materialRef : null}
+          inputRef={materialRef}
           style={{ width: '90%' }}
           placeholder='開始輸入'
           onClick={() => {
