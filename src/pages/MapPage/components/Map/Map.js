@@ -68,11 +68,11 @@ function Map(props) {
   )
   const [markers, setMarkers] = React.useState([])
   const clusterer = useMemo(() => {
-    if (mapInstance) {
+    if (mapInstance && !isInMission) {
       return new MarkerClusterer({ map: mapInstance, markers })
     }
     return null
-  }, [markers, mapInstance])
+  }, [markers, mapInstance, isInMission])
 
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const mission2ImageVoting = useMemo(() => [Mission2Voting], [])
