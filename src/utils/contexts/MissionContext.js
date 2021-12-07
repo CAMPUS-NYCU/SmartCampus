@@ -594,7 +594,8 @@ export const MissionContextProvider = ({ children }) => {
     setRemindOpen,
     setImageDeleteUrls,
     imageDeleteUrls,
-    handleChangeMissionType
+    handleChangeMissionType,
+    mapInstance
   }
   return (
     <MissionContext.Provider value={contextValues}>

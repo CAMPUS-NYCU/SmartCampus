@@ -1597,6 +1597,16 @@
     fast-deep-equal "^3.1.3"
     supercluster "^7.1.3"
 
+"@googlemaps/markerclusterer@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@googlemaps/markerclusterer/-/markerclusterer-1.0.16.tgz#e90c3c2d8bc8ba9df01a661ab643a84900240937"
+  integrity sha512-MIqNur5t2Pg57HcFPCavqqA22V4E1l6/anyC4XeFQb9awNknmkb7MosyTFvFUsApakvgpLv1vvOTjth4+kD67Q==
+  dependencies:
+    "@turf/clusters-dbscan" "^6.4.0"
+    "@turf/clusters-kmeans" "^6.4.0"
+    fast-deep-equal "^3.1.3"
+    supercluster "^7.1.3"
+
 "@graphql-typed-document-node/core@^3.0.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@graphql-typed-document-node/core/-/core-3.1.0.tgz"
