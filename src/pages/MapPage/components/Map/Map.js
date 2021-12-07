@@ -69,7 +69,29 @@ function Map(props) {
   const [markers, setMarkers] = React.useState([])
   const clusterer = useMemo(() => {
     if (mapInstance) {
-      return new MarkerClusterer({ map: mapInstance, markers: [] })
+      return new MarkerClusterer({
+        map: mapInstance,
+        markers: [],
+        renderer: {
+          render: ({ count, position }) => {
+            return new window.google.maps.Marker({
+              position,
+              icon: {
+                url:
+                  'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m2.png',
+                scaledSize: new window.google.maps.Size(45, 45)
+              },
+              label: {
+                text: String(count),
+                color: 'rgba(255,255,255,0.9)',
+                fontSize: '12px'
+              },
+              // adjust zIndex to be above other markers
+              zIndex: Number(window.google.maps.Marker.MAX_ZINDEX) + count
+            })
+          }
+        }
+      })
     }
     return null
   }, [mapInstance])
