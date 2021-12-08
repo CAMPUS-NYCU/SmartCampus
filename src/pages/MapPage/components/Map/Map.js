@@ -1,10 +1,6 @@
-import React, { useMemo } from 'react'
-import {
-  GoogleMap,
-  Marker,
-  StreetViewPanorama,
-  MarkerClusterer
-} from '@react-google-maps/api'
+import React, { useMemo, useEffect } from 'react'
+import { GoogleMap, Marker, StreetViewPanorama } from '@react-google-maps/api'
+import { MarkerClusterer } from '@googlemaps/markerclusterer'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import {
@@ -54,7 +50,8 @@ function Map(props) {
     handleChangeStreetViewPosition,
     handleChangeStreetViewPOV,
     povChanged,
-    showControl
+    showControl,
+    mapInstance
   } = useMissionValue()
   const { tags, activeTagId, filterTags } = useTagValue()
   const showTags = useMemo(
@@ -69,6 +66,43 @@ function Map(props) {
           ),
     [filterTags, tags]
   )
+  const [markers, setMarkers] = React.useState([])
+  const clusterer = useMemo(() => {
+    if (mapInstance) {
+      return new MarkerClusterer({
+        map: mapInstance,
+        markers: [],
+        renderer: {
+          render: ({ count, position }) => {
+            return new window.google.maps.Marker({
+              position,
+              icon: {
+                url:
+                  'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m2.png',
+                scaledSize: new window.google.maps.Size(45, 45)
+              },
+              label: {
+                text: String(count),
+                color: 'rgba(255,255,255,0.9)',
+                fontSize: '12px'
+              },
+              // adjust zIndex to be above other markers
+              zIndex: Number(window.google.maps.Marker.MAX_ZINDEX) + count
+            })
+          }
+        }
+      })
+    }
+    return null
+  }, [mapInstance])
+  useEffect(() => {
+    if (isInMission && clusterer) {
+      clusterer.clearMarkers()
+    } else if (clusterer && !isInMission) {
+      clusterer.addMarkers(markers)
+    }
+  }, [clusterer, isInMission, markers])
+
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const mission2ImageVoting = useMemo(() => [Mission2Voting], [])
   const missionredImage = useMemo(
@@ -166,75 +200,66 @@ function Map(props) {
             }}
           />
         )}
-        {!isInMission && (
-          <MarkerClusterer
-            option={{
-              imagePath:
-                'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        {showTags.map((tag) => (
+          <Marker
+            key={tag.id}
+            visible={!isInMission}
+            onLoad={(marker) => {
+              setMarkers((prevMarkers) => [...prevMarkers, marker])
             }}
-          >
-            {(clusterer) =>
-              showTags.map((tag) => (
-                <Marker
-                  key={tag.id}
-                  position={{
-                    lat: parseFloat(tag.coordinates.latitude),
-                    lng: parseFloat(tag.coordinates.longitude)
-                  }}
-                  icon={(() => {
-                    if (activeTagId === tag.id) {
-                      return {
-                        url:
-                          missionredImage[
-                            missionName.findIndex(
-                              (mission) => mission === tag.category.missionName
-                            )
-                          ],
-                        scaledSize: { width: 28, height: 30 }
-                      }
-                    }
-                    if (tag.category.missionName === '動態任務') {
-                      if (compareTime(tag.lastUpdateTime)) {
-                        return {
-                          url:
-                            missionActiveImage[
-                              StatusName.findIndex(
-                                (statusName) =>
-                                  statusName === tag.status.statusName
-                              ) % 3
-                            ],
-                          scaledSize: { width: 28, height: 30 }
-                        }
-                      }
-                      return {
-                        url: missionImage[2],
-                        scaledSize: { width: 28, height: 30 }
-                      }
-                    }
-                    if (tag?.status?.statusName === '已解決') {
-                      return {
-                        url: mission2ImageVoting[0],
-                        scaledSize: { width: 28, height: 30 }
-                      }
-                    }
-                    return {
-                      url:
-                        missionImage[
-                          missionName.findIndex(
-                            (mission) => mission === tag.category.missionName
-                          )
-                        ],
-                      scaledSize: { width: 28, height: 30 }
-                    }
-                  })()}
-                  clickable
-                  onClick={() => history.push(`${MAP_PATH}/${tag.id}`)}
-                  clusterer={clusterer}
-                />
-              ))
-            }
-          </MarkerClusterer>
-        )}
+            position={{
+              lat: parseFloat(tag.coordinates.latitude),
+              lng: parseFloat(tag.coordinates.longitude)
+            }}
+            icon={(() => {
+              if (activeTagId === tag.id) {
+                return {
+                  url:
+                    missionredImage[
+                      missionName.findIndex(
+                        (mission) => mission === tag.category.missionName
+                      )
+                    ],
+                  scaledSize: { width: 28, height: 30 }
+                }
+              }
+              if (tag.category.missionName === '動態任務') {
+                if (compareTime(tag.lastUpdateTime)) {
+                  return {
+                    url:
+                      missionActiveImage[
+                        StatusName.findIndex(
+                          (statusName) => statusName === tag.status.statusName
+                        ) % 3
+                      ],
+                    scaledSize: { width: 28, height: 30 }
+                  }
+                }
+                return {
+                  url: missionImage[2],
+                  scaledSize: { width: 28, height: 30 }
+                }
+              }
+              if (tag?.status?.statusName === '已解決') {
+                return {
+                  url: mission2ImageVoting[0],
+                  scaledSize: { width: 28, height: 30 }
+                }
+              }
+              return {
+                url:
+                  missionImage[
+                    missionName.findIndex(
+                      (mission) => mission === tag.category.missionName
+                    )
+                  ],
+                scaledSize: { width: 28, height: 30 }
+              }
+            })()}
+            clickable
+            onClick={() => history.push(`${MAP_PATH}/${tag.id}`)}
+          />
+        ))}
         {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
           <Marker
             position={{
