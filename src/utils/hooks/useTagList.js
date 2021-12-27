@@ -34,7 +34,7 @@ function useTagList() {
     getTagList,
     {
       data: {
-        unarchivedTagList: { tags = [], empty = false, cursor = '' } = {}
+        unarchivedTagList: { tags = null, empty = false, cursor = '' } = {}
       } = {}
     }
   ] = useLazyQuery(GET_TAG_LIST_QUERY)
