@@ -142,8 +142,6 @@ export const MissionContextProvider = ({ children }) => {
   })
   const { activeTag, tagDetail, getUserTagList } = useTagValue()
   const handleBack = useCallback(() => {
-    setSelectedMissionId(InitialMissionValue.selectedMissionId)
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
     setRemindOpen(false)
     if (isInEdit && currentStep === MissionStep.SelectMission) {
       handleBackStep(2)
@@ -369,12 +367,14 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleChangeMissionType = useCallback(
     (target) => {
+      if (target !== missionType) {
+        setSelectedMissionId('')
+        setSelectedSubOptionId('')
+      }
       setMissionType(target)
-      setSelectedMissionId('')
-      setSelectedSubOptionId('')
       handleNext()
     },
-    [handleNext]
+    [handleNext, missionType]
   )
   const handleStartMission = useCallback(() => {
     setShowControl(true)
