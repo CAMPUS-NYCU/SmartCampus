@@ -6,6 +6,7 @@ import useTagList from '../hooks/useTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
 import useThreshold from '../hooks/useThreshhold'
+import { useDeleteTag } from '../hooks/useDeleteTag'
 
 export const TagContext = React.createContext({
   tags: [],
@@ -29,6 +30,7 @@ export const TagContextProvider = ({ children }) => {
   const { tags } = useTagList()
   const { userAddTags, getUserTagList } = useUserTags()
   const threshold = useThreshold()
+  const { deleteTag, isDeleting } = useDeleteTag()
 
   // ! TEMP: 之後會串接 API 拿category列表？
   const categoryList = [
@@ -104,7 +106,9 @@ export const TagContextProvider = ({ children }) => {
     userAddTags,
     getUserTagList,
     fetchTagDetail,
-    threshold
+    threshold,
+    deleteTag,
+    isDeleting
   }
 
   return (

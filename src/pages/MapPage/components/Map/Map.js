@@ -62,10 +62,11 @@ function Map(props) {
       return (
         filterTags.includes(tag.category.missionName) ||
         filterTags.includes(tag.category.subTypeName) ||
-        filterTags.includes(tag.category.targetName)
+        (filterTags.includes(tag.category.targetName) &&
+          tags.map((t) => t.id).includes(tag.id))
       )
     },
-    [filterTags]
+    [filterTags, tags]
   )
   const [markers, setMarkers] = React.useState([])
   const [markerCluster, setMarkerCluster] = React.useState(null)
@@ -113,6 +114,11 @@ function Map(props) {
       }
     }
   }, [markers, markerCluster, isShown, isInMission])
+  useEffect(() => {
+    setMarkers((prevMarkers) => {
+      return prevMarkers.filter((m) => tags.map((t) => t.id).includes(m.tag.id))
+    })
+  }, [tags])
 
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const mission2ImageVoting = useMemo(() => [Mission2Voting], [])

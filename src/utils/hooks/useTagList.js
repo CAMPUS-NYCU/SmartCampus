@@ -55,7 +55,7 @@ function useTagList() {
     }
   }, [fetchTagList, empty, cursor])
   useEffect(() => {
-    if (Array.isArray(tags) && tags.length !== 0)
+    if (Array.isArray(tags))
       setTagList((prevState) => [...(prevState || []), ...tags])
   }, [tags])
   useEffect(() => {
