@@ -148,6 +148,7 @@ function MissionStep2() {
             <NativeSelect
               native='true'
               onChange={handleChangeFloor}
+              value={floor}
               style={{
                 direction: 'rtl',
                 borderRadius: '5px',
