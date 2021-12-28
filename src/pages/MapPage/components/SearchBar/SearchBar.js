@@ -123,76 +123,82 @@ const SearchBar = React.forwardRef((props, ref) => {
   })
   return (
     <div ref={ref} {...otherProps}>
-      <Paper className={classes.root}>
-        {search === false ? (
-          <IconButton
-            className={classes.iconButton}
-            aria-label='search'
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+        }}
+      >
+        <Paper className={classes.root}>
+          {search === false ? (
+            <IconButton
+              className={classes.iconButton}
+              aria-label='search'
+              onClick={() => {
+                document.getElementById('inputBase').focus()
+                setSearch(true)
+              }}
+            >
+              <SearchIcon />
+            </IconButton>
+          ) : (
+            <IconButton
+              className={classes.iconButton}
+              aria-label='search'
+              onClick={() => {
+                document.getElementById('inputBase').blur()
+                document.getElementById('inputBase').value = ''
+                setSearch(false)
+                setPlaceName('')
+              }}
+            >
+              <KeyboardReturnIcon />
+            </IconButton>
+          )}
+          <InputBase
+            id='inputBase'
+            inputRef={materialRef}
+            style={{ width: '90%' }}
+            placeholder='開始輸入'
             onClick={() => {
-              document.getElementById('inputBase').focus()
               setSearch(true)
             }}
-          >
-            <SearchIcon />
-          </IconButton>
-        ) : (
-          <IconButton
-            className={classes.iconButton}
-            aria-label='search'
-            onClick={() => {
-              document.getElementById('inputBase').blur()
-              document.getElementById('inputBase').value = ''
-              setSearch(false)
-              setPlaceName('')
-            }}
-          >
-            <KeyboardReturnIcon />
-          </IconButton>
-        )}
-        <InputBase
-          id='inputBase'
-          inputRef={materialRef}
-          style={{ width: '90%' }}
-          placeholder='開始輸入'
-          onClick={() => {
-            setSearch(true)
-          }}
-        />
-        {search === true && (
-          <IconButton
-            className={classes.iconButton}
-            aria-label='closeIcon'
-            onClick={() => {
-              document.getElementById('inputBase').value = ''
-              document.getElementById('inputBase').focus()
-              setPlaceName('')
-              setPositionName('')
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        )}
-        <Divider className={classes.divider} orientation='vertical' />
-        <IconButton
-          className={classes.iconButton}
-          aria-label='filter'
-          onClick={currentStep === 1 ? () => {} : () => toggle(open)}
-        >
-          {open === true ? (
-            <img src={yellowfilter} alt='' />
-          ) : (
-            <img src={grayfilter} alt='' />
+          />
+          {search === true && (
+            <IconButton
+              className={classes.iconButton}
+              aria-label='closeIcon'
+              onClick={() => {
+                document.getElementById('inputBase').value = ''
+                document.getElementById('inputBase').focus()
+                setPlaceName('')
+                setPositionName('')
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
           )}
-        </IconButton>
-        <Divider className={classes.divider} orientation='vertical' />
-        <IconButton
-          className={classes.iconButton}
-          aria-label='menu'
-          onClick={currentStep === 1 ? () => {} : menuControl.setOpen}
-        >
-          <MenuIcon />
-        </IconButton>
-      </Paper>
+          <Divider className={classes.divider} orientation='vertical' />
+          <IconButton
+            className={classes.iconButton}
+            aria-label='filter'
+            onClick={currentStep === 1 ? () => {} : () => toggle(open)}
+          >
+            {open === true ? (
+              <img src={yellowfilter} alt='' />
+            ) : (
+              <img src={grayfilter} alt='' />
+            )}
+          </IconButton>
+          <Divider className={classes.divider} orientation='vertical' />
+          <IconButton
+            className={classes.iconButton}
+            aria-label='menu'
+            onClick={currentStep === 1 ? () => {} : menuControl.setOpen}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Paper>
+      </form>
       <Fillter open={open} />
       <SearchBarMenu control={menuControl} menuControls={menuControls} />
     </div>
