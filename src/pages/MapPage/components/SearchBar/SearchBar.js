@@ -108,8 +108,10 @@ const SearchBar = React.forwardRef((props, ref) => {
       } else {
         onkeydown = (e) => {
           if (e.key === 'Enter') {
-            enqueueSnackbar('請點擊下方建議列表', { varient: 'error' })
-            document.getElementById('inputBase').focus()
+            enqueueSnackbar('請再次點擊輸入框，並選擇目標地標', {
+              varient: 'error'
+            })
+            document.getElementById('inputBase').blur()
           }
         }
         // document.getElementById('inputBase').value = ''
@@ -174,9 +176,7 @@ const SearchBar = React.forwardRef((props, ref) => {
               border: '0',
               backgroundColor: 'rgba(0,0,0,0)'
             }}
-            type='search'
             placeholder='開始輸入'
-            returnKeyType='done'
             onClick={() => {
               setSearch(true)
             }}
