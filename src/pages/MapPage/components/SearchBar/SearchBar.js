@@ -124,6 +124,7 @@ const SearchBar = React.forwardRef((props, ref) => {
   return (
     <div ref={ref} {...otherProps}>
       <form
+        action=''
         onSubmit={(e) => {
           e.preventDefault()
         }}
@@ -159,6 +160,7 @@ const SearchBar = React.forwardRef((props, ref) => {
             inputRef={materialRef}
             style={{ width: '90%' }}
             placeholder='開始輸入'
+            returnKeyType='done'
             onClick={() => {
               setSearch(true)
             }}
