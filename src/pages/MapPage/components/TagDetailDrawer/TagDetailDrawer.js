@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography, Dialog, DialogTitle } from '@material-ui/core'
 import { Lightbox } from 'react-modal-image'
 
 import Mission2 from '../../../../assets/images/mission2_round.svg'
@@ -16,6 +16,7 @@ import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useViewCount } from '../../../../utils/hooks/useViewCount'
+import CustomButton from '../../../../components/CustomButton'
 
 function TagDetailDialog(props) {
   const { activeTag, onClose, tagDetail, ...rest } = props
@@ -24,6 +25,7 @@ function TagDetailDialog(props) {
   const { isGuest } = useUserValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
+  const [deleteDialog, setDeleteDialog] = useState(false)
   const { incrementViewCount } = useViewCount()
   const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
   const mission2ImageVoting = useMemo(() => [Mission2Voting], [])
@@ -68,6 +70,44 @@ function TagDetailDialog(props) {
   }, [fetchTagDetail])
   return (
     <>
+      <Dialog
+        open={deleteDialog}
+        PaperProps={{
+          style: {
+            background: 'r #FAFAFA',
+            boxShadow: `0px 2px 4px rgba(0, 0, 0, 0.12), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2)`,
+            borderRadius: `10px`,
+            padding: '10px'
+          }
+        }}
+      >
+        <DialogTitle>確定要刪除?</DialogTitle>
+        <Box
+          width='100%'
+          mb={2}
+          mt={3}
+          display='flex'
+          justifyContent='space-around'
+        >
+          <CustomButton
+            buttonType='finishButton'
+            onClick={() => {
+              setDeleteDialog(false)
+            }}
+          >
+            取消
+          </CustomButton>
+          <CustomButton
+            buttonType='finishButton'
+            onClick={() => {
+              deleteTag(activeTag.id)
+              onClose()
+            }}
+          >
+            確定
+          </CustomButton>
+        </Box>
+      </Dialog>
       <CustomDrawer
         open={activeTag && !isInMission}
         handleClose={onClose}
@@ -84,8 +124,7 @@ function TagDetailDialog(props) {
                 {
                   name: '刪除',
                   handleOnClick: () => {
-                    deleteTag(activeTag.id)
-                    onClose()
+                    setDeleteDialog(true)
                   },
                   disabled: !tagDetail
                 },
