@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { usePlacesWidget } from 'react-google-autocomplete'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import InputBase from '@material-ui/core/InputBase'
+// import InputBase from '@material-ui/core/InputBase'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -155,10 +155,26 @@ const SearchBar = React.forwardRef((props, ref) => {
               <KeyboardReturnIcon />
             </IconButton>
           )}
-          <InputBase
+          {/* <InputBase
             id='inputBase'
             inputRef={materialRef}
             style={{ width: '90%' }}
+            placeholder='開始輸入'
+            enterkeyhint
+            onClick={() => {
+              setSearch(true)
+            }}
+          /> */}
+          <input
+            id='inputBase'
+            ref={materialRef}
+            style={{
+              width: '90%',
+              outline: 'none',
+              border: '0',
+              backgroundColor: 'rgba(0,0,0,0)'
+            }}
+            type='search'
             placeholder='開始輸入'
             returnKeyType='done'
             onClick={() => {
