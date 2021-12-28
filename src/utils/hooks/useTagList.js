@@ -34,7 +34,7 @@ function useTagList() {
     getTagList,
     {
       data: {
-        unarchivedTagList: { tags = [], empty = false, cursor = '' } = {}
+        unarchivedTagList: { tags = null, empty = false, cursor = '' } = {}
       } = {}
     }
   ] = useLazyQuery(GET_TAG_LIST_QUERY)
@@ -55,7 +55,7 @@ function useTagList() {
     }
   }, [fetchTagList, empty, cursor])
   useEffect(() => {
-    if (Array.isArray(tags) && tags.length !== 0)
+    if (Array.isArray(tags))
       setTagList((prevState) => [...(prevState || []), ...tags])
   }, [tags])
   useEffect(() => {

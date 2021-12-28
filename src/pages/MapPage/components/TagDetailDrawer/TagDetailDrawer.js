@@ -20,7 +20,7 @@ import { useViewCount } from '../../../../utils/hooks/useViewCount'
 function TagDetailDialog(props) {
   const { activeTag, onClose, tagDetail, ...rest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
-  const { userAddTags, threshold, fetchTagDetail } = useTagValue()
+  const { userAddTags, threshold, fetchTagDetail, deleteTag } = useTagValue()
   const { isGuest } = useUserValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
@@ -81,6 +81,14 @@ function TagDetailDialog(props) {
         titleActions={
           checkTagOwner()
             ? [
+                {
+                  name: '刪除',
+                  handleOnClick: () => {
+                    deleteTag(activeTag.id)
+                    onClose()
+                  },
+                  disabled: !tagDetail
+                },
                 {
                   name: '編輯',
                   handleOnClick: () => handleStartEdit(activeTag),

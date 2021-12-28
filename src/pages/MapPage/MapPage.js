@@ -61,7 +61,13 @@ const MapPageContent = (props) => {
   const userDialogControl = useModal()
   const ReportHistoryControl = useModal()
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
-  const { activeTag, resetActiveTag, tagDetail, setActiveTagId } = useTagValue()
+  const {
+    activeTag,
+    resetActiveTag,
+    tagDetail,
+    setActiveTagId,
+    isDeleting
+  } = useTagValue()
   const { uid } = useUserValue()
   const { activeTagId } = useParams()
   const {
@@ -134,7 +140,7 @@ const MapPageContent = (props) => {
         </>
       )}
       <Dialog
-        open={loading || !isLoaded}
+        open={loading || !isLoaded || isDeleting}
         PaperProps={{
           style: {
             backgroundColor: 'transparent',
