@@ -219,7 +219,7 @@ const DetailPart = (props) => {
               <p>無描述</p>
             )}
             <Box display='flex' justifyContent='flex-end'>
-              <Box className={classes.clickableFont} m={0.5}>
+              <Box m={0.5} style={{ fontSize: '0.8em', color: 'gray' }}>
                 {tagDetail?.newCreateTime}
               </Box>
             </Box>
@@ -270,7 +270,7 @@ const DetailPart = (props) => {
             </Box>
           )}
           <UserDialog
-            userId={tagDetail.createUser.uid}
+            userId={tagDetail?.statusHistory?.statusList?.[0]?.createUser?.uid}
             control={userDialogControl}
           />
         </>

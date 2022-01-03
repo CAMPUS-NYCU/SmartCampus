@@ -29,6 +29,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
           createTime
           createUser {
             displayName
+            uid
           }
           description
         }
