@@ -27,8 +27,8 @@ function findTagById(id, tags) {
 }
 
 export const TagContextProvider = ({ children }) => {
-  const { tags } = useTagList()
-  const { userAddTags, getUserTagList } = useUserTags()
+  const { tags, setTagList } = useTagList()
+  const { userAddTags, getUserTagList, setUserAddTags } = useUserTags()
   const threshold = useThreshold()
   const { deleteTag, isDeleting } = useDeleteTag()
 
@@ -62,6 +62,30 @@ export const TagContextProvider = ({ children }) => {
       variables: { id: activeTagId }
     })
   }, [getTagDetail, activeTagId])
+  useEffect(() => {
+    if (newTag.changeType === 'updated') {
+      setTagList((prevTagList) => {
+        const target = prevTagList.find(
+          (tag) => tag.id === newTag.tagContent.id
+        )
+        return [
+          ...prevTagList.filter((tag) => tag.id !== newTag.tagContent.id),
+          { ...target, ...newTag.tagContent }
+        ]
+      })
+    }
+    if (newTag.changeType === 'added') {
+      setTagList((prevTagList) => [...prevTagList, newTag.tagContent])
+    }
+    if (newTag.changeType === 'archived' || newTag.changeType === 'deleted') {
+      setUserAddTags((prevUserAddTags) =>
+        prevUserAddTags.filter((tag) => tag.id !== newTag.tagContent.id)
+      )
+      setTagList((prevTagList) =>
+        prevTagList.filter((tag) => tag.id !== newTag.tagContent.id)
+      )
+    }
+  }, [newTag, setTagList, setUserAddTags])
   useEffect(() => {
     if (newTag.changeType === 'updated' && activeTagId) {
       fetchTagDetail()
