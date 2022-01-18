@@ -49,7 +49,7 @@ function useTagList() {
   }, [fetchTagList])
   useEffect(() => {
     if (!empty && cursor) {
-      fetchTagList(cursor, 50)
+      fetchTagList(cursor, 100)
     }
   }, [fetchTagList, empty, cursor])
   useEffect(() => {

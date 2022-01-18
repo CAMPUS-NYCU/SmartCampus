@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     maxWidth: 800,
     left: '50%',
+    '-ms-overflow-style': 'none',
+    scrollbarWidth: 'none',
     [theme.breakpoints.down('sm')]: {
       paddingLeft: '5vw'
     }
