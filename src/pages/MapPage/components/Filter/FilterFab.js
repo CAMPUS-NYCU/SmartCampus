@@ -78,7 +78,7 @@ function FilterFab(props) {
               marginRight: '7px'
             }}
           >
-            加入其他
+            加入其他篩選器
           </CustomButton>
           {filterTags.map((item) => {
             return (
