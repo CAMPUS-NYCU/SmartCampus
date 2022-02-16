@@ -38,7 +38,7 @@ function MissionDrawer() {
       return '編輯回報紀錄'
     }
     if (currentStep === MissionStep.selectMissionName) {
-      return `選擇要標注的任務`
+      return `選擇回報類型`
     }
     return `標註${missionInfo[missionType].missionName}`
   }

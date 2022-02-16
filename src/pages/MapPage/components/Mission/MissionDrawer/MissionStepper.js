@@ -142,7 +142,7 @@ function MissionStepper(props) {
           }
         }}
       >
-        <DialogTitle>確定完成任務並送出？</DialogTitle>
+        <DialogTitle>確定完成回報並送出？</DialogTitle>
         <Box
           width='100%'
           mb={2}
