@@ -1,14 +1,14 @@
 export const missionInfo = [
   {
-    missionName: '設施任務',
+    missionName: '設施回報',
     missionDescription: '回報此處設施，例如無障礙設施與交通設施。'
   },
   {
-    missionName: '問題任務',
+    missionName: '問題回報',
     missionDescription: '回報待解決的問題，例如積水與道路施工。'
   },
   {
-    missionName: '動態任務',
+    missionName: '動態回報',
     missionDescription: '回報固定地點的人潮，例如餐廳的擁擠程度。'
   }
 ]
