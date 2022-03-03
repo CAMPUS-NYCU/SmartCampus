@@ -291,9 +291,10 @@ function Map(props) {
             position={place}
             icon={{
               url: Searchposition,
-              scaledSize: { width: 32, height: 32 }
+              scaledSize: { width: 32, height: 32 },
+              labelOrigin: { x: 16, y: -8 }
             }}
-            animation={1}
+            label={{ text: placeName, color: '#E25D33' }}
           />
         )}
       </GoogleMap>
