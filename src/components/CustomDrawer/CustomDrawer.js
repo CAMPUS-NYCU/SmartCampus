@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerContentFull: {
     minHeight: 450,
-    height: 'calc(var(--vh, 1vh) * 100 - 100px)'
+    height: 'calc(100vh - 100px)'
   },
   titleBar: {
     position: 'sticky',
