@@ -20,7 +20,7 @@
     "firebase": "^7.2.2",
     "graphql": "^14.6.0",
     "material-ui-popup-state": "^1.5.3",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "notistack": "^0.9.7",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
