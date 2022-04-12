@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import useTagSubscription from '../hooks/useTagsSubscription'
 import useTagList from '../hooks/useTagList'
+import useFixedTagList from '../hooks/useFixedTagList'
 import useTagDetail from '../hooks/useTagDetail'
 import useUserTags from '../hooks/useUserTags'
 import useThreshold from '../hooks/useThreshhold'
@@ -28,6 +29,7 @@ function findTagById(id, tags) {
 
 export const TagContextProvider = ({ children }) => {
   const { tags, setTagList } = useTagList()
+  const { fixedtags } = useFixedTagList()
   const { userAddTags, getUserTagList, setUserAddTags } = useUserTags()
   const threshold = useThreshold()
   const { deleteTag, isDeleting } = useDeleteTag()
@@ -118,6 +120,7 @@ export const TagContextProvider = ({ children }) => {
   }
   const contextValues = {
     tags,
+    fixedtags,
     activeTag,
     activeTagId,
     setActiveTagId,
