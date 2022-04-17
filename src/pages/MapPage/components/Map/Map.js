@@ -53,7 +53,7 @@ function Map(props) {
     showControl,
     mapInstance
   } = useMissionValue()
-  const { tags, activeTagId, filterTags } = useTagValue()
+  const { tags, fixedTags, activeTagId, filterTags } = useTagValue()
   const isShown = useCallback(
     (tag) => {
       if (filterTags.length === 0) {
@@ -188,6 +188,8 @@ function Map(props) {
             }}
           />
         )}
+        {console.log(tags)}
+        {console.log(fixedTags)}
         {markerCluster &&
           tags.map((tag) => (
             <Marker

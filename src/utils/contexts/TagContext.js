@@ -29,7 +29,7 @@ function findTagById(id, tags) {
 
 export const TagContextProvider = ({ children }) => {
   const { tags, setTagList } = useTagList()
-  const { fixedtags } = useFixedTagList()
+  const { fixedTags } = useFixedTagList()
   const { userAddTags, getUserTagList, setUserAddTags } = useUserTags()
   const threshold = useThreshold()
   const { deleteTag, isDeleting } = useDeleteTag()
@@ -120,7 +120,7 @@ export const TagContextProvider = ({ children }) => {
   }
   const contextValues = {
     tags,
-    fixedtags,
+    fixedTags,
     activeTag,
     activeTagId,
     setActiveTagId,
