@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
 
-export const GET_TAG_LIST_QUERY = gql`
-  query getFixedTagList($cursor: String!, $pageSize: Int!) {
+export const GET_FIXEDTAG_LIST_QUERY = gql`
+  query getfixedTagList($cursor: String!, $pageSize: Int!) {
     fixedTagList(pageParams: { cursor: $cursor, pageSize: $pageSize }) {
       cursor
       empty
@@ -14,22 +14,6 @@ export const GET_TAG_LIST_QUERY = gql`
           longitude
         }
         viewCount
-        information {
-          __typename
-          ... on FixedTagRestaurantStoreInfo {
-            id
-            type
-            floor
-            name
-            status
-          }
-          ... on FixedTagFloorInfo {
-            id
-            type
-            floor
-            status
-          }
-        }
       }
     }
   }
@@ -37,20 +21,20 @@ export const GET_TAG_LIST_QUERY = gql`
 
 function useFixedTagList() {
   const [
-    getFixedTagList,
+    getfixedTagList,
     {
       data: {
-        unarchivedTagList: { tags = null, empty = false, cursor = null } = {}
+        fixedTagList: { fixedTags = null, empty = false, cursor = null } = {}
       } = {}
     }
-  ] = useLazyQuery(GET_TAG_LIST_QUERY)
-  const [fixedtagList, setFixedTagList] = useState(null)
-  const [fixedcacheTagList, setFixedCacheTagList] = useState(null)
+  ] = useLazyQuery(GET_FIXEDTAG_LIST_QUERY)
+  const [fixedtagList, setfixedTagList] = useState(null)
+  const [cachefixedTagList, setfixedCacheTagList] = useState(null)
   const fetchTagList = useCallback(
     (currentCursor, pageSize) => {
-      getFixedTagList({ variables: { cursor: currentCursor || '', pageSize } })
+      getfixedTagList({ variables: { cursor: currentCursor || '', pageSize } })
     },
-    [getFixedTagList]
+    [getfixedTagList]
   )
   useEffect(() => {
     fetchTagList('', 10)
@@ -61,16 +45,16 @@ function useFixedTagList() {
     }
   }, [fetchTagList, empty, cursor])
   useEffect(() => {
-    if (Array.isArray(tags)) {
-      setFixedCacheTagList((prevState) => [...(prevState || []), ...tags])
+    if (Array.isArray(fixedTags)) {
+      setfixedCacheTagList((prevState) => [...(prevState || []), ...fixedTags])
     }
-  }, [tags, empty, cursor])
+  }, [fixedTags, empty, cursor])
   useEffect(() => {
-    if (fixedcacheTagList && (empty || fixedcacheTagList.length === 10)) {
-      setFixedTagList(fixedcacheTagList)
+    if (cachefixedTagList && (empty || cachefixedTagList.length === 10)) {
+      setfixedTagList(cachefixedTagList)
     }
-  }, [fixedcacheTagList, empty])
-  return { tags: fixedtagList, setFixedTagList }
+  }, [cachefixedTagList, empty])
+  return { fixedTags: fixedtagList }
 }
 
 export default useFixedTagList
