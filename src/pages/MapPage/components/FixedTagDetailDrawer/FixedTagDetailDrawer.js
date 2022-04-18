@@ -19,7 +19,7 @@ import CustomButton from '../../../../components/CustomButton'
 function TagDetailDialog(props) {
   const { activeTag, onClose, tagDetail, ...rest } = props
   const { handleStartEdit, isInMission } = useMissionValue()
-  const { userAddTags, fetchTagDetail, deleteTag } = useTagValue()
+  const { userAddTags, fetchFixedTagDetail, deleteTag } = useTagValue()
   const { isGuest } = useUserValue()
   const [largeImg, setLargeImg] = useState(null)
   const [deleteDialog, setDeleteDialog] = useState(false)
@@ -63,8 +63,8 @@ function TagDetailDialog(props) {
     }
   }, [incrementViewCount, activeTag, isGuest])
   useEffect(() => {
-    fetchTagDetail()
-  }, [fetchTagDetail])
+    fetchFixedTagDetail()
+  }, [fetchFixedTagDetail])
   return (
     <>
       <Dialog

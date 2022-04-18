@@ -13,6 +13,7 @@ import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.svg'
 import { DefaultZoom } from '../../../../constants/mapConstants'
 import PinTarget from '../PinTarget'
+import FixedTags from '../../../../assets/images/fixedtag.svg'
 import Mission2Voting from '../../../../assets/images/mission2_pin_voting.svg'
 import Mission2 from '../../../../assets/images/mission2_pin.svg'
 import Mission1 from '../../../../assets/images/mission1_pin.svg'
@@ -166,7 +167,27 @@ function Map(props) {
         options={{
           fullscreenControl: false,
           mapTypeControl: false,
-          streetViewControl: false
+          streetViewControl: false,
+          styles: [
+            {
+              featureType: 'poi',
+              elementType: 'labels.icon',
+              stylers: [
+                {
+                  visibility: 'off'
+                }
+              ]
+            },
+            {
+              featureType: 'poi.school',
+              elementType: 'labels.icon',
+              stylers: [
+                {
+                  visibility: 'on'
+                }
+              ]
+            }
+          ]
         }}
         mapContainerStyle={{
           height: '100%',
@@ -188,8 +209,37 @@ function Map(props) {
             }}
           />
         )}
-        {console.log(tags)}
-        {console.log(fixedTags)}
+        {markerCluster &&
+          fixedTags.map((fixedtag) => (
+            <Marker
+              key={fixedtag.id}
+              visible={!isInMission && isShown(fixedtag)}
+              onLoad={(marker) => {
+                setMarkers((prevMarkers) => [
+                  ...prevMarkers,
+                  { fixedtag, marker }
+                ])
+              }}
+              position={{
+                lat: parseFloat(fixedtag.coordinates.latitude),
+                lng: parseFloat(fixedtag.coordinates.longitude)
+              }}
+              icon={{
+                url: FixedTags,
+                scaledSize: { width: 28, height: 30 },
+                labelOrigin: { x: 15, y: 34 }
+              }}
+              label={{
+                text: fixedtag.locationName,
+                fontFamily: 'Roboto',
+                fontWeight: 'bold',
+                fontSize: '12px',
+                color: '#FDCC4F'
+              }}
+              clickable
+              onClick={() => history.push(`${MAP_PATH}/${fixedtag.id}`)}
+            />
+          ))}
         {markerCluster &&
           tags.map((tag) => (
             <Marker
@@ -296,7 +346,13 @@ function Map(props) {
               scaledSize: { width: 32, height: 32 },
               labelOrigin: { x: 16, y: -8 }
             }}
-            label={{ text: placeName, color: '#E25D33' }}
+            label={{
+              text: placeName,
+              color: '#E25D33',
+              fontFamily: 'Roboto',
+              fontWeight: 'bold',
+              fontSize: '12px'
+            }}
           />
         )}
       </GoogleMap>

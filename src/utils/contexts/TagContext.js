@@ -5,6 +5,7 @@ import useTagSubscription from '../hooks/useTagsSubscription'
 import useTagList from '../hooks/useTagList'
 import useFixedTagList from '../hooks/useFixedTagList'
 import useTagDetail from '../hooks/useTagDetail'
+import useFixedTagDetail from '../hooks/useFixedTagDetail'
 import useUserTags from '../hooks/useUserTags'
 import useThreshold from '../hooks/useThreshhold'
 import { useDeleteTag } from '../hooks/useDeleteTag'
@@ -24,6 +25,11 @@ export const TagContext = React.createContext({
 function findTagById(id, tags) {
   if (!id || !tags || tags.length === 0) return null
   const targetTag = tags.find((tag) => tag.id === id)
+  return targetTag || null
+}
+function findFixedTagById(id, fixedTags) {
+  if (!id || !fixedTags || fixedTags.length === 0) return null
+  const targetTag = fixedTags.find((fixedtag) => fixedtag.id === id)
   return targetTag || null
 }
 
@@ -51,9 +57,9 @@ export const TagContextProvider = ({ children }) => {
   ]
   const [activeTagId, setActiveTagId] = useState(null)
   const activeTag = findTagById(activeTagId, tags)
-  const { tagDetail, getTagDetail, resetTagDetail } = useTagDetail(
-    setActiveTagId
-  )
+  const activeFixedTag = findFixedTagById(activeTagId, fixedTags)
+  const { tagDetail, getTagDetail, resetTagDetail } = useTagDetail()
+  const { fixedtagDetail, getFixedTagDetail } = useFixedTagDetail()
   const newTag = useTagSubscription()
   const resetActiveTag = useCallback(() => {
     setActiveTagId(null)
@@ -64,6 +70,11 @@ export const TagContextProvider = ({ children }) => {
       variables: { id: activeTagId }
     })
   }, [getTagDetail, activeTagId])
+  const fetchFixedTagDetail = useCallback(async () => {
+    getFixedTagDetail({
+      variables: { id: activeTagId }
+    })
+  }, [getFixedTagDetail, activeTagId])
   useEffect(() => {
     if (newTag.changeType === 'updated') {
       setTagList((prevTagList) => {
@@ -123,6 +134,7 @@ export const TagContextProvider = ({ children }) => {
     fixedTags,
     activeTag,
     activeTagId,
+    activeFixedTag,
     setActiveTagId,
     resetActiveTag,
     categoryList,
@@ -130,9 +142,11 @@ export const TagContextProvider = ({ children }) => {
     addFilterTags,
     resetFilterTags,
     tagDetail,
+    fixedtagDetail,
     userAddTags,
     getUserTagList,
     fetchTagDetail,
+    fetchFixedTagDetail,
     threshold,
     deleteTag,
     isDeleting

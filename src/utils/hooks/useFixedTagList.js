@@ -14,6 +14,48 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
           longitude
         }
         viewCount
+        fixedTagSubLocations {
+          __typename
+          ... on FixedTagPlace {
+            id
+            fixedTagId
+            type
+            floor
+            name
+            status {
+              statusName
+              createTime
+              type
+            }
+            statusHistory {
+              statusList {
+                statusName
+                createTime
+                type
+              }
+              empty
+            }
+          }
+          ... on FixedTagFloor {
+            id
+            fixedTagId
+            type
+            floor
+            status {
+              statusName
+              createTime
+              type
+            }
+            statusHistory {
+              statusList {
+                statusName
+                createTime
+                type
+              }
+              empty
+            }
+          }
+        }
       }
     }
   }
