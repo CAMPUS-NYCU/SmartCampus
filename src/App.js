@@ -85,7 +85,6 @@ function App() {
   const onClickDismiss = (key) => () => {
     notistackRef.current.closeSnackbar(key)
   }
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

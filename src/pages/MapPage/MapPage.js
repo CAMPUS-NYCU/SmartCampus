@@ -63,8 +63,10 @@ const MapPageContent = (props) => {
   const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
   const {
     activeTag,
+    activeFixedTag,
     resetActiveTag,
     tagDetail,
+    fixedtagDetail,
     setActiveTagId,
     isDeleting
   } = useTagValue()
@@ -137,6 +139,8 @@ const MapPageContent = (props) => {
               onClose={() => history.push(MAP_PATH)}
             />
           )}
+          {activeFixedTag && console.log(activeFixedTag)}
+          {activeFixedTag && console.log(fixedtagDetail)}
         </>
       )}
       <Dialog
