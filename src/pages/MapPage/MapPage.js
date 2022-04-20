@@ -21,6 +21,7 @@ import { useTagValue } from '../../utils/contexts/TagContext'
 import { useUserValue } from '../../utils/contexts/UserContext'
 import useStep from '../../utils/hooks/useStep'
 import TagDetailDrawer from './components/TagDetailDrawer'
+import FixedTagDetailDrawer from './components/FixedTagDetailDrawer'
 import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
@@ -139,8 +140,13 @@ const MapPageContent = (props) => {
               onClose={() => history.push(MAP_PATH)}
             />
           )}
-          {activeFixedTag && console.log(activeFixedTag)}
-          {activeFixedTag && console.log(fixedtagDetail)}
+          {activeFixedTag && (
+            <FixedTagDetailDrawer
+              activeFixedTag={activeFixedTag}
+              fixedtagDetail={fixedtagDetail}
+              onClose={() => history.push(MAP_PATH)}
+            />
+          )}
         </>
       )}
       <Dialog
