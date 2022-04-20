@@ -72,13 +72,16 @@ const fixedtagDetailInitial = {
     longitude: ''
   },
   viewCount: '',
-  fixedTagSubLocations: []
+  fixedTagSubLocations: {
+    FixedTagPlace: [],
+    FixedTagFloor: []
+  }
 }
 
 function useFixedTagDetail() {
   const { token, uid } = useUserValue()
   const [fixedtagDetail, setFixedTagDetail] = useState(fixedtagDetailInitial)
-  const [getfixedTagDetail, { data: { fixedTag = {} } = {} }] = useLazyQuery(
+  const [getFixedTagDetail, { data: { fixedTag = {} } = {} }] = useLazyQuery(
     GET_FIXEDTAG_DETAIL_QUERY,
     {
       fetchPolicy: 'no-cache',
@@ -95,7 +98,7 @@ function useFixedTagDetail() {
       })
     }
   }, [fixedTag])
-  return { fixedtagDetail, getfixedTagDetail }
+  return { fixedtagDetail, getFixedTagDetail }
 }
 
 export default useFixedTagDetail

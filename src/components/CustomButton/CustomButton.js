@@ -71,6 +71,26 @@ export default withStyles((theme) => ({
     '&:hover': {
       color: theme.palette.greyOut.contrastText
     }
+  },
+  fixedTagfloorButton: {
+    borderBottom: '5px solid #lightgray',
+    '&:hover': {
+      color: theme.palette.primary.main,
+      borderBottom: '5px solid ',
+      borderBottomColor: theme.palette.primary.main
+    }
+  },
+  fixedTagChosefloorButton: {
+    color: theme.palette.primary.main,
+    borderBottom: '5px solid ',
+    borderBottomColor: theme.palette.primary.main
+  },
+  fixedTagDetailButton: {
+    borderRadius: '5px',
+    margin: '8px',
+    color: theme.palette.greyOut.contrastText,
+    backgroundColor: theme.palette.greyOut.main,
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
   }
 }))((props) => {
   const {
@@ -109,6 +129,15 @@ export default withStyles((theme) => ({
       break
     case 'finishButton':
       className = classes.finishButton
+      break
+    case 'fixedTagfloorButton':
+      className = classes.fixedTagfloorButton
+      break
+    case 'fixedTagChosefloorButton':
+      className = classes.fixedTagChosefloorButton
+      break
+    case 'fixedTagDetailButton':
+      className = classes.fixedTagDetailButton
       break
     default:
       className = classes.defaultButton
