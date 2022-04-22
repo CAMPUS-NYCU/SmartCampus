@@ -153,3 +153,31 @@ export const fixedTagContext = [
     ]
   }
 ]
+
+export const fixedTagStatus = [
+  {
+    id: 0,
+    statusName: '非常不壅擠',
+    color: '#D3E430'
+  },
+  {
+    id: 1,
+    statusName: '不壅擠',
+    color: '#FAE391'
+  },
+  {
+    id: 2,
+    statusName: '普通',
+    color: '#FFCC80'
+  },
+  {
+    id: 3,
+    statusName: '壅擠',
+    color: '#FFAB6E'
+  },
+  {
+    id: 4,
+    statusName: '非常壅擠',
+    color: '#FF8965'
+  }
+]

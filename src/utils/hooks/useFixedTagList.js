@@ -25,12 +25,18 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
             status {
               statusName
               createTime
+              createUser {
+                displayName
+              }
               type
             }
             statusHistory {
               statusList {
                 statusName
                 createTime
+                createUser {
+                  displayName
+                }
                 type
               }
               empty

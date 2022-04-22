@@ -214,12 +214,6 @@ function Map(props) {
             <Marker
               key={fixedtag.id}
               visible={!isInMission && isShown(fixedtag)}
-              onLoad={(marker) => {
-                setMarkers((prevMarkers) => [
-                  ...prevMarkers,
-                  { fixedtag, marker }
-                ])
-              }}
               position={{
                 lat: parseFloat(fixedtag.coordinates.latitude),
                 lng: parseFloat(fixedtag.coordinates.longitude)
