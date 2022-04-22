@@ -1,3 +1,9 @@
+import veryUnCrowded from '../assets/images/veryUnCrowded.svg'
+import unCrowded from '../assets/images/unCrowded.svg'
+import normalCrowded from '../assets/images/normalCrowded.svg'
+import Crowded from '../assets/images/Crowded.svg'
+import veryCrowded from '../assets/images/veryCrowded.svg'
+
 export const fixedTagContext = [
   {
     locationName: '圖書館',
@@ -157,27 +163,32 @@ export const fixedTagContext = [
 export const fixedTagStatus = [
   {
     id: 0,
-    statusName: '非常不壅擠',
-    color: '#D3E430'
+    statusName: '非常不擁擠',
+    color: '#D3E430',
+    img: veryUnCrowded
   },
   {
     id: 1,
-    statusName: '不壅擠',
-    color: '#FAE391'
+    statusName: '不擁擠',
+    color: '#FAE391',
+    img: unCrowded
   },
   {
     id: 2,
     statusName: '普通',
-    color: '#FFCC80'
+    color: '#FFCC80',
+    img: normalCrowded
   },
   {
     id: 3,
-    statusName: '壅擠',
-    color: '#FFAB6E'
+    statusName: '擁擠',
+    color: '#FFAB6E',
+    img: Crowded
   },
   {
     id: 4,
-    statusName: '非常壅擠',
-    color: '#FF8965'
+    statusName: '非常擁擠',
+    color: '#FF8965',
+    img: veryCrowded
   }
 ]

@@ -19,6 +19,7 @@ export const UPDATE_FIXEDTAG_STATUS_MUTATION = gql`
         createUser {
           displayName
           uid
+          userAddTagNumber
         }
       }
     }
