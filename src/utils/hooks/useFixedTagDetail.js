@@ -25,12 +25,20 @@ export const GET_FIXEDTAG_DETAIL_QUERY = gql`
           status {
             statusName
             createTime
+            createUser {
+              displayName
+              uid
+            }
             type
           }
           statusHistory {
             statusList {
               statusName
               createTime
+              createUser {
+                displayName
+                uid
+              }
               type
             }
             empty
@@ -44,6 +52,10 @@ export const GET_FIXEDTAG_DETAIL_QUERY = gql`
           status {
             statusName
             createTime
+            createUser {
+              displayName
+              uid
+            }
             type
           }
           statusHistory {
