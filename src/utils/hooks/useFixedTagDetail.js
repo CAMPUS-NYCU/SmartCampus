@@ -28,6 +28,7 @@ export const GET_FIXEDTAG_DETAIL_QUERY = gql`
             createUser {
               displayName
               uid
+              userAddTagNumber
             }
             type
           }
@@ -38,6 +39,7 @@ export const GET_FIXEDTAG_DETAIL_QUERY = gql`
               createUser {
                 displayName
                 uid
+                userAddTagNumber
               }
               type
             }
@@ -55,6 +57,7 @@ export const GET_FIXEDTAG_DETAIL_QUERY = gql`
             createUser {
               displayName
               uid
+              userAddTagNumber
             }
             type
           }
@@ -77,6 +80,7 @@ export const generateTime = (time) => {
 }
 
 const fixedtagDetailInitial = {
+  __typename: '',
   id: null,
   locationName: '',
   coordinates: {

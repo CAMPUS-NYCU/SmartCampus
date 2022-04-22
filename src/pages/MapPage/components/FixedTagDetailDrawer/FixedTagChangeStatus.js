@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo } from 'react'
+import React, { Fragment, useState, useMemo, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -32,6 +32,24 @@ function ChangeStatus(props) {
   const [tmpStatus, setTmpStatus] = React.useState(
     fixedTagSubLocation.status.statusName
   )
+  const findStatusIndex = (statusName) => {
+    if (statusName === fixedTagStatus[0].statusName) {
+      return fixedTagStatus[0]
+    }
+    if (statusName === fixedTagStatus[1].statusName) {
+      return fixedTagStatus[1]
+    }
+    if (statusName === fixedTagStatus[2].statusName) {
+      return fixedTagStatus[2]
+    }
+    if (statusName === fixedTagStatus[3].statusName) {
+      return fixedTagStatus[3]
+    }
+    if (statusName === fixedTagStatus[4].statusName) {
+      return fixedTagStatus[4]
+    }
+    return <> </>
+  }
   const { updateFixedTagSubLoacationStatus } = useUpdateFixedTagStatus()
   const handleChange = (event) => {
     setChecked(event.target.checked)
@@ -51,6 +69,12 @@ function ChangeStatus(props) {
     }
     return fixedTagStatus[nowIndex].color
   }
+  useEffect(() => {
+    if (fixedTagSubLocation) {
+      setTmpStatus(fixedTagSubLocation.status.statusName)
+      setNowIndex(findStatusIndex(fixedTagSubLocation.status.statusName).id)
+    }
+  }, [fixedTagSubLocation, setTmpStatus, setNowIndex])
   const handleDrawerComplete = async () => {
     setLoading(true)
     if (token) {
@@ -111,10 +135,8 @@ function ChangeStatus(props) {
           display='flex'
           flexDirection='column'
           style={{
-            height: '80%',
-            width: '100%'
+            height: '80%'
           }}
-          m={2}
         >
           {checked ? (
             <>
@@ -122,10 +144,17 @@ function ChangeStatus(props) {
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
-                  margin: '5px 11px'
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
-                <img src={UnCrowded} alt='' />
+                <img
+                  src={UnCrowded}
+                  alt=''
+                  style={{
+                    marginLeft: '5px'
+                  }}
+                />
                 {fixedTagStatus.map((item, index) => (
                   <Fragment key={item.statusName}>
                     <ListItem
@@ -150,14 +179,13 @@ function ChangeStatus(props) {
               </List>
               <div
                 style={{
-                  width: '90%',
                   fontFamily: 'Roboto',
                   fontStyle: 'normal',
                   fontWeight: '700',
                   fontSize: '22px',
                   textAlign: 'center',
                   lineHeight: '26px',
-                  marginTop: '5px',
+                  margin: '10px',
                   color: fixedTagStatus[nowIndex].color
                 }}
               >
@@ -170,7 +198,6 @@ function ChangeStatus(props) {
         </Box>
         <div
           style={{
-            width: '100%',
             borderTop: 'solid 0.5px lightgray',
             display: 'flex',
             alignItems: 'center',
@@ -189,7 +216,7 @@ function ChangeStatus(props) {
               fontFamily: 'Roboto',
               fontWeight: '400',
               textAlign: 'center',
-              lineHeight: '26px',
+              lineHeight: '21px',
               marginTop: '5px'
             }}
             variant='contained'
@@ -222,7 +249,7 @@ function ChangeStatus(props) {
 
 ChangeStatus.propTypes = {
   fixedTagSubLocation: PropTypes.object.isRequired,
-  stateDrawer: PropTypes.object.isRequired,
+  stateDrawer: PropTypes.bool.isRequired,
   setStateDrawer: PropTypes.func.isRequired
 }
 

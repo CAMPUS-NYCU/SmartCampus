@@ -22,6 +22,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
       createUser {
         displayName
         uid
+        userAddTagNumber
       }
       statusHistory {
         statusList {
@@ -30,6 +31,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
           createUser {
             displayName
             uid
+            userAddTagNumber
           }
           description
         }

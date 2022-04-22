@@ -27,6 +27,8 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
               createTime
               createUser {
                 displayName
+                uid
+                userAddTagNumber
               }
               type
             }
@@ -36,6 +38,8 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
                 createTime
                 createUser {
                   displayName
+                  uid
+                  userAddTagNumber
                 }
                 type
               }
