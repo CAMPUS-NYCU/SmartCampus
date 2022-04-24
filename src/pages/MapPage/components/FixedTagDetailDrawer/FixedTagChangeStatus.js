@@ -21,13 +21,18 @@ import { useUpdateFixedTagStatus } from '../../../../utils/Mutation/updateFixedT
 import CustomDrawer from '../../../../components/CustomDrawer'
 
 function ChangeStatus(props) {
-  const { fixedTagSubLocation, stateDrawer, setStateDrawer } = props
+  const {
+    fixedTagSubLocation,
+    stateDrawer,
+    setStateDrawer,
+    checked,
+    setChecked
+  } = props
   const handleDrawerClose = () => {
     setStateDrawer(false)
   }
   const { fetchFixedTagDetail } = useTagValue()
   const { token } = useUserValue()
-  const [checked, setChecked] = React.useState(true)
   const [loading, setLoading] = useState(false)
   const [tmpStatus, setTmpStatus] = React.useState(
     fixedTagSubLocation.status.statusName
@@ -48,7 +53,7 @@ function ChangeStatus(props) {
     if (statusName === fixedTagStatus[4].statusName) {
       return fixedTagStatus[4]
     }
-    return <> </>
+    return fixedTagStatus[5]
   }
   const { updateFixedTagSubLoacationStatus } = useUpdateFixedTagStatus()
   const handleChange = (event) => {
@@ -70,11 +75,16 @@ function ChangeStatus(props) {
     return fixedTagStatus[nowIndex].color
   }
   useEffect(() => {
-    if (fixedTagSubLocation) {
-      setTmpStatus(fixedTagSubLocation.status.statusName)
-      setNowIndex(findStatusIndex(fixedTagSubLocation.status.statusName).id)
+    if (!checked) {
+      setTmpStatus('未營業')
     }
-  }, [fixedTagSubLocation, setTmpStatus, setNowIndex])
+    if (checked) {
+      if (fixedTagSubLocation) {
+        setTmpStatus(fixedTagSubLocation.status.statusName)
+        setNowIndex(findStatusIndex(fixedTagSubLocation.status.statusName).id)
+      }
+    }
+  }, [checked, fixedTagSubLocation])
   const handleDrawerComplete = async () => {
     setLoading(true)
     if (token) {
@@ -155,37 +165,44 @@ function ChangeStatus(props) {
                     marginLeft: '5px'
                   }}
                 />
-                {fixedTagStatus.map((item, index) => (
-                  <Fragment key={item.statusName}>
-                    <ListItem
-                      button
-                      onClick={() => {
-                        setTmpStatus(item.statusName)
-                        setNowIndex(index)
-                      }}
-                      style={{
-                        width: '35px',
-                        height: '10px',
-                        margin: '5px 11px',
-                        alignItems: 'center',
-                        backgroundColor: findColor(index)
-                      }}
-                    >
-                      {' '}
-                    </ListItem>
-                  </Fragment>
-                ))}
+                {fixedTagStatus.map((item, index) => {
+                  if (index !== 5) {
+                    return (
+                      <Fragment key={item.statusName}>
+                        <ListItem
+                          button
+                          onClick={() => {
+                            setTmpStatus(item.statusName)
+                            setNowIndex(index)
+                          }}
+                          style={{
+                            width: '35px',
+                            height: '10px',
+                            margin: '5px 11px',
+                            alignItems: 'center',
+                            backgroundColor: findColor(index)
+                          }}
+                        >
+                          {' '}
+                        </ListItem>
+                      </Fragment>
+                    )
+                  }
+                  return <></>
+                })}
                 <img src={Crowded} alt='' style={{ marginLeft: '5px' }} />
               </List>
               <div
                 style={{
+                  width: '100%',
                   fontFamily: 'Roboto',
                   fontStyle: 'normal',
                   fontWeight: '700',
                   fontSize: '22px',
-                  textAlign: 'center',
                   lineHeight: '26px',
-                  margin: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   color: fixedTagStatus[nowIndex].color
                 }}
               >
@@ -225,7 +242,12 @@ function ChangeStatus(props) {
           </Button>
         </div>
         <DialogActions>
-          <Button color='primary' onClick={() => handleDrawerComplete()}>
+          <Button
+            color='primary'
+            onClick={() => {
+              handleDrawerComplete()
+            }}
+          >
             確定
           </Button>
         </DialogActions>
@@ -250,7 +272,9 @@ function ChangeStatus(props) {
 ChangeStatus.propTypes = {
   fixedTagSubLocation: PropTypes.object.isRequired,
   stateDrawer: PropTypes.bool.isRequired,
-  setStateDrawer: PropTypes.func.isRequired
+  checked: PropTypes.bool.isRequired,
+  setStateDrawer: PropTypes.func.isRequired,
+  setChecked: PropTypes.func.isRequired
 }
 
 export default ChangeStatus

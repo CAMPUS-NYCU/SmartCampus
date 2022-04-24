@@ -3,6 +3,11 @@ import unCrowded from '../assets/images/unCrowded.svg'
 import normalCrowded from '../assets/images/normalCrowded.svg'
 import Crowded from '../assets/images/Crowded.svg'
 import veryCrowded from '../assets/images/veryCrowded.svg'
+import bigVeryUnCrowded from '../assets/images/bigVeryUnCrowded.svg'
+import bigUnCrowded from '../assets/images/bigUnCrowded.svg'
+import bigNormalCrowded from '../assets/images/bigNormalCrowded.svg'
+import bigCrowded from '../assets/images/bigCrowded.svg'
+import bigVeryCrowded from '../assets/images/bigVeryCrowded.svg'
 
 export const fixedTagContext = [
   {
@@ -165,30 +170,40 @@ export const fixedTagStatus = [
     id: 0,
     statusName: '非常不擁擠',
     color: '#D3E430',
-    img: veryUnCrowded
+    img: veryUnCrowded,
+    bigImg: bigVeryUnCrowded
   },
   {
     id: 1,
     statusName: '不擁擠',
     color: '#FAE391',
-    img: unCrowded
+    img: unCrowded,
+    bigImg: bigUnCrowded
   },
   {
     id: 2,
     statusName: '普通',
     color: '#FFCC80',
-    img: normalCrowded
+    img: normalCrowded,
+    bigImg: bigNormalCrowded
   },
   {
     id: 3,
     statusName: '擁擠',
     color: '#FFAB6E',
-    img: Crowded
+    img: Crowded,
+    bigImg: bigCrowded
   },
   {
     id: 4,
     statusName: '非常擁擠',
     color: '#FF8965',
-    img: veryCrowded
+    img: veryCrowded,
+    bigImg: bigVeryCrowded
+  },
+  {
+    id: 5,
+    statusName: '未營業',
+    color: '#D8D8D8'
   }
 ]

@@ -19,6 +19,7 @@ function FixedTagDetailDialog(props) {
     setOpenHistory(false)
   }
   const userDialogControl = useModal()
+  const [checked, setChecked] = React.useState(true)
   const [fixedTagSubLocation, setFixedTagSubLocations] = useState(null)
   useEffect(() => {
     fetchFixedTagDetail()
@@ -36,16 +37,18 @@ function FixedTagDetailDialog(props) {
           <DetailPart
             activeFixedTag={activeFixedTag}
             setFixedTagSubLocations={setFixedTagSubLocations}
-            fixedTagSubLocation={fixedTagSubLocation}
             setStateDrawer={setStateDrawer}
             setOpenHistory={setOpenHistory}
             userDialogControl={userDialogControl}
+            setChecked={setChecked}
           />
           {fixedTagSubLocation && (
             <ChangeStatus
               fixedTagSubLocation={fixedTagSubLocation}
               setStateDrawer={setStateDrawer}
               stateDrawer={stateDrawer}
+              setChecked={setChecked}
+              checked={checked}
             />
           )}
           {fixedTagSubLocation && (

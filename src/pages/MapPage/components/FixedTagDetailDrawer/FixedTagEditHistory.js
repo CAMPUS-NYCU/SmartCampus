@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React from 'react'
 import {
   Dialog,
   AppBar,
@@ -11,10 +11,10 @@ import {
   ListItemIcon,
   Button,
   Box,
-  ListItemSecondaryAction,
-  Divider
+  ListItemSecondaryAction
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import moment from 'moment'
 import noImage from '../../../../assets/images/no-image.svg'
 import { fixedTagStatus } from '../../../../constants/fixedTagContext'
 
@@ -29,21 +29,58 @@ const useStyles = makeStyles((theme) => ({
   clickableFont: {
     fontSize: '0.9em',
     color: 'gray'
+  },
+  datetitle: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: '700',
+    fontSize: '28px',
+    lineHeight: '33px',
+    color: '#000000',
+    display: 'flex',
+    alignItems: 'center',
+    letterSpacing: '0.75px',
+    textTransform: 'uppercase',
+    paddingTop: '5px',
+    paddingBottom: '5px',
+    paddingLeft: '5%'
   }
 }))
 
 const EditHistory = (props) => {
   const classes = useStyles()
   const { openHistory, handleHistoryClose, fixedTagSubLocation } = props
-  const testindex = useMemo(
-    () =>
-      fixedTagStatus.find(
-        (fixedtagfloor) =>
-          fixedtagfloor.statusName === fixedTagSubLocation.status.statusName
-      ) || {},
-    [fixedTagSubLocation]
-  )
-  const [nowIndex] = useState(testindex.id)
+  const findStatusIndex = (statusName) => {
+    if (statusName === fixedTagStatus[0].statusName) {
+      return fixedTagStatus[0]
+    }
+    if (statusName === fixedTagStatus[1].statusName) {
+      return fixedTagStatus[1]
+    }
+    if (statusName === fixedTagStatus[2].statusName) {
+      return fixedTagStatus[2]
+    }
+    if (statusName === fixedTagStatus[3].statusName) {
+      return fixedTagStatus[3]
+    }
+    if (statusName === fixedTagStatus[4].statusName) {
+      return fixedTagStatus[4]
+    }
+    return fixedTagStatus[5]
+  }
+  const compareDayTime = (time) => {
+    const tagTime = moment(time, 'YYYY-MM-DD h:mm')
+    const nowTime = moment()
+    return moment.duration(nowTime.diff(tagTime)).as('day') < 1
+  }
+  const compareWeekTime = (time) => {
+    const tagTime = moment(time, 'YYYY-MM-DD h:mm')
+    const nowTime = moment()
+    return (
+      moment.duration(nowTime.diff(tagTime)).as('day') < 7 &&
+      moment.duration(nowTime.diff(tagTime)).as('day') > 1
+    )
+  }
   return (
     <Dialog fullScreen open={openHistory} onClose={handleHistoryClose}>
       <AppBar position='sticky'>
@@ -102,28 +139,100 @@ const EditHistory = (props) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '1.5px solid fixedTagStatus[nowIndex].color',
+            border:
+              '1.5px solid findStatusIndex(fixedTagSubLocation.status.statusName).color',
             boxSizing: 'border-box',
             borderRadius: '5px',
-            backgroundColor: fixedTagStatus[nowIndex].color
+            backgroundColor: findStatusIndex(
+              fixedTagSubLocation.status.statusName
+            ).color
           }}
         >
+          <img
+            src={findStatusIndex(fixedTagSubLocation.status.statusName).bigImg}
+            alt=''
+            style={{ paddingRight: '8px' }}
+          />
           {fixedTagSubLocation.status.statusName}
         </div>
       </div>
-      <List component='nav' style={{ overflowY: 'auto' }}>
+      <Typography className={classes.datetitle}>今天</Typography>
+      <List
+        component='nav'
+        style={{
+          overflowY: 'auto',
+          height: '20%',
+          width: '95%',
+          paddingLeft: '5%'
+        }}
+      >
         {fixedTagSubLocation.statusHistory.statusList.map((history) => {
-          return (
-            <div key={history.statusName + history.createTime}>
-              <ListItem style={{ marginTop: '10px' }}>
-                <ListItemIcon>
-                  <Button>{history.statusName}</Button>
-                </ListItemIcon>
-                <ListItemSecondaryAction>
+          if (compareDayTime(history.createTime)) {
+            return (
+              <div key={history.statusName + history.createTime}>
+                <ListItem>
                   <Box
                     display='flex'
                     flexDirection='column'
-                    alignItems='flex-end'
+                    alignItems='flex-start'
+                  >
+                    <Box className={classes.clickableFont}>
+                      {history.createUser ? (
+                        <>{history.createUser.displayName} 編輯於</>
+                      ) : (
+                        <>編輯於</>
+                      )}
+                    </Box>
+                    <Box className={classes.clickableFont}>
+                      {history.createTime
+                        ? moment(history.createTime).fromNow()
+                        : ''}
+                    </Box>
+                  </Box>
+                  <ListItemSecondaryAction>
+                    <ListItemIcon>
+                      <Button
+                        style={{
+                          backgroundColor: findStatusIndex(history.statusName)
+                            .color,
+                          width: '115px'
+                        }}
+                      >
+                        <img
+                          src={findStatusIndex(history.statusName).img}
+                          alt=''
+                          style={{ paddingRight: '8px' }}
+                        />
+                        {history.statusName}
+                      </Button>
+                    </ListItemIcon>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </div>
+            )
+          }
+          return <> </>
+        })}
+      </List>
+      <Typography className={classes.datetitle}>過去七天歷史紀錄</Typography>
+      <List
+        component='nav'
+        style={{
+          overflowY: 'auto',
+          height: '20%',
+          width: '95%',
+          paddingLeft: '5%'
+        }}
+      >
+        {fixedTagSubLocation.statusHistory.statusList.map((history) => {
+          if (compareWeekTime(history.createTime)) {
+            return (
+              <div key={history.statusName + history.createTime}>
+                <ListItem>
+                  <Box
+                    display='flex'
+                    flexDirection='column'
+                    alignItems='flex-start'
                   >
                     <Box className={classes.clickableFont}>
                       {history.createUser ? (
@@ -133,15 +242,34 @@ const EditHistory = (props) => {
                       )}
                     </Box>
                     <Box className={classes.clickableFont}>
-                      {history.createTime ? history.createTime : ''}
+                      {history.createTime
+                        ? moment(history.createTime).fromNow()
+                        : ''}
                     </Box>
                   </Box>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <Box m={2.5}>{history.description}</Box>
-              <Divider variant='middle' />
-            </div>
-          )
+                  <ListItemSecondaryAction>
+                    <ListItemIcon style={{ padding: '6px' }}>
+                      <Button
+                        style={{
+                          backgroundColor: findStatusIndex(history.statusName)
+                            .color,
+                          width: '115px'
+                        }}
+                      >
+                        <img
+                          src={findStatusIndex(history.statusName).img}
+                          alt=''
+                          style={{ paddingRight: '8px' }}
+                        />
+                        {history.statusName}
+                      </Button>
+                    </ListItemIcon>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </div>
+            )
+          }
+          return <> </>
         })}
       </List>
     </Dialog>
