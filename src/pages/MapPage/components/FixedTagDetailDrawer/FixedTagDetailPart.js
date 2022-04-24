@@ -28,6 +28,7 @@ const DetailPart = (props) => {
     setFixedTagSubLocations,
     setStateDrawer,
     setOpenHistory,
+    setChecked,
     userDialogControl
   } = props
   const [floor, setFloor] = useState('1F')
@@ -253,6 +254,11 @@ const DetailPart = (props) => {
                         onClick={() => {
                           setFixedTagSubLocations(fixedtagfloor)
                           setStateDrawer(true)
+                          if (fixedtagfloor.status.statusName === '未營業') {
+                            setChecked(false)
+                          } else {
+                            setChecked(true)
+                          }
                         }}
                       >
                         <img src={changeImage} alt='' />
@@ -278,6 +284,7 @@ DetailPart.propTypes = {
   setFixedTagSubLocations: PropTypes.func.isRequired,
   setStateDrawer: PropTypes.func.isRequired,
   setOpenHistory: PropTypes.func.isRequired,
+  setChecked: PropTypes.func.isRequired,
   userDialogControl: PropTypes.object.isRequired
 }
 
