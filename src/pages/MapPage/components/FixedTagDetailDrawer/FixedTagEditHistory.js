@@ -42,8 +42,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.75px',
     textTransform: 'uppercase',
     paddingTop: '5px',
-    paddingBottom: '5px',
-    paddingLeft: '5%'
+    paddingBottom: '5px'
   }
 }))
 
@@ -98,8 +97,7 @@ const EditHistory = (props) => {
       <div
         style={{
           width: '100%',
-          height: '60%',
-          flexGrow: '1',
+          height: '46%',
           overflowX: 'scroll',
           overflowY: 'hidden',
           display: '-webkit-flex',
@@ -109,6 +107,7 @@ const EditHistory = (props) => {
         <div
           style={{
             width: '100%',
+            height: '100%',
             flexShrink: '0',
             overflow: 'hidden',
             backgroundSize: 'cover',
@@ -120,7 +119,7 @@ const EditHistory = (props) => {
       <div
         style={{
           width: '100%',
-          height: '15%',
+          height: '14%',
           borderBottom: 'solid 0.5px lightgray',
           display: 'flex',
           alignItems: 'center',
@@ -129,7 +128,6 @@ const EditHistory = (props) => {
       >
         <div
           style={{
-            width: '60%',
             height: '55px',
             fontFamily: 'Roboto',
             fontStyle: 'normal',
@@ -139,6 +137,7 @@ const EditHistory = (props) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            padding: '10px',
             border:
               '1.5px solid findStatusIndex(fixedTagSubLocation.status.statusName).color',
             boxSizing: 'border-box',
@@ -156,16 +155,17 @@ const EditHistory = (props) => {
           {fixedTagSubLocation.status.statusName}
         </div>
       </div>
-      <Typography className={classes.datetitle}>今天</Typography>
+
       <List
         component='nav'
         style={{
           overflowY: 'auto',
-          height: '20%',
+          height: '40%',
           width: '95%',
           paddingLeft: '5%'
         }}
       >
+        <Typography className={classes.datetitle}>今天</Typography>
         {fixedTagSubLocation.statusHistory.statusList.map((history) => {
           if (compareDayTime(history.createTime)) {
             return (
@@ -194,8 +194,7 @@ const EditHistory = (props) => {
                       <Button
                         style={{
                           backgroundColor: findStatusIndex(history.statusName)
-                            .color,
-                          width: '115px'
+                            .color
                         }}
                       >
                         <img
@@ -213,17 +212,7 @@ const EditHistory = (props) => {
           }
           return <> </>
         })}
-      </List>
-      <Typography className={classes.datetitle}>過去七天歷史紀錄</Typography>
-      <List
-        component='nav'
-        style={{
-          overflowY: 'auto',
-          height: '20%',
-          width: '95%',
-          paddingLeft: '5%'
-        }}
-      >
+        <Typography className={classes.datetitle}>過去七天記錄</Typography>
         {fixedTagSubLocation.statusHistory.statusList.map((history) => {
           if (compareWeekTime(history.createTime)) {
             return (
@@ -238,7 +227,7 @@ const EditHistory = (props) => {
                       {history.createUser ? (
                         <>{history.createUser.displayName} 編輯於</>
                       ) : (
-                        ''
+                        <>編輯於</>
                       )}
                     </Box>
                     <Box className={classes.clickableFont}>
@@ -248,12 +237,11 @@ const EditHistory = (props) => {
                     </Box>
                   </Box>
                   <ListItemSecondaryAction>
-                    <ListItemIcon style={{ padding: '6px' }}>
+                    <ListItemIcon>
                       <Button
                         style={{
                           backgroundColor: findStatusIndex(history.statusName)
-                            .color,
-                          width: '115px'
+                            .color
                         }}
                       >
                         <img

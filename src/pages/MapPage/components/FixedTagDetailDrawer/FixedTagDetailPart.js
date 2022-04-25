@@ -31,7 +31,10 @@ const DetailPart = (props) => {
     setChecked,
     userDialogControl
   } = props
-  const [floor, setFloor] = useState('1F')
+  const [floor, setFloor] = useState(
+    activeFixedTag.locationName === '圖書館' ? '2F' : '1F'
+  )
+
   const { fixedtagDetail } = useTagValue()
   const { information } = useMemo(
     () =>
@@ -58,7 +61,7 @@ const DetailPart = (props) => {
     if (statusName === fixedTagStatus[4].statusName) {
       return fixedTagStatus[4]
     }
-    return <> </>
+    return fixedTagStatus[5]
   }
   return (
     <>
@@ -98,18 +101,17 @@ const DetailPart = (props) => {
         m={2}
       >
         {information.map((discovery) => (
-          <Grid item xs={4}>
-            <CustomButton
-              buttonType={
-                discovery.floor === floor
-                  ? 'fixedTagChosefloorButton'
-                  : 'fixedTagfloorButton'
-              }
-              onClick={() => setFloor(discovery.floor)}
-            >
-              {discovery.floor}
-            </CustomButton>
-          </Grid>
+          <CustomButton
+            key={discovery.floor}
+            buttonType={
+              discovery.floor === floor
+                ? 'fixedTagChosefloorButton'
+                : 'fixedTagfloorButton'
+            }
+            onClick={() => setFloor(discovery.floor)}
+          >
+            {discovery.floor}
+          </CustomButton>
         ))}
       </Box>
       <Box
@@ -128,6 +130,7 @@ const DetailPart = (props) => {
               if (fixedtagfloor.floor === floor) {
                 return (
                   <Grid
+                    key={fixedtagfloor.id + fixedtagfloor.floor}
                     container
                     spacing={2}
                     style={{
@@ -140,7 +143,6 @@ const DetailPart = (props) => {
                     alignItems='center'
                   >
                     <Grid
-                      key={fixedtagfloor.id}
                       item
                       xs={6}
                       style={{
@@ -157,20 +159,24 @@ const DetailPart = (props) => {
                         ? fixedtagfloor.name
                         : `${fixedtagfloor.floor} 公共區域`}
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid
+                      item
+                      xs={5}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        paddingRight: '0px'
+                      }}
+                    >
                       <Button
                         key={fixedtagfloor.id}
                         id='changeStatusButton'
-                        variant='contained'
                         style={{
                           background: findStatusIndex(
                             fixedtagfloor.status.statusName
                           ).color,
                           fontSize: '12px',
-                          borderRadius: '5px',
-                          width: '115px',
-                          height: '24px',
-                          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
+                          borderRadius: '5px'
                         }}
                       >
                         <img
@@ -254,7 +260,7 @@ const DetailPart = (props) => {
                         onClick={() => {
                           setFixedTagSubLocations(fixedtagfloor)
                           setStateDrawer(true)
-                          if (fixedtagfloor.status.statusName === '未營業') {
+                          if (fixedtagfloor.status.statusName === '暫停服務') {
                             setChecked(false)
                           } else {
                             setChecked(true)

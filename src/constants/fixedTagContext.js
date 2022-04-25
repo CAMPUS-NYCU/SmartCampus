@@ -3,11 +3,13 @@ import unCrowded from '../assets/images/unCrowded.svg'
 import normalCrowded from '../assets/images/normalCrowded.svg'
 import Crowded from '../assets/images/Crowded.svg'
 import veryCrowded from '../assets/images/veryCrowded.svg'
+import notOpen from '../assets/images/notOpen.svg'
 import bigVeryUnCrowded from '../assets/images/bigVeryUnCrowded.svg'
 import bigUnCrowded from '../assets/images/bigUnCrowded.svg'
 import bigNormalCrowded from '../assets/images/bigNormalCrowded.svg'
 import bigCrowded from '../assets/images/bigCrowded.svg'
 import bigVeryCrowded from '../assets/images/bigVeryCrowded.svg'
+import bigNotOpen from '../assets/images/bigNotOpen.svg'
 
 export const fixedTagContext = [
   {
@@ -203,7 +205,23 @@ export const fixedTagStatus = [
   },
   {
     id: 5,
+    statusName: '暫停服務',
+    color: '#D8D8D8',
+    img: notOpen,
+    bigImg: bigNotOpen
+  },
+  {
+    id: 5,
     statusName: '未營業',
-    color: '#D8D8D8'
+    color: '#D8D8D8',
+    img: notOpen,
+    bigImg: bigNotOpen
+  },
+  {
+    id: 5,
+    statusName: '未開放',
+    color: '#D8D8D8',
+    img: notOpen,
+    bigImg: bigNotOpen
   }
 ]

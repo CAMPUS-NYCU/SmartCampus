@@ -12,6 +12,7 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
+import { useSnackbar } from 'notistack'
 import UnCrowded from '../../../../assets/images/fixedTagStatusUnCrowded.svg'
 import Crowded from '../../../../assets/images/fixedTagStatusCrowded.svg'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
@@ -31,6 +32,7 @@ function ChangeStatus(props) {
   const handleDrawerClose = () => {
     setStateDrawer(false)
   }
+  const { enqueueSnackbar } = useSnackbar()
   const { fetchFixedTagDetail } = useTagValue()
   const { token } = useUserValue()
   const [loading, setLoading] = useState(false)
@@ -76,7 +78,7 @@ function ChangeStatus(props) {
   }
   useEffect(() => {
     if (!checked) {
-      setTmpStatus('未營業')
+      setTmpStatus('暫停服務')
     }
     if (checked) {
       if (fixedTagSubLocation) {
@@ -166,7 +168,7 @@ function ChangeStatus(props) {
                   }}
                 />
                 {fixedTagStatus.map((item, index) => {
-                  if (index !== 5) {
+                  if (index < 5) {
                     return (
                       <Fragment key={item.statusName}>
                         <ListItem
@@ -219,7 +221,12 @@ function ChangeStatus(props) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            paddingTop: '10px'
+            paddingTop: '10px',
+            ontFamily: 'Roboto',
+            fontWeight: '400',
+            textAlign: 'center',
+            lineHeight: '21px',
+            fontSize: '18px'
           }}
         >
           <Button
@@ -227,16 +234,16 @@ function ChangeStatus(props) {
             size='small'
             style={{
               background: '#FDCC4F',
-              fontSize: '18px',
               borderRadius: '20px',
               boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
-              fontFamily: 'Roboto',
-              fontWeight: '400',
-              textAlign: 'center',
-              lineHeight: '21px',
               marginTop: '5px'
             }}
             variant='contained'
+            onClick={() => {
+              enqueueSnackbar('功能目前尚未開放', {
+                variant: 'warning'
+              })
+            }}
           >
             上傳圖片
           </Button>

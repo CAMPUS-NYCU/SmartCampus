@@ -62,6 +62,7 @@ function FixedTagDetailDialog(props) {
           )}
           {fixedTagSubLocation && (
             <EditHistory
+              key={fixedTagSubLocation}
               openHistory={openHistory}
               fixedTagSubLocation={fixedTagSubLocation}
               handleHistoryClose={handleHistoryClose}
