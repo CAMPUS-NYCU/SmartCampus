@@ -115,19 +115,19 @@ function ChangeStatus(props) {
     }
   }
   return (
-    <>
-      <CustomDrawer
-        open={stateDrawer}
-        handleClose={handleDrawerClose}
-        closeButton
-        title='選擇目前狀態'
-      >
+    <CustomDrawer
+      open={stateDrawer}
+      handleClose={handleDrawerClose}
+      closeButton
+      title='選擇目前狀態'
+    >
+      <>
         <FormGroup>
           <div align='left' style={{}}>
             <FormControlLabel
               checked={checked}
               onChange={handleChange}
-              control={<Switch defaultChecked color='primary' />}
+              control={<Switch color='primary' />}
               labelPlacement='start'
               label={
                 <span
@@ -190,7 +190,9 @@ function ChangeStatus(props) {
                       </Fragment>
                     )
                   }
-                  return <></>
+                  return (
+                    <React.Fragment key={item.statusName}> </React.Fragment>
+                  )
                 })}
                 <img src={Crowded} alt='' style={{ marginLeft: '5px' }} />
               </List>
@@ -271,8 +273,8 @@ function ChangeStatus(props) {
         >
           <CircularProgress />
         </Dialog>
-      </CustomDrawer>
-    </>
+      </>
+    </CustomDrawer>
   )
 }
 
