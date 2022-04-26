@@ -210,7 +210,7 @@ const EditHistory = (props) => {
               </div>
             )
           }
-          return <> </>
+          return <React.Fragment key={history.createTime}> </React.Fragment>
         })}
         <Typography className={classes.datetitle}>過去七天記錄</Typography>
         {fixedTagSubLocation.statusHistory.statusList.map((history) => {
@@ -257,7 +257,7 @@ const EditHistory = (props) => {
               </div>
             )
           }
-          return <> </>
+          return <React.Fragment key={history.createTime}> </React.Fragment>
         })}
       </List>
     </Dialog>
