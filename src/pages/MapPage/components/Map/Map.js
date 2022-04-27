@@ -210,6 +210,7 @@ function Map(props) {
           />
         )}
         {markerCluster &&
+          fixedTags &&
           fixedTags.map((fixedtag) => (
             <Marker
               key={fixedtag.id}
