@@ -1,18 +1,29 @@
-import React, { Fragment, useState, useMemo, useEffect } from 'react'
+import React, {
+  Fragment,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback
+} from 'react'
 import {
   Box,
   Button,
   Switch,
   FormGroup,
   FormControlLabel,
+  Grid,
   List,
   ListItem,
   Dialog,
   DialogActions,
   CircularProgress
 } from '@material-ui/core'
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
+import axios from 'axios'
+import PicturePreview from './PicturePreview'
+import ImageUpload from '../../../../utils/functions/ImageUpload'
 import UnCrowded from '../../../../assets/images/fixedTagStatusUnCrowded.svg'
 import Crowded from '../../../../assets/images/fixedTagStatusCrowded.svg'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
@@ -32,6 +43,9 @@ function ChangeStatus(props) {
   const handleDrawerClose = () => {
     setStateDrawer(false)
   }
+  // 照片
+  const [imageFiles, setImageFiles] = useState([])
+  const [previewImages, setPreviewImages] = useState([])
   const { enqueueSnackbar } = useSnackbar()
   const { fetchFixedTagDetail } = useTagValue()
   const { token } = useUserValue()
@@ -87,6 +101,25 @@ function ChangeStatus(props) {
       }
     }
   }, [checked, fixedTagSubLocation])
+  const handleUploadImages = useCallback(
+    async (imageUrlList) => {
+      try {
+        const requests = imageUrlList.map((url, index) => {
+          const options = {
+            headers: {
+              'Content-Type': 'application/octet-stream'
+            }
+          }
+          return axios.put(url, imageFiles[index], options)
+        })
+        await Promise.all(requests)
+      } catch (err) {
+        console.log(err)
+        enqueueSnackbar('圖片上傳失敗', { variant: 'error' })
+      }
+    },
+    [imageFiles, enqueueSnackbar]
+  )
   const handleDrawerComplete = async () => {
     setLoading(true)
     if (token) {
@@ -101,10 +134,11 @@ function ChangeStatus(props) {
             fixedTagSubLocationId: fixedTagSubLocation.id,
             statusName: tmpStatus,
             description: '',
-            imageUploadNumber: 0
+            imageUploadNumber: imageFiles.length
           }
         })
         await fetchFixedTagDetail()
+        await handleUploadImages()
         setLoading(false)
         setStateDrawer(false)
       } catch (err) {
@@ -250,6 +284,17 @@ function ChangeStatus(props) {
             上傳圖片
           </Button>
         </div>
+        <Grid container item xs={12} direction='row' alignItems='center'>
+          <AddAPhotoIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
+          <ImageUpload
+            setPreviewImages={setPreviewImages}
+            previewImages={previewImages}
+          />
+        </Grid>
+        <PicturePreview
+          previewImages={previewImages}
+          setPreviewImages={setPreviewImages}
+        />
         <DialogActions>
           <Button
             color='primary'
