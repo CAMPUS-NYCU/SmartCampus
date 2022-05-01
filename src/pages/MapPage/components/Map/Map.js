@@ -214,7 +214,6 @@ function Map(props) {
           fixedTags.map((fixedtag) => (
             <Marker
               key={fixedtag.id}
-              visible={!isInMission && isShown(fixedtag)}
               position={{
                 lat: parseFloat(fixedtag.coordinates.latitude),
                 lng: parseFloat(fixedtag.coordinates.longitude)
