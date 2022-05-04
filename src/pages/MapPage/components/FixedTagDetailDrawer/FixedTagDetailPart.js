@@ -92,13 +92,14 @@ const DetailPart = (props) => {
         display='flex'
         alignItems='center'
         flexDirection='row'
+        m={2}
         style={{
           overflowY: 'hidden',
           overflowX: 'scroll',
-          height: '13%',
-          width: '90%'
+          height: '15%',
+          width: '90%',
+          margin: '2px'
         }}
-        m={2}
       >
         {information.map((discovery) => (
           <CustomButton
@@ -117,13 +118,14 @@ const DetailPart = (props) => {
       <Box
         display='flex'
         flexDirection='column'
+        m={2}
         style={{
           overflowX: 'hidden',
           overflowY: 'scroll',
           height: '80%',
-          width: '90%'
+          width: '90%',
+          marginTop: '10px'
         }}
-        m={2}
       >
         {fixedtagDetail.fixedTagSubLocations.length > 0
           ? fixedtagDetail.fixedTagSubLocations.map((fixedtagfloor) => {
