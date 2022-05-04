@@ -190,7 +190,7 @@ const DetailPart = (props) => {
                     </Grid>
                     <Grid
                       item
-                      xs={5}
+                      xs={4}
                       style={{
                         fontSize: '12px',
                         fontColor: '#888888',
@@ -225,14 +225,21 @@ const DetailPart = (props) => {
                         ).fromNow()}
                       </Box>
                     </Grid>
-                    <Grid item style={{ justifyContent: 'flex-end', xs: '4' }}>
+                    <Grid
+                      item
+                      xs={4}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        paddingRight: '0px'
+                      }}
+                    >
                       <Button
                         id='changeStatusButton'
                         size='small'
                         style={{
                           background: '#FDCC4F',
                           fontSize: '12px',
-                          /* Primary_light */
                           borderRadius: '20px',
                           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
                         }}
@@ -246,7 +253,14 @@ const DetailPart = (props) => {
                         &nbsp;詳細資訊
                       </Button>
                     </Grid>
-                    <Grid item style={{ justifyContent: 'flex-end', xs: '4' }}>
+                    <Grid
+                      item
+                      xs={4}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                      }}
+                    >
                       <Button
                         id='changeStatusButton'
                         size='small'

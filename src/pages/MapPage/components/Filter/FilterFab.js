@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     height: '35px',
     flexGrow: '1',
     overflowX: 'scroll',
-    overflowY: 'hidden',
+    overflowY: 'auto',
     display: '-webkit-flex',
     flexDirection: 'row',
     maxWidth: 800,
