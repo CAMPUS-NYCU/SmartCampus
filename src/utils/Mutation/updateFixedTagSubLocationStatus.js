@@ -22,6 +22,8 @@ export const UPDATE_FIXEDTAG_STATUS_MUTATION = gql`
           userAddTagNumber
         }
       }
+      imageUploadNumber
+      imageUploadUrls
     }
   }
 `

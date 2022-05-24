@@ -3,7 +3,8 @@ import React, {
   useState,
   useMemo,
   useEffect,
-  useCallback
+  useCallback,
+  useRef
 } from 'react'
 import {
   Box,
@@ -11,19 +12,15 @@ import {
   Switch,
   FormGroup,
   FormControlLabel,
-  Grid,
   List,
   ListItem,
   Dialog,
   DialogActions,
   CircularProgress
 } from '@material-ui/core'
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import axios from 'axios'
-import PicturePreview from './PicturePreview'
-import ImageUpload from '../../../../utils/functions/ImageUpload'
 import UnCrowded from '../../../../assets/images/fixedTagStatusUnCrowded.svg'
 import Crowded from '../../../../assets/images/fixedTagStatusCrowded.svg'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
@@ -44,8 +41,8 @@ function ChangeStatus(props) {
     setStateDrawer(false)
   }
   // 照片
-  const [imageFiles, setImageFiles] = useState([])
-  const [previewImages, setPreviewImages] = useState([])
+  const imageRef = useRef(null)
+  const [imageFile, setImageFile] = useState(null)
   const { enqueueSnackbar } = useSnackbar()
   const { fetchFixedTagDetail } = useTagValue()
   const { token } = useUserValue()
@@ -72,6 +69,11 @@ function ChangeStatus(props) {
     return fixedTagStatus[5]
   }
   const { updateFixedTagSubLoacationStatus } = useUpdateFixedTagStatus()
+  const handleImageChange = (event) => {
+    const image = event.target.files[0]
+    setImageFile(image)
+  }
+
   const handleChange = (event) => {
     setChecked(event.target.checked)
   }
@@ -110,7 +112,7 @@ function ChangeStatus(props) {
               'Content-Type': 'application/octet-stream'
             }
           }
-          return axios.put(url, imageFiles[index], options)
+          return axios.put(url, imageFile[index], options)
         })
         await Promise.all(requests)
       } catch (err) {
@@ -118,13 +120,13 @@ function ChangeStatus(props) {
         enqueueSnackbar('圖片上傳失敗', { variant: 'error' })
       }
     },
-    [imageFiles, enqueueSnackbar]
+    [imageFile, enqueueSnackbar]
   )
   const handleDrawerComplete = async () => {
     setLoading(true)
     if (token) {
       try {
-        await updateFixedTagSubLoacationStatus({
+        const res = await updateFixedTagSubLoacationStatus({
           context: {
             headers: {
               authorization: token ? `Bearer ${token}` : ''
@@ -134,11 +136,17 @@ function ChangeStatus(props) {
             fixedTagSubLocationId: fixedTagSubLocation.id,
             statusName: tmpStatus,
             description: '',
-            imageUploadNumber: imageFiles.length
+            imageUploadNumber: imageFile === null ? 0 : 1
           }
         })
         await fetchFixedTagDetail()
-        await handleUploadImages()
+        if (
+          res?.data?.updateFixedTagSubLocationStatus?.imageUploadNumber !== 0
+        ) {
+          await handleUploadImages(
+            res?.data?.updateFixedTagSubLocationStatus?.imageUploadUrls
+          )
+        }
         setLoading(false)
         setStateDrawer(false)
       } catch (err) {
@@ -269,32 +277,26 @@ function ChangeStatus(props) {
             id='changeStatusButton'
             size='small'
             style={{
-              background: '#FDCC4F',
+              background: imageFile ? '#FDCC4F' : '#EEEEEE',
               borderRadius: '20px',
               boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
               marginTop: '5px'
             }}
             variant='contained'
             onClick={() => {
-              enqueueSnackbar('功能目前尚未開放', {
-                variant: 'warning'
-              })
+              imageRef.current.click()
             }}
           >
             上傳圖片
           </Button>
-        </div>
-        <Grid container item xs={12} direction='row' alignItems='center'>
-          <AddAPhotoIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
-          <ImageUpload
-            setPreviewImages={setPreviewImages}
-            previewImages={previewImages}
+          <input
+            ref={imageRef}
+            onChange={handleImageChange}
+            type='file'
+            hidden
+            accept='image/*'
           />
-        </Grid>
-        <PicturePreview
-          previewImages={previewImages}
-          setPreviewImages={setPreviewImages}
-        />
+        </div>
         <DialogActions>
           <Button
             color='primary'
