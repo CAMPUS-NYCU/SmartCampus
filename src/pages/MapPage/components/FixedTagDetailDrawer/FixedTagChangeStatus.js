@@ -1,4 +1,11 @@
-import React, { Fragment, useState, useMemo, useEffect } from 'react'
+import React, {
+  Fragment,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+  useRef
+} from 'react'
 import {
   Box,
   Button,
@@ -13,6 +20,7 @@ import {
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
+import axios from 'axios'
 import UnCrowded from '../../../../assets/images/fixedTagStatusUnCrowded.svg'
 import Crowded from '../../../../assets/images/fixedTagStatusCrowded.svg'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
@@ -32,6 +40,9 @@ function ChangeStatus(props) {
   const handleDrawerClose = () => {
     setStateDrawer(false)
   }
+  // 照片
+  const imageRef = useRef(null)
+  const [imageFile, setImageFile] = useState(null)
   const { enqueueSnackbar } = useSnackbar()
   const { fetchFixedTagDetail } = useTagValue()
   const { token } = useUserValue()
@@ -58,6 +69,11 @@ function ChangeStatus(props) {
     return fixedTagStatus[5]
   }
   const { updateFixedTagSubLoacationStatus } = useUpdateFixedTagStatus()
+  const handleImageChange = (event) => {
+    const image = event.target.files[0]
+    setImageFile(image)
+  }
+
   const handleChange = (event) => {
     setChecked(event.target.checked)
   }
@@ -87,11 +103,30 @@ function ChangeStatus(props) {
       }
     }
   }, [checked, fixedTagSubLocation])
+  const handleUploadImages = useCallback(
+    async (imageUrlList) => {
+      try {
+        const requests = imageUrlList.map((url, index) => {
+          const options = {
+            headers: {
+              'Content-Type': 'application/octet-stream'
+            }
+          }
+          return axios.put(url, imageFile[index], options)
+        })
+        await Promise.all(requests)
+      } catch (err) {
+        console.log(err)
+        enqueueSnackbar('圖片上傳失敗', { variant: 'error' })
+      }
+    },
+    [imageFile, enqueueSnackbar]
+  )
   const handleDrawerComplete = async () => {
     setLoading(true)
     if (token) {
       try {
-        await updateFixedTagSubLoacationStatus({
+        const res = await updateFixedTagSubLoacationStatus({
           context: {
             headers: {
               authorization: token ? `Bearer ${token}` : ''
@@ -101,10 +136,17 @@ function ChangeStatus(props) {
             fixedTagSubLocationId: fixedTagSubLocation.id,
             statusName: tmpStatus,
             description: '',
-            imageUploadNumber: 0
+            imageUploadNumber: imageFile === null ? 0 : 1
           }
         })
         await fetchFixedTagDetail()
+        if (
+          res?.data?.updateFixedTagSubLocationStatus?.imageUploadNumber !== 0
+        ) {
+          await handleUploadImages(
+            res?.data?.updateFixedTagSubLocationStatus?.imageUploadUrls
+          )
+        }
         setLoading(false)
         setStateDrawer(false)
       } catch (err) {
@@ -235,20 +277,25 @@ function ChangeStatus(props) {
             id='changeStatusButton'
             size='small'
             style={{
-              background: '#FDCC4F',
+              background: imageFile ? '#FDCC4F' : '#EEEEEE',
               borderRadius: '20px',
               boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
               marginTop: '5px'
             }}
             variant='contained'
             onClick={() => {
-              enqueueSnackbar('功能目前尚未開放', {
-                variant: 'warning'
-              })
+              imageRef.current.click()
             }}
           >
             上傳圖片
           </Button>
+          <input
+            ref={imageRef}
+            onChange={handleImageChange}
+            type='file'
+            hidden
+            accept='image/*'
+          />
         </div>
         <DialogActions>
           <Button

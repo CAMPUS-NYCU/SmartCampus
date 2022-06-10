@@ -65,6 +65,11 @@ export const GET_FIXEDTAG_DETAIL_QUERY = gql`
             statusList {
               statusName
               createTime
+              createUser {
+                displayName
+                uid
+                userAddTagNumber
+              }
               type
             }
             empty
