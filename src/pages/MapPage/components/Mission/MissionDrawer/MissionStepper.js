@@ -4,6 +4,8 @@ import Box from '@material-ui/core/Box'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { makeStyles } from '@material-ui/core/styles'
 import { Dialog, DialogTitle } from '@material-ui/core'
+import ClickTimer from 'components/ClickTimer/ClickTimer'
+import clickTimerType from 'components/ClickTimer/clickTimerType'
 import CustomButton from '../../../../../components/CustomButton'
 import {
   MISSION_MAX_STEP,
@@ -158,12 +160,14 @@ function MissionStepper(props) {
           >
             取消
           </CustomButton>
-          <CustomButton
-            buttonType='finishButton'
-            onClick={handleCompleteMission}
-          >
-            送出
-          </CustomButton>
+          <ClickTimer type={clickTimerType.Record}>
+            <CustomButton
+              buttonType='finishButton'
+              onClick={handleCompleteMission}
+            >
+              送出
+            </CustomButton>
+          </ClickTimer>
         </Box>
       </Dialog>
     </>

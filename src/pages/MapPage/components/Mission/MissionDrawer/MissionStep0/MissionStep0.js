@@ -9,6 +9,8 @@ import {
 // import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 // import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 // import { BorderAllRounded } from '@material-ui/icons'
+import ClickTimer from 'components/ClickTimer/ClickTimer'
+import clickTimerType from 'components/ClickTimer/clickTimerType'
 import { missionInfo } from '../../../../../../constants/missionInfo'
 import Mission1 from '../../../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../../../assets/images/mission2.svg'
@@ -34,34 +36,40 @@ const MissionStep0 = () => {
   return (
     <List>
       {missionInfo.map((item, index) => (
-        <ListItem
-          onClick={() => handleChangeMissionType(index)}
-          button
+        <ClickTimer
+          type={clickTimerType.Extend}
+          data={{ key: 'name', value: item.missionName }}
           key={item.missionName}
-          style={{
-            borderRadius: '8px',
-            backgroundColor: listBackgroundColor[index],
-            marginBottom: '20px',
-            padding: '4px'
-          }}
         >
-          <ListItemIcon>
-            <img
-              src={missionImage[index]}
-              alt=''
-              style={{ marginLeft: '6px', height: '40px', width: '40px' }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            style={{ maxWidth: '85%' }}
-            classes={{
-              primary: classes.primaryText,
-              secondary: classes.secondaryText
+          <ListItem
+            onClick={() => handleChangeMissionType(index)}
+            button
+            key={item.missionName}
+            style={{
+              borderRadius: '8px',
+              backgroundColor: listBackgroundColor[index],
+              marginBottom: '20px',
+              padding: '4px'
             }}
-            primary={item.missionName}
-            secondary={item.missionDescription}
-          />
-        </ListItem>
+          >
+            <ListItemIcon>
+              <img
+                src={missionImage[index]}
+                alt=''
+                style={{ marginLeft: '6px', height: '40px', width: '40px' }}
+              />
+            </ListItemIcon>
+            <ListItemText
+              style={{ maxWidth: '85%' }}
+              classes={{
+                primary: classes.primaryText,
+                secondary: classes.secondaryText
+              }}
+              primary={item.missionName}
+              secondary={item.missionDescription}
+            />
+          </ListItem>
+        </ClickTimer>
       ))}
     </List>
   )
