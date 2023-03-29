@@ -9,6 +9,7 @@ import SearchBar from './components/SearchBar'
 import Map from './components/Map'
 import useModal from '../../utils/hooks/useModal'
 import MissionFab from './components/Mission/MissionFab'
+import MissionListFab from './components/Mission/MissionListFab'
 import MissionDrawer from './components/Mission/MissionDrawer'
 import {
   MissionContextProvider,
@@ -121,6 +122,7 @@ const MapPageContent = (props) => {
                 setPlaceName={setPlaceName}
               />
               <MissionFab />
+              <MissionListFab />
               <FilterFab />
               <LocationFab
                 setMapCenter={() => {
