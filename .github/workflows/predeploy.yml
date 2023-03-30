@@ -1,4 +1,4 @@
-name: predeploy to firebase
+name: Predeploy to firebase
 on: 
   pull_request:
     branches:
@@ -7,28 +7,35 @@ on:
 
 jobs:
   predeploy:
+    env:
+      REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
+      REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+      REACT_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+      REACT_APP_FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+      REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+      REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+      REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+      REACT_APP_GRAPHQL_API_URL: ${{ secrets.GRAPHQL_API_URL }}
+      REACT_APP_GRAPHQL_WEBSOCKET_URL: ${{ secrets.GRAPHQL_WEBSOCKET_URL }}
     runs-on: ubuntu-latest
     steps:
       - name: Into repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 14
       - name: Install firebase CLI
         run: npm install -g firebase-tools
       - name: Install Packages
         run: yarn install
+      - name: Create Production Build
+        run: yarn build
       - name: Predeploy to firebase channel
-        run: yarn build && firebase hosting:channel:deploy ${{ github.ref }}
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
-          REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          REACT_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
-          REACT_APP_FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
-          REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
-          REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
-          REACT_APP_GRAPHQL_API_URL: ${{ secrets.GRAPHQL_API_URL }}
-          REACT_APP_GRAPHQL_WEBSOCKET_URL: ${{ secrets.GRAPHQL_WEBSOCKET_URL }}
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          expires: 30d
+          projectId: "smartcampus-1b31f"
+          channelId: ${{ github.ref }}
