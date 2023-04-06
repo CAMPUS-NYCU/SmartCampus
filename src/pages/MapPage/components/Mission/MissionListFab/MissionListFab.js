@@ -4,7 +4,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import { Fab } from '@material-ui/core'
 import MissionListDrawer from '../MissionListDrawer'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   missionListFab: {
     width: '45px',
     height: '45px',
