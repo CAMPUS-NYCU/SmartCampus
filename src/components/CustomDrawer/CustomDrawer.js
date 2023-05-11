@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   drawerPaperStyle: {
     borderRadius: '20px 20px 0 0',
     backgroundColor: '#FAFAFA',
-    overflow: 'hidden',
     zIndex: '20',
     [theme.breakpoints.up('sm')]: {
       width: '400px'
@@ -26,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   drawerContentFull: {
     minHeight: 450,
     height: 'calc(100vh - 100px)'
+  },
+  drawerContentPart: {
+    maxHeight: 'calc(100vh - 100px)'
   },
   titleBar: {
     position: 'sticky',
@@ -58,6 +60,7 @@ const CustomDrawer = (props) => {
     handleClose,
     handleBack,
     fullHeight,
+    partHeight,
     closeButton,
     title,
     titleActions,
@@ -65,6 +68,11 @@ const CustomDrawer = (props) => {
     width
   } = props
   const classes = useStyles()
+  const boxClassGetter = (_fullHeight, _partHeight) => {
+    if (_fullHeight) return classes.drawerContentFull
+    if (_partHeight) return classes.drawerContentPart
+    return null
+  }
   return (
     <Drawer
       anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
@@ -76,7 +84,7 @@ const CustomDrawer = (props) => {
       <Box
         display='flex'
         flexDirection='column'
-        className={fullHeight ? classes.drawerContentFull : null}
+        className={boxClassGetter(fullHeight, partHeight)}
       >
         <Toolbar className={classes.titleBar}>
           {closeButton ? (
@@ -122,6 +130,7 @@ const CustomDrawer = (props) => {
 CustomDrawer.defaultProps = {
   handleBack: null,
   fullHeight: false,
+  partHeight: false,
   closeButton: true,
   variant: 'temporary',
   titleActions: []
@@ -133,6 +142,7 @@ CustomDrawer.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleBack: PropTypes.func,
   fullHeight: PropTypes.bool,
+  partHeight: PropTypes.bool,
   closeButton: PropTypes.bool,
   title: PropTypes.string.isRequired,
   titleActions: PropTypes.arrayOf(
