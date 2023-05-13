@@ -45,8 +45,8 @@
     "deploy": "firebase deploy",
     "build-deploy": "yarn run build && yarn run deploy",
     "lint": "eslint src",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "storybook": "storybook dev -p 9009 -s public",
+    "build-storybook": "storybook build -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,17 +64,18 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "^5.3.19",
-    "@storybook/addon-actions": "^5.3.19",
-    "@storybook/addon-console": "^1.2.1",
-    "@storybook/addon-docs": "^5.3.19",
-    "@storybook/addon-links": "^5.3.19",
-    "@storybook/addon-storysource": "^5.3.19",
-    "@storybook/addon-viewport": "^5.3.19",
-    "@storybook/addons": "^5.3.19",
-    "@storybook/preset-create-react-app": "^3.0.0",
-    "@storybook/react": "^5.3.19",
-    "@storybook/theming": "^5.3.19",
+    "@storybook/addon-a11y": "^7.0.11",
+    "@storybook/addon-actions": "^7.0.11",
+    "@storybook/addon-console": "^1.2.3",
+    "@storybook/addon-docs": "^7.0.11",
+    "@storybook/addon-links": "^7.0.11",
+    "@storybook/addon-storysource": "^7.0.11",
+    "@storybook/addon-viewport": "^7.0.11",
+    "@storybook/addons": "^7.0.11",
+    "@storybook/react": "^7.0.11",
+    "@storybook/react-vite": "7.0.11",
+    "@storybook/theming": "^7.0.11",
+    "babel-loader": "^9.1.2",
     "eslint": "6.1.0",
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-prettier": "^6.11.0",
@@ -84,8 +85,9 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "prettier": "^2.0.5",
-    "storybook-dark-mode": "^0.6.1",
-    "storybook-mobile": "^0.1.23",
+    "storybook": "7.0.11",
+    "storybook-dark-mode": "^3.0.0",
+    "storybook-mobile": "^1.0.1",
     "storybook-react-router": "^1.0.8"
   }
 }
