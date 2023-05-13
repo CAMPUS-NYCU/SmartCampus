@@ -4,16 +4,16 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/client/link/ws'
 
 import {
-  REACT_APP_GRAPHQL_API_URL,
-  REACT_APP_GRAPHQL_WEBSOCKET_URL
+  VITE_GRAPHQL_API_URL,
+  VITE_GRAPHQL_WEBSOCKET_URL
 } from '../constants/envValues'
 
 const httpLink = new HttpLink({
-  uri: REACT_APP_GRAPHQL_API_URL
+  uri: VITE_GRAPHQL_API_URL
 })
 
 const wsLink = new WebSocketLink({
-  uri: REACT_APP_GRAPHQL_WEBSOCKET_URL,
+  uri: VITE_GRAPHQL_WEBSOCKET_URL,
   options: {
     reconnect: true
   }

@@ -10,7 +10,7 @@ import {
   useMissionValue,
   MissionStep
 } from '../../../../../../utils/contexts/MissionContext'
-import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
+import { VITE_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
 import CustomButton from '../../../../../../components/CustomButton'
 
 function MissionStep1() {
@@ -25,7 +25,7 @@ function MissionStep1() {
   useEffect(() => {
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${markerPosition.latitude},${markerPosition.longitude}&language=zh-TW&result_type=premise&key=${REACT_APP_GOOGLE_MAP_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${markerPosition.latitude},${markerPosition.longitude}&language=zh-TW&result_type=premise&key=${VITE_GOOGLE_MAP_API_KEY}`
       )
       .then(({ data }) => {
         setTextLocation(

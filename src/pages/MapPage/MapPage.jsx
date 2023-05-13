@@ -27,7 +27,7 @@ import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
 import UserDialog from './components/UserDialog/UserDialog'
-import { REACT_APP_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
+import { VITE_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
 import { LOADED_LIBRARIES } from '../../constants/mapConstants'
 
 export default function MapPage() {
@@ -55,7 +55,7 @@ export default function MapPage() {
 const MapPageContent = (props) => {
   const { setGuideStep, setSkip } = props
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: REACT_APP_GOOGLE_MAP_API_KEY,
+    googleMapsApiKey: VITE_GOOGLE_MAP_API_KEY,
     libraries: LOADED_LIBRARIES,
     language: 'zh-TW'
   })
