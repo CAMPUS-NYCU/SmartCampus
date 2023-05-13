@@ -13,6 +13,7 @@
     "@sentry/integrations": "^6.13.3",
     "@sentry/react": "^6.13.3",
     "@sentry/tracing": "^6.13.3",
+    "@vitejs/plugin-react": "^4.0.0",
     "apollo-boost": "^0.4.7",
     "axios": "^0.21.2",
     "babel-eslint": "10.0.3",
@@ -34,7 +35,8 @@
     "roughjs": "^4.3.1",
     "subscriptions-transport-ws": "^0.9.19",
     "typescript": "^3.6.4",
-    "use-position": "^0.0.6"
+    "use-position": "^0.0.6",
+    "vite": "^4.3.5"
   },
   "scripts": {
     "start": "vite",
@@ -73,7 +75,6 @@
     "@storybook/preset-create-react-app": "^3.0.0",
     "@storybook/react": "^5.3.19",
     "@storybook/theming": "^5.3.19",
-    "@vitejs/plugin-react": "^4.0.0",
     "eslint": "6.1.0",
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-prettier": "^6.11.0",
@@ -85,7 +86,6 @@
     "prettier": "^2.0.5",
     "storybook-dark-mode": "^0.6.1",
     "storybook-mobile": "^0.1.23",
-    "storybook-react-router": "^1.0.8",
-    "vite": "^4.3.5"
+    "storybook-react-router": "^1.0.8"
   }
 }
