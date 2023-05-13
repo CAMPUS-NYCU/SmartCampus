@@ -12,8 +12,8 @@ import withFirebaseAuth from 'react-with-firebase-auth'
 
 import firebaseConfig from '../../constants/firebaseConfig'
 import {
-  REACT_APP_FIREBASE_LOCAL_SERVER,
-  REACT_APP_FIREBASE_EMULATER_URL
+  VITE_FIREBASE_LOCAL_SERVER,
+  VITE_FIREBASE_EMULATER_URL
 } from '../../constants/envValues'
 import { getItem, setItem, TOKEN_EXPIRE_INFO } from '../functions/localStorage'
 
@@ -139,8 +139,8 @@ export const UserContextProvider = withFirebaseAuth({
     if (user) handleRefreshToken()
   }, [handleRefreshToken, user])
   useEffect(() => {
-    if (REACT_APP_FIREBASE_LOCAL_SERVER) {
-      firebaseAppAuth.useEmulator(REACT_APP_FIREBASE_EMULATER_URL)
+    if (VITE_FIREBASE_LOCAL_SERVER) {
+      firebaseAppAuth.useEmulator(VITE_FIREBASE_EMULATER_URL)
     }
   }, [])
   const contextValues = {
