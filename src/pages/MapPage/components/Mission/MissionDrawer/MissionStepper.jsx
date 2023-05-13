@@ -4,8 +4,8 @@ import Box from '@material-ui/core/Box'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { makeStyles } from '@material-ui/core/styles'
 import { Dialog, DialogTitle } from '@material-ui/core'
-import ClickTimer from 'components/ClickTimer/ClickTimer'
-import clickTimerType from 'components/ClickTimer/clickTimerType'
+import ClickTimer from '../../../../../components/ClickTimer/ClickTimer'
+import clickTimerType from '../../../../../components/ClickTimer/clickTimerType'
 import CustomButton from '../../../../../components/CustomButton'
 import {
   MISSION_MAX_STEP,
