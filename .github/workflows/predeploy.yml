@@ -5,6 +5,8 @@ on:
       - master
   workflow_dispatch:
 
+permissions: read-all
+
 jobs:
   predeploy:
     env:
