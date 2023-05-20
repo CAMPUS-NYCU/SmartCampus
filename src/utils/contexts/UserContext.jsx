@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react'
 import 'firebase/auth'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import withFirebaseAuth from 'react-with-firebase-auth'
 
 import firebaseConfig from '../../constants/firebaseConfig'
