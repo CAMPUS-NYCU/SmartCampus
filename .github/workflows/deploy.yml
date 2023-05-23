@@ -30,7 +30,7 @@ jobs:
         run: yarn install
       - name: Create Production Build
         run: yarn build
-      - name: Predeploy to firebase channel
+      - name: Deploy to firebase channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
