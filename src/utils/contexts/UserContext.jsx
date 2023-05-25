@@ -21,7 +21,7 @@ const REFRESH_TOKEN_TIMEOUT = 15 * 60 * 1000 // 15 minutes
 
 // Firebase Google authentication settings
 //const firebaseApp = firebase.initializeApp(firebaseConfig)
-const firebaseApp = REACT_APP_FIREBASE_LOCAL_SERVER
+const firebaseApp = VITE_FIREBASE_LOCAL_SERVER
   ? firebase.initializeApp({
       apiKey: 'API_KEY',
       authDomain: 'PROJECT_ID.firebaseapp.com',
