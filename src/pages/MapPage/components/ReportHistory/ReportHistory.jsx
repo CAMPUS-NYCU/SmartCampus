@@ -13,7 +13,7 @@ import {
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 
-import { useUserValue } from 'utils/contexts/UserContext'
+import { useUserValue } from '../../../../utils/contexts/UserContext'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
