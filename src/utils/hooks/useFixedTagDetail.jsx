@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
 import moment from 'moment'
 
-import { useUserValue } from 'utils/contexts/UserContext'
+import { useUserValue } from '../contexts/UserContext'
 
 export const GET_FIXEDTAG_DETAIL_QUERY = gql`
   query getFixedTagDetail($id: ID!) {

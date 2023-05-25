@@ -10,8 +10,8 @@ import * as serviceWorker from './serviceWorker'
 
 Sentry.init({
   dsn:
-    (process.env.NODE_ENV === 'production' &&
-      process.env.REACT_APP_SENTRY_DSN) ||
+    (import.meta.env.NODE_ENV === 'production' &&
+      import.meta.env.VITE_SENTRY_DSN) ||
     '',
   integrations: [
     new Integrations.BrowserTracing(),
