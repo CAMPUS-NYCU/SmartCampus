@@ -77,7 +77,7 @@ function MissionStep2() {
     <>
       <Grid container spacing={3}>
         {/* * ==================== 1.經緯度標註 ==================== */}
-        <Grid container item xs={12} justify='space-between' direction='row'>
+        <Grid container item xs={12} justifyContent='space-between' direction='row'>
           <Box
             display='flex'
             flexDirection='row'
@@ -97,7 +97,7 @@ function MissionStep2() {
         </Grid>
 
         {/* * ==================== 2.地點資訊 ==================== */}
-        <Grid container item xs={12} justify='space-between' direction='row'>
+        <Grid container item xs={12} justifyContent='space-between' direction='row'>
           <Box
             display='flex'
             flexDirection='row'
@@ -133,7 +133,7 @@ function MissionStep2() {
           </Box>
         </Grid>
 
-        <Grid container item xs={12} justify='space-between' direction='row'>
+        <Grid container item xs={12} justifyContent='space-between' direction='row'>
           <Box
             display='flex'
             flexDirection='row'

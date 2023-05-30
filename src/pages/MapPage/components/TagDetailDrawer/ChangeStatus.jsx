@@ -110,7 +110,7 @@ function ChangeStatus(props) {
                 {item.statusName === temporaryTagState && (
                   <TextField
                     multiline
-                    rows={2}
+                    minRows={2}
                     variant='outlined'
                     placeholder={tagDetail.status.description}
                     onChange={handleChangeDescription}

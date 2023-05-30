@@ -141,7 +141,7 @@ const DetailPart = (props) => {
                       margin: '5px',
                       width: '98%'
                     }}
-                    justify='center'
+                    justifyContent='center'
                     alignItems='center'
                   >
                     <Grid
