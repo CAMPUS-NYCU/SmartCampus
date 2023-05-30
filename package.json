@@ -22,7 +22,7 @@
     "graphql": "^14.6.0",
     "material-ui-popup-state": "^1.5.3",
     "moment": "^2.29.2",
-    "notistack": "^0.9.7",
+    "notistack": "^3.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
