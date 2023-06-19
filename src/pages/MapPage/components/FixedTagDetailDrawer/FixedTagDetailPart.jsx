@@ -179,6 +179,7 @@ const DetailPart = (props) => {
                           background: findStatusIndex(
                             fixedtagfloor.status.statusName
                           ).color,
+                          color: 'black',
                           fontSize: '12px',
                           borderRadius: '5px'
                         }}
