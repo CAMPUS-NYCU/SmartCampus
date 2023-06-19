@@ -1,5 +1,5 @@
 import React from 'react'
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 import title from '../assets/images/title.svg'
 import wave1 from '../assets/images/main-wave1.svg'
 import wave2 from '../assets/images/main-wave2.svg'

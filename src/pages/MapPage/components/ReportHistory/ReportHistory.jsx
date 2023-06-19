@@ -7,9 +7,10 @@ import {
   Divider,
   Grid,
   Box,
-  makeStyles,
   CircularProgress
-} from '@material-ui/core'
+} from '@mui/material'
+// import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 

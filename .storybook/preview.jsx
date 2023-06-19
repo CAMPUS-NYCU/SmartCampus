@@ -6,8 +6,8 @@ import StoryRouter from 'storybook-react-router'
 // ========================================
 
 // 包入 Material-UI ThemeProvider 和 CssBaseline
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
 import { theme } from '../src/utils/theme'
 const MuiDecorator = (storyFn) => {
   return (

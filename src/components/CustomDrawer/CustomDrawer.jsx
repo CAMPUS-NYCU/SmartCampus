@@ -1,17 +1,18 @@
 import React from 'react'
 import {
   Drawer,
-  makeStyles,
   Toolbar,
   IconButton,
   Typography,
   Box
-} from '@material-ui/core'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
-import CloseIcon from '@material-ui/icons/Close'
-import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import CloseIcon from '@mui/icons-material/Close'
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
 import PropTypes from 'prop-types'
 import CustomButton from '../CustomButton'
+import { useTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
   drawerPaperStyle: {
@@ -62,12 +63,15 @@ const CustomDrawer = (props) => {
     title,
     titleActions,
     variant,
-    width
   } = props
   const classes = useStyles()
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
+
   return (
     <Drawer
-      anchor={isWidthUp('sm', width) ? 'left' : 'bottom'}
+      anchor={matches ? 'left' : 'bottom'}
       open={open}
       onClose={handleClose}
       classes={{ paper: classes.drawerPaperStyle }}
@@ -143,7 +147,6 @@ CustomDrawer.propTypes = {
     })
   ),
   variant: PropTypes.string,
-  width: PropTypes.string.isRequired
 }
 
-export default withWidth()(CustomDrawer)
+export default CustomDrawer

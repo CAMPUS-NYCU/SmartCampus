@@ -5,8 +5,9 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  makeStyles
-} from '@material-ui/core'
+} from '@mui/material'
+// import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
 import moment from 'moment'
 import { useSnackbar } from 'notistack'
 import noImage from '../../../../assets/images/no-image.svg'

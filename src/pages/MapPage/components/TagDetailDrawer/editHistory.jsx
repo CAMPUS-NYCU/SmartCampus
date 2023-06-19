@@ -5,7 +5,6 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  makeStyles,
   List,
   ListItem,
   ListItemIcon,
@@ -13,8 +12,10 @@ import {
   Box,
   ListItemSecondaryAction,
   Divider
-} from '@material-ui/core'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+} from '@mui/material'
+// import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import tagStatus from '../../../../constants/tagData'
 
 const useStyles = makeStyles((theme) => ({

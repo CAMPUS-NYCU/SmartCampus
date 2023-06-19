@@ -4,11 +4,12 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  makeStyles
-} from '@material-ui/core'
-// import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
-// import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
-// import { BorderAllRounded } from '@material-ui/icons'
+} from '@mui/material'
+// import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
+// import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
+// import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
+// import { BorderAllRounded } from '@mui/icons-material'
 import { missionInfo } from '../../../../../../constants/missionInfo'
 import Mission1 from '../../../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../../../assets/images/mission2.svg'

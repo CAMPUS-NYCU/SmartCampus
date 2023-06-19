@@ -10,7 +10,7 @@ import {
   Dialog,
   DialogActions,
   CircularProgress
-} from '@material-ui/core'
+} from '@mui/material'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import UnCrowded from '../../../../assets/images/fixedTagStatusUnCrowded.svg'

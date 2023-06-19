@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Typography, Dialog, DialogTitle } from '@material-ui/core'
+import { Box, Typography, Dialog, DialogTitle } from '@mui/material'
 import { Lightbox } from 'react-modal-image'
 
 import Mission2 from '../../../../assets/images/mission2_round.svg'

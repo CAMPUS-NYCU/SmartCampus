@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, IconButton } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
+import { Box, IconButton } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { useMissionValue } from '../../../../../../utils/contexts/MissionContext'
 
 const PicturePreview = (props) => {

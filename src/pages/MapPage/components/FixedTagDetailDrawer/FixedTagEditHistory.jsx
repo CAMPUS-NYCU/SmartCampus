@@ -5,15 +5,16 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  makeStyles,
   List,
   ListItem,
   ListItemIcon,
   Button,
   Box,
   ListItemSecondaryAction
-} from '@material-ui/core'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+} from '@mui/material'
+// import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import moment from 'moment'
 import noImage from '../../../../assets/images/no-image.svg'
 import { fixedTagStatus } from '../../../../constants/fixedTagContext'

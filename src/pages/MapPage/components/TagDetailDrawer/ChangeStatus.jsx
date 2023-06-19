@@ -11,7 +11,7 @@ import {
   Dialog,
   CircularProgress,
   TextField
-} from '@material-ui/core'
+} from '@mui/material'
 import PropTypes from 'prop-types'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'

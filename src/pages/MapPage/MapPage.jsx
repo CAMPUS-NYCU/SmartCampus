@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Fade, Dialog, CircularProgress } from '@material-ui/core'
+import { Fade, Dialog, CircularProgress } from '@mui/material'
 import { usePosition } from 'use-position'
 import { useJsApiLoader } from '@react-google-maps/api'
 import { useParams, useHistory } from 'react-router-dom'

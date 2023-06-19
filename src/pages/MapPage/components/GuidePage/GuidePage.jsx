@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 
-import { MobileStepper, Button, CircularProgress } from '@material-ui/core'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
-import { makeStyles } from '@material-ui/core/styles'
+import { MobileStepper, Button, CircularProgress } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles'
 import { gql, useLazyQuery, useMutation } from '@apollo/client'
 import { useSnackbar } from 'notistack'
 
@@ -38,10 +39,13 @@ const SET_HAS_READ_GUIDE_MUTATION = gql`
 `
 
 const GuidePage = (props) => {
-  const { step, setStep, handleNext, handleBack, width, skip } = props
+  const { step, setStep, handleNext, handleBack, skip } = props
   const { token, isGuest, signOut } = useUserValue()
   const [setHasReadGuideMutation] = useMutation(SET_HAS_READ_GUIDE_MUTATION)
   const { enqueueSnackbar } = useSnackbar()
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm')  )
 
   const [loadHasReadGuide, { data = null }] = useLazyQuery(
     GET_READ_GUIDE_QUERY,
@@ -55,11 +59,11 @@ const GuidePage = (props) => {
     }
   )
   useEffect(() => {
-    if (isWidthUp('sm', width)) {
+    if (matches) {
       enqueueSnackbar('功能介紹目前只能在手機上瀏覽', { variant: 'warning' })
       setStep(3)
     }
-  }, [setStep, enqueueSnackbar, width])
+  }, [setStep, enqueueSnackbar])
   useEffect(() => {
     if (token && !isGuest) {
       try {
@@ -180,4 +184,4 @@ const GuidePageContent = (props) => {
   )
 }
 
-export default withWidth()(GuidePage)
+export default GuidePage

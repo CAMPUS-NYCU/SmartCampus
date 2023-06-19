@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 
-import Box from '@material-ui/core/Box'
-import MobileStepper from '@material-ui/core/MobileStepper'
-import { makeStyles } from '@material-ui/core/styles'
-import { Dialog, DialogTitle } from '@material-ui/core'
+import Box from '@mui/material/Box'
+import MobileStepper from '@mui/material/MobileStepper'
+// import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
+import { Dialog, DialogTitle } from '@mui/material'
 import CustomButton from '../../../../../components/CustomButton'
 import {
   MISSION_MAX_STEP,
