@@ -22,12 +22,8 @@ const useStyles = makeStyles(() => ({
 }))
 
 function MissionDrawer() {
-  const {
-    isInMission,
-    handleCloseMission,
-    handleBack,
-    isInEdit
-  } = useMissionValue()
+  const { isInMission, handleCloseMission, handleBack, isInEdit } =
+    useMissionValue()
   const classes = useStyles()
   const { currentStep, missionType } = useMissionValue()
 

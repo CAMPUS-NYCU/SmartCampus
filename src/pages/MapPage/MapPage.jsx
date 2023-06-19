@@ -30,7 +30,12 @@ import { VITE_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
 import { LOADED_LIBRARIES } from '../../constants/mapConstants'
 
 export default function MapPage() {
-  const { step: guideStep, setStep, handleNext, handleBack } = useStep({
+  const {
+    step: guideStep,
+    setStep,
+    handleNext,
+    handleBack
+  } = useStep({
     initialStep: 0,
     maxStep: 3,
     minStep: 0

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { MobileStepper, Button, CircularProgress } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import { gql, useLazyQuery, useMutation } from '@apollo/client'
 import { useSnackbar } from 'notistack'
@@ -44,8 +44,8 @@ const GuidePage = (props) => {
   const [setHasReadGuideMutation] = useMutation(SET_HAS_READ_GUIDE_MUTATION)
   const { enqueueSnackbar } = useSnackbar()
 
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('sm')  )
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   const [loadHasReadGuide, { data = null }] = useLazyQuery(
     GET_READ_GUIDE_QUERY,
@@ -63,7 +63,7 @@ const GuidePage = (props) => {
       enqueueSnackbar('功能介紹目前只能在手機上瀏覽', { variant: 'warning' })
       setStep(3)
     }
-  }, [setStep, enqueueSnackbar])
+  }, [setStep, enqueueSnackbar, matches])
   useEffect(() => {
     if (token && !isGuest) {
       try {

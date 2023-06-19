@@ -1,18 +1,12 @@
 import React from 'react'
-import {
-  Drawer,
-  Toolbar,
-  IconButton,
-  Typography,
-  Box
-} from '@mui/material'
+import { Drawer, Toolbar, IconButton, Typography, Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import CloseIcon from '@mui/icons-material/Close'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
 import PropTypes from 'prop-types'
+import { useTheme } from '@mui/material/styles'
 import CustomButton from '../CustomButton'
-import { useTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
   drawerPaperStyle: {
@@ -62,11 +56,11 @@ const CustomDrawer = (props) => {
     closeButton,
     title,
     titleActions,
-    variant,
+    variant
   } = props
   const classes = useStyles()
 
-  const theme = useTheme();
+  const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
@@ -146,7 +140,7 @@ CustomDrawer.propTypes = {
       disable: PropTypes.bool
     })
   ),
-  variant: PropTypes.string,
+  variant: PropTypes.string
 }
 
 export default CustomDrawer

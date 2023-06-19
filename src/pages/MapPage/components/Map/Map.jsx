@@ -81,8 +81,7 @@ function Map(props) {
             return new window.google.maps.Marker({
               position,
               icon: {
-                url:
-                  'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m2.png',
+                url: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m2.png',
                 scaledSize: new window.google.maps.Size(45, 45)
               },
               label: {
@@ -249,24 +248,22 @@ function Map(props) {
               icon={(() => {
                 if (activeTagId === tag.id) {
                   return {
-                    url:
-                      missionredImage[
-                        missionName.findIndex(
-                          (mission) => mission === tag.category.missionName
-                        )
-                      ],
+                    url: missionredImage[
+                      missionName.findIndex(
+                        (mission) => mission === tag.category.missionName
+                      )
+                    ],
                     scaledSize: { width: 28, height: 30 }
                   }
                 }
                 if (tag.category.missionName === '動態任務') {
                   if (compareTime(tag.lastUpdateTime)) {
                     return {
-                      url:
-                        missionActiveImage[
-                          StatusName.findIndex(
-                            (statusName) => statusName === tag.status.statusName
-                          ) % 3
-                        ],
+                      url: missionActiveImage[
+                        StatusName.findIndex(
+                          (statusName) => statusName === tag.status.statusName
+                        ) % 3
+                      ],
                       scaledSize: { width: 28, height: 30 }
                     }
                   }
@@ -282,12 +279,11 @@ function Map(props) {
                   }
                 }
                 return {
-                  url:
-                    missionImage[
-                      missionName.findIndex(
-                        (mission) => mission === tag.category.missionName
-                      )
-                    ],
+                  url: missionImage[
+                    missionName.findIndex(
+                      (mission) => mission === tag.category.missionName
+                    )
+                  ],
                   scaledSize: { width: 28, height: 30 }
                 }
               })()}

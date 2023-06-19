@@ -123,7 +123,7 @@ function ChangeStatus(props) {
     >
       <>
         <FormGroup>
-          <div align='left' style={{}}>
+          <div style={{ textAlign: 'left' }}>
             <FormControlLabel
               checked={checked}
               onChange={handleChange}

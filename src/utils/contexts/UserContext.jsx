@@ -20,7 +20,7 @@ import { getItem, setItem, TOKEN_EXPIRE_INFO } from '../functions/localStorage'
 const REFRESH_TOKEN_TIMEOUT = 15 * 60 * 1000 // 15 minutes
 
 // Firebase Google authentication settings
-//const firebaseApp = firebase.initializeApp(firebaseConfig)
+// const firebaseApp = firebase.initializeApp(firebaseConfig)
 const firebaseApp = VITE_FIREBASE_LOCAL_SERVER
   ? firebase.initializeApp({
       apiKey: 'API_KEY',
