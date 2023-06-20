@@ -1,4 +1,3 @@
-// import ApolloClient from 'apollo-boost'
 import { split, HttpLink, ApolloClient, InMemoryCache } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/client/link/ws'

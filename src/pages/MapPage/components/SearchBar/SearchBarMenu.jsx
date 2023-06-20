@@ -11,7 +11,6 @@ import DescriptionIcon from '@mui/icons-material/Description'
 import HelpIcon from '@mui/icons-material/Help'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import RateReviewIcon from '@mui/icons-material/RateReview'
-// import { makeStyles } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 
 import { useUserValue } from '../../../../utils/contexts/UserContext'

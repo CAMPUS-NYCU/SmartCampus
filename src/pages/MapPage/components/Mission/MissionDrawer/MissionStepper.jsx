@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
-// import { makeStyles } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import { Dialog, DialogTitle } from '@mui/material'
 import CustomButton from '../../../../../components/CustomButton'
