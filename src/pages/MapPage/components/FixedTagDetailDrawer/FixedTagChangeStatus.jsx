@@ -10,7 +10,7 @@ import {
   Dialog,
   DialogActions,
   CircularProgress
-} from '@material-ui/core'
+} from '@mui/material'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import UnCrowded from '../../../../assets/images/fixedTagStatusUnCrowded.svg'
@@ -123,7 +123,7 @@ function ChangeStatus(props) {
     >
       <>
         <FormGroup>
-          <div align='left' style={{}}>
+          <div style={{ textAlign: 'left' }}>
             <FormControlLabel
               checked={checked}
               onChange={handleChange}

@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Button, makeStyles } from '@material-ui/core'
-import Grid from '@material-ui/core/Grid'
+import { Box, Button } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import Grid from '@mui/material/Grid'
 import moment from 'moment'
 import noImage from '../../../../assets/images/no-image.svg'
 import informationImage from '../../../../assets/images/fixedTagInformation.svg'
@@ -141,7 +142,7 @@ const DetailPart = (props) => {
                       margin: '5px',
                       width: '98%'
                     }}
-                    justify='center'
+                    justifyContent='center'
                     alignItems='center'
                   >
                     <Grid
@@ -177,6 +178,7 @@ const DetailPart = (props) => {
                           background: findStatusIndex(
                             fixedtagfloor.status.statusName
                           ).color,
+                          color: 'black',
                           fontSize: '12px',
                           borderRadius: '5px'
                         }}

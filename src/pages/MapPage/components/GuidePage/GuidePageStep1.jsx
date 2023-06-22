@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
-import { Typography } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Typography } from '@mui/material'
 import ReactRough, { Circle, LinearPath, Curve, Line } from 'react-rough'
 
 const useStyles = makeStyles(() => ({

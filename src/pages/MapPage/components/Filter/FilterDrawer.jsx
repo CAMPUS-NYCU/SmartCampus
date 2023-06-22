@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Typography, Grid, Box } from '@material-ui/core'
+import { Typography, Grid, Box } from '@mui/material'
 import PropTypes from 'prop-types'
 
 import CustomDrawer from '../../../../components/CustomDrawer'

@@ -1,14 +1,6 @@
 import React, { useMemo } from 'react'
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  makeStyles
-} from '@material-ui/core'
-// import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
-// import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
-// import { BorderAllRounded } from '@material-ui/icons'
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { missionInfo } from '../../../../../../constants/missionInfo'
 import Mission1 from '../../../../../../assets/images/mission1.svg'
 import Mission2 from '../../../../../../assets/images/mission2.svg'

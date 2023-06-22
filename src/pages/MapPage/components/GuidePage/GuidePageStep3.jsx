@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { Typography } from '@material-ui/core'
+import { makeStyles } from '@mui/styles'
+import { Typography } from '@mui/material'
 import ReactRough, { Circle, LinearPath, Line } from 'react-rough'
 import TagDetailDrawer from '../TagDetailDrawer'
 import elevator from '../../../../assets/images/elevator.png'

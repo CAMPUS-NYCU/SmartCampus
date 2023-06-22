@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import {
   Typography,
   List,
   ListItem,
   ListItemText,
   ListItemIcon
-} from '@material-ui/core'
+} from '@mui/material'
 import { missionGuide } from '../../../../constants/missionInfo'
 import Mission1 from '../../../../assets/images/mission1_pin.svg'
 import Mission2 from '../../../../assets/images/mission2_pin.svg'

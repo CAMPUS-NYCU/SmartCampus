@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Fade, Dialog, CircularProgress } from '@material-ui/core'
+import { Fade, Dialog, CircularProgress } from '@mui/material'
 import { usePosition } from 'use-position'
 import { useJsApiLoader } from '@react-google-maps/api'
 import { useParams, useHistory } from 'react-router-dom'
@@ -30,7 +30,12 @@ import { VITE_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
 import { LOADED_LIBRARIES } from '../../constants/mapConstants'
 
 export default function MapPage() {
-  const { step: guideStep, setStep, handleNext, handleBack } = useStep({
+  const {
+    step: guideStep,
+    setStep,
+    handleNext,
+    handleBack
+  } = useStep({
     initialStep: 0,
     maxStep: 3,
     minStep: 0

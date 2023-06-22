@@ -10,10 +10,10 @@ import { SnackbarProvider } from 'notistack'
 
 import { ApolloProvider } from '@apollo/client'
 
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { ThemeProvider } from '@material-ui/core/styles'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 
 import WindowHeightProvider from './utils/WindowHeightProvider'
 import MainPage from './components/MainPage'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close'
+import { makeStyles } from '@mui/styles'
+import CloseIcon from '@mui/icons-material/Close'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import FilterDrawer from './FilterDrawer'
 import CustomButton from '../../../../components/CustomButton'

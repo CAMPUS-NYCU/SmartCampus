@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Box,
-  Button,
-  CircularProgress,
-  IconButton,
-  makeStyles
-} from '@material-ui/core'
+import { Box, Button, CircularProgress, IconButton } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import moment from 'moment'
 import { useSnackbar } from 'notistack'
 import noImage from '../../../../assets/images/no-image.svg'

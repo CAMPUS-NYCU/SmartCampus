@@ -11,7 +11,7 @@ import {
   Dialog,
   CircularProgress,
   TextField
-} from '@material-ui/core'
+} from '@mui/material'
 import PropTypes from 'prop-types'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
@@ -110,7 +110,7 @@ function ChangeStatus(props) {
                 {item.statusName === temporaryTagState && (
                   <TextField
                     multiline
-                    rows={2}
+                    minRows={2}
                     variant='outlined'
                     placeholder={tagDetail.status.description}
                     onChange={handleChangeDescription}

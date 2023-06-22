@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
+import { makeStyles } from '@mui/styles'
+import Box from '@mui/material/Box'
 
 import MissionStepper from './MissionStepper'
 import MissionStep1 from './MissionStep1'
@@ -21,12 +21,8 @@ const useStyles = makeStyles(() => ({
 }))
 
 function MissionDrawer() {
-  const {
-    isInMission,
-    handleCloseMission,
-    handleBack,
-    isInEdit
-  } = useMissionValue()
+  const { isInMission, handleCloseMission, handleBack, isInEdit } =
+    useMissionValue()
   const classes = useStyles()
   const { currentStep, missionType } = useMissionValue()
 
