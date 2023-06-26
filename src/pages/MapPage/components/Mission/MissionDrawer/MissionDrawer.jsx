@@ -5,12 +5,10 @@ import Box from '@mui/material/Box'
 import MissionStepper from './MissionStepper'
 import MissionStep1 from './MissionStep1'
 import MissionStep2 from './MissionStep2'
-import MissionStep0 from './MissionStep0'
 import {
   MissionStep,
   useMissionValue
 } from '../../../../../utils/contexts/MissionContext'
-import { missionInfo } from '../../../../../constants/missionInfo'
 import CustomDrawer from '../../../../../components/CustomDrawer'
 
 const useStyles = makeStyles(() => ({
@@ -24,7 +22,7 @@ function MissionDrawer() {
   const { isInMission, handleCloseMission, handleBack, isInEdit } =
     useMissionValue()
   const classes = useStyles()
-  const { currentStep, missionType } = useMissionValue()
+  const { currentStep } = useMissionValue()
 
   const getDrawerTitle = () => {
     if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
@@ -33,10 +31,7 @@ function MissionDrawer() {
     if (isInEdit) {
       return '編輯回報紀錄'
     }
-    if (currentStep === MissionStep.selectMissionName) {
-      return `選擇回報類型`
-    }
-    return `標註${missionInfo[missionType].missionName}`
+    return `標註`
   }
   return (
     <>
@@ -46,18 +41,12 @@ function MissionDrawer() {
           handleClose={handleCloseMission}
           handleBack={handleBack}
           fullHeight={currentStep === MissionStep.SelectMission}
-          closeButton={
-            !isInEdit && currentStep === MissionStep.selectMissionName
-          }
           title={getDrawerTitle()}
-          variant={currentStep === 1 ? 'persistent' : 'temporary'}
+          variant='persistent'
         >
           <>
             <Box px={2} py={1} className={classes.missionContent}>
               {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-              {currentStep === MissionStep.selectMissionName && (
-                <MissionStep0 />
-              )}
               {currentStep === MissionStep.SelectMission && <MissionStep2 />}
             </Box>
             <MissionStepper />

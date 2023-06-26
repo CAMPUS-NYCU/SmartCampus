@@ -53,10 +53,9 @@ export const SubOptionOther = Symbol('SubOptionOther')
 
 export const MissionStep = {
   Init: -1,
-  selectMissionName: 0,
-  PlaceFlagOnMap: 1,
-  PlaceFlagOnStreet: 3,
-  SelectMission: 2
+  PlaceFlagOnMap: 0,
+  PlaceFlagOnStreet: 2,
+  SelectMission: 1
 }
 
 const InitialMissionValue = {
@@ -152,7 +151,7 @@ export const MissionContextProvider = ({ children }) => {
     }
   }, [currentStep, handleBackStep, isInEdit])
   const isInMission = useMemo(
-    () => currentStep >= MissionStep.selectMissionName,
+    () => currentStep !== MissionStep.Init,
     [currentStep]
   )
   // ==================== UI toggle control ====================
@@ -315,9 +314,6 @@ export const MissionContextProvider = ({ children }) => {
   // ========== Token ==========
 
   const checkNextStep = useCallback(() => {
-    if (currentStep === MissionStep.selectMissionName) {
-      return missionType !== null
-    }
     if (currentStep === MissionStep.SelectMission) {
       if (missionType === 2) {
         return selectedMissionId !== '' && selectedSubOptionId !== '請選擇'
@@ -357,13 +353,8 @@ export const MissionContextProvider = ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const handleNext = useCallback(() => {
-    // TODO 第一步驟要判斷是否已選擇街景，決定是否直接跳到第三步驟
-    if (isInEdit && currentStep === MissionStep.selectMissionName) {
-      handleNextStep(2)
-    } else {
-      handleNextStep(1)
-    }
-  }, [currentStep, handleNextStep, isInEdit])
+    handleNextStep(1)
+  }, [handleNextStep])
 
   const handleChangeMissionType = useCallback(
     (target) => {
@@ -387,7 +378,7 @@ export const MissionContextProvider = ({ children }) => {
       longitude: center.lng(),
       latitude: center.lat()
     })
-    setStep(MissionStep.selectMissionName)
+    setStep(MissionStep.PlaceFlagOnMap)
   }, [mapInstance, setStep])
   const handleStartEdit = useCallback(
     (startTag) => {
@@ -414,7 +405,7 @@ export const MissionContextProvider = ({ children }) => {
       setFloor(tagDetail.floor)
       setSelectedMissionId(startTag.category.subTypeName)
       setSelectedSubOptionId(startTag.category.targetName)
-      setStep(MissionStep.selectMissionName)
+      setStep(MissionStep.PlaceFlagOnMap)
       setMoreDescriptionText(tagDetail.description)
       setPreviewImages(tagDetail.imageUrl)
       setImageFiles([])

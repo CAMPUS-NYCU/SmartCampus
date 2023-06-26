@@ -8,6 +8,7 @@ import UserDialog from '../UserDialog/UserDialog'
 import useModal from '../../../../utils/hooks/useModal'
 import EditHistory from './FixedTagEditHistory'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
+import MissionFab from '../Mission/MissionFab'
 
 function FixedTagDetailDialog(props) {
   const { activeFixedTag, onClose } = props
@@ -68,6 +69,7 @@ function FixedTagDetailDialog(props) {
               handleHistoryClose={handleHistoryClose}
             />
           )}
+          <MissionFab />
         </>
       </CustomDrawer>
       {largeImg && (

@@ -57,9 +57,7 @@ function MissionStepper(props) {
   const { PlaceFlagOnStreet } = MissionStep
   const [finishOpen, setFinishOpen] = useState(false)
   let nextStepButtonName = ''
-  if (currentStep === 0) {
-    nextStepButtonName = ''
-  } else if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
+  if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
     nextStepButtonName = '確定'
   } else {
     nextStepButtonName = '下一步'
