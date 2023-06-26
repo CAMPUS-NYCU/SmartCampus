@@ -18,7 +18,6 @@ import { useParams, useHistory } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import Map from './components/Map'
 import useModal from '../../utils/hooks/useModal'
-import MissionFab from './components/Mission/MissionFab'
 import MissionDrawer from './components/Mission/MissionDrawer'
 import {
   MissionContextProvider,
@@ -166,7 +165,6 @@ const MapPageContent = (props) => {
                 setSearch={setSearch}
                 setPlaceName={setPlaceName}
               />
-              <MissionFab />
               <FilterFab />
               <LocationFab
                 setMapCenter={() => {

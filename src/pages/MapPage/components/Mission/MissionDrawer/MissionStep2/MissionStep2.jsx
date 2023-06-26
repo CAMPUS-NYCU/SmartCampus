@@ -40,7 +40,7 @@ function MissionStep2() {
     handleChangeTextLocation,
     previewImages,
     setPreviewImages,
-    missionType,
+    // missionType,
     floor,
     setFloor,
     status,
@@ -48,6 +48,9 @@ function MissionStep2() {
     isInEdit,
     remindOpen
   } = useMissionValue()
+
+  const missionType = 0
+
   const [locationFocus, setLocationFocus] = useState(true)
   const focusInput = useRef(null)
   const handleChangeFloor = (event) => {
