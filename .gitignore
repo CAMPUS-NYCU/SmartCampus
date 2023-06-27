@@ -43,6 +43,5 @@ credentials.csv
 schema.graphql
 
 # yarn
-yarn.lock
-.yarn/
+.yarn/*
 .yarnrc.yml
