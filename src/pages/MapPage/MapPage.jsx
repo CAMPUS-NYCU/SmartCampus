@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-import { Fade, Dialog, CircularProgress } from '@mui/material'
+import {
+  Box,
+  Fade,
+  Dialog,
+  CircularProgress,
+  Modal,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material'
+import DangerousIcon from '@mui/icons-material/Dangerous'
 import { usePosition } from 'use-position'
 import { useJsApiLoader } from '@react-google-maps/api'
 import { useParams, useHistory } from 'react-router-dom'
@@ -29,6 +39,19 @@ import UserDialog from './components/UserDialog/UserDialog'
 import { VITE_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
 import { LOADED_LIBRARIES } from '../../constants/mapConstants'
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '20px'
+}
+
 export default function MapPage() {
   const {
     step: guideStep,
@@ -41,6 +64,7 @@ export default function MapPage() {
     minStep: 0
   })
   const [skip, setSkip] = useState(true) // use to determine whether to skip the guide page
+  const isMobile = useMediaQuery(useTheme().breakpoints.up('sm'))
   return (
     <MissionContextProvider>
       <WindowBackProvider />
@@ -51,6 +75,23 @@ export default function MapPage() {
         handleBack={() => handleBack(1)}
         skip={skip}
       />
+      <Modal
+        open={isMobile}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <Box display='flex' flexDirection='row' alignItems='center'>
+            <DangerousIcon fontSize='large' color='error' />
+            <Typography id='modal-modal-title' variant='h5' color='error'>
+              電腦版瀏覽器暫不支援
+            </Typography>
+          </Box>
+          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+            實驗進行中，電腦版瀏覽器暫不支援，敬請見諒。如果您是實驗參與者，請使用手機板瀏覽器開啟此頁面，感謝！
+          </Typography>
+        </Box>
+      </Modal>
       <MapPageContent setGuideStep={setStep} setSkip={setSkip} />
     </MissionContextProvider>
   )
