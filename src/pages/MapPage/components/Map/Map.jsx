@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { GoogleMap, Marker, StreetViewPanorama } from '@react-google-maps/api'
+import { GoogleMap, Marker } from '@react-google-maps/api'
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
@@ -12,7 +12,6 @@ import { MAP_PATH } from '../../../../constants/pageUrls'
 import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.svg'
 import { DefaultZoom } from '../../../../constants/mapConstants'
-import PinTarget from '../PinTarget'
 import FixedTags from '../../../../assets/images/fixedtag.svg'
 import Mission2Voting from '../../../../assets/images/mission2_pin_voting.svg'
 import Mission2 from '../../../../assets/images/mission2_pin.svg'
@@ -45,12 +44,6 @@ function Map(props) {
     handleSetMarkerPosition,
     handleMapOnLoad,
     currentStep,
-    handleStreetViewOnLoad,
-    streetViewPosition,
-    streetViewPOV,
-    handleChangeStreetViewPosition,
-    handleChangeStreetViewPOV,
-    povChanged,
     showControl,
     mapInstance
   } = useMissionValue()
@@ -299,34 +292,6 @@ function Map(props) {
             }}
             icon={{ url: flagImg, scaledSize: { width: 30, height: 30 } }}
           />
-        )}
-        {currentStep === MissionStep.PlaceFlagOnStreet && (
-          <>
-            <PinTarget />
-            <StreetViewPanorama
-              position={{
-                lat: streetViewPosition.latitude,
-                lng: streetViewPosition.longitude
-              }}
-              pov={{
-                heading: !povChanged && streetViewPOV.heading,
-                pitch: !povChanged && streetViewPOV.pitch
-              }}
-              visible={currentStep === MissionStep.PlaceFlagOnStreet}
-              onLoad={handleStreetViewOnLoad}
-              onPanoChanged={handleChangeStreetViewPosition}
-              onPovChanged={handleChangeStreetViewPOV}
-              options={{
-                fullscreenControl: false,
-                zoomControl: false,
-                mapTypeControl: false,
-                // disableDefaultUI: true,
-                enableCloseButton: false,
-                clickToGo: true,
-                addressControl: false
-              }}
-            />
-          </>
         )}
         {placeName !== '' && search === true && showControl && (
           <Marker

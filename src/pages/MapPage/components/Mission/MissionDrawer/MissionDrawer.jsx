@@ -34,30 +34,22 @@ function MissionDrawer() {
     return `標註`
   }
   return (
-    <>
-      {isInMission && currentStep !== MissionStep.PlaceFlagOnStreet ? (
-        <CustomDrawer
-          open={isInMission}
-          handleClose={handleCloseMission}
-          handleBack={handleBack}
-          fullHeight={currentStep === MissionStep.SelectMission}
-          title={getDrawerTitle()}
-          variant='persistent'
-        >
-          <>
-            <Box px={2} py={1} className={classes.missionContent}>
-              {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
-              {currentStep === MissionStep.SelectMission && <MissionStep2 />}
-            </Box>
-            <MissionStepper />
-          </>
-        </CustomDrawer>
-      ) : (
-        <>
-          {currentStep === MissionStep.PlaceFlagOnStreet && <MissionStepper />}
-        </>
-      )}
-    </>
+    <CustomDrawer
+      open={isInMission}
+      handleClose={handleCloseMission}
+      handleBack={handleBack}
+      fullHeight={currentStep === MissionStep.SelectMission}
+      title={getDrawerTitle()}
+      variant='persistent'
+    >
+      <>
+        <Box px={2} py={1} className={classes.missionContent}>
+          {currentStep === MissionStep.PlaceFlagOnMap && <MissionStep1 />}
+          {currentStep === MissionStep.SelectMission && <MissionStep2 />}
+        </Box>
+        <MissionStepper />
+      </>
+    </CustomDrawer>
   )
 }
 

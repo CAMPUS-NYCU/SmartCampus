@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { gql, useMutation } from '@apollo/client'
 import axios from 'axios'
-import debounce from '../debounce'
 import useStep from '../hooks/useStep'
 import { missionInfo } from '../../constants/missionInfo'
 import { useTagValue } from './TagContext'
@@ -54,7 +53,6 @@ export const SubOptionOther = Symbol('SubOptionOther')
 export const MissionStep = {
   Init: -1,
   PlaceFlagOnMap: 0,
-  PlaceFlagOnStreet: 2,
   SelectMission: 1
 }
 
@@ -63,14 +61,6 @@ const InitialMissionValue = {
   markerPosition: {
     longitude: 0,
     latitude: 0
-  },
-  streetViewPosition: {
-    longitude: 0,
-    latitude: 0
-  },
-  streetViewPOV: {
-    heading: 0,
-    pitch: 0
   },
   selectedCategoryId: null,
   selectedMissionId: '',
@@ -94,9 +84,6 @@ export const MissionContext = React.createContext({
   showControl: true,
   handleToggleShowControl: () => {},
   handleSetMarkerPosition: () => {},
-  handleStreetViewOnLoad: () => {},
-  handleChangeStreetViewPosition: () => {},
-  handleChangeStreetViewPOV: () => {},
   handleSetSelectedCategoryId: () => {},
   handleSetSelectedMissionId: () => {},
   setSelectedSubOptionId: () => {},
@@ -110,8 +97,6 @@ export const MissionContext = React.createContext({
   setStep: () => {},
   loading: false,
   ableToNextStep: true,
-  handleCloseStreetView: () => {},
-  handleCompleteStreetView: () => {},
   ...InitialMissionValue
 })
 
@@ -177,75 +162,7 @@ export const MissionContextProvider = ({ children }) => {
       longitude: mapInstance.getCenter().lng(),
       latitude: mapInstance.getCenter().lat()
     })
-    // ? marker改地點，street view也要重設？
-    setStreetViewPosition({
-      longitude: mapInstance.getCenter().lng(),
-      latitude: mapInstance.getCenter().lat()
-    })
   }, [mapInstance])
-
-  // ==================== Street View control ====================
-  const [streetViewUpload, setStreetViewUpload] = useState(false)
-  const [streetViewInstance, setStreetViewInstance] = useState(null)
-  const [povChanged, setPovChanged] = useState(false)
-  const handleStreetViewOnLoad = useCallback((panorama) => {
-    setStreetViewInstance(panorama)
-  }, [])
-  const [streetViewPosition, setStreetViewPosition] = useState(
-    InitialMissionValue.streetViewPosition
-  )
-  const handleChangeStreetViewPosition = useCallback(() => {
-    if (!streetViewInstance) return
-    setStreetViewPosition({
-      longitude: streetViewInstance.position.lng(),
-      latitude: streetViewInstance.position.lat()
-    })
-  }, [streetViewInstance])
-  const [streetViewPOV, setStreetViewPOV] = useState(
-    InitialMissionValue.streetViewPOV
-  )
-  const handleChangeStreetViewPOVUndebounced = useCallback(() => {
-    if (!streetViewInstance) return
-    setPovChanged(true)
-    setStreetViewPOV({
-      heading: streetViewInstance.pov.heading,
-      pitch: streetViewInstance.pov.pitch
-    })
-  }, [streetViewInstance])
-  // ! 因為不debounce的話，街景FPS會很低，所以加入debounce
-  const handleChangeStreetViewPOV = useMemo(
-    () => debounce(handleChangeStreetViewPOVUndebounced, 200),
-    [handleChangeStreetViewPOVUndebounced]
-  )
-  const handleCompleteStreetView = useCallback(() => {
-    if (!streetViewInstance) {
-      setStreetViewUpload(true)
-      setPovChanged(false)
-      handleBack()
-      return
-    }
-    setPovChanged(false)
-    setStreetViewUpload(true)
-    setStreetViewPOV({
-      heading: streetViewInstance.pov.heading,
-      pitch: streetViewInstance.pov.pitch
-    })
-    setStreetViewPosition({
-      longitude: streetViewInstance.position.lng(),
-      latitude: streetViewInstance.position.lat()
-    })
-    setStep(MissionStep.PlaceFlagOnMap)
-  }, [handleBack, setStep, streetViewInstance])
-  const handleCloseStreetView = useCallback(() => {
-    setStreetViewPosition({
-      longitude: markerPosition.longitude,
-      latitude: markerPosition.latitude
-    })
-    setPovChanged(false)
-    setStreetViewPOV(InitialMissionValue.streetViewPOV)
-    setStreetViewUpload(false)
-    setStep(MissionStep.PlaceFlagOnMap)
-  }, [markerPosition, setStep])
 
   // ==================== Option control ====================
   // TODO 使用 useReducer 優化這坨 useState？
@@ -336,18 +253,12 @@ export const MissionContextProvider = ({ children }) => {
     setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
     setPhotos(InitialMissionValue.photos)
     setTextLocation(InitialMissionValue.textLocation)
-    setStreetViewPosition({
-      longitude: markerPosition.longitude,
-      latitude: markerPosition.latitude
-    })
-    setStreetViewPOV(InitialMissionValue.streetViewPOV)
-    setStreetViewUpload(false)
     setPreviewImages([])
     setImageDeleteUrls([])
     setFloor(0)
     setStatus('請選擇')
     setRemindOpen(false)
-  }, [markerPosition, setStep])
+  }, [setStep])
 
   // ==================== Step control ====================
   const { enqueueSnackbar } = useSnackbar()
@@ -374,10 +285,6 @@ export const MissionContextProvider = ({ children }) => {
       longitude: center.lng(),
       latitude: center.lat()
     })
-    setStreetViewPosition({
-      longitude: center.lng(),
-      latitude: center.lat()
-    })
     setStep(MissionStep.PlaceFlagOnMap)
   }, [mapInstance, setStep])
   const handleStartEdit = useCallback(
@@ -390,10 +297,6 @@ export const MissionContextProvider = ({ children }) => {
       setMapCenter({
         lat: parseFloat(startTag.coordinates.latitude),
         lng: parseFloat(startTag.coordinates.longitude)
-      })
-      setStreetViewPosition({
-        latitude: parseFloat(startTag.coordinates.latitude),
-        longitude: parseFloat(startTag.coordinates.longitude)
       })
       const tagMissionType = missionInfo.findIndex(
         (element) => element.missionName === startTag.category.missionName
@@ -460,23 +363,12 @@ export const MissionContextProvider = ({ children }) => {
         targetName: selectedSubOptionId.toString()
       },
       coordinates: {
-        latitude: streetViewUpload
-          ? streetViewPosition.latitude.toString()
-          : markerPosition.latitude.toString(),
-        longitude: streetViewUpload
-          ? streetViewPosition.longitude.toString()
-          : markerPosition.longitude.toString()
+        latitude: markerPosition.latitude.toString(),
+        longitude: markerPosition.longitude.toString()
       },
       description: moreDescriptionText,
       floor: floorNumber,
       imageUploadNumber: imageFiles.length,
-      streetViewInfo: {
-        povHeading: streetViewPOV.heading,
-        povPitch: streetViewPOV.pitch,
-        panoID: '',
-        cameraLatitude: streetViewPosition.latitude,
-        cameraLongitude: streetViewPosition.longitude
-      },
       statusName: status.toString()
     }
     const context = {
@@ -540,11 +432,6 @@ export const MissionContextProvider = ({ children }) => {
     handleToggleShowControl,
     markerPosition,
     handleSetMarkerPosition,
-    handleStreetViewOnLoad,
-    streetViewPosition,
-    handleChangeStreetViewPosition,
-    streetViewPOV,
-    handleChangeStreetViewPOV,
     selectedCategoryId,
     handleSetSelectedCategoryId,
     selectedMissionId,
@@ -566,10 +453,6 @@ export const MissionContextProvider = ({ children }) => {
     setStep,
     loading,
     ableToNextStep,
-    handleCloseStreetView,
-    handleCompleteStreetView,
-    streetViewUpload,
-    povChanged,
     previewImages,
     setPreviewImages,
     isInEdit,
