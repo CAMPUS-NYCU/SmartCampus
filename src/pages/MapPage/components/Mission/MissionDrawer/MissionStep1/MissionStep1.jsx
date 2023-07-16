@@ -2,23 +2,16 @@ import React, { useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
-import StreetviewIcon from '@mui/icons-material/Streetview'
 import axios from 'axios'
 import Flag from '../../../Flag'
 import inputImg from '../../../../../../assets/images/input-icon.svg'
-import {
-  useMissionValue,
-  MissionStep
-} from '../../../../../../utils/contexts/MissionContext'
+import { useMissionValue } from '../../../../../../utils/contexts/MissionContext'
 import { VITE_GOOGLE_MAP_API_KEY } from '../../../../../../constants/envValues'
-import CustomButton from '../../../../../../components/CustomButton'
 
 function MissionStep1() {
   const {
     textLocation,
     handleChangeTextLocation,
-    setStep,
-    streetViewUpload,
     markerPosition,
     setTextLocation
   } = useMissionValue()
@@ -66,22 +59,6 @@ function MissionStep1() {
           value={textLocation}
           onChange={handleChangeTextLocation}
         />
-      </Box>
-      <Box display='flex' alignItems='center'>
-        <StreetviewIcon style={{ color: 'FDCC4F', marginRight: '15px' }} />
-        <CustomButton
-          buttonType={
-            streetViewUpload
-              ? 'roundButton_activated'
-              : 'roundButton_inactivated'
-          }
-          variant='contained'
-          onClick={() => {
-            setStep(MissionStep.PlaceFlagOnStreet)
-          }}
-        >
-          新增街景
-        </CustomButton>
       </Box>
     </>
   )
