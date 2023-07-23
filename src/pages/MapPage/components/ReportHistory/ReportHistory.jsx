@@ -52,7 +52,7 @@ const ReportHistory = (props) => {
       handleClose={setClose}
       title='回報紀錄'
       closeButton
-      fullHeight
+      height='full'
     >
       {userAddTags ? (
         <List component='nav'>

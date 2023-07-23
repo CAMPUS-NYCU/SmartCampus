@@ -31,7 +31,7 @@ function MissionDrawer() {
       open={isInMission}
       handleClose={handleCloseMission}
       handleBack={handleBack}
-      fullHeight={currentStep === MissionStep.SelectMission}
+      height='part'
       title={getDrawerTitle()}
       variant='persistent'
     >

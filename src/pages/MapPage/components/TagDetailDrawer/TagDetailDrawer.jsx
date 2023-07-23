@@ -111,7 +111,7 @@ function TagDetailDialog(props) {
       <CustomDrawer
         open={activeTag && !isInMission}
         handleClose={onClose}
-        fullHeight
+        height='full'
         closeButton={false}
         title={
           activeTag && tagMissionIndex === 2

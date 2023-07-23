@@ -15,7 +15,7 @@ function FixedTagDetailDialog(props) {
     <CustomDrawer
       open={activeFixedTag ? true : ' '}
       handleClose={onClose}
-      fullHeight
+      height='part'
       closeButton={false}
       title={`${activeFixedTag.locationName}現有回報資訊`}
       variant='persistent'
