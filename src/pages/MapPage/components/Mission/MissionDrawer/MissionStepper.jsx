@@ -45,8 +45,7 @@ function MissionStepper(props) {
     handleNext,
     handleCompleteMission,
     ableToNextStep,
-    isInEdit,
-    setRemindOpen
+    isInEdit
   } = useMissionValue()
   const [finishOpen, setFinishOpen] = useState(false)
 
@@ -72,11 +71,7 @@ function MissionStepper(props) {
         <CustomButton
           buttonType='textButton_activated'
           size='medium'
-          onClick={
-            ableToNextStep === true
-              ? () => setFinishOpen(true)
-              : () => setRemindOpen(true)
-          }
+          onClick={() => setFinishOpen(true)}
           style={{ minWidth: 80 }}
         >
           {isInEdit ? '完成更新' : '完成新增'}

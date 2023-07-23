@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack'
 import { gql, useMutation } from '@apollo/client'
 import axios from 'axios'
 import useStep from '../hooks/useStep'
-import { missionInfo } from '../../constants/missionInfo'
 import { useTagValue } from './TagContext'
 import { useUserValue } from './UserContext'
 import { DefaultCenter } from '../../constants/mapConstants'
@@ -28,7 +27,6 @@ export const TAG_UPDATE_MUTATION = gql`
 
 export const MISSION_MAX_STEP = 1
 export const MISSION_MIN_STEP = 0
-export const MISSION_NUM_STEPS = 4
 
 export const floorMapping = [
   '無',
@@ -46,10 +44,6 @@ export const floorMapping = [
   '10樓'
 ]
 
-// 特殊的 selectedSubOptionId 數值，
-// 當 user 要手動輸入 subOption 的文字框時，selectedSubOptionId 會是這個
-export const SubOptionOther = Symbol('SubOptionOther')
-
 export const MissionStep = {
   Init: -1,
   PlaceFlagOnMap: 0,
@@ -62,18 +56,11 @@ const InitialMissionValue = {
     longitude: 0,
     latitude: 0
   },
-  selectedCategoryId: null,
-  selectedMissionId: '',
-  selectedSubOptionId: '',
-  subOptionOtherText: '',
-  moreDescriptionText: '',
   textLocation: '',
   photos: []
 }
 
 export const MissionContext = React.createContext({
-  missionType: null,
-  setMissionType: () => {},
   isInMission: false,
   handleBack: () => {},
   handleNext: () => {},
@@ -84,11 +71,6 @@ export const MissionContext = React.createContext({
   showControl: true,
   handleToggleShowControl: () => {},
   handleSetMarkerPosition: () => {},
-  handleSetSelectedCategoryId: () => {},
-  handleSetSelectedMissionId: () => {},
-  setSelectedSubOptionId: () => {},
-  handleChangeSubOptionOtherText: () => {},
-  handleChangeMoreDescriptionText: () => {},
   handleChangeTextLocation: () => {},
   setPhotos: () => {},
   handleMapOnLoad: () => {},
@@ -107,7 +89,6 @@ export const MissionContextProvider = ({ children }) => {
 
   const [isInEdit, setIsInEdit] = useState(false)
 
-  const [missionType, setMissionType] = useState(null)
   const [mapCenter, setMapCenter] = useState(DefaultCenter)
 
   // 照片
@@ -125,16 +106,6 @@ export const MissionContextProvider = ({ children }) => {
     minStep: MISSION_MIN_STEP
   })
   const { activeTag, tagDetail, getUserTagList } = useTagValue()
-  const handleBack = useCallback(() => {
-    setRemindOpen(false)
-    if (isInEdit && currentStep === MissionStep.SelectMission) {
-      handleBackStep(2)
-    } else if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
-      handleBackStep(-1)
-    } else {
-      handleBackStep(1)
-    }
-  }, [currentStep, handleBackStep, isInEdit])
   const isInMission = useMemo(
     () => currentStep !== MissionStep.Init,
     [currentStep]
@@ -165,53 +136,6 @@ export const MissionContextProvider = ({ children }) => {
   }, [mapInstance])
 
   // ==================== Option control ====================
-  // TODO 使用 useReducer 優化這坨 useState？
-
-  // --------------- Category ---------------
-  const [selectedCategoryId, setSelectedCategoryId] = useState(
-    InitialMissionValue.selectedCategoryId
-  )
-  const handleSetSelectedCategoryId = useCallback((newCategoryId) => {
-    setSelectedCategoryId(newCategoryId)
-  }, [])
-
-  // --------------- Mission ---------------
-  const [selectedMissionId, setSelectedMissionId] = useState(
-    InitialMissionValue.selectedMissionId
-  )
-  // --------------- Discovery ---------------
-  const [selectedSubOptionId, setSelectedSubOptionId] = useState(
-    InitialMissionValue.selectedSubOptionId
-  )
-  const [subOptionOtherText, setSubOptionOtherText] = useState(
-    InitialMissionValue.subOptionOtherText
-  )
-
-  const handleSetSelectedMissionId = useCallback(
-    (newMissionId) => {
-      if (missionType === 2) {
-        setStatus('請選擇')
-      } else {
-        setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
-      }
-      setRemindOpen(false)
-      setSelectedMissionId(newMissionId)
-    },
-    [missionType]
-  )
-
-  const handleChangeSubOptionOtherText = useCallback(
-    (event) => setSubOptionOtherText(event.target.value),
-    []
-  )
-  // --------------- Description ---------------
-  const [moreDescriptionText, setMoreDescriptionText] = useState(
-    InitialMissionValue.moreDescriptionText
-  )
-  const handleChangeMoreDescriptionText = useCallback(
-    (event) => setMoreDescriptionText(event.target.value),
-    []
-  )
   const [photos, setPhotos] = useState(InitialMissionValue.photos)
 
   // --------------- Location Text ---------------
@@ -222,8 +146,6 @@ export const MissionContextProvider = ({ children }) => {
     setTextLocation(event.target.value)
   }, [])
   const [floor, setFloor] = useState(0)
-  const [status, setStatus] = useState('請選擇')
-  const [remindOpen, setRemindOpen] = useState(false)
 
   // ===================== Loading =======================
   const [loading, setLoading] = useState(false)
@@ -231,14 +153,8 @@ export const MissionContextProvider = ({ children }) => {
   // ========== Token ==========
 
   const checkNextStep = useCallback(() => {
-    if (currentStep === MissionStep.SelectMission) {
-      if (missionType === 2) {
-        return selectedMissionId !== '' && selectedSubOptionId !== '請選擇'
-      }
-      return selectedMissionId !== '' && selectedSubOptionId !== ''
-    }
     return true
-  }, [currentStep, missionType, selectedMissionId, selectedSubOptionId])
+  }, [])
   const ableToNextStep = useMemo(() => checkNextStep(), [checkNextStep])
 
   // ==================== Clear ====================
@@ -246,38 +162,23 @@ export const MissionContextProvider = ({ children }) => {
     setImageFiles([])
     setStep(InitialMissionValue.currentStep)
     setMarkerPosition(InitialMissionValue.markerPosition)
-    setSelectedCategoryId(InitialMissionValue.selectedCategoryId)
-    setSelectedMissionId(InitialMissionValue.selectedMissionId)
-    setSelectedSubOptionId(InitialMissionValue.selectedSubOptionId)
-    setSubOptionOtherText(InitialMissionValue.subOptionOtherText)
-    setMoreDescriptionText(InitialMissionValue.moreDescriptionText)
     setPhotos(InitialMissionValue.photos)
     setTextLocation(InitialMissionValue.textLocation)
     setPreviewImages([])
     setImageDeleteUrls([])
     setFloor(0)
-    setStatus('請選擇')
-    setRemindOpen(false)
   }, [setStep])
 
   // ==================== Step control ====================
   const { enqueueSnackbar } = useSnackbar()
 
+  const handleBack = useCallback(() => {
+    handleBackStep(1)
+  }, [handleBackStep])
   const handleNext = useCallback(() => {
     handleNextStep(1)
   }, [handleNextStep])
 
-  const handleChangeMissionType = useCallback(
-    (target) => {
-      if (target !== missionType) {
-        setSelectedMissionId('')
-        setSelectedSubOptionId('')
-      }
-      setMissionType(target)
-      handleNext()
-    },
-    [handleNext, missionType]
-  )
   const handleStartMission = useCallback(() => {
     setShowControl(true)
     const center = mapInstance.getCenter()
@@ -298,36 +199,24 @@ export const MissionContextProvider = ({ children }) => {
         lat: parseFloat(startTag.coordinates.latitude),
         lng: parseFloat(startTag.coordinates.longitude)
       })
-      const tagMissionType = missionInfo.findIndex(
-        (element) => element.missionName === startTag.category.missionName
-      )
-      setMissionType(tagMissionType)
-      if (tagMissionType === 2) {
-        setStatus(startTag.category.targetName)
-      }
       setFloor(tagDetail.floor)
-      setSelectedMissionId(startTag.category.subTypeName)
-      setSelectedSubOptionId(startTag.category.targetName)
       setStep(MissionStep.PlaceFlagOnMap)
-      setMoreDescriptionText(tagDetail.description)
       setPreviewImages(tagDetail.imageUrl)
       setImageFiles([])
       setImageDeleteUrls([])
       setTextLocation(startTag.locationName || '')
       setIsInEdit(true)
     },
-    [setStep, tagDetail.description, tagDetail.imageUrl, tagDetail.floor]
+    [setStep, tagDetail.imageUrl, tagDetail.floor]
   )
 
   const handleCloseMission = useCallback(() => {
     clearMissionData()
-    setMissionType(null)
     setStep(MissionStep.Init)
     setIsInEdit(false)
   }, [clearMissionData, setStep])
   const handleCloseEdit = useCallback(() => {
     clearMissionData()
-    setMissionType(null)
     setStep(MissionStep.Init)
     setIsInEdit(false)
   }, [clearMissionData, setStep])
@@ -355,19 +244,12 @@ export const MissionContextProvider = ({ children }) => {
     setLoading(true)
     const payload = {
       locationName: textLocation,
-      category: {
-        missionName: missionInfo[missionType].missionName.toString(),
-        subTypeName: selectedMissionId.toString(),
-        targetName: selectedSubOptionId.toString()
-      },
       coordinates: {
         latitude: markerPosition.latitude.toString(),
         longitude: markerPosition.longitude.toString()
       },
-      description: moreDescriptionText,
       floor: Number(floor),
-      imageUploadNumber: imageFiles.length,
-      statusName: status.toString()
+      imageUploadNumber: imageFiles.length
     }
     const context = {
       headers: {
@@ -404,20 +286,16 @@ export const MissionContextProvider = ({ children }) => {
       getUserTagList({ variables: { uid } })
       setLoading(false)
       clearMissionData()
-      setMissionType(null)
       enqueueSnackbar('地圖標籤上傳完成', { variant: 'success' })
     } catch (err) {
       console.error(err)
       setLoading(false)
       clearMissionData()
-      setMissionType(null)
       enqueueSnackbar('錯誤', { variant: 'error' })
     }
   }
 
   const contextValues = {
-    missionType,
-    setMissionType,
     currentStep,
     isInMission,
     handleBack,
@@ -430,16 +308,6 @@ export const MissionContextProvider = ({ children }) => {
     handleToggleShowControl,
     markerPosition,
     handleSetMarkerPosition,
-    selectedCategoryId,
-    handleSetSelectedCategoryId,
-    selectedMissionId,
-    handleSetSelectedMissionId,
-    selectedSubOptionId,
-    setSelectedSubOptionId,
-    subOptionOtherText,
-    handleChangeSubOptionOtherText,
-    moreDescriptionText,
-    handleChangeMoreDescriptionText,
     textLocation,
     setTextLocation,
     handleChangeTextLocation,
@@ -460,13 +328,8 @@ export const MissionContextProvider = ({ children }) => {
     setMapCenter,
     floor,
     setFloor,
-    status,
-    setStatus,
-    remindOpen,
-    setRemindOpen,
     setImageDeleteUrls,
     imageDeleteUrls,
-    handleChangeMissionType,
     mapInstance
   }
   return (
