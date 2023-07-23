@@ -33,6 +33,7 @@ function FixedTagDetailDialog(props) {
         fullHeight
         closeButton={false}
         title={activeFixedTag.locationName}
+        variant='persistent'
       >
         <>
           <DetailPart
