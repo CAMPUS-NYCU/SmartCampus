@@ -353,8 +353,6 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleCompleteMission = async () => {
     setLoading(true)
-    let floorNumber = 0
-    floorNumber = Number(floor)
     const payload = {
       locationName: textLocation,
       category: {
@@ -367,7 +365,7 @@ export const MissionContextProvider = ({ children }) => {
         longitude: markerPosition.longitude.toString()
       },
       description: moreDescriptionText,
-      floor: floorNumber,
+      floor: Number(floor),
       imageUploadNumber: imageFiles.length,
       statusName: status.toString()
     }
