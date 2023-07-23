@@ -170,7 +170,7 @@ const DetailPart = (props) => {
           margin: '2px'
         }}
       >
-        {information.map((discovery) => (
+        {information?.map((discovery) => (
           <CustomButton
             key={discovery.floor}
             buttonType={
@@ -205,7 +205,7 @@ const DetailPart = (props) => {
                   fixedtagfloor={fixedtagfloor}
                 />
               ))
-          : ''}
+          : '[TODO]: 無資料'}
       </Box>
     </>
   )
