@@ -223,7 +223,9 @@ function Map(props) {
                 color: '#FDCC4F'
               }}
               clickable
-              onClick={() => history.push(`${MAP_PATH}/${fixedtag.id}`)}
+              onClick={() =>
+                history.push(`${MAP_PATH}/fixedtag/${fixedtag.id}`)
+              }
             />
           ))}
         {markerCluster &&
@@ -281,7 +283,7 @@ function Map(props) {
                 }
               })()}
               clickable
-              onClick={() => history.push(`${MAP_PATH}/${tag.id}`)}
+              onClick={() => history.push(`${MAP_PATH}/tag/${tag.id}`)}
             />
           ))}
         {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
