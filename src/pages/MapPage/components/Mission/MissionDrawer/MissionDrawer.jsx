@@ -19,10 +19,9 @@ const useStyles = makeStyles(() => ({
 }))
 
 function MissionDrawer() {
-  const { isInMission, handleCloseMission, handleBack, isInEdit } =
+  const { isInMission, currentStep, handleCloseMission, handleBack, isInEdit } =
     useMissionValue()
   const classes = useStyles()
-  const { currentStep } = useMissionValue()
 
   const getDrawerTitle = () => {
     if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {

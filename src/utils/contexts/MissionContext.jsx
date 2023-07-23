@@ -26,7 +26,7 @@ export const TAG_UPDATE_MUTATION = gql`
   }
 `
 
-export const MISSION_MAX_STEP = 2
+export const MISSION_MAX_STEP = 1
 export const MISSION_MIN_STEP = 0
 export const MISSION_NUM_STEPS = 4
 
