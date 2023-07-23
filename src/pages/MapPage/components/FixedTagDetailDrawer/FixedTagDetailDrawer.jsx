@@ -17,7 +17,7 @@ function FixedTagDetailDialog(props) {
       handleClose={onClose}
       fullHeight
       closeButton={false}
-      title={activeFixedTag.locationName}
+      title={`${activeFixedTag.locationName}現有回報資訊`}
       variant='persistent'
     >
       <>

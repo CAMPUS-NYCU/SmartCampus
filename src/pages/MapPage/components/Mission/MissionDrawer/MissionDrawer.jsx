@@ -24,13 +24,7 @@ function MissionDrawer() {
   const classes = useStyles()
 
   const getDrawerTitle = () => {
-    if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
-      return '更改座標位置'
-    }
-    if (isInEdit) {
-      return '編輯回報紀錄'
-    }
-    return `標註`
+    return isInEdit ? '更新回報資訊' : '新增回報資訊'
   }
   return (
     <CustomDrawer
