@@ -106,7 +106,8 @@ const MapPageContent = (props) => {
   const history = useHistory()
   const userDialogControl = useModal()
   const ReportHistoryControl = useModal()
-  const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
+  const { isInMission, showControl, loading, mapCenter, setMapCenter } =
+    useMissionValue()
   const {
     activeTag,
     activeFixedTag,
@@ -177,14 +178,14 @@ const MapPageContent = (props) => {
           <MissionDrawer />
           <ReportHistory control={ReportHistoryControl} />
           <UserDialog userId={uid} control={userDialogControl} />
-          {activeTag && (
+          {!isInMission && activeTag && (
             <TagDetailDrawer
               activeTag={activeTag}
               tagDetail={tagDetail}
               onClose={() => history.push(MAP_PATH)}
             />
           )}
-          {activeFixedTag && (
+          {!isInMission && activeFixedTag && (
             <FixedTagDetailDrawer
               activeFixedTag={activeFixedTag}
               fixedtagDetail={fixedtagDetail}
