@@ -25,9 +25,6 @@ export const TAG_UPDATE_MUTATION = gql`
   }
 `
 
-export const MISSION_MAX_STEP = 1
-export const MISSION_MIN_STEP = 0
-
 export const floorMapping = [
   '無',
   'B1',
@@ -49,6 +46,10 @@ export const MissionStep = {
   PlaceFlagOnMap: 0,
   SelectMission: 1
 }
+
+export const MISSION_MAX_STEP = 1
+export const MISSION_MIN_STEP = 0
+export const MISSION_FIRST_STEP = MissionStep.PlaceFlagOnMap
 
 const InitialMissionValue = {
   currentStep: MissionStep.Init,
@@ -186,7 +187,7 @@ export const MissionContextProvider = ({ children }) => {
       longitude: center.lng(),
       latitude: center.lat()
     })
-    setStep(MissionStep.PlaceFlagOnMap)
+    setStep(MISSION_FIRST_STEP)
   }, [mapInstance, setStep])
   const handleStartEdit = useCallback(
     (startTag) => {
@@ -200,7 +201,7 @@ export const MissionContextProvider = ({ children }) => {
         lng: parseFloat(startTag.coordinates.longitude)
       })
       setFloor(tagDetail.floor)
-      setStep(MissionStep.PlaceFlagOnMap)
+      setStep(MISSION_FIRST_STEP)
       setPreviewImages(tagDetail.imageUrl)
       setImageFiles([])
       setImageDeleteUrls([])
