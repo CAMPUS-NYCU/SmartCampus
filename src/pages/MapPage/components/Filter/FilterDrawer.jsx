@@ -79,7 +79,7 @@ const FilterDrawer = (props) => {
       handleClose={handleCloseFilter}
       title='篩選'
       closeButton
-      fullHeight
+      height='full'
     >
       <>
         <Box p={2} display='flex'>
