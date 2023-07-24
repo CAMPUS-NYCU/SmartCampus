@@ -55,7 +55,21 @@ const Pages = () => {
                 <Redirect to={LOGIN_PATH} />
               )}
             </Route>
-            <Route path={`${MAP_PATH}/:activeTagId?`} exact>
+            <Route path={`${MAP_PATH}`} exact>
+              {token ? (
+                <MapPage />
+              ) : (
+                <CacheTagId setTagIdCache={setTagIdCache} />
+              )}
+            </Route>
+            <Route path={`${MAP_PATH}/tag/:activeTagId`} exact>
+              {token ? (
+                <MapPage />
+              ) : (
+                <CacheTagId setTagIdCache={setTagIdCache} />
+              )}
+            </Route>
+            <Route path={`${MAP_PATH}/fixedtag/:activeTagId`} exact>
               {token ? (
                 <MapPage />
               ) : (

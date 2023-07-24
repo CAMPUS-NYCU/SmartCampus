@@ -6,9 +6,9 @@ import { makeStyles } from '@mui/styles'
 import { Dialog, DialogTitle } from '@mui/material'
 import CustomButton from '../../../../../components/CustomButton'
 import {
+  MISSION_MIN_STEP,
   MISSION_MAX_STEP,
-  useMissionValue,
-  MissionStep
+  useMissionValue
 } from '../../../../../utils/contexts/MissionContext'
 
 const useStyles = makeStyles((theme) => ({
@@ -20,12 +20,6 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '400px'
     }
     // backgroundColor: 'rgba(0,0,0,0)' // 不要預設的灰底
-  },
-  streetStepper: {
-    position: 'fixed',
-    bottom: 0,
-    width: '100%',
-    background: 'none'
   },
   button: {
     minWidth: 80,
@@ -42,96 +36,74 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: `10px`
   }
 }))
+
 function MissionStepper(props) {
   const classes = useStyles()
   const {
     currentStep,
+    handleBack,
     handleNext,
     handleCompleteMission,
-    handleCloseStreetView,
     ableToNextStep,
-    handleCompleteStreetView,
-    isInEdit,
-    setRemindOpen
+    isInEdit
   } = useMissionValue()
-  const { PlaceFlagOnStreet } = MissionStep
   const [finishOpen, setFinishOpen] = useState(false)
-  let nextStepButtonName = ''
-  if (currentStep === 0) {
-    nextStepButtonName = ''
-  } else if (isInEdit && currentStep === MissionStep.PlaceFlagOnMap) {
-    nextStepButtonName = '確定'
-  } else {
-    nextStepButtonName = '下一步'
+
+  function getBackButton() {
+    if (currentStep <= MISSION_MIN_STEP) {
+      return null
+    }
+    return (
+      <CustomButton
+        buttonType='textButton_activated'
+        size='medium'
+        onClick={handleBack}
+        style={{ minWidth: 80 }}
+      >
+        上一步
+      </CustomButton>
+    )
   }
+
+  function getNextButton() {
+    if (currentStep >= MISSION_MAX_STEP) {
+      return (
+        <CustomButton
+          buttonType='textButton_activated'
+          size='medium'
+          onClick={() => setFinishOpen(true)}
+          style={{ minWidth: 80 }}
+        >
+          {isInEdit ? '完成更新' : '完成新增'}
+        </CustomButton>
+      )
+    }
+    return (
+      <CustomButton
+        buttonType='textButton_activated'
+        size='medium'
+        disabled={!ableToNextStep}
+        onClick={handleNext}
+        style={{ minWidth: 80 }}
+      >
+        下一步
+      </CustomButton>
+    )
+  }
+
   return (
     <>
-      {currentStep === PlaceFlagOnStreet ? (
-        <MobileStepper
-          variant='dots'
-          steps={0}
-          position='bottom'
-          activeStep={-1}
-          className={classes.stepper}
-          backButton={
-            <CustomButton
-              buttonType='textButton_activated'
-              size='medium'
-              onClick={handleCloseStreetView}
-              style={{ minWidth: 80 }}
-            >
-              取消
-            </CustomButton>
-          }
-          nextButton={
-            <CustomButton
-              buttonType='textButton_activated'
-              size='medium'
-              onClick={handleCompleteStreetView}
-              style={{ minWidth: 80 }}
-            >
-              確定
-            </CustomButton>
-          }
-          {...props}
-        />
-      ) : (
-        <MobileStepper
-          variant='dots'
-          steps={0}
-          position='bottom'
-          // activeStep={currentStep}
-          activeStep={-1}
-          className={classes.stepper}
-          nextButton={
-            currentStep >= MISSION_MAX_STEP ? (
-              <CustomButton
-                buttonType='textButton_activated'
-                size='medium'
-                onClick={
-                  ableToNextStep === true
-                    ? () => setFinishOpen(true)
-                    : () => setRemindOpen(true)
-                }
-                style={{ minWidth: 80 }}
-              >
-                確定
-              </CustomButton>
-            ) : (
-              <CustomButton
-                buttonType='textButton_activated'
-                size='medium'
-                disabled={!ableToNextStep}
-                onClick={handleNext}
-                style={{ minWidth: 80 }}
-              >
-                {nextStepButtonName}
-              </CustomButton>
-            )
-          }
-          {...props}
-        />
-      )}
+      <MobileStepper
+        variant='dots'
+        steps={0}
+        position='bottom'
+        // activeStep={currentStep}
+        activeStep={-1}
+        className={classes.stepper}
+        backButton={getBackButton()}
+        nextButton={getNextButton()}
+        {...props}
+      />
       <Dialog
         open={finishOpen}
         PaperProps={{

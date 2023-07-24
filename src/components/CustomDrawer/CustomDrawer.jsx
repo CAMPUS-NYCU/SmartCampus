@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 450,
     height: 'calc(100vh - 100px)'
   },
+  drawerContentPart: {
+    minHeight: 450,
+    height: 'calc(50vh - 100px)'
+  },
   titleBar: {
     position: 'sticky',
     top: 0,
@@ -52,7 +56,7 @@ const CustomDrawer = (props) => {
     open,
     handleClose,
     handleBack,
-    fullHeight,
+    height,
     closeButton,
     title,
     titleActions,
@@ -62,6 +66,17 @@ const CustomDrawer = (props) => {
 
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
+
+  const getDrawerContentStyle = () => {
+    switch (height) {
+      case 'full':
+        return classes.drawerContentFull
+      case 'part':
+        return classes.drawerContentPart
+      default:
+        return null
+    }
+  }
 
   return (
     <Drawer
@@ -74,7 +89,7 @@ const CustomDrawer = (props) => {
       <Box
         display='flex'
         flexDirection='column'
-        className={fullHeight ? classes.drawerContentFull : null}
+        className={getDrawerContentStyle()}
       >
         <Toolbar className={classes.titleBar}>
           {closeButton ? (
@@ -119,7 +134,7 @@ const CustomDrawer = (props) => {
 
 CustomDrawer.defaultProps = {
   handleBack: null,
-  fullHeight: false,
+  height: null,
   closeButton: true,
   variant: 'temporary',
   titleActions: []
@@ -130,7 +145,7 @@ CustomDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleBack: PropTypes.func,
-  fullHeight: PropTypes.bool,
+  height: PropTypes.string,
   closeButton: PropTypes.bool,
   title: PropTypes.string.isRequired,
   titleActions: PropTypes.arrayOf(

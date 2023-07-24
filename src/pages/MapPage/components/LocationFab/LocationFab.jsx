@@ -7,7 +7,8 @@ const useStyles = makeStyles({
   fab: {
     position: 'fixed',
     top: 150,
-    right: 24
+    right: 24,
+    zIndex: 10
   }
 })
 

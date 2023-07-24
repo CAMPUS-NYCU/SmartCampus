@@ -18,7 +18,6 @@ import { useParams, useHistory } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import Map from './components/Map'
 import useModal from '../../utils/hooks/useModal'
-import MissionFab from './components/Mission/MissionFab'
 import MissionDrawer from './components/Mission/MissionDrawer'
 import {
   MissionContextProvider,
@@ -107,7 +106,8 @@ const MapPageContent = (props) => {
   const history = useHistory()
   const userDialogControl = useModal()
   const ReportHistoryControl = useModal()
-  const { showControl, loading, mapCenter, setMapCenter } = useMissionValue()
+  const { isInMission, showControl, loading, mapCenter, setMapCenter } =
+    useMissionValue()
   const {
     activeTag,
     activeFixedTag,
@@ -166,7 +166,6 @@ const MapPageContent = (props) => {
                 setSearch={setSearch}
                 setPlaceName={setPlaceName}
               />
-              <MissionFab />
               <FilterFab />
               <LocationFab
                 setMapCenter={() => {
@@ -179,14 +178,14 @@ const MapPageContent = (props) => {
           <MissionDrawer />
           <ReportHistory control={ReportHistoryControl} />
           <UserDialog userId={uid} control={userDialogControl} />
-          {activeTag && (
+          {!isInMission && activeTag && (
             <TagDetailDrawer
               activeTag={activeTag}
               tagDetail={tagDetail}
               onClose={() => history.push(MAP_PATH)}
             />
           )}
-          {activeFixedTag && (
+          {!isInMission && activeFixedTag && (
             <FixedTagDetailDrawer
               activeFixedTag={activeFixedTag}
               fixedtagDetail={fixedtagDetail}
