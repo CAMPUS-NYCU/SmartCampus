@@ -6,35 +6,25 @@ import { useUserValue } from '../contexts/UserContext'
 
 export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
-    tag(tagId: $id) {
+    tagResearch(tagId: $id) {
       id
       createTime
-      locationName
       floor
       lastUpdateTime
       imageUrl
       status {
-        numberOfUpVote
-        hasUpVote
         statusName
-        description
+        statusDescName
       }
       createUser {
         displayName
         uid
-        userAddTagNumber
       }
-      statusHistory {
-        statusList {
-          statusName
-          createTime
-          createUser {
-            displayName
-            uid
-            userAddTagNumber
-          }
-          description
-        }
+      category {
+        categoryType
+        categoryName
+        categoryDescName
+        locationImgUrl
       }
     }
   }
@@ -47,25 +37,29 @@ export const generateTime = (time) => {
 const tagDetailInitial = {
   id: null,
   createTime: '',
+  floor: '',
   lastUpdateTime: '',
   imageUrl: [],
   status: {
-    numberOfUpVote: null,
-    hasUpVote: null
+    statusName: '',
+    statusDescName: ''
   },
   createUser: {
     uid: '',
     displayName: ''
   },
-  statusHistory: {
-    statusList: []
+  category: {
+    categoryType: '',
+    categoryName: '',
+    categoryDescName: '',
+    locationImgUrl: []
   }
 }
 
 function useTagDetail() {
   const { token, uid } = useUserValue()
   const [tagDetail, setTagDetail] = useState(tagDetailInitial)
-  const [getTagDetail, { data: { tag = {} } = {} }] = useLazyQuery(
+  const [getTagDetail, { data: { tagResearch = {} } = {} }] = useLazyQuery(
     GET_TAG_DETAIL_QUERY,
     {
       fetchPolicy: 'no-cache',
@@ -75,15 +69,15 @@ function useTagDetail() {
     }
   )
   useEffect(() => {
-    if (tag?.id) {
+    if (tagResearch?.id) {
       setTagDetail({
         ...tagDetailInitial,
-        ...tag,
-        newCreateTime: generateTime(tag.createTime) || '0',
-        newLastUpdateTime: generateTime(tag.lastUpdateTime) || '0'
+        ...tagResearch,
+        newCreateTime: generateTime(tagResearch.createTime) || '0',
+        newLastUpdateTime: generateTime(tagResearch.lastUpdateTime) || '0'
       })
     }
-  }, [tag])
+  }, [tagResearch])
   const resetTagDetail = useCallback(() => {
     setTagDetail(tagDetailInitial)
   }, [])

@@ -2,40 +2,17 @@ import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Button } from '@mui/material'
 import Grid from '@mui/material/Grid'
-import moment from 'moment'
 import changeImage from '../../../../assets/images/fixedTagChange.svg'
 import CustomButton from '../../../../components/CustomButton'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
-import {
-  fixedTagContext,
-  fixedTagStatus
-} from '../../../../constants/fixedTagContext'
+import { fixedTagContext } from '../../../../constants/fixedTagContext'
 
 const DetailPartItem = (props) => {
-  const { fixedtagfloor } = props
-
-  const findStatusIndex = (statusName) => {
-    if (statusName === fixedTagStatus[0].statusName) {
-      return fixedTagStatus[0]
-    }
-    if (statusName === fixedTagStatus[1].statusName) {
-      return fixedTagStatus[1]
-    }
-    if (statusName === fixedTagStatus[2].statusName) {
-      return fixedTagStatus[2]
-    }
-    if (statusName === fixedTagStatus[3].statusName) {
-      return fixedTagStatus[3]
-    }
-    if (statusName === fixedTagStatus[4].statusName) {
-      return fixedTagStatus[4]
-    }
-    return fixedTagStatus[5]
-  }
+  const { tag } = props
 
   return (
     <Grid
-      key={fixedtagfloor.id + fixedtagfloor.floor}
+      key={tag.id}
       container
       spacing={2}
       style={{
@@ -60,55 +37,7 @@ const DetailPartItem = (props) => {
           textTransform: 'uppercase'
         }}
       >
-        {fixedtagfloor.type !== 'floor'
-          ? fixedtagfloor.name
-          : `${fixedtagfloor.floor} 公共區域`}
-      </Grid>
-      <Grid
-        item
-        xs={5}
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          paddingRight: '0px'
-        }}
-      >
-        <Button
-          key={fixedtagfloor.id}
-          id='changeStatusButton'
-          style={{
-            background: findStatusIndex(fixedtagfloor.status.statusName).color,
-            color: 'black',
-            fontSize: '12px',
-            borderRadius: '5px'
-          }}
-        >
-          <img
-            src={findStatusIndex(fixedtagfloor.status.statusName).img}
-            alt=''
-          />
-          &nbsp;{fixedtagfloor.status.statusName}
-        </Button>
-      </Grid>
-      <Grid
-        item
-        xs={4}
-        style={{
-          fontSize: '12px',
-          fontColor: '#888888',
-          fontFamily: 'Roboto',
-          fontStyle: 'normal',
-          fontWeight: '400',
-          lineHeight: '18px',
-          letterSpacing: '0.75px'
-        }}
-      >
-        <Box m={0.5} style={{ fontSize: '12px', color: 'gray' }}>
-          編輯於{' '}
-          {moment(
-            fixedtagfloor?.statusHistory?.statusList?.[0]?.createTime
-          ).fromNow()}
-        </Box>
+        {tag.locationName}
       </Grid>
       <Grid
         item
@@ -196,15 +125,10 @@ const DetailPart = (props) => {
           marginTop: '10px'
         }}
       >
-        {fixedtagDetail.fixedTagSubLocations.length > 0
-          ? fixedtagDetail.fixedTagSubLocations
-              .filter((fixedtagfloor) => fixedtagfloor.floor === floor)
-              .map((fixedtagfloor) => (
-                <DetailPartItem
-                  key={fixedtagfloor.id}
-                  fixedtagfloor={fixedtagfloor}
-                />
-              ))
+        {fixedtagDetail.tags.length > 0
+          ? fixedtagDetail.tags.map((tag) => (
+              <DetailPartItem key={tag.id} tag={tag} />
+            ))
           : '[TODO]: 無資料'}
       </Box>
     </>

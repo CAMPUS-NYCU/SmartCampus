@@ -3,25 +3,39 @@ import { gql, useLazyQuery } from '@apollo/client'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList($cursor: String!, $pageSize: Int!) {
-    unarchivedTagList(pageParams: { cursor: $cursor, pageSize: $pageSize }) {
+    unarchivedTagListResearch(
+      pageParams: { cursor: $cursor, pageSize: $pageSize }
+    ) {
       cursor
       empty
       tags {
         id
+        locationName
         category {
-          missionName
-          subTypeName
-          targetName
+          categoryType
+          categoryName
+          categoryDescName
+          locationImgUrl
         }
         coordinates {
           latitude
           longitude
         }
-        lastUpdateTime
         status {
           statusName
-          numberOfUpVote
+          statusDescName
         }
+        statusHistory {
+          statusList {
+            statusName
+            statusDescName
+            createTime
+          }
+          cursor
+          empty
+        }
+        floor
+        archived
       }
     }
   }
@@ -32,7 +46,11 @@ function useTagList() {
     getTagList,
     {
       data: {
-        unarchivedTagList: { tags = null, empty = false, cursor = null } = {}
+        unarchivedTagListResearch: {
+          tags = null,
+          empty = false,
+          cursor = null
+        } = {}
       } = {}
     }
   ] = useLazyQuery(GET_TAG_LIST_QUERY)

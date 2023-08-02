@@ -3,9 +3,7 @@ import { gql, useLazyQuery } from '@apollo/client'
 
 export const GET_FIXEDTAG_LIST_QUERY = gql`
   query getfixedTagList($cursor: String!, $pageSize: Int!) {
-    fixedTagList(pageParams: { cursor: $cursor, pageSize: $pageSize }) {
-      cursor
-      empty
+    fixedTagResearchList(pageParams: { cursor: $cursor, pageSize: $pageSize }) {
       fixedTags {
         id
         locationName
@@ -13,60 +11,38 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
           latitude
           longitude
         }
-        viewCount
-        fixedTagSubLocations {
-          __typename
-          ... on FixedTagPlace {
-            id
-            fixedTagId
-            type
-            floor
-            name
-            status {
-              statusName
-              createTime
-              createUser {
-                displayName
-                uid
-                userAddTagNumber
-              }
-              type
-            }
-            statusHistory {
-              statusList {
-                statusName
-                createTime
-                createUser {
-                  displayName
-                  uid
-                  userAddTagNumber
-                }
-                type
-              }
-              empty
-            }
+        tags {
+          id
+          fixedTagId
+          locationName
+          floor
+          category {
+            categoryType
+            categoryName
+            categoryDescName
+            locationImgUrl
           }
-          ... on FixedTagFloor {
-            id
-            fixedTagId
-            type
-            floor
-            status {
+          coordinates {
+            latitude
+            longitude
+          }
+          status {
+            statusName
+            statusDescName
+            createTime
+          }
+          statusHistory {
+            statusList {
               statusName
+              statusDescName
               createTime
-              type
             }
-            statusHistory {
-              statusList {
-                statusName
-                createTime
-                type
-              }
-              empty
-            }
+            empty
           }
         }
       }
+      cursor
+      empty
     }
   }
 `
@@ -76,7 +52,11 @@ function useFixedTagList() {
     getfixedTagList,
     {
       data: {
-        fixedTagList: { fixedTags = null, empty = false, cursor = null } = {}
+        fixedTagResearchList: {
+          fixedTags = null,
+          empty = false,
+          cursor = null
+        } = {}
       } = {}
     }
   ] = useLazyQuery(GET_FIXEDTAG_LIST_QUERY)

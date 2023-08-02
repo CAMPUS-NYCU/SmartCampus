@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const GET_READ_GUIDE_QUERY = gql`
   query {
-    hasReadGuide
+    hasReadGuideResearch
   }
 `
 
@@ -75,7 +75,7 @@ const GuidePage = (props) => {
     }
   }, [token, loadHasReadGuide, isGuest, signOut])
   useEffect(() => {
-    if (data && !data.hasReadGuide && step === 3) {
+    if (data && !data.hasReadGuideResearch && step === 3) {
       setHasReadGuideMutation({
         context: {
           headers: {
@@ -83,7 +83,7 @@ const GuidePage = (props) => {
           }
         }
       })
-    } else if (data?.hasReadGuide && skip) {
+    } else if (data?.hasReadGuideResearch && skip) {
       setStep(3)
     }
   }, [data, token, setHasReadGuideMutation, setStep, step, skip])
