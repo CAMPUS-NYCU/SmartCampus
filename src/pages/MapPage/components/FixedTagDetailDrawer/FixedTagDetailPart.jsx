@@ -69,6 +69,11 @@ const DetailPartItem = (props) => {
   )
 }
 
+const DetailPartContext = (props) => {
+  const { tags } = props
+  return tags.map((tag) => <DetailPartItem key={tag.id} tag={tag} />)
+}
+
 const DetailPart = (props) => {
   const { activeFixedTag } = props
   const [floor, setFloor] = useState(
@@ -125,11 +130,11 @@ const DetailPart = (props) => {
           marginTop: '10px'
         }}
       >
-        {fixedtagDetail.tags.length > 0
-          ? fixedtagDetail.tags.map((tag) => (
-              <DetailPartItem key={tag.id} tag={tag} />
-            ))
-          : '[TODO]: 無資料'}
+        {fixedtagDetail.tags.length > 0 ? (
+          <DetailPartContext tags={fixedtagDetail.tags} />
+        ) : (
+          '[TODO]: 無資料'
+        )}
       </Box>
     </>
   )
