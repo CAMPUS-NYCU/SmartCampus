@@ -34,7 +34,7 @@ const GET_READ_GUIDE_QUERY = gql`
 
 const SET_HAS_READ_GUIDE_MUTATION = gql`
   mutation {
-    setHasReadGuide
+    setHasReadGuideResearch
   }
 `
 
