@@ -268,7 +268,15 @@ export const MissionContextProvider = ({ children }) => {
         longitude: markerPosition.longitude.toString()
       },
       floor: Number(floor),
-      imageUploadNumber: imageFiles.length
+      imageUploadNumber: imageFiles.length,
+      statusName: '清潔狀態',
+      statusDescName: '乾淨',
+      category: {
+        categoryType: '物體',
+        categoryName: '飲水機',
+        categoryDescName: '飲水機1',
+        locationImgUrl: []
+      }
     }
     const context = {
       headers: {
