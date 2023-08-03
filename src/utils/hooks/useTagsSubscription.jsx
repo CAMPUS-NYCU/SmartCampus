@@ -6,19 +6,21 @@ export const TAG_CHANGE_SUBSCRIPTION = gql`
       changeType
       tagContent {
         id
-        category {
-          missionName
-          subTypeName
-          targetName
-        }
+        locationName
         coordinates {
           latitude
           longitude
         }
-        lastUpdateTime
+        category {
+          categoryType
+          categoryName
+          categoryDescName
+          locationImgUrl
+        }
+        floor
         status {
           statusName
-          numberOfUpVote
+          statusDescName
         }
       }
     }

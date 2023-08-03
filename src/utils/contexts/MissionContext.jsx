@@ -28,15 +28,29 @@ export const TAG_ADD_MUTATION = gql`
       }
       imageUploadNumber
       imageUploadUrls
+      imageDeleteStatus
     }
   }
 `
 export const TAG_UPDATE_MUTATION = gql`
   mutation updateTagData($tagId: ID!, $data: updateTagResearchDataInput!) {
     updateTagResearchData(tagId: $tagId, data: $data) {
-      tag {
+      tagResearch {
         id
+        locationName
+        category {
+          categoryType
+          categoryName
+          categoryDescName
+          locationImgUrl
+        }
+        floor
+        status {
+          statusName
+          statusDescName
+        }
       }
+      imageUploadNumber
       imageUploadUrls
       imageDeleteStatus
     }
@@ -263,20 +277,20 @@ export const MissionContextProvider = ({ children }) => {
     setLoading(true)
     const payload = {
       locationName: textLocation,
-      coordinates: {
-        latitude: markerPosition.latitude.toString(),
-        longitude: markerPosition.longitude.toString()
-      },
-      floor: Number(floor),
-      imageUploadNumber: imageFiles.length,
-      statusName: '清潔狀態',
-      statusDescName: '乾淨',
       category: {
         categoryType: '物體',
         categoryName: '飲水機',
         categoryDescName: '飲水機1',
         locationImgUrl: []
-      }
+      },
+      coordinates: {
+        latitude: markerPosition.latitude.toString(),
+        longitude: markerPosition.longitude.toString()
+      },
+      imageUploadNumber: imageFiles.length,
+      floor: Number(floor),
+      statusName: '清潔狀態',
+      statusDescName: '乾淨'
     }
     const context = {
       headers: {
