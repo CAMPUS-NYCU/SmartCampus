@@ -77,7 +77,7 @@ const ReportHistory = (props) => {
                     >
                       <Typography variant='h6'>{item.locationName}</Typography>
                       <Typography variant='body2' color='textSecondary'>
-                        {item.statusHistory[0].createTime}
+                        [TODO]: Obsolete, please remove the code
                       </Typography>
                     </Grid>
                     <Grid
@@ -88,10 +88,10 @@ const ReportHistory = (props) => {
                       alignItems='center'
                     >
                       <Box className={classes.tag} mr={1} p={0.5}>
-                        {item.category.subTypeName}
+                        [TODO]: Obsolete, please remove the code
                       </Box>
                       <Box className={classes.tag} mr={1} p={0.5}>
-                        {item.category.targetName}
+                        [TODO]: Obsolete, please remove the code
                       </Box>
                     </Grid>
                   </Grid>

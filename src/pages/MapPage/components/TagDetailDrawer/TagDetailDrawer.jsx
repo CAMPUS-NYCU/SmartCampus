@@ -1,13 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Typography, Dialog, DialogTitle } from '@mui/material'
 import { Lightbox } from 'react-modal-image'
 
-import Mission2 from '../../../../assets/images/mission2_round.svg'
-import Mission1 from '../../../../assets/images/mission1_round.svg'
-import Mission3 from '../../../../assets/images/mission3_round.svg'
-import Mission2Voting from '../../../../assets/images/mission2_round_voting.svg'
-import { missionInfo } from '../../../../constants/missionInfo'
 import tagStatus from '../../../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
@@ -27,33 +22,6 @@ function TagDetailDialog(props) {
   const [stateDrawer, setStateDrawer] = useState(false)
   const [deleteDialog, setDeleteDialog] = useState(false)
   const { incrementViewCount } = useViewCount()
-  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
-  const mission2ImageVoting = useMemo(() => [Mission2Voting], [])
-  const missionName = useMemo(
-    () =>
-      missionInfo.map((mission) => {
-        return mission.missionName
-      }),
-    []
-  )
-  const tagMissionIndex = useMemo(
-    () =>
-      missionName.findIndex(
-        (mission) => mission === activeTag.category.missionName
-      ),
-    [activeTag.category.missionName, missionName]
-  )
-  const tagStatusIndex = useMemo(
-    () =>
-      tagStatus[tagMissionIndex].findIndex(
-        (status) => status.statusName === tagDetail.status.statusName || ''
-      ),
-    [tagDetail.status.statusName, tagMissionIndex]
-  )
-  const status = useMemo(
-    () => tagStatus[tagMissionIndex][tagStatusIndex] || tagStatus[0][0],
-    [tagMissionIndex, tagStatusIndex]
-  )
   const checkTagOwner = () => {
     if (userAddTags) {
       return userAddTags.find((userAddTag) => userAddTag.id === activeTag.id)
@@ -113,11 +81,7 @@ function TagDetailDialog(props) {
         handleClose={onClose}
         height='full'
         closeButton={false}
-        title={
-          activeTag && tagMissionIndex === 2
-            ? activeTag.category.subTypeName
-            : activeTag.category.targetName || '詳細資訊'
-        }
+        title='[TODO]: title'
         titleActions={
           checkTagOwner()
             ? [
@@ -158,17 +122,6 @@ function TagDetailDialog(props) {
                 justifyContent='space-around'
                 width='70%'
               >
-                <img
-                  src={
-                    tagDetail.status.statusName === '已解決'
-                      ? mission2ImageVoting[0]
-                      : missionImage[tagMissionIndex]
-                  }
-                  alt=''
-                />
-                <Typography>
-                  {tagMissionIndex !== 2 ? activeTag.category.subTypeName : ''}
-                </Typography>
                 <Typography>{tagDetail.locationName}</Typography>
                 {tagDetail.floor === 0 ? (
                   ''
@@ -182,30 +135,12 @@ function TagDetailDialog(props) {
                   </>
                 )}
               </Box>
-              <div
-                style={{
-                  cursor: 'default',
-                  width: '100px',
-                  height: '36px',
-                  borderTop: `18px solid ${status.statusColor}`,
-                  borderBottom: `18px solid ${status.statusColor}`,
-                  borderLeft: '12px solid transparent',
-                  textAlign: 'center'
-                }}
-              >
-                <Typography style={{ position: 'relative', top: '-10px' }}>
-                  {status.statusName}
-                </Typography>
-              </div>
             </Box>
           )}
           <DetailPart
             tagDetail={tagDetail}
-            activeTag={activeTag}
-            missionName={missionName}
             setLargeImg={setLargeImg}
             setStateDrawer={setStateDrawer}
-            tagMissionIndex={tagMissionIndex}
             threshold={threshold}
           />
         </Box>
@@ -215,15 +150,7 @@ function TagDetailDialog(props) {
           stateDrawer={stateDrawer}
           tagDetail={tagDetail}
           setStateDrawer={setStateDrawer}
-          status={(() => {
-            if (tagMissionIndex === 2) {
-              if (activeTag.category.subTypeName === 'Wi-Fi 訊號') {
-                return tagStatus[4]
-              }
-              return tagStatus[3]
-            }
-            return tagStatus[tagMissionIndex]
-          })()}
+          status={(() => tagStatus[0])()}
         />
       )}
       {largeImg && (

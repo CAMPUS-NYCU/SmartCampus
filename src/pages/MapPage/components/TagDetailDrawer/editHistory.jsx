@@ -45,7 +45,7 @@ const EditHistory = (props) => {
         </Toolbar>
       </AppBar>
       <List component='nav'>
-        {tagDetail.statusHistory.statusList.map((history) => {
+        {tagDetail.statusHistory?.statusList?.map((history) => {
           let tagStatusIndex = null
           tagStatus.forEach((s) => {
             const f = s.findIndex(
