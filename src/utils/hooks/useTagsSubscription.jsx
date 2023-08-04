@@ -2,23 +2,25 @@ import { useSubscription, gql } from '@apollo/client'
 
 export const TAG_CHANGE_SUBSCRIPTION = gql`
   subscription onTagChange {
-    tagChangeSubscription {
+    tagResearchChangeSubscription {
       changeType
       tagContent {
         id
-        category {
-          missionName
-          subTypeName
-          targetName
-        }
+        locationName
         coordinates {
           latitude
           longitude
         }
-        lastUpdateTime
+        category {
+          categoryType
+          categoryName
+          categoryDescName
+          locationImgUrl
+        }
+        floor
         status {
           statusName
-          numberOfUpVote
+          statusDescName
         }
       }
     }
@@ -27,7 +29,7 @@ export const TAG_CHANGE_SUBSCRIPTION = gql`
 
 const useTagSubscription = () => {
   const { data, loading } = useSubscription(TAG_CHANGE_SUBSCRIPTION)
-  return !loading && data.tagChangeSubscription
+  return !loading && data.tagResearchChangeSubscription
 }
 
 export default useTagSubscription

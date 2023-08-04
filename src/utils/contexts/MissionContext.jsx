@@ -9,16 +9,48 @@ import { useUserValue } from './UserContext'
 import { DefaultCenter } from '../../constants/mapConstants'
 
 export const TAG_ADD_MUTATION = gql`
-  mutation AddNewTagResponse($input: addTagDataInput!) {
-    addNewTagData(data: $input) {
+  mutation addNewTagData($input: addTagResearchDataInput!) {
+    addNewTagResearchData(data: $input) {
+      tagResearch {
+        id
+        locationName
+        category {
+          categoryType
+          categoryName
+          categoryDescName
+          locationImgUrl
+        }
+        floor
+        status {
+          statusName
+          statusDescName
+        }
+      }
       imageUploadNumber
       imageUploadUrls
+      imageDeleteStatus
     }
   }
 `
 export const TAG_UPDATE_MUTATION = gql`
-  mutation AddOrUpdateTagResponse($tagId: ID!, $data: updateTagDataInput!) {
-    updateTagData(tagId: $tagId, data: $data) {
+  mutation updateTagData($tagId: ID!, $data: updateTagResearchDataInput!) {
+    updateTagResearchData(tagId: $tagId, data: $data) {
+      tagResearch {
+        id
+        locationName
+        category {
+          categoryType
+          categoryName
+          categoryDescName
+          locationImgUrl
+        }
+        floor
+        status {
+          statusName
+          statusDescName
+        }
+      }
+      imageUploadNumber
       imageUploadUrls
       imageDeleteStatus
     }
@@ -245,12 +277,20 @@ export const MissionContextProvider = ({ children }) => {
     setLoading(true)
     const payload = {
       locationName: textLocation,
+      category: {
+        categoryType: '物體',
+        categoryName: '飲水機',
+        categoryDescName: '飲水機1',
+        locationImgUrl: []
+      },
       coordinates: {
         latitude: markerPosition.latitude.toString(),
         longitude: markerPosition.longitude.toString()
       },
+      imageUploadNumber: imageFiles.length,
       floor: Number(floor),
-      imageUploadNumber: imageFiles.length
+      statusName: '清潔狀態',
+      statusDescName: '乾淨'
     }
     const context = {
       headers: {
@@ -261,7 +301,7 @@ export const MissionContextProvider = ({ children }) => {
       if (isInEdit) {
         const {
           data: {
-            updateTagData: { imageUploadUrls }
+            updateTagResearchData: { imageUploadUrls }
           }
         } = await tagUpdate({
           context,
@@ -274,7 +314,7 @@ export const MissionContextProvider = ({ children }) => {
       } else {
         const {
           data: {
-            addNewTagData: { imageUploadUrls }
+            addNewTagResearchData: { imageUploadUrls }
           }
         } = await tagAdd({
           context,

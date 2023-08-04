@@ -22,15 +22,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const DetailPart = (props) => {
-  const {
-    tagDetail,
-    activeTag,
-    missionName,
-    setLargeImg,
-    setStateDrawer,
-    tagMissionIndex,
-    threshold
-  } = props
+  const { tagDetail, setLargeImg, setStateDrawer, threshold } = props
   const classes = useStyles()
   const { isGuest, signOut } = useUserValue()
   const [openHistory, setOpenHistory] = useState(false)
@@ -194,9 +186,6 @@ const DetailPart = (props) => {
             style={{
               width: '90%',
               borderTop: 'solid 0.5px lightgray',
-              borderBottom:
-                activeTag.category.missionName === missionName[1] &&
-                'solid 0.5px lightgray',
               paddingBottom: '2'
             }}
           >
@@ -283,7 +272,7 @@ const DetailPart = (props) => {
         <EditHistory
           open={openHistory}
           handleHistoryClose={handleHistoryClose}
-          tagMissionIndex={tagMissionIndex}
+          tagMissionIndex={undefined}
           tagDetail={tagDetail}
         />
       )}
@@ -293,11 +282,8 @@ const DetailPart = (props) => {
 
 DetailPart.propTypes = {
   tagDetail: PropTypes.object.isRequired,
-  activeTag: PropTypes.object.isRequired,
-  missionName: PropTypes.array.isRequired,
   setLargeImg: PropTypes.func.isRequired,
   setStateDrawer: PropTypes.func.isRequired,
-  tagMissionIndex: PropTypes.number.isRequired,
   threshold: PropTypes.number.isRequired
 }
 

@@ -91,6 +91,10 @@ function MissionStepper(props) {
     )
   }
 
+  const handleSubmit = React.useCallback(() => {
+    handleCompleteMission().then(() => setFinishOpen(false))
+  }, [handleCompleteMission])
+
   return (
     <>
       <MobileStepper
@@ -130,10 +134,7 @@ function MissionStepper(props) {
           >
             取消
           </CustomButton>
-          <CustomButton
-            buttonType='finishButton'
-            onClick={handleCompleteMission}
-          >
+          <CustomButton buttonType='finishButton' onClick={handleSubmit}>
             送出
           </CustomButton>
         </Box>

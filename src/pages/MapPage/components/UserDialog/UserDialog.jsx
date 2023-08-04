@@ -73,7 +73,7 @@ function UserDialog(props) {
               )}
               <Grid item container xs={12} alignItems='center'>
                 <AssessmentIcon style={{ marginRight: '8px' }} />
-                回報次數：{userDetail.userAddTagNumber}
+                回報次數：[TODO]: Obsolete, please remove the code
               </Grid>
             </Grid>
           </Box>
