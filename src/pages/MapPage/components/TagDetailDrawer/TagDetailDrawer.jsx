@@ -123,17 +123,7 @@ function TagDetailDialog(props) {
                 width='70%'
               >
                 <Typography>{tagDetail.locationName}</Typography>
-                {tagDetail.floor === 0 ? (
-                  ''
-                ) : (
-                  <>
-                    {tagDetail.floor < 0 ? (
-                      <Typography>B{-1 * tagDetail.floor}樓</Typography>
-                    ) : (
-                      <Typography>{tagDetail.floor}樓</Typography>
-                    )}
-                  </>
-                )}
+                <Typography>{tagDetail.floor}樓</Typography>
               </Box>
             </Box>
           )}
