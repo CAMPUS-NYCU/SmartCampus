@@ -83,33 +83,23 @@ function MissionStep2() {
               style={{
                 direction: 'rtl',
                 borderRadius: '5px',
-                boxShadow: (() => {
-                  if (floor !== 0) {
-                    return '0px 2px 4px rgba(0, 0, 0, 0.12)'
-                  }
-                  return ''
-                })(),
-                backgroundColor: (() => {
-                  if (floor !== 0) {
-                    return '#FDCC4F'
-                  }
-                  return ''
-                })()
+                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
+                backgroundColor: '#FDCC4F'
               }}
             >
-              <option value={0}>無</option>
-              <option value={-1}>B1</option>
-              <option value={-2}>B2</option>
-              <option value={1}>1樓</option>
-              <option value={2}>2樓</option>
-              <option value={3}>3樓</option>
-              <option value={4}>4樓</option>
-              <option value={5}>5樓</option>
-              <option value={6}>6樓</option>
-              <option value={7}>7樓</option>
-              <option value={8}>8樓</option>
-              <option value={9}>9樓</option>
-              <option value={10}>10樓</option>
+              <option value=''>無</option>
+              <option value='B1'>B1</option>
+              <option value='B2'>B2</option>
+              <option value='1'>1樓</option>
+              <option value='2'>2樓</option>
+              <option value='3'>3樓</option>
+              <option value='4'>4樓</option>
+              <option value='5'>5樓</option>
+              <option value='6'>6樓</option>
+              <option value='7'>7樓</option>
+              <option value='8'>8樓</option>
+              <option value='9'>9樓</option>
+              <option value='10'>10樓</option>
             </NativeSelect>
           </Box>
         </Grid>
