@@ -72,7 +72,12 @@ function useTagList() {
   }, [fetchTagList, empty, cursor])
   useEffect(() => {
     if (Array.isArray(tags)) {
-      setCacheTagList((prevState) => [...(prevState || []), ...tags])
+      setCacheTagList((prevState) => [
+        ...(prevState || []).filter(
+          (tag) => !tags.map((t) => t.id).includes(tag.id)
+        ),
+        ...tags
+      ])
     }
   }, [tags, empty, cursor])
   useEffect(() => {
