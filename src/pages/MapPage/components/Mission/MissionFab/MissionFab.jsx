@@ -3,9 +3,19 @@ import { Button } from '@mui/material'
 import { useMissionValue } from '../../../../../utils/contexts/MissionContext'
 import { useUserValue } from '../../../../../utils/contexts/UserContext'
 
-const MissionFab = () => {
-  const { handleStartMission } = useMissionValue()
+const MissionFab = (props) => {
+  const { activeFixedTag } = props
+  const { setFixedTagId, handleStartMission } = useMissionValue()
   const { isGuest, signOut } = useUserValue()
+
+  const handleClick = () => {
+    if (isGuest) {
+      signOut()
+    } else {
+      setFixedTagId(activeFixedTag.id)
+      handleStartMission(activeFixedTag)
+    }
+  }
   return (
     <Button
       display='flex'
@@ -18,7 +28,7 @@ const MissionFab = () => {
         margin: '-10px 0 10px 0'
       }}
       variant='contained'
-      onClick={isGuest ? signOut : handleStartMission}
+      onClick={handleClick}
     >
       新增回報
     </Button>

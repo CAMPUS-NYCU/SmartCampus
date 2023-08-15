@@ -13,6 +13,7 @@ export const TAG_ADD_MUTATION = gql`
     addNewTagResearchData(data: $input) {
       tagResearch {
         id
+        fixedTagId
         locationName
         category {
           categoryType
@@ -110,6 +111,8 @@ export const MissionContext = React.createContext({
   imageFiles: [],
   setImageFiles: () => {},
   setStep: () => {},
+  fixedTagId: null,
+  setFixedTagId: () => {},
   loading: false,
   ableToNextStep: true,
   ...InitialMissionValue
@@ -123,6 +126,8 @@ export const MissionContextProvider = ({ children }) => {
   const [isInEdit, setIsInEdit] = useState(false)
 
   const [mapCenter, setMapCenter] = useState(DefaultCenter)
+
+  const [fixedTagId, setFixedTagId] = useState(null)
 
   // 照片
   const [imageFiles, setImageFiles] = useState([])
@@ -277,6 +282,7 @@ export const MissionContextProvider = ({ children }) => {
     setLoading(true)
     const payload = {
       locationName: textLocation,
+      fixedTagId,
       category: {
         categoryType: '物體',
         categoryName: '飲水機',
@@ -365,6 +371,8 @@ export const MissionContextProvider = ({ children }) => {
     isInEdit,
     handleStartEdit,
     handleCloseEdit,
+    fixedTagId,
+    setFixedTagId,
     mapCenter,
     setMapCenter,
     floor,

@@ -47,9 +47,22 @@ function Map(props) {
     showControl,
     mapInstance
   } = useMissionValue()
-  const { tags, fixedTags, activeTagId, filterTags } = useTagValue()
+  const {
+    tags,
+    fixedTags,
+    activeTagId,
+    filterTags,
+    activeTag,
+    activeFixedTag
+  } = useTagValue()
   const isShown = useCallback(
     (tag) => {
+      if (
+        tag.fixedTagId !== activeFixedTag?.id &&
+        tag.fixedTagId !== activeTag?.fixedTagId
+      ) {
+        return false
+      }
       if (filterTags.length === 0) {
         return true
       }
@@ -60,7 +73,7 @@ function Map(props) {
           tags.map((t) => t.id).includes(tag.id))
       )
     },
-    [filterTags, tags]
+    [activeFixedTag, activeTag, filterTags, tags]
   )
   const [markers, setMarkers] = React.useState([])
   const [markerCluster, setMarkerCluster] = React.useState(null)

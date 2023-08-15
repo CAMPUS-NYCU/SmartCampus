@@ -22,7 +22,7 @@ function FixedTagDetailDialog(props) {
     >
       <>
         <DetailPart activeFixedTag={activeFixedTag} />
-        <MissionFab />
+        <MissionFab activeFixedTag={activeFixedTag} />
       </>
     </CustomDrawer>
   )
