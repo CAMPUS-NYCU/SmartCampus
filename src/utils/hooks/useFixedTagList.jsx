@@ -78,7 +78,12 @@ function useFixedTagList() {
   }, [fetchTagList, empty, cursor])
   useEffect(() => {
     if (Array.isArray(fixedTags)) {
-      setfixedCacheTagList((prevState) => [...(prevState || []), ...fixedTags])
+      setfixedCacheTagList((prevState) => [
+        ...(prevState || []).filter(
+          (fixedTag) => !fixedTags.map((t) => t.id).includes(fixedTag.id)
+        ),
+        ...fixedTags
+      ])
     }
   }, [fixedTags, empty, cursor])
   useEffect(() => {
