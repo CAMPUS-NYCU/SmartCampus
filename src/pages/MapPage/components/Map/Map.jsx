@@ -2,7 +2,6 @@ import React, { useMemo, useEffect, useCallback } from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
 import { useHistory } from 'react-router-dom'
-import moment from 'moment'
 import {
   useMissionValue,
   MissionStep
@@ -13,19 +12,9 @@ import flagImg from '../../../../assets/images/yellow-flag.svg'
 import myLocationImg from '../../../../assets/images/my-location.svg'
 import { DefaultZoom } from '../../../../constants/mapConstants'
 import FixedTags from '../../../../assets/images/fixedtag.svg'
-import Mission2Voting from '../../../../assets/images/mission2_pin_voting.svg'
-import Mission2 from '../../../../assets/images/mission2_pin.svg'
 import Mission1 from '../../../../assets/images/mission1_pin.svg'
-import Mission3 from '../../../../assets/images/mission3_pin.svg'
-import Missionred2 from '../../../../assets/images/mission2_pin_activated.svg'
-import Missionred1 from '../../../../assets/images/mission1_pin_activated.svg'
-import Missionred3 from '../../../../assets/images/mission3_pin_activated.svg'
-import Missiongreen3 from '../../../../assets/images/mission3_pin_statusGreen.svg'
-import Missionyellow3 from '../../../../assets/images/mission3_pin_statusYellow.svg'
-import Missionnewred3 from '../../../../assets/images/mission3_pin_statusRed.svg'
+import Mission2 from '../../../../assets/images/mission2_pin.svg'
 import Searchposition from '../../../../assets/images/searchPositionIcon.svg'
-import { missionInfo } from '../../../../constants/missionInfo'
-import tagData from '../../../../constants/tagData'
 
 function Map(props) {
   const {
@@ -51,10 +40,15 @@ function Map(props) {
     tags,
     fixedTags,
     activeTagId,
+    highlightTagId,
+    setHighLightTagId,
     filterTags,
     activeTag,
     activeFixedTag
   } = useTagValue()
+
+  const missionImage = useMemo(() => [Mission1, Mission2], [])
+
   const isShown = useCallback(
     (tag) => {
       if (
@@ -76,7 +70,24 @@ function Map(props) {
     [activeFixedTag, activeTag, filterTags, tags]
   )
   const [markers, setMarkers] = React.useState([])
+  const [displayTags, setDisplayTags] = React.useState([])
   const [markerCluster, setMarkerCluster] = React.useState(null)
+
+  const getTagIcon = React.useCallback(
+    (tag) => {
+      if (highlightTagId === tag.id) {
+        return {
+          url: missionImage[1],
+          scaledSize: { width: 42, height: 45 }
+        }
+      }
+      return {
+        url: missionImage[0],
+        scaledSize: { width: 28, height: 30 }
+      }
+    },
+    [highlightTagId, missionImage]
+  )
   useEffect(() => {
     if (mapInstance) {
       const cluster = new MarkerClusterer({
@@ -125,36 +136,16 @@ function Map(props) {
       return prevMarkers.filter((m) => tags.map((t) => t.id).includes(m.tag.id))
     })
   }, [tags])
+  useEffect(() => {
+    const newDisplayedTags = tags.map((tag) => {
+      return {
+        ...tag,
+        icon: getTagIcon(tag)
+      }
+    })
+    setDisplayTags(newDisplayedTags)
+  }, [tags, activeTagId, highlightTagId, getTagIcon])
 
-  const missionImage = useMemo(() => [Mission1, Mission2, Mission3], [])
-  const mission2ImageVoting = useMemo(() => [Mission2Voting], [])
-  const missionredImage = useMemo(
-    () => [Missionred1, Missionred2, Missionred3],
-    []
-  )
-  const missionActiveImage = useMemo(
-    () => [Missiongreen3, Missionyellow3, Missionnewred3],
-    []
-  )
-  const missionName = useMemo(
-    () =>
-      missionInfo.map((mission) => {
-        return mission.missionName
-      }),
-    []
-  )
-  const StatusName = useMemo(
-    () =>
-      tagData[2].map((tagdata) => {
-        return tagdata.statusName
-      }),
-    []
-  )
-  const compareTime = (time) => {
-    const tagTime = moment(time, 'YYYY-MM-DD h:mm')
-    const nowTime = moment()
-    return moment.duration(nowTime.diff(tagTime)).as('minutes') < 30
-  }
   return (
     <div
       style={{
@@ -242,7 +233,7 @@ function Map(props) {
             />
           ))}
         {markerCluster &&
-          tags.map((tag) => (
+          displayTags.map((tag) => (
             <Marker
               key={tag.id}
               visible={!isInMission && isShown(tag)}
@@ -253,50 +244,9 @@ function Map(props) {
                 lat: parseFloat(tag.coordinates.latitude),
                 lng: parseFloat(tag.coordinates.longitude)
               }}
-              icon={(() => {
-                if (activeTagId === tag.id) {
-                  return {
-                    url: missionredImage[
-                      missionName.findIndex(
-                        (mission) => mission === tag.category.missionName
-                      )
-                    ],
-                    scaledSize: { width: 28, height: 30 }
-                  }
-                }
-                if (tag.category.missionName === '動態任務') {
-                  if (compareTime(tag.lastUpdateTime)) {
-                    return {
-                      url: missionActiveImage[
-                        StatusName.findIndex(
-                          (statusName) => statusName === tag.status.statusName
-                        ) % 3
-                      ],
-                      scaledSize: { width: 28, height: 30 }
-                    }
-                  }
-                  return {
-                    url: missionImage[2],
-                    scaledSize: { width: 28, height: 30 }
-                  }
-                }
-                if (tag?.status?.statusName === '已解決') {
-                  return {
-                    url: mission2ImageVoting[0],
-                    scaledSize: { width: 28, height: 30 }
-                  }
-                }
-                return {
-                  url: missionImage[
-                    missionName.findIndex(
-                      (mission) => mission === tag.category.missionName
-                    )
-                  ],
-                  scaledSize: { width: 28, height: 30 }
-                }
-              })()}
+              icon={tag.icon}
               clickable
-              onClick={() => history.push(`${MAP_PATH}/tag/${tag.id}`)}
+              onClick={() => setHighLightTagId(tag.id)}
             />
           ))}
         {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (

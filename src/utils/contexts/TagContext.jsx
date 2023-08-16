@@ -15,6 +15,8 @@ export const TagContext = React.createContext({
   activeTag: null,
   activeTagId: null,
   setActiveTagId: () => {},
+  highlightTagId: null,
+  setHighLightTagId: () => {},
   resetActiveTag: () => {},
   categoryList: [],
   upVote: () => {},
@@ -56,6 +58,7 @@ export const TagContextProvider = ({ children }) => {
     }
   ]
   const [activeTagId, setActiveTagId] = useState(null)
+  const [highlightTagId, setHighLightTagId] = useState(null)
   const activeTag = findTagById(activeTagId, tags)
   const activeFixedTag = findFixedTagById(activeTagId, fixedTags)
   const { tagDetail, getTagDetail, resetTagDetail } = useTagDetail()
@@ -136,6 +139,8 @@ export const TagContextProvider = ({ children }) => {
     activeTagId,
     activeFixedTag,
     setActiveTagId,
+    highlightTagId,
+    setHighLightTagId,
     resetActiveTag,
     categoryList,
     filterTags,

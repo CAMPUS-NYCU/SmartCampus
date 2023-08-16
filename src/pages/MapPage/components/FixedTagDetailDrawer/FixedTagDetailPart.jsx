@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Box, Button } from '@mui/material'
 import Grid from '@mui/material/Grid'
+import { MAP_PATH } from '../../../../constants/pageUrls'
 import changeImage from '../../../../assets/images/fixedTagChange.svg'
 import CustomButton from '../../../../components/CustomButton'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
@@ -9,14 +11,16 @@ import { fixedTagContext } from '../../../../constants/fixedTagContext'
 
 const DetailPartItem = (props) => {
   const { tag } = props
-
+  const history = useHistory()
+  const { highlightTagId, setHighLightTagId } = useTagValue()
+  const isHighlighted = tag.id === highlightTagId
   return (
     <Grid
       key={tag.id}
       container
       spacing={2}
       style={{
-        backgroundColor: '#EEEEEE',
+        backgroundColor: isHighlighted ? '#888888' : '#EEEEEE',
         borderRadius: '10px',
         margin: '5px',
         width: '98%'
@@ -63,6 +67,38 @@ const DetailPartItem = (props) => {
         >
           <img src={changeImage} alt='' />
           &nbsp;編輯
+        </Button>
+        <Button
+          id='highlightButton'
+          size='small'
+          style={{
+            background: '#FDCC4F',
+            fontSize: '12px',
+            borderRadius: '20px',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
+          }}
+          variant='contained'
+          onClick={() => {
+            setHighLightTagId(tag.id)
+          }}
+        >
+          標記
+        </Button>
+        <Button
+          id='highlightButton'
+          size='small'
+          style={{
+            background: '#FDCC4F',
+            fontSize: '12px',
+            borderRadius: '20px',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
+          }}
+          variant='contained'
+          onClick={() => {
+            history.push(`${MAP_PATH}/tag/${tag.id}`)
+          }}
+        >
+          選取
         </Button>
       </Grid>
     </Grid>
