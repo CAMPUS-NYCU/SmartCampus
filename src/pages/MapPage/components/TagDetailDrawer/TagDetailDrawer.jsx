@@ -79,7 +79,8 @@ function TagDetailDialog(props) {
       <CustomDrawer
         open={activeTag && !isInMission}
         handleClose={onClose}
-        height='full'
+        height='part'
+        variant='persistent'
         closeButton={false}
         title='[TODO]: title'
         titleActions={
