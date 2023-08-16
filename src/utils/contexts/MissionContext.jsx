@@ -108,6 +108,7 @@ export const MissionContext = React.createContext({
   handleChangeTextLocation: () => {},
   setPhotos: () => {},
   handleMapOnLoad: () => {},
+  handlePanTo: () => {},
   imageFiles: [],
   setImageFiles: () => {},
   setStep: () => {},
@@ -161,6 +162,13 @@ export const MissionContextProvider = ({ children }) => {
   const handleMapOnLoad = useCallback((map) => {
     setMapInstance(map)
   }, [])
+
+  const handlePanTo = useCallback(
+    (latlng) => {
+      mapInstance.panTo(latlng)
+    },
+    [mapInstance]
+  )
 
   // ==================== Marker control ====================
   const [markerPosition, setMarkerPosition] = useState(
@@ -361,6 +369,7 @@ export const MissionContextProvider = ({ children }) => {
     photos,
     setPhotos,
     handleMapOnLoad,
+    handlePanTo,
     imageFiles,
     setImageFiles,
     setStep,

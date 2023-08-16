@@ -32,6 +32,7 @@ function Map(props) {
     markerPosition,
     handleSetMarkerPosition,
     handleMapOnLoad,
+    handlePanTo,
     currentStep,
     showControl,
     mapInstance
@@ -227,9 +228,13 @@ function Map(props) {
                 color: '#FDCC4F'
               }}
               clickable
-              onClick={() =>
+              onClick={() => {
                 history.push(`${MAP_PATH}/fixedtag/${fixedtag.id}`)
-              }
+                handlePanTo({
+                  lat: parseFloat(fixedtag.coordinates.latitude),
+                  lng: parseFloat(fixedtag.coordinates.longitude)
+                })
+              }}
             />
           ))}
         {markerCluster &&
