@@ -41,6 +41,16 @@ const Pages = () => {
   const { tags } = useTagValue()
   const { token, isLoadingToken } = useUserValue()
   const [tagIdCache, setTagIdCache] = useState(null)
+  const [fixedTagIdCache, setFixedTagIdCache] = useState(null)
+  const getCacheLink = () => {
+    if (tagIdCache) {
+      return `${MAP_PATH}/tag/${tagIdCache}`
+    }
+    if (fixedTagIdCache) {
+      return `${MAP_PATH}/fixedtag/${fixedTagIdCache}`
+    }
+    return MAP_PATH
+  }
   return (
     <>
       {!tags || isLoadingToken ? (
@@ -50,17 +60,13 @@ const Pages = () => {
           <Switch>
             <Route path={INDEX_PATH} exact>
               {token ? (
-                <Redirect to={`${MAP_PATH}/${tagIdCache || ''}`} />
+                <Redirect to={getCacheLink()} />
               ) : (
                 <Redirect to={LOGIN_PATH} />
               )}
             </Route>
             <Route path={`${MAP_PATH}`} exact>
-              {token ? (
-                <MapPage />
-              ) : (
-                <CacheTagId setTagIdCache={setTagIdCache} />
-              )}
+              {token ? <MapPage /> : <CacheTagId />}
             </Route>
             <Route path={`${MAP_PATH}/tag/:activeTagId`} exact>
               {token ? (
@@ -73,15 +79,11 @@ const Pages = () => {
               {token ? (
                 <MapPage />
               ) : (
-                <CacheTagId setTagIdCache={setTagIdCache} />
+                <CacheTagId setTagIdCache={setFixedTagIdCache} />
               )}
             </Route>
             <Route path={LOGIN_PATH} exact>
-              {token ? (
-                <Redirect to={`${MAP_PATH}/${tagIdCache || ''}`} />
-              ) : (
-                <LoginPage />
-              )}
+              {token ? <Redirect to={getCacheLink()} /> : <LoginPage />}
             </Route>
             <Route path='/'>
               <Redirect to={LOGIN_PATH} />
