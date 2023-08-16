@@ -12,11 +12,24 @@ import { fixedTagContext } from '../../../../constants/fixedTagContext'
 const DetailPartItem = (props) => {
   const { tag } = props
   const history = useHistory()
+  const myRef = React.useRef(null)
+
   const { highlightTagId, setHighLightTagId } = useTagValue()
   const isHighlighted = tag.id === highlightTagId
+  React.useEffect(() => {
+    if (isHighlighted) {
+      myRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      })
+    }
+  }, [isHighlighted])
+
   return (
     <Grid
       key={tag.id}
+      ref={myRef}
       container
       spacing={2}
       style={{
