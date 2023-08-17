@@ -182,7 +182,19 @@ const MapPageContent = (props) => {
             <TagDetailDrawer
               activeTag={activeTag}
               tagDetail={tagDetail}
-              onClose={() => history.push(MAP_PATH)}
+              onClose={() => {
+                switch (history.action) {
+                  case 'POP':
+                  case 'REPLACE':
+                    history.push(MAP_PATH)
+                    break
+                  case 'PUSH':
+                    history.goBack()
+                    break
+                  default:
+                    history.push(MAP_PATH)
+                }
+              }}
             />
           )}
           {!isInMission && activeFixedTag && (
