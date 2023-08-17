@@ -45,3 +45,6 @@ schema.graphql
 # yarn
 .yarn/*
 .yarnrc.yml
+
+# lock
+*.lock
