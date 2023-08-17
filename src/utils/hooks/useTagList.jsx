@@ -10,6 +10,7 @@ export const GET_TAG_LIST_QUERY = gql`
       empty
       tags {
         id
+        fixedTagId
         locationName
         category {
           categoryType

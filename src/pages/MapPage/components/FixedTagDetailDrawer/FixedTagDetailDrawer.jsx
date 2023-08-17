@@ -7,10 +7,13 @@ import MissionFab from '../Mission/MissionFab'
 
 function FixedTagDetailDialog(props) {
   const { activeFixedTag, onClose } = props
-  const { fetchFixedTagDetail } = useTagValue()
+  const { fetchFixedTagDetail, setHighLightTagId } = useTagValue()
   React.useEffect(() => {
     fetchFixedTagDetail()
   }, [fetchFixedTagDetail])
+  React.useEffect(() => {
+    setHighLightTagId(null)
+  }, [setHighLightTagId, activeFixedTag])
   return (
     <CustomDrawer
       open={activeFixedTag ? true : ' '}
@@ -22,7 +25,7 @@ function FixedTagDetailDialog(props) {
     >
       <>
         <DetailPart activeFixedTag={activeFixedTag} />
-        <MissionFab />
+        <MissionFab activeFixedTag={activeFixedTag} />
       </>
     </CustomDrawer>
   )
