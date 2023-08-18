@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Button, CircularProgress, IconButton } from '@mui/material'
+import { Box, Button, CircularProgress, Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import moment from 'moment'
-import { useSnackbar } from 'notistack'
 import noImage from '../../../../assets/images/no-image.svg'
-import EditIcon from '../../../../assets/images/edit.svg'
 import EditHistory from './editHistory'
-import { useUpdateVote } from '../../../../utils/Mutation/useVoteTag'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
 import UserDialog from '../UserDialog/UserDialog'
 import useModal from '../../../../utils/hooks/useModal'
+import ResearchTextWrapper from '../../../../components/ResarchTextWrapper'
+import Res1StatusType from '../../../../constants/Res1StatusType'
+import LocationIcon from '../../../../assets/images/res1-detailLocation.svg'
+import CategoryDescNameIcon from '../../../../assets/images/res1-detailCategoryDescName.svg'
 
 const useStyles = makeStyles(() => ({
   clickableFont: {
@@ -29,36 +30,16 @@ const DetailPart = (props) => {
   const handleHistoryClose = () => {
     setOpenHistory(false)
   }
-  const { upVote } = useUpdateVote()
-  const [numberOfVote, setNumberOfVote] = useState(0)
-  const [hasUpVote, setHasUpVote] = useState(false)
-  const { enqueueSnackbar } = useSnackbar()
   const userDialogControl = useModal()
+
+  const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
-    setNumberOfVote(tagDetail ? tagDetail.status.numberOfUpVote : 0)
-    setHasUpVote(tagDetail ? tagDetail.status.hasUpVote : false)
-    if (tagDetail.status.statusName === '已解決' && tagDetail) {
-      enqueueSnackbar(
-        `再${
-          tagDetail ? threshold - tagDetail.status.numberOfUpVote : threshold
-        }人投票即可刪除回報`,
-        {
-          variant: 'warning'
-        }
-      )
+    for (let i = 0; i < Res1StatusType.length; i += 1) {
+      if (tagDetail.status.statusName === Res1StatusType[i].status) {
+        setThisStatusType(Res1StatusType[i])
+      }
     }
-  }, [tagDetail, enqueueSnackbar, threshold])
-  const handleUopVote = () => {
-    if (isGuest) {
-      signOut()
-      return
-    }
-    setNumberOfVote((prevNumberOfVote) =>
-      hasUpVote ? prevNumberOfVote - 1 : prevNumberOfVote + 1
-    )
-    upVote(tagDetail.id, !hasUpVote)
-    setHasUpVote((prevHasUpVote) => !prevHasUpVote)
-  }
+  }, [tagDetail])
 
   return (
     <>
@@ -122,11 +103,83 @@ const DetailPart = (props) => {
               })
             )}
           </div>
+          <div
+            style={{
+              width: '90%',
+              borderTop: 'solid 0.5px lightgray',
+              paddingBottom: '2'
+            }}
+          >
+            {/* 地點、樓層 */}
+            <Grid container marginTop={0.5}>
+              <Grid container item xs={1}>
+                <img src={LocationIcon} alt='地點與樓層' />
+              </Grid>
+              <Grid container item xs={4} marginRight={1}>
+                <ResearchTextWrapper>
+                  {tagDetail.locationName}
+                </ResearchTextWrapper>
+              </Grid>
+              <Grid container item xs={1.5}>
+                <ResearchTextWrapper>
+                  {`${tagDetail.floor}樓`}
+                </ResearchTextWrapper>
+              </Grid>
+            </Grid>
+
+            {/* 回報項目 */}
+            <Grid container marginTop={0.5}>
+              <Grid container item xs={1}>
+                <img src={CategoryDescNameIcon} alt='項目描述' />
+              </Grid>
+              <Grid container item xs={4} marginRight={1}>
+                <ResearchTextWrapper>
+                  {tagDetail.category.categoryDescName}
+                </ResearchTextWrapper>
+              </Grid>
+            </Grid>
+
+            {/* 狀態 */}
+            <Grid container marginTop={0.5}>
+              <Grid container item xs={1}>
+                <img src={thisStatusType.statusIcon} alt='項目狀態與狀態描述' />
+              </Grid>
+              <Grid container item xs={4}>
+                <ResearchTextWrapper bgcolor={thisStatusType.statusColor}>
+                  {`${tagDetail.status.statusName}：${tagDetail.status.statusDescName}`}
+                </ResearchTextWrapper>
+              </Grid>
+            </Grid>
+
+            {/* 上次編輯者、時間 */}
+            <Box display='flex' flexDirection='column' alignItems='flex-end'>
+              <Box m={0.5} style={{ fontSize: '0.8em', color: 'gray' }}>
+                <Box
+                  display='inline'
+                  className={classes.clickableFont}
+                  style={{ fontSize: '1em' }}
+                  onClick={() => userDialogControl.setOpen(true)}
+                  mr={1}
+                >
+                  {
+                    // 待更新功能串好後測試
+                    tagDetail?.statusHistory?.statusList?.[0]?.createUser
+                      ?.displayName
+                    // tagDetail?.createUser?.displayName
+                  }
+                </Box>
+                編輯於{' '}
+                {moment(
+                  tagDetail?.statusHistory?.statusList?.[0]?.createTime
+                ).format('YYYY-MM-DD h:mm')}
+              </Box>
+            </Box>
+          </div>
           <Box
             display='flex'
             alignItems='center'
             flexDirection='row'
-            justifyContent='space-between'
+            justifyContent='center'
             m={2}
             width='90%'
           >
@@ -147,112 +200,10 @@ const DetailPart = (props) => {
               }}
               variant='contained'
             >
-              更改狀態
+              更新回報
             </Button>
-            <Box display='flex' flexDirection='column' alignItems='flex-end'>
-              <Box
-                className={classes.clickableFont}
-                m={0.5}
-                width='85px'
-                display='flex'
-                alignItems='center'
-                justifyContent='space-between'
-                onClick={() => setOpenHistory(true)}
-              >
-                <img src={EditIcon} alt='' />
-                狀態編輯紀錄
-              </Box>
-              <Box m={0.5} style={{ fontSize: '0.8em', color: 'gray' }}>
-                <Box
-                  display='inline'
-                  className={classes.clickableFont}
-                  style={{ fontSize: '1em' }}
-                  onClick={() => userDialogControl.setOpen(true)}
-                  mr={1}
-                >
-                  {
-                    tagDetail?.statusHistory?.statusList?.[0]?.createUser
-                      ?.displayName
-                  }
-                </Box>
-                編輯於{' '}
-                {moment(
-                  tagDetail?.statusHistory?.statusList?.[0]?.createTime
-                ).format('YYYY-MM-DD h:mm')}
-              </Box>
-            </Box>
           </Box>
-          <div
-            style={{
-              width: '90%',
-              borderTop: 'solid 0.5px lightgray',
-              paddingBottom: '2'
-            }}
-          >
-            {tagDetail.status.description ? (
-              <Box
-                my={2}
-                textOverflow='ellipsis'
-                component='div'
-                overflow='hidden'
-                height='4.5em'
-              >
-                {tagDetail.status.description}
-              </Box>
-            ) : (
-              <p>無描述</p>
-            )}
-            <Box display='flex' justifyContent='flex-end'>
-              <Box m={0.5} style={{ fontSize: '0.8em', color: 'gray' }}>
-                {tagDetail?.newCreateTime}
-              </Box>
-            </Box>
-          </div>
-          {tagDetail.status.statusName === '已解決' && (
-            <Box
-              display='flex'
-              justifyContent='flex-end'
-              alignItems='center'
-              width='90%'
-              m={2}
-            >
-              <div
-                style={{
-                  width: '40%',
-                  height: '6px',
-                  marginRight: '30px',
-                  border: 'solid 0.5px',
-                  borderColor: 'lightgray'
-                }}
-              >
-                <div
-                  style={{
-                    width: `${(numberOfVote / threshold) * 100}%`,
-                    height: '100%',
-                    backgroundColor: '#FDCC4F'
-                  }}
-                />
-              </div>
-              <Box className={classes.clickableFont} m={0.5}>
-                {numberOfVote || 0}
-                人贊同此問題已解決
-                <br />再{numberOfVote ? threshold - numberOfVote : threshold}
-                人即可刪除此回報
-              </Box>
-              <IconButton
-                variant='contained'
-                style={{
-                  marginLeft: '8px',
-                  background: hasUpVote ? '#FDCC4F' : '#EEEEEE',
-                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)',
-                  fontSize: '15px'
-                }}
-                onClick={handleUopVote}
-              >
-                +1
-              </IconButton>
-            </Box>
-          )}
+
           <UserDialog
             userId={tagDetail?.statusHistory?.statusList?.[0]?.createUser?.uid}
             control={userDialogControl}
