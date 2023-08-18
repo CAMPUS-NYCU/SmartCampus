@@ -9,6 +9,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
     tagResearch(tagId: $id) {
       id
       createTime
+      locationName
       floor
       lastUpdateTime
       imageUrl
