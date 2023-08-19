@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Box } from '@mui/material'
 import { Lightbox } from 'react-modal-image'
 
-import tagStatus from '../../../../constants/tagData'
+// import tagStatus from '../../../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
@@ -13,9 +13,9 @@ import CustomDrawer from '../../../../components/CustomDrawer'
 import { useViewCount } from '../../../../utils/hooks/useViewCount'
 
 function TagDetailDialog(props) {
-  const { activeTag, onClose, tagDetail, ...rest } = props
+  const { activeTag, onClose, tagDetail } = props
   const { isInMission } = useMissionValue()
-  const { threshold, fetchTagDetail } = useTagValue()
+  const { fetchTagDetail } = useTagValue()
   const { isGuest } = useUserValue()
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
@@ -29,7 +29,6 @@ function TagDetailDialog(props) {
   useEffect(() => {
     fetchTagDetail()
   }, [fetchTagDetail])
-  console.log('tagDetail', tagDetail)
 
   return (
     <>
@@ -51,7 +50,7 @@ function TagDetailDialog(props) {
             tagDetail={tagDetail}
             setLargeImg={setLargeImg}
             setStateDrawer={setStateDrawer}
-            threshold={threshold}
+            // threshold={threshold}
           />
         </Box>
       </CustomDrawer>
@@ -60,7 +59,7 @@ function TagDetailDialog(props) {
           stateDrawer={stateDrawer}
           tagDetail={tagDetail}
           setStateDrawer={setStateDrawer}
-          status={(() => tagStatus[0])()}
+          // status={(() => tagStatus[0])()}
         />
       )}
       {largeImg && (
