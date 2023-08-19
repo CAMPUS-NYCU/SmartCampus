@@ -112,6 +112,7 @@ const MapPageContent = (props) => {
     activeTag,
     activeFixedTag,
     resetActiveTag,
+    resetActiveFixedTag,
     tagDetail,
     fixedtagDetail,
     setActiveTagId,
@@ -136,6 +137,26 @@ const MapPageContent = (props) => {
   const [placePosition, setPlacePosition] = useState('')
   const [placeName, setPlaceName] = useState('')
   const [search, setSearch] = useState(false)
+
+  const handleTagDetailDrawerClose = () => {
+    resetActiveTag()
+    switch (history.action) {
+      case 'POP':
+      case 'REPLACE':
+        history.push(MAP_PATH)
+        break
+      case 'PUSH':
+        history.goBack()
+        break
+      default:
+        history.push(MAP_PATH)
+    }
+  }
+  const handleFixedTagDetailDrawerClose = () => {
+    resetActiveFixedTag()
+    history.push(MAP_PATH)
+  }
+
   return (
     <div>
       {isLoaded && (
@@ -182,26 +203,14 @@ const MapPageContent = (props) => {
             <TagDetailDrawer
               activeTag={activeTag}
               tagDetail={tagDetail}
-              onClose={() => {
-                switch (history.action) {
-                  case 'POP':
-                  case 'REPLACE':
-                    history.push(MAP_PATH)
-                    break
-                  case 'PUSH':
-                    history.goBack()
-                    break
-                  default:
-                    history.push(MAP_PATH)
-                }
-              }}
+              onClose={handleTagDetailDrawerClose}
             />
           )}
           {!isInMission && activeFixedTag && (
             <FixedTagDetailDrawer
               activeFixedTag={activeFixedTag}
               fixedtagDetail={fixedtagDetail}
-              onClose={() => history.push(MAP_PATH)}
+              onClose={handleFixedTagDetailDrawerClose}
             />
           )}
         </>
