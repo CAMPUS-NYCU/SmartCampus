@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const DetailPart = (props) => {
-  const { tagDetail, setLargeImg, setStateDrawer, threshold } = props
+  const { tagDetail, setLargeImg, setStateDrawer } = props
   const classes = useStyles()
   const { isGuest, signOut } = useUserValue()
   const [openHistory, setOpenHistory] = useState(false)
@@ -115,12 +115,12 @@ const DetailPart = (props) => {
               <Grid container item xs={1}>
                 <img src={LocationIcon} alt='地點與樓層' />
               </Grid>
-              <Grid container item xs={4} marginRight={1}>
+              <Grid item xs={4} mr={1}>
                 <ResearchTextWrapper>
                   {tagDetail.locationName}
                 </ResearchTextWrapper>
               </Grid>
-              <Grid container item xs={1.5}>
+              <Grid item xs={1.5}>
                 <ResearchTextWrapper>
                   {`${tagDetail.floor}樓`}
                 </ResearchTextWrapper>
@@ -129,10 +129,10 @@ const DetailPart = (props) => {
 
             {/* 回報項目 */}
             <Grid container marginTop={0.5}>
-              <Grid container item xs={1}>
+              <Grid item xs={1}>
                 <img src={CategoryDescNameIcon} alt='項目描述' />
               </Grid>
-              <Grid container item xs={4} marginRight={1}>
+              <Grid item xs={4} marginRight={1}>
                 <ResearchTextWrapper>
                   {tagDetail.category.categoryDescName}
                 </ResearchTextWrapper>
@@ -141,10 +141,10 @@ const DetailPart = (props) => {
 
             {/* 狀態 */}
             <Grid container marginTop={0.5}>
-              <Grid container item xs={1}>
+              <Grid item xs={1}>
                 <img src={thisStatusType.statusIcon} alt='項目狀態與狀態描述' />
               </Grid>
-              <Grid container item xs={4}>
+              <Grid item xs={4}>
                 <ResearchTextWrapper bgcolor={thisStatusType.statusColor}>
                   {`${tagDetail.status.statusName}：${tagDetail.status.statusDescName}`}
                 </ResearchTextWrapper>
@@ -234,8 +234,8 @@ const DetailPart = (props) => {
 DetailPart.propTypes = {
   tagDetail: PropTypes.object.isRequired,
   setLargeImg: PropTypes.func.isRequired,
-  setStateDrawer: PropTypes.func.isRequired,
-  threshold: PropTypes.number.isRequired
+  setStateDrawer: PropTypes.func.isRequired
+  // threshold: PropTypes.numsber.isRequired
 }
 
 export default DetailPart

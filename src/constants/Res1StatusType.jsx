@@ -10,48 +10,57 @@ import detailStatusOccupationIcon from '../assets/images/res1-detailStatusOccupa
 
 export default [
   {
-    status: '維護狀態',
+    status: '保養狀態',
     statusColor: '#9CD6D6',
-    statusIcon: detailStatusMaintenanceIcon
+    statusIcon: detailStatusMaintenanceIcon,
+    statusOptions: ['保養完成', '保養中']
   },
   {
     status: '功能狀態',
     statusColor: '#A4D6FF',
-    statusIcon: detailStatusFunctionIcon
+    statusIcon: detailStatusFunctionIcon,
+    statusOptions: ['功能正常', '尚可使用', '無法使用']
   },
   {
     status: '外觀狀態',
     statusColor: '#A6B6B6',
-    statusIcon: detailStatusOutlookIcon
+    statusIcon: detailStatusOutlookIcon,
+    statusOptions: ['完好無損', '外觀破損']
   },
   {
     status: '佔用狀態',
     statusColor: '#99B1D4',
-    statusIcon: detailStatusOccupationIcon
+    statusIcon: detailStatusOccupationIcon,
+    statusOptions: ['無人使用', '有人佔用']
   },
   {
     status: '清潔狀態',
     statusColor: '#DAAEDB',
-    statusIcon: detailStatusCleanIcon
+    statusIcon: detailStatusCleanIcon,
+    statusOptions: ['整潔', '普通', '髒亂']
   },
   {
     status: '使用狀態',
     statusColor: '#FDAFC6',
-    statusIcon: detailStatusUsageIcon
+    statusIcon: detailStatusUsageIcon,
+    statusOptions: ['尚有空位', '空位有限', '已無空位']
   },
   {
     status: '人潮狀態',
     statusColor: '#FA8888',
-    statusIcon: detailStatusCrowdIcon
+    statusIcon: detailStatusCrowdIcon,
+    statusOptions: ['擁擠', '普通', '沒人']
   },
   {
     status: '噪音狀態',
     statusColor: '#D3AAB1',
-    statusIcon: detailStatusNoiseIcon
+    statusIcon: detailStatusNoiseIcon,
+    statusOptions: ['安靜', '普通', '吵雜']
   },
   {
     status: '體感狀態',
     statusColor: '#FCA6D4',
-    statusIcon: detailStatusThermalComfortIcon
+    statusIcon: detailStatusThermalComfortIcon,
+    statusOptions: ['舒適', '普通', '不適']
   }
 ]

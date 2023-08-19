@@ -1,18 +1,26 @@
 import { gql, useMutation } from '@apollo/client'
 
 export const UPDATE_TAG_STATUS_MUTATION = gql`
-  mutation updateTagStatus(
-    $tagId: ID!
-    $statusName: String!
-    $description: String
-  ) {
-    updateTagStatus(
-      tagId: $tagId
-      statusName: $statusName
-      description: $description
-    ) {
-      statusName
-      createTime
+  mutation updateTagData($tagId: ID!, $data: updateTagResearchDataInput!) {
+    updateTagResearchData(tagId: $tagId, data: $data) {
+      tagResearch {
+        id
+        locationName
+        category {
+          categoryType
+          categoryName
+          categoryDescName
+          locationImgUrl
+        }
+        floor
+        status {
+          statusName
+          statusDescName
+        }
+      }
+      imageUploadNumber
+      imageUploadUrls
+      imageDeleteStatus
     }
   }
 `

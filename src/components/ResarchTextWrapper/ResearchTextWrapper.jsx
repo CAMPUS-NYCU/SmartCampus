@@ -7,7 +7,11 @@ const useStyles = makeStyles(() => ({
     variant: 'outlined',
     background: '#D9D9D9',
     textAlign: 'center',
-    width: '100%',
+    minWidth: '70%',
+    width: 'auto',
+    height: '100%',
+    paddingLeft: 1,
+    paddingRight: 1,
     boxShadow: 'none'
   }
 }))
