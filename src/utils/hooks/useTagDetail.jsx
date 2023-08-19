@@ -8,6 +8,7 @@ export const GET_TAG_DETAIL_QUERY = gql`
   query getTagDetail($id: ID!) {
     tagResearch(tagId: $id) {
       id
+      fixedTagId
       createTime
       locationName
       floor
