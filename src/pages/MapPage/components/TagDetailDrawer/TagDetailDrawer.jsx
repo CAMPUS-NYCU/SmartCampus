@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Box } from '@mui/material'
 import { Lightbox } from 'react-modal-image'
 
-// import tagStatus from '../../../../constants/tagData'
 import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
