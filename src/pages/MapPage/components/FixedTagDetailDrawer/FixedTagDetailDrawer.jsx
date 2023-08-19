@@ -24,7 +24,7 @@ function FixedTagDetailDialog(props) {
       variant='persistent'
     >
       <>
-        <DetailPart activeFixedTag={activeFixedTag} />
+        <DetailPart tags={activeFixedTag.tags} />
         <MissionFab activeFixedTag={activeFixedTag} />
       </>
     </CustomDrawer>
