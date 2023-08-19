@@ -18,6 +18,7 @@ export const TagContext = React.createContext({
   highlightTagId: null,
   setHighLightTagId: () => {},
   resetActiveTag: () => {},
+  resetActiveFixedTag: () => {},
   categoryList: [],
   upVote: () => {},
   userAddTags: null,
@@ -62,12 +63,17 @@ export const TagContextProvider = ({ children }) => {
   const activeTag = findTagById(activeTagId, tags)
   const activeFixedTag = findFixedTagById(activeTagId, fixedTags)
   const { tagDetail, getTagDetail, resetTagDetail } = useTagDetail()
-  const { fixedtagDetail, getFixedTagDetail } = useFixedTagDetail()
+  const { fixedtagDetail, getFixedTagDetail, resetFixedTagDetail } =
+    useFixedTagDetail()
   const newTag = useTagSubscription()
   const resetActiveTag = useCallback(() => {
     setActiveTagId(null)
     resetTagDetail()
   }, [setActiveTagId, resetTagDetail])
+  const resetActiveFixedTag = useCallback(() => {
+    setActiveTagId(null)
+    resetFixedTagDetail()
+  }, [setActiveTagId, resetFixedTagDetail])
   const fetchTagDetail = useCallback(async () => {
     getTagDetail({
       variables: { id: activeTagId }
@@ -142,6 +148,7 @@ export const TagContextProvider = ({ children }) => {
     highlightTagId,
     setHighLightTagId,
     resetActiveTag,
+    resetActiveFixedTag,
     categoryList,
     filterTags,
     addFilterTags,
