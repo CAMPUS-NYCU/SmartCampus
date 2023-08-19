@@ -200,7 +200,7 @@ function ChangeStatus(props) {
                       value={selectedStatusDesc}
                       onChange={handleSelectChange}
                     >
-                      {thisStatusType.statusOptions.map((currentValue) => {
+                      {thisStatusType?.statusOptions?.map((currentValue) => {
                         return (
                           <MenuItem key={currentValue} value={currentValue}>
                             {currentValue}
