@@ -6,6 +6,7 @@ export const TAG_CHANGE_SUBSCRIPTION = gql`
       changeType
       tagContent {
         id
+        fixedTagId
         locationName
         coordinates {
           latitude
