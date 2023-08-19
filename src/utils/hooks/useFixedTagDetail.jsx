@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
 
 import { useUserValue } from '../contexts/UserContext'
@@ -49,7 +49,10 @@ function useFixedTagDetail() {
       })
     }
   }, [fixedTagResearch])
-  return { fixedtagDetail, getFixedTagDetail }
+  const resetFixedTagDetail = useCallback(() => {
+    setFixedTagDetail(fixedtagDetailInitial)
+  }, [])
+  return { fixedtagDetail, getFixedTagDetail, resetFixedTagDetail }
 }
 
 export default useFixedTagDetail

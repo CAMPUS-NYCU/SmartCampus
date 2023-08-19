@@ -138,26 +138,7 @@ const DetailPartItem = (props) => {
   )
 }
 
-const DetailPartPlaceholder = () => {
-  return (
-    <Box
-      display='flex'
-      flexDirection='column'
-      m={2}
-      style={{
-        overflowX: 'hidden',
-        overflowY: 'scroll',
-        height: '80%',
-        width: '90%',
-        marginTop: '10px'
-      }}
-    >
-      [TODO]: 無資料
-    </Box>
-  )
-}
-
-const DetailPartWithContext = (props) => {
+const DetailPart = (props) => {
   const { tags } = props
   return (
     <Box
@@ -177,14 +158,6 @@ const DetailPartWithContext = (props) => {
       ))}
     </Box>
   )
-}
-
-const DetailPart = (props) => {
-  const { tags } = props
-  if (tags.length === 0) {
-    return <DetailPartPlaceholder />
-  }
-  return <DetailPartWithContext tags={tags} />
 }
 
 DetailPart.propTypes = {
