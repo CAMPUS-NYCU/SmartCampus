@@ -37,7 +37,7 @@ function TagDetailDialog(props) {
         height='part'
         variant='persistent'
         closeButton={false}
-        title={`${tagDetail.category.categoryType}/${tagDetail.category.categoryName}`}
+        title={`${tagDetail.category?.categoryType}/${tagDetail.category?.categoryName}`}
       >
         <Box
           display='flex'

@@ -134,7 +134,7 @@ const DetailPart = (props) => {
               </Grid>
               <Grid item xs={4} marginRight={1}>
                 <ResearchTextWrapper>
-                  {tagDetail.category.categoryDescName}
+                  {tagDetail.category?.categoryDescName}
                 </ResearchTextWrapper>
               </Grid>
             </Grid>

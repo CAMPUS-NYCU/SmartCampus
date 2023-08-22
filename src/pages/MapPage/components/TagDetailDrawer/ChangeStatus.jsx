@@ -67,10 +67,10 @@ function ChangeStatus(props) {
             data: {
               locationName: tagDetail.locationName,
               category: {
-                categoryType: tagDetail.category.categoryType,
-                categoryName: tagDetail.category.categoryName,
-                categoryDescName: tagDetail.category.categoryDescName,
-                locationImgUrl: tagDetail.category.locationImgUrl
+                categoryType: tagDetail.category?.categoryType,
+                categoryName: tagDetail.category?.categoryName,
+                categoryDescName: tagDetail.category?.categoryDescName,
+                locationImgUrl: tagDetail.category?.locationImgUrl
               },
               statusName: tagDetail.status.statusName,
               statusDescName: selectedStatusDesc
@@ -133,7 +133,7 @@ function ChangeStatus(props) {
               </Grid>
               <Grid item xs={2}>
                 <ResearchTextWrapper>
-                  {tagDetail.category.categoryType}
+                  {tagDetail.category?.categoryType}
                 </ResearchTextWrapper>
               </Grid>
             </Grid>
@@ -148,7 +148,7 @@ function ChangeStatus(props) {
               </Grid>
               <Grid item xs={2}>
                 <ResearchTextWrapper>
-                  {tagDetail.category.categoryName}
+                  {tagDetail.category?.categoryName}
                 </ResearchTextWrapper>
               </Grid>
             </Grid>
@@ -163,7 +163,7 @@ function ChangeStatus(props) {
               </Grid>
               <Grid item xs={2}>
                 <ResearchTextWrapper>
-                  {tagDetail.category.categoryDescName}
+                  {tagDetail.category?.categoryDescName}
                 </ResearchTextWrapper>
               </Grid>
             </Grid>
