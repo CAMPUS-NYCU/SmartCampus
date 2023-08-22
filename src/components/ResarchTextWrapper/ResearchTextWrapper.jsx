@@ -17,8 +17,21 @@ const useStyles = makeStyles(() => ({
 }))
 
 const ResearchTextWrapper = (props) => {
-  const { bgcolor = '#D9D9D9', children } = props
+  const { bgcolor = '#D9D9D9', isEditable = false, children } = props
   const classes = useStyles()
+
+  if (isEditable) {
+    return (
+      <>
+        <Paper
+          className={classes.ResearchDetailWrapper}
+          style={{ background: '#FDCC4F' }}
+        >
+          {children}
+        </Paper>
+      </>
+    )
+  }
 
   return (
     <>
