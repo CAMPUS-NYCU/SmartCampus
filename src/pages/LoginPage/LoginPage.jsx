@@ -1,18 +1,131 @@
 import React from 'react'
 
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography
+} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import { Google, Visibility, VisibilityOff } from '@mui/icons-material'
+
+// import { useSnackbar } from 'notistack'
 
 import { useUserValue } from '../../utils/contexts/UserContext'
 import wave1 from '../../assets/images/main-wave1.svg'
 import wave2 from '../../assets/images/main-wave2.svg'
-import googleIcon from '../../assets/images/google_icon.png'
 import title from '../../assets/images/title.svg'
 
-export default function LoginPage() {
-  const { signInWithGoogle, signInWithGuest } = useUserValue()
+const useStyles = makeStyles(() => ({
+  form: {
+    width: '80vw',
+    maxWidth: '400px'
+  }
+}))
 
+function SignInWithEmailAndPasswordForm() {
+  const classes = useStyles()
+  const [passwordVisibility, setPasswordVisibility] = React.useState(false)
+  const [formData, setFormData] = React.useState({
+    email: '',
+    password: ''
+  })
+  const { signInWithEmailAndPassword } = useUserValue()
+
+  const handleFormDataChange = (prop) => (event) => {
+    setFormData({ ...formData, [prop]: event.target.value })
+  }
+
+  const handlePasswordVisibility = () => {
+    setPasswordVisibility(!passwordVisibility)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    signInWithEmailAndPassword(formData.email, formData.password)
+  }
+
+  return (
+    <form className={classes.form} onSubmit={handleSubmit}>
+      <FormControl fullWidth margin='normal'>
+        <TextField
+          label='電子郵件'
+          variant='outlined'
+          value={formData.email}
+          onChange={handleFormDataChange('email')}
+        />
+      </FormControl>
+      <FormControl fullWidth margin='normal'>
+        <TextField
+          label='密碼'
+          variant='outlined'
+          type={passwordVisibility ? 'text' : 'password'}
+          value={formData.password}
+          onChange={handleFormDataChange('password')}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton onClick={handlePasswordVisibility} edge='end'>
+                  {passwordVisibility ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+      </FormControl>
+      <FormControl fullWidth margin='normal'>
+        <Button type='submit' variant='contained' color='primary'>
+          登入
+        </Button>
+      </FormControl>
+    </form>
+  )
+}
+
+function SignInWithGoogleButton() {
+  const { signInWithGoogle } = useUserValue()
+  const disabled = true
+  return (
+    <Button
+      style={{
+        // marginTop: '150px',
+        background: disabled ? '#AAAAAA' : '#4385F4'
+      }}
+      onClick={signInWithGoogle}
+      disabled={disabled}
+    >
+      <Box display='flex' flexDirection='row' margin={1}>
+        <Google style={{ color: 'white' }} />
+        <Typography variant='subtitle1' style={{ color: 'white' }}>
+          &nbsp;使用Google登入
+        </Typography>
+      </Box>
+    </Button>
+  )
+}
+
+function SignInWithGuestButton() {
+  const { signInWithGuest } = useUserValue()
+  const disabled = true
+  return (
+    <Button
+      style={{
+        marginTop: '30px',
+        color: '#BABABA',
+        padding: '0'
+      }}
+      onClick={signInWithGuest}
+      disabled={disabled}
+    >
+      以訪客身分進入
+    </Button>
+  )
+}
+
+export default function LoginPage() {
   return (
     <Box
       style={{
@@ -41,54 +154,9 @@ export default function LoginPage() {
         alignItems='center'
         justifyContent='center'
       >
-        <Button
-          style={{
-            width: '220px',
-            height: '50px',
-            // marginTop: '150px',
-            background: '#4385F4'
-          }}
-          onClick={signInWithGoogle}
-        >
-          <Box
-            style={{
-              width: '45px',
-              height: '45px',
-              background: 'white',
-              position: 'absolute',
-              left: '2.5px'
-            }}
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-          >
-            <div
-              style={{
-                backgroundImage: `url(${googleIcon})`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                width: '60%',
-                height: '60%'
-              }}
-            />
-          </Box>
-          <Typography
-            variant='subtitle1'
-            style={{ color: 'white', marginLeft: '50px' }}
-          >
-            使用Google登入
-          </Typography>
-        </Button>
-        <Button
-          style={{
-            marginTop: '30px',
-            color: '#BABABA',
-            padding: '0'
-          }}
-          onClick={signInWithGuest}
-        >
-          以訪客身分進入
-        </Button>
+        <SignInWithEmailAndPasswordForm />
+        <SignInWithGoogleButton />
+        <SignInWithGuestButton />
       </Box>
       <div
         style={{
