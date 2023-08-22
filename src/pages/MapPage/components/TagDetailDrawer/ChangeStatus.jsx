@@ -6,7 +6,7 @@ import {
   Dialog,
   CircularProgress,
   Grid,
-  Select,
+  NativeSelect,
   MenuItem,
   FormControl
 } from '@mui/material'
@@ -193,21 +193,21 @@ function ChangeStatus(props) {
                 狀態描述
               </Grid>
               <Grid item xs={4}>
-                <ResearchTextWrapper bgcolor='#FDCC4F'>
+                <ResearchTextWrapper isEditable={true}>
                   <FormControl fullWidth>
-                    <Select
+                    <NativeSelect
                       defaultValue={tagDetail.status.statusDescName}
                       value={selectedStatusDesc}
                       onChange={handleSelectChange}
                     >
                       {thisStatusType?.statusOptions?.map((currentValue) => {
                         return (
-                          <MenuItem key={currentValue} value={currentValue}>
+                          <option key={currentValue} value={currentValue} style={{ textAlign: 'center' }}>
                             {currentValue}
-                          </MenuItem>
+                          </option>
                         )
                       })}
-                    </Select>
+                    </NativeSelect>
                   </FormControl>
                 </ResearchTextWrapper>
               </Grid>
