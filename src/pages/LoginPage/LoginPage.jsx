@@ -12,7 +12,7 @@ import {
 import { makeStyles } from '@mui/styles'
 import { Google, Visibility, VisibilityOff } from '@mui/icons-material'
 
-// import { useSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 import { useUserValue } from '../../utils/contexts/UserContext'
 import wave1 from '../../assets/images/main-wave1.svg'
@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 function SignInWithEmailAndPasswordForm() {
+  const { enqueueSnackbar } = useSnackbar()
   const classes = useStyles()
   const [passwordVisibility, setPasswordVisibility] = React.useState(false)
   const [formData, setFormData] = React.useState({
@@ -46,6 +47,18 @@ function SignInWithEmailAndPasswordForm() {
   const handleSubmit = (event) => {
     event.preventDefault()
     signInWithEmailAndPassword(formData.email, formData.password)
+      .then(() =>
+        enqueueSnackbar('登入成功', {
+          variant: 'success',
+          autoHideDuration: 3000
+        })
+      )
+      .catch(() =>
+        enqueueSnackbar('登入失敗', {
+          variant: 'error',
+          autoHideDuration: 3000
+        })
+      )
   }
 
   return (
