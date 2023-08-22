@@ -31,18 +31,18 @@ const ResearchTextWrapper = (props) => {
         </Paper>
       </>
     )
-  } else {
-    return (
-      <>
-        <Paper
-          className={classes.ResearchDetailWrapper}
-          style={{ background: bgcolor }}
-        >
-          {children}
-        </Paper>
-      </>
-    )
   }
+
+  return (
+    <>
+      <Paper
+        className={classes.ResearchDetailWrapper}
+        style={{ background: bgcolor }}
+      >
+        {children}
+      </Paper>
+    </>
+  )
 }
 
 export default ResearchTextWrapper
