@@ -34,7 +34,10 @@ function ChangeStatus(props) {
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
     for (let i = 0; i < Res1StatusType.length; i += 1) {
-      if (tagDetail.status.statusName === Res1StatusType[i].status) {
+      if (
+        tagDetail.status.statusName === Res1StatusType[i].status &&
+        tagDetail.category.categoryType === Res1StatusType[i].categoryType
+      ) {
         setThisStatusType(Res1StatusType[i])
       }
     }
@@ -44,7 +47,7 @@ function ChangeStatus(props) {
   useEffect(() => {
     setSelectedStatusDesc(tagDetail.status.statusDescName)
   }, [tagDetail, stateDrawer])
-  const handleSelectChange = (event) => {
+  const handleChangeStatusDescName = (event) => {
     setSelectedStatusDesc(event.target.value)
   }
 
@@ -197,7 +200,7 @@ function ChangeStatus(props) {
                     <NativeSelect
                       defaultValue={tagDetail.status.statusDescName}
                       value={selectedStatusDesc}
-                      onChange={handleSelectChange}
+                      onChange={handleChangeStatusDescName}
                     >
                       {thisStatusType?.statusOptions?.map((currentValue) => {
                         return (

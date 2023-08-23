@@ -1,0 +1,537 @@
+[
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786631012560846,
+      "longitude": 120.99857963514003
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機B1-1"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78653360806729,
+      "longitude": 120.99828056883487
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機B1-2"
+    }
+  },
+
+
+
+
+
+
+
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786760073397044,
+      "longitude": 120.99849648666057
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-1"
+    }
+  },
+
+
+
+
+
+
+
+
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78663466522788,
+      "longitude": 120.9986265737978
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區2-1"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78671989409452,
+      "longitude": 120.99852464985523
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區2-2"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78649342869143,
+      "longitude": 120.99851392101917
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區2-3"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786635411788694,
+      "longitude": 120.99857249466854
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區2-1"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786111211305954,
+      "longitude": 120.99816932808554
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機2-1"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78633879885077,
+      "longitude": 120.99846430015239
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-1"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78651777982988,
+      "longitude": 120.99837712835941
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-2"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78641794013188,
+      "longitude": 120.99828928601417
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-1"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786392980194833,
+      "longitude": 120.99828794490966
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-2"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78640819966922,
+      "longitude": 120.99826514613304
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-3"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786417637367247,
+      "longitude": 120.9982140812239
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-4"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78638993792454,
+      "longitude": 120.99821341067165
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-5"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786410027630865,
+      "longitude": 120.99818860023827
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-6"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78633794013188,
+      "longitude": 120.99828928601417
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-7"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786312980194833,
+      "longitude": 120.99828794490966
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-8"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78632819966922,
+      "longitude": 120.99826514613304
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-9"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786337637367247,
+      "longitude": 120.9982140812239
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-10"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78630993792454,
+      "longitude": 120.99821341067165
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-11"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786330027630865,
+      "longitude": 120.99818860023827
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-12"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78625794013188,
+      "longitude": 120.99828928601417
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-13"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786232980194833,
+      "longitude": 120.99828794490966
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-14"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78624819966922,
+      "longitude": 120.99826514613304
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-15"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786257637367247,
+      "longitude": 120.9982140812239
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-16"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78622993792454,
+      "longitude": 120.99821341067165
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-17"
+    }
+  }, {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786250027630865,
+      "longitude": 120.99818860023827
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦2-18"
+    }
+  },
+
+
+
+
+
+
+  
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78637776071854,
+      "longitude": 120.99861182164821
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機3-1"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786001534671545,
+      "longitude": 120.99823363017711
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機3-2"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786461772204287,
+      "longitude": 120.9985018510786
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦3-1"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78646055464694,
+      "longitude": 120.99846027683887
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦3-2"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786413069900654,
+      "longitude": 120.9984468657938
+    },
+    "category": {
+      "categoryName": "公用電腦",
+      "categoryDescName": "公用電腦3-3"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786467859990903,
+      "longitude": 120.99839255106124
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區3-1"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786467859990903,
+      "longitude": 120.99831744920883
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區3-2"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786466033654953,
+      "longitude": 120.99823295962486
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區3-3"
+    }
+  },
+  {
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78643376838204,
+      "longitude": 120.99839188050899
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-1"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78644107372758,
+      "longitude": 120.99831946086559
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-2"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78643985617003,
+      "longitude": 120.9982322890726
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-3"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.78643985617003,
+      "longitude": 120.99816389274272
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-4"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786344886643413,
+      "longitude": 120.99816255163822
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-5"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786266962874997,
+      "longitude": 120.99816523384723
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-6"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786066065433783,
+      "longitude": 120.99846027683887
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-7"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786069718117457,
+      "longitude": 120.99838383388195
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-8"
+    }
+  },{
+    "region": "密度高-室內多",
+    "locationName": "圖書館",
+    "coordinates": {
+      "latitude": 24.786070935678648,
+      "longitude": 120.99831543755207
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-9"
+    }
+  }
+
+]

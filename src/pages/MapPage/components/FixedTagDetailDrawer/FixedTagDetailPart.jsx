@@ -23,6 +23,7 @@ const DetailPartItem = (props) => {
       })
     }
   }, [isHighlighted])
+  console.log('tag', tag)
 
   return (
     <Grid

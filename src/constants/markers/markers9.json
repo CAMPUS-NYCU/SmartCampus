@@ -1,0 +1,242 @@
+[
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788559799677053,
+      "longitude": 120.99600929176862
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-1"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78852692618008,
+      "longitude": 120.99600929176862
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-2"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788565887360722,
+      "longitude": 120.99565926349217
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-3"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788539101550363,
+      "longitude": 120.99566194570119
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-4"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788607283601763,
+      "longitude": 120.99596235311085
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-1"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788604848529125,
+      "longitude": 120.99574643528516
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-2"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788838615282625,
+      "longitude": 120.99564853465611
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-3"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78868155329368,
+      "longitude": 120.99564853465611
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-4"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.789220920378206,
+      "longitude": 120.99616687154824
+    },
+    "category": {
+      "categoryName": "教職員停車區",
+      "categoryDescName": "教職員停車區1-1"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78921970284793,
+      "longitude": 120.99606226539666
+    },
+    "category": {
+      "categoryName": "教職員停車區",
+      "categoryDescName": "教職員停車區1-2"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78921726778733,
+      "longitude": 120.99600191569382
+    },
+    "category": {
+      "categoryName": "教職員停車區",
+      "categoryDescName": "教職員停車區1-3"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.789214832726678,
+      "longitude": 120.9959080383783
+    },
+    "category": {
+      "categoryName": "教職員停車區",
+      "categoryDescName": "教職員停車區1-4"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78921970284793,
+      "longitude": 120.9958356187349
+    },
+    "category": {
+      "categoryName": "教職員停車區",
+      "categoryDescName": "教職員停車區1-5"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788772868427746,
+      "longitude": 120.99596503531987
+    },
+    "category": {
+      "categoryName": "室內排球場",
+      "categoryDescName": "室內排球場1-1"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.788774085962398,
+      "longitude": 120.99577459847981
+    },
+    "category": {
+      "categoryName": "室內籃球場",
+      "categoryDescName": "室內籃球場1-1"
+    }
+  },
+  {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.789224572968983,
+      "longitude": 120.99575179970319
+    },
+    "category": {
+      "categoryName": "一般停車區",
+      "categoryDescName": "一般停車區1-1"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.789224572968983,
+      "longitude": 120.99568742668683
+    },
+    "category": {
+      "categoryName": "一般停車區",
+      "categoryDescName": "一般停車區1-2"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78923066062003,
+      "longitude": 120.99558282053525
+    },
+    "category": {
+      "categoryName": "一般停車區",
+      "categoryDescName": "一般停車區1-3"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78923066062003,
+      "longitude": 120.99550771868283
+    },
+    "category": {
+      "categoryName": "一般停車區",
+      "categoryDescName": "一般停車區1-4"
+    }
+  }
+  , {
+    "region": "空間-室外",
+    "locationName": "舊體育館",
+    "coordinates": {
+      "latitude": 24.78923066062003,
+      "longitude": 120.99542188799435
+    },
+    "category": {
+      "categoryName": "一般停車區",
+      "categoryDescName": "一般停車區1-5"
+    }
+  }
+]

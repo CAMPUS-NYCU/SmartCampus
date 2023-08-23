@@ -1,0 +1,256 @@
+[
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786495255525654,
+      "longitude": 120.99990175728573
+    },
+    "category": {
+      "categoryName": "ATM",
+      "categoryDescName": "ATM1-1"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786567091369268,
+      "longitude": 120.99961476092113
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-1"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786566482591105,
+      "longitude": 120.99941359524502
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-2"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786530564674308,
+      "longitude": 121.00028665427936
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-1"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786626751614538,
+      "longitude": 120.99967506247044
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-1"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786581093266133,
+      "longitude": 120.99967640357495
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-2"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786536652457542,
+      "longitude": 120.9996770741272
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-3"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786469078046885,
+      "longitude": 120.99972334223271
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-4"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786470295604158,
+      "longitude": 120.99962410049916
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-5"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.78647820972616,
+      "longitude": 120.99952485876561
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-6"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786452030463913,
+      "longitude": 121.00038522506857
+    },
+    "category": {
+      "categoryName": "路邊無障礙停車位",
+      "categoryDescName": "路邊無障礙停車位1-1"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786411851061615,
+      "longitude": 121.00036376739645
+    },
+    "category": {
+      "categoryName": "路邊無障礙停車位",
+      "categoryDescName": "路邊無障礙停車位1-2"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786376541879175,
+      "longitude": 121.00034767414236
+    },
+    "category": {
+      "categoryName": "路邊無障礙停車位",
+      "categoryDescName": "路邊無障礙停車位1-3"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786335144893854,
+      "longitude": 121.00032621647024
+    },
+    "category": {
+      "categoryName": "路邊無障礙停車位",
+      "categoryDescName": "路邊無障礙停車位1-4"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786287660099553,
+      "longitude": 121.0003007354846
+    },
+    "category": {
+      "categoryName": "路邊無障礙停車位",
+      "categoryDescName": "路邊無障礙停車位1-5"
+    }
+  },
+  {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786517194363395,
+      "longitude": 121.00045376781117
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-1"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786480667653755,
+      "longitude": 121.00043432179581
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-2"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786436226809208,
+      "longitude": 121.00041487578045
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-3"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.78639787373879,
+      "longitude": 121.00039341810833
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-4"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786363173331534,
+      "longitude": 121.00037732485424
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-5"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786316906106745,
+      "longitude": 121.00035519662987
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-6"
+    }
+  }, {
+    "region": "密度高-室外",
+    "locationName": "活動中心&一餐",
+    "coordinates": {
+      "latitude": 24.786277944219865,
+      "longitude": 121.00033440951
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-7"
+    }
+  }
+]

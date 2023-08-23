@@ -1,0 +1,394 @@
+[
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78912759293131,
+      "longitude": 120.99711075885095
+    },
+    "category": {
+      "categoryName": "ATM",
+      "categoryDescName": "ATM1-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78923717069016,
+      "longitude": 120.99700615269937
+    },
+    "category": {
+      "categoryName": "ATM",
+      "categoryDescName": "ATM1-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789274914118018,
+      "longitude": 120.99725962145128
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78916777145412,
+      "longitude": 120.99704504473009
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789260316556827,
+      "longitude": 120.9972817778665
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區1-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78931084403693,
+      "longitude": 120.99723148644748
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區1-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789322867145387,
+      "longitude": 120.99718549180594
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區1-3"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789267211849687,
+      "longitude": 120.99715989565279
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區1-4"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789355879819674,
+      "longitude": 120.9973260061244
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區1-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789220734032483,
+      "longitude": 120.9971114294032
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區1-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789230474274337,
+      "longitude": 120.9974695043067
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789181773057507,
+      "longitude": 120.99743731779851
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78912698416572,
+      "longitude": 120.99738367361822
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-3"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78906489005912,
+      "longitude": 120.99726833863058
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-4"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789124758036436,
+      "longitude": 120.99720126282591
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-5"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78916838021954,
+      "longitude": 120.99714093370237
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台1-6"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78918055552685,
+      "longitude": 120.99771001617628
+    },
+    "category": {
+      "categoryName": "教職員停車區",
+      "categoryDescName": "教職員停車區1-1"
+    }
+  },
+
+
+
+
+
+
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789256422883618,
+      "longitude": 120.99733053235211
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區2-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78925155276381,
+      "longitude": 120.99709315685429
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區2-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789261293003246,
+      "longitude": 120.99695368198552
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區2-3"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789078663386917,
+      "longitude": 120.99732852069535
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78912858217542,
+      "longitude": 120.99718166975178
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789169369463288,
+      "longitude": 120.99713137833275
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-3"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789350172652583,
+      "longitude": 120.99718770472207
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-4"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789304515306426,
+      "longitude": 120.99706164089837
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-5"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789205286616138,
+      "longitude": 120.99697379855313
+    },
+    "category": {
+      "categoryName": "櫃台",
+      "categoryDescName": "櫃台2-6"
+    }
+  },
+
+
+
+  
+
+
+
+
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789177283413107,
+      "longitude": 120.99739624647297
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789273468301424,
+      "longitude": 120.9969858684937
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區3-2"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789236942403257,
+      "longitude": 120.99704253015913
+    },
+    "category": {
+      "categoryName": "高腳椅區",
+      "categoryDescName": "高腳椅區3-1"
+    }
+  },
+  {
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.789362347942053,
+      "longitude": 120.99739557592072
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區3-1"
+    }
+  }
+  ,{
+    "region": "空間-室內多",
+    "locationName": "二餐&停車場",
+    "coordinates": {
+      "latitude": 24.78935078141708,
+      "longitude": 120.99720916239419
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區3-2"
+    }
+  }
+
+
+
+
+
+
+]

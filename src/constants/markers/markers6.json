@@ -1,0 +1,374 @@
+[
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78810103700698,
+      "longitude": 120.99492277366161
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-1"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787743079358442,
+      "longitude": 120.99445338708401
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-2"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78772359864045,
+      "longitude": 120.99491204482555
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-3"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787662721377032,
+      "longitude": 120.9950461552763
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-4"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787414341832697,
+      "longitude": 120.99503274423122
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-5"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.788076077408526,
+      "longitude": 120.9951360092783
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-1"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787724201437193,
+      "longitude": 120.99506528875405
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-1"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78772541898215,
+      "longitude": 120.99497878751332
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-2"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78792266708332,
+      "longitude": 120.99513768565893
+    },
+    "category": {
+      "categoryName": "室外排球場",
+      "categoryDescName": "室外排球場1-1"
+    }
+  }
+  ,{
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78792266708332,
+      "longitude": 120.9950062574172
+    },
+    "category": {
+      "categoryName": "室外排球場",
+      "categoryDescName": "室外排球場1-2"
+    }
+  }
+  ,{
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78792266708332,
+      "longitude": 120.99482386720419
+    },
+    "category": {
+      "categoryName": "室外排球場",
+      "categoryDescName": "室外排球場1-3"
+    }
+  }
+  ,{
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78792266708332,
+      "longitude": 120.99467634570837
+    },
+    "category": {
+      "categoryName": "室外排球場",
+      "categoryDescName": "室外排球場1-4"
+    }
+  }
+  ,{
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78792266708332,
+      "longitude": 120.99453418863058
+    },
+    "category": {
+      "categoryName": "室外排球場",
+      "categoryDescName": "室外排球場1-5"
+    }
+  }
+  ,{
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78792266708332,
+      "longitude": 120.99436520946264
+    },
+    "category": {
+      "categoryName": "室外排球場",
+      "categoryDescName": "室外排球場1-6"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78751844214343,
+      "longitude": 120.99511522215843
+    },
+    "category": {
+      "categoryName": "室外籃球場",
+      "categoryDescName": "室外籃球場1-1"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78752331233127,
+      "longitude": 120.99489528101921
+    },
+    "category": {
+      "categoryName": "室外籃球場",
+      "categoryDescName": "室外籃球場1-2"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787520877237363,
+      "longitude": 120.9946941153431
+    },
+    "category": {
+      "categoryName": "室外籃球場",
+      "categoryDescName": "室外籃球場1-3"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787514789502424,
+      "longitude": 120.99445271653175
+    },
+    "category": {
+      "categoryName": "室外籃球場",
+      "categoryDescName": "室外籃球場1-4"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787694986330365,
+      "longitude": 120.99469813865662
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-1"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787694986330365,
+      "longitude": 120.99462169569969
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-2"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78769376878513,
+      "longitude": 120.99453854722023
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-3"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78769376878513,
+      "longitude": 120.9944419876957
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-4"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787694986330365,
+      "longitude": 120.99435883921623
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-5"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787690116149264,
+      "longitude": 120.9942797140503
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-6"
+    }
+  },
+  {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78767063542298,
+      "longitude": 120.99476519388199
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-7"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787673679286655,
+      "longitude": 120.99470082086563
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-8"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787673679286655,
+      "longitude": 120.99462370735645
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-9"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787673070513932,
+      "longitude": 120.99453921777248
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-10"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787671852968444,
+      "longitude": 120.9944419876957
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-11"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.787671852968444,
+      "longitude": 120.99435883921623
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-12"
+    }
+  }
+  , {
+    "region": "密度低-室外",
+    "locationName": "室外球場",
+    "coordinates": {
+      "latitude": 24.78767063542298,
+      "longitude": 120.99428172570705
+    },
+    "category": {
+      "categoryName": "路邊一般停車位",
+      "categoryDescName": "路邊一般停車位1-13"
+    }
+  }
+]
