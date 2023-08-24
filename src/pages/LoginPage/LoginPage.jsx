@@ -105,7 +105,8 @@ function SignInWithGoogleButton() {
     <Button
       style={{
         // marginTop: '150px',
-        background: disabled ? '#AAAAAA' : '#4385F4'
+        background: disabled ? '#AAAAAA' : '#4385F4',
+        display: 'none'
       }}
       onClick={signInWithGoogle}
       disabled={disabled}
@@ -128,7 +129,8 @@ function SignInWithGuestButton() {
       style={{
         marginTop: '30px',
         color: '#BABABA',
-        padding: '0'
+        padding: '0',
+        display: 'none'
       }}
       onClick={signInWithGuest}
       disabled={disabled}
