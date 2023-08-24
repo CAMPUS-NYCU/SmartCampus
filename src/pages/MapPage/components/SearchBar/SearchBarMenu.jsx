@@ -8,7 +8,6 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import PersonIcon from '@mui/icons-material/Person'
 import DescriptionIcon from '@mui/icons-material/Description'
-import HelpIcon from '@mui/icons-material/Help'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import RateReviewIcon from '@mui/icons-material/RateReview'
 import { makeStyles } from '@mui/styles'
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function SearchBarMenu(props) {
   const {
     control: { open, anchorEl, setClose },
-    menuControls: { handleOpenUser, handleOpenHistory, handleOpenHowToUse }
+    menuControls: { handleOpenUser, handleOpenHistory }
   } = props
   const classes = useStyles()
   const { signOut } = useUserValue()
@@ -45,18 +44,12 @@ function SearchBarMenu(props) {
     },
     {
       id: 3,
-      text: '功能介紹',
-      action: handleOpenHowToUse,
-      icon: <HelpIcon color='primary' />
-    },
-    {
-      id: 4,
       text: '意見回饋',
       action: () => window.open('https://forms.gle/M9zsKyJyAvLLx3o2A'),
       icon: <RateReviewIcon color='primary' />
     },
     {
-      id: 5,
+      id: 4,
       text: '登出',
       action: signOut,
       icon: <ExitToAppIcon color='primary' />
@@ -110,7 +103,6 @@ SearchBarMenu.propTypes = {
     handleOpenUser: PropTypes.func.isRequired,
     handleOpenHistory: PropTypes.func.isRequired,
     handleOpenSetting: PropTypes.func.isRequired,
-    handleOpenHowToUse: PropTypes.func.isRequired,
     handleOpenTerms: PropTypes.func.isRequired
   }).isRequired
 }

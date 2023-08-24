@@ -25,10 +25,8 @@ import {
 } from '../../utils/contexts/MissionContext'
 import { MAP_PATH } from '../../constants/pageUrls'
 import ReportHistory from './components/ReportHistory'
-import GuidePage from './components/GuidePage'
 import { useTagValue } from '../../utils/contexts/TagContext'
 import { useUserValue } from '../../utils/contexts/UserContext'
-import useStep from '../../utils/hooks/useStep'
 import TagDetailDrawer from './components/TagDetailDrawer'
 import FixedTagDetailDrawer from './components/FixedTagDetailDrawer'
 import FilterFab from './components/Filter/FilterFab'
@@ -52,28 +50,10 @@ const style = {
 }
 
 export default function MapPage() {
-  const {
-    step: guideStep,
-    setStep,
-    handleNext,
-    handleBack
-  } = useStep({
-    initialStep: 0,
-    maxStep: 3,
-    minStep: 0
-  })
-  const [skip, setSkip] = useState(true) // use to determine whether to skip the guide page
   const isMobile = useMediaQuery(useTheme().breakpoints.up('sm'))
   return (
     <MissionContextProvider>
       <WindowBackProvider />
-      <GuidePage
-        step={guideStep}
-        setStep={setStep}
-        handleNext={() => handleNext(1)}
-        handleBack={() => handleBack(1)}
-        skip={skip}
-      />
       <Modal
         open={isMobile}
         aria-labelledby='modal-modal-title'
@@ -91,13 +71,12 @@ export default function MapPage() {
           </Typography>
         </Box>
       </Modal>
-      <MapPageContent setGuideStep={setStep} setSkip={setSkip} />
+      <MapPageContent />
     </MissionContextProvider>
   )
 }
 
-const MapPageContent = (props) => {
-  const { setGuideStep, setSkip } = props
+const MapPageContent = () => {
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: VITE_GOOGLE_MAP_API_KEY,
     libraries: LOADED_LIBRARIES,
@@ -176,10 +155,6 @@ const MapPageContent = (props) => {
                   handleOpenUser: userDialogControl.setOpen,
                   handleOpenHistory: ReportHistoryControl.setOpen,
                   handleOpenSetting: userDialogControl.setOpen,
-                  handleOpenHowToUse: () => {
-                    setSkip(false)
-                    setGuideStep(0)
-                  },
                   handleOpenTerms: userDialogControl.setOpen
                 }}
                 setPlacePosition={setPlacePosition}
