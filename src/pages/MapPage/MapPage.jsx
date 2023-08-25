@@ -15,7 +15,7 @@ import { usePosition } from 'use-position'
 import { useJsApiLoader } from '@react-google-maps/api'
 import { useParams, useHistory } from 'react-router-dom'
 
-import SearchBar from './components/SearchBar'
+// import SearchBar from './components/SearchBar'
 import Map from './components/Map'
 import useModal from '../../utils/hooks/useModal'
 import MissionDrawer from './components/Mission/MissionDrawer'
@@ -29,7 +29,7 @@ import { useTagValue } from '../../utils/contexts/TagContext'
 import { useUserValue } from '../../utils/contexts/UserContext'
 import TagDetailDrawer from './components/TagDetailDrawer'
 import FixedTagDetailDrawer from './components/FixedTagDetailDrawer'
-import FilterFab from './components/Filter/FilterFab'
+// import FilterFab from './components/Filter/FilterFab'
 import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
 import UserDialog from './components/UserDialog/UserDialog'
@@ -113,9 +113,9 @@ const MapPageContent = () => {
       console.error('Google map load error')
     }
   }, [loadError])
-  const [placePosition, setPlacePosition] = useState('')
-  const [placeName, setPlaceName] = useState('')
-  const [search, setSearch] = useState(false)
+  const [placePosition] = useState('')
+  const [placeName] = useState('')
+  const [search] = useState(false)
 
   const handleTagDetailDrawerClose = () => {
     resetActiveTag()
@@ -150,7 +150,7 @@ const MapPageContent = () => {
           />
           <Fade in={showControl}>
             <div>
-              <SearchBar
+              {/* <SearchBar
                 menuControls={{
                   handleOpenUser: userDialogControl.setOpen,
                   handleOpenHistory: ReportHistoryControl.setOpen,
@@ -161,8 +161,8 @@ const MapPageContent = () => {
                 search={search}
                 setSearch={setSearch}
                 setPlaceName={setPlaceName}
-              />
-              <FilterFab />
+              /> */}
+              {/* <FilterFab /> */}
               <LocationFab
                 setMapCenter={() => {
                   if (!positionError)

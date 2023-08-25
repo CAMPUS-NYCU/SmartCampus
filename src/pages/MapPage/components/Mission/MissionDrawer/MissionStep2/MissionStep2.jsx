@@ -74,7 +74,13 @@ function MissionStep2() {
     setCategoryName('')
     setCategoryDescName('')
     setStatusName('')
-  }, [floor])
+  }, [
+    floor,
+    setCategoryType,
+    setCategoryName,
+    setCategoryDescName,
+    setStatusName
+  ])
 
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {

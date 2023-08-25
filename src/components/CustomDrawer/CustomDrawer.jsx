@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaperStyle: {
     borderRadius: '20px 20px 0 0',
     backgroundColor: '#FAFAFA',
-    overflow: 'scoll',
+    overflow: 'scroll',
     zIndex: '20',
     [theme.breakpoints.up('sm')]: {
       width: '400px'

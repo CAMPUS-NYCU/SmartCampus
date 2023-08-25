@@ -15,6 +15,7 @@ import FixedTags from '../../../../assets/images/fixedtag.svg'
 import Mission1 from '../../../../assets/images/mission1_pin.svg'
 import Mission2 from '../../../../assets/images/mission2_pin.svg'
 import Searchposition from '../../../../assets/images/searchPositionIcon.svg'
+import ReferMarkerFab from '../ReferMarkerFab'
 
 function Map(props) {
   const {
@@ -171,7 +172,7 @@ function Map(props) {
               elementType: 'labels.icon',
               stylers: [
                 {
-                  visibility: 'off'
+                  visibility: 'on'
                 }
               ]
             },
@@ -281,6 +282,7 @@ function Map(props) {
             }}
           />
         )}
+        <ReferMarkerFab />
       </GoogleMap>
     </div>
   )
