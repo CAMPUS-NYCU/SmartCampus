@@ -114,6 +114,8 @@ export const MissionContext = React.createContext({
   setStep: () => {},
   fixedTagId: null,
   setFixedTagId: () => {},
+  locationName: null,
+  setLocationName: () => {},
   loading: false,
   ableToNextStep: true,
   ...InitialMissionValue
@@ -129,6 +131,8 @@ export const MissionContextProvider = ({ children }) => {
   const [mapCenter, setMapCenter] = useState(DefaultCenter)
 
   const [fixedTagId, setFixedTagId] = useState(null)
+
+  const [locationName, setLocationName] = useState(null)
 
   // 照片
   const [imageFiles, setImageFiles] = useState([])
@@ -392,6 +396,8 @@ export const MissionContextProvider = ({ children }) => {
     handleCloseEdit,
     fixedTagId,
     setFixedTagId,
+    locationName,
+    setLocationName,
     mapCenter,
     setMapCenter,
     floor,

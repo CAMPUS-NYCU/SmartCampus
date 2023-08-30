@@ -9,7 +9,7 @@ import { useUserValue } from '../../../../utils/contexts/UserContext'
 import UserDialog from '../UserDialog/UserDialog'
 import useModal from '../../../../utils/hooks/useModal'
 import ResearchTextWrapper from '../../../../components/ResarchTextWrapper'
-import Res1StatusType from '../../../../constants/Res1StatusType'
+import res1StatusType from '../../../../constants/res1StatusType'
 import LocationIcon from '../../../../assets/images/res1-detailLocation.svg'
 import CategoryDescNameIcon from '../../../../assets/images/res1-detailCategoryDescName.svg'
 
@@ -34,9 +34,9 @@ const DetailPart = (props) => {
 
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
-    for (let i = 0; i < Res1StatusType.length; i += 1) {
-      if (tagDetail.status.statusName === Res1StatusType[i].status) {
-        setThisStatusType(Res1StatusType[i])
+    for (let i = 0; i < res1StatusType.length; i += 1) {
+      if (tagDetail.status.statusName === res1StatusType[i].status) {
+        setThisStatusType(res1StatusType[i])
       }
     }
   }, [tagDetail])

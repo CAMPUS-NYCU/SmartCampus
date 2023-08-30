@@ -1,0 +1,518 @@
+[
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78980315692971,
+          "longitude": 120.99552158152062
+      },
+      "category": {
+          "categoryName": "飲水機",
+          "categoryDescName": "飲水機2-1"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78993099694277,
+          "longitude": 120.99532846247155
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區2-1"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78986159809488,
+          "longitude": 120.99532443915803
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區2-2"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78978552772132,
+          "longitude": 120.99526374738267
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區2-3"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789782007353406,
+          "longitude": 120.99513314680595
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區2-4"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78976807799171,
+          "longitude": 120.99499719215058
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區2-5"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.7897337580103,
+          "longitude": 120.99574485791348
+      },
+      "category": {
+          "categoryName": "置物櫃",
+          "categoryDescName": "置物櫃2-1"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789770283762188,
+          "longitude": 120.99561208856724
+      },
+      "category": {
+          "categoryName": "置物櫃",
+          "categoryDescName": "置物櫃2-2"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78980315692971,
+          "longitude": 120.99557051432751
+      },
+      "category": {
+          "categoryName": "置物櫃",
+          "categoryDescName": "置物櫃2-3"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78980802702786,
+          "longitude": 120.99593462420128
+      },
+      "category": {
+          "categoryName": "櫃台",
+          "categoryDescName": "櫃台2-1"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789820549699154,
+          "longitude": 120.99620284510277
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-1"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789820811034588,
+          "longitude": 120.99616105845371
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-2"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789820811034588,
+          "longitude": 120.9961250259773
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-3"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.7898217926405,
+          "longitude": 120.99609385682085
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-4"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789803202377083,
+          "longitude": 120.99622837614874
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-5"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789805726055857,
+          "longitude": 120.99618736593894
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-6"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789805421674735,
+          "longitude": 120.99614210366181
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-7"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789807306412257,
+          "longitude": 120.99610905741403
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-8"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789809273102293,
+          "longitude": 120.99607701732829
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-9"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789808393225833,
+          "longitude": 120.99605068173571
+      },
+      "category": {
+          "categoryName": "跑步機",
+          "categoryDescName": "跑步機2-10"
+      }
+  },
+  {
+      "region": "密度高-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789744870325116,
+          "longitude": 120.9962434633758
+      },
+      "category": {
+          "categoryName": "轉體機",
+          "categoryDescName": "轉體機2-1"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.7897545606392,
+          "longitude": 120.99507197560061
+      },
+      "category": {
+          "categoryName": "飲水機",
+          "categoryDescName": "飲水機1-1"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789721687458805,
+          "longitude": 120.99507331670512
+      },
+      "category": {
+          "categoryName": "飲水機",
+          "categoryDescName": "飲水機1-2"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78967907406386,
+          "longitude": 120.99602818311442
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區1-1"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789806914204803,
+          "longitude": 120.99527448238123
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區1-2"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78979588519207,
+          "longitude": 120.99507142078266
+      },
+      "category": {
+          "categoryName": "一般座位區",
+          "categoryDescName": "一般座位區1-3"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.7898117843028,
+          "longitude": 120.9956759236394
+      },
+      "category": {
+          "categoryName": "置物櫃",
+          "categoryDescName": "置物櫃1-1"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789790488286055,
+          "longitude": 120.99582749194022
+      },
+      "category": {
+          "categoryName": "櫃台",
+          "categoryDescName": "櫃台1-1"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789670551383125,
+          "longitude": 120.99575370770083
+      },
+      "category": {
+          "categoryName": "沙發區",
+          "categoryDescName": "沙發區1-1"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789995769043454,
+          "longitude": 120.99533398181593
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-1"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78999637780478,
+          "longitude": 120.9952823492924
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-2"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789991627873555,
+          "longitude": 120.99522114404776
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-3"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78999211647538,
+          "longitude": 120.99515025049841
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-4"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78999211647538,
+          "longitude": 120.99508855969107
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-5"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789990290191312,
+          "longitude": 120.99501077562964
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-6"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78996945362235,
+          "longitude": 120.99530396524362
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-7"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78993779802215,
+          "longitude": 120.99530396524362
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-8"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78990370736674,
+          "longitude": 120.99530463579588
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-9"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78997371495254,
+          "longitude": 120.99518594804697
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-10"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.78994814696927,
+          "longitude": 120.99518930080824
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-11"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789967627337955,
+          "longitude": 120.99504580262594
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-12"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.7899365804989,
+          "longitude": 120.9950491553872
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-13"
+      }
+  },
+  {
+      "region": "空間-室內單",
+      "locationName": "游泳館&綜合球館",
+      "coordinates": {
+          "latitude": 24.789903098604967,
+          "longitude": 120.99504982593946
+      },
+      "category": {
+          "categoryName": "桌球場",
+          "categoryDescName": "桌球場1-14"
+      }
+  }
+]

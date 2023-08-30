@@ -12,7 +12,7 @@ import ImageUpload from '../../../../../../utils/functions/ImageUpload'
 import PicturePreview from './PicturePreview'
 
 import ResearchTextWrapper from '../../../../../../components/ResarchTextWrapper'
-import Res1StatusType from '../../../../../../constants/Res1StatusType'
+import res1StatusType from '../../../../../../constants/res1StatusType'
 
 import editLocationIcon from '../../../../../../assets/images/res1-editLocation.svg'
 import editFloorIcon from '../../../../../../assets/images/res1-editFloor.svg'
@@ -23,7 +23,7 @@ import editCategoryTypeIcon from '../../../../../../assets/images/res1-editCateg
 import editStatusDescNameIcon from '../../../../../../assets/images/res1-editStatusDescName.svg'
 import editStatusNameIcon from '../../../../../../assets/images/res1-editStatusName.svg'
 
-import LibraryOptions from '../../../../../../constants/options/mission2'
+import { findCorrespondingOptions } from '../../../../../../constants/res1CreateOptions'
 
 function MissionStep2() {
   const {
@@ -42,7 +42,8 @@ function MissionStep2() {
     statusName,
     setStatusName,
     statusDescName,
-    setStatusDescName
+    setStatusDescName,
+    locationName
   } = useMissionValue()
 
   const handleChangeFloor = (event) => {
@@ -85,7 +86,7 @@ function MissionStep2() {
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
     if (statusName) {
-      Res1StatusType.map((item) => {
+      res1StatusType.map((item) => {
         if (item.status === statusName) {
           setThisStatusType(item)
         }
@@ -96,7 +97,10 @@ function MissionStep2() {
     }
   }, [statusName])
 
-  console.log(LibraryOptions)
+  const [thisLocationOptions, setThisLocationOptions] = useState([])
+  useEffect(() => {
+    setThisLocationOptions(findCorrespondingOptions(locationName))
+  }, [locationName])
 
   return (
     <>
@@ -136,7 +140,7 @@ function MissionStep2() {
                   <option value='' style={{ textAlign: 'center' }}>
                     請選擇
                   </option>
-                  {LibraryOptions?.floorOptions?.map((item) => {
+                  {thisLocationOptions?.floorOptions?.map((item) => {
                     return (
                       <option
                         key={item}
@@ -208,7 +212,7 @@ function MissionStep2() {
                     <option value='' style={{ textAlign: 'center' }}>
                       請選擇
                     </option>
-                    {LibraryOptions?.uniqueCateOfFloors?.map((item) => {
+                    {thisLocationOptions?.uniqueCateOfFloors?.map((item) => {
                       if (
                         item.categoryType === categoryType &&
                         item.floor === floor
@@ -257,7 +261,7 @@ function MissionStep2() {
                     <option value='' style={{ textAlign: 'center' }}>
                       請選擇
                     </option>
-                    {LibraryOptions?.optionData?.map((item) => {
+                    {thisLocationOptions?.optionData?.map((item) => {
                       if (
                         item.categoryType === categoryType &&
                         item.floor === floor &&
@@ -303,7 +307,7 @@ function MissionStep2() {
                     <option value='' style={{ textAlign: 'center' }}>
                       請選擇
                     </option>
-                    {Res1StatusType?.map((item) => {
+                    {res1StatusType?.map((item) => {
                       if (item.categoryType === categoryType) {
                         return (
                           <option

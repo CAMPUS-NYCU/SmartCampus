@@ -15,7 +15,7 @@ import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
 import ResearchTextWrapper from '../../../../components/ResarchTextWrapper'
-import Res1StatusType from '../../../../constants/Res1StatusType'
+import res1StatusType from '../../../../constants/res1StatusType'
 
 import editLocationIcon from '../../../../assets/images/res1-editLocation.svg'
 // import editAddImgIcon from '../../../../assets/images/res1-editAddImg.svg'
@@ -33,12 +33,12 @@ function ChangeStatus(props) {
 
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
-    for (let i = 0; i < Res1StatusType.length; i += 1) {
+    for (let i = 0; i < res1StatusType.length; i += 1) {
       if (
-        tagDetail.status.statusName === Res1StatusType[i].status &&
-        tagDetail.category.categoryType === Res1StatusType[i].categoryType
+        tagDetail.status.statusName === res1StatusType[i].status &&
+        tagDetail.category.categoryType === res1StatusType[i].categoryType
       ) {
-        setThisStatusType(Res1StatusType[i])
+        setThisStatusType(res1StatusType[i])
       }
     }
   }, [tagDetail])
