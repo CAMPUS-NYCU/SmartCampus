@@ -10,8 +10,8 @@ const useStyles = makeStyles(() => ({
     minWidth: '70%',
     width: 'auto',
     height: '100%',
-    paddingLeft: 1,
-    paddingRight: 1,
+    paddingLeft: 5,
+    paddingRight: 5,
     boxShadow: 'none'
   }
 }))

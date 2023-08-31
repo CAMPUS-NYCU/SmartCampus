@@ -36,6 +36,7 @@ const DetailPart = (props) => {
   useEffect(() => {
     for (let i = 0; i < res1StatusType.length; i += 1) {
       if (tagDetail.status.statusName === res1StatusType[i].status) {
+        console.log(res1StatusType[i])
         setThisStatusType(res1StatusType[i])
       }
     }
@@ -57,7 +58,7 @@ const DetailPart = (props) => {
               flexDirection: 'row'
             }}
           >
-            {tagDetail.imageUrl.length === 0 ? (
+            {tagDetail?.category?.locationImgUrl?.length === 0 ? (
               <div
                 style={{
                   width: '100%',
@@ -69,7 +70,7 @@ const DetailPart = (props) => {
                 }}
               />
             ) : (
-              tagDetail.imageUrl.map((url) => {
+              tagDetail?.category?.locationImgUrl?.map((url) => {
                 if (tagDetail.imageUrl.length === 1) {
                   return (
                     <Button
@@ -111,28 +112,36 @@ const DetailPart = (props) => {
             }}
           >
             {/* 地點、樓層 */}
-            <Grid container marginTop={0.5}>
-              <Grid container item xs={1}>
+            <Grid
+              container
+              marginTop={0.5}
+              spacingX={1}
+              alignContent='flex-start'
+            >
+              <Grid item xs={1}>
                 <img src={LocationIcon} alt='地點與樓層' />
               </Grid>
-              <Grid item xs={4} mr={1}>
+              <Grid item marginRight={1}>
                 <ResearchTextWrapper>
                   {tagDetail.locationName}
                 </ResearchTextWrapper>
               </Grid>
               <Grid item xs={1.5}>
-                <ResearchTextWrapper>
-                  {`${tagDetail.floor}樓`}
-                </ResearchTextWrapper>
+                <ResearchTextWrapper>{tagDetail.floor}</ResearchTextWrapper>
               </Grid>
             </Grid>
 
             {/* 回報項目 */}
-            <Grid container marginTop={0.5}>
+            <Grid
+              container
+              marginTop={0.5}
+              spacingX={1}
+              alignContent='flex-start'
+            >
               <Grid item xs={1}>
                 <img src={CategoryDescNameIcon} alt='項目描述' />
               </Grid>
-              <Grid item xs={4} marginRight={1}>
+              <Grid item>
                 <ResearchTextWrapper>
                   {tagDetail.category?.categoryDescName}
                 </ResearchTextWrapper>
@@ -140,11 +149,16 @@ const DetailPart = (props) => {
             </Grid>
 
             {/* 狀態 */}
-            <Grid container marginTop={0.5}>
+            <Grid
+              container
+              marginTop={0.5}
+              spacingX={1}
+              alignContent='flex-start'
+            >
               <Grid item xs={1}>
                 <img src={thisStatusType.statusIcon} alt='項目狀態與狀態描述' />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item>
                 <ResearchTextWrapper bgcolor={thisStatusType.statusColor}>
                   {`${tagDetail.status.statusName}：${tagDetail.status.statusDescName}`}
                 </ResearchTextWrapper>
@@ -162,10 +176,8 @@ const DetailPart = (props) => {
                   mr={1}
                 >
                   {
-                    // 待更新功能串好後測試
                     tagDetail?.statusHistory?.statusList?.[0]?.createUser
                       ?.displayName
-                    // tagDetail?.createUser?.displayName
                   }
                 </Box>
                 編輯於{' '}

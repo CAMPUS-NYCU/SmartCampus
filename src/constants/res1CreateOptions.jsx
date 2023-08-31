@@ -2,7 +2,7 @@ import secondCafeAndParkingLotsMarkers from './markers/markers_2ndCafe_parkingLo
 import activityCenterAndFirstCafeMarkers from './markers/markers_activityCenter_1stCafe.json' // 活動中心&一餐
 import engThreeAndEngFourMarkers from './markers/markers_eng3_eng4.json' // 工三&工四
 import libraryMarkers from './markers/markers_library.json' // 圖書館
-import olfGymMarkers from './markers/markers_oldGym.json' // 舊體育館
+import oldGymMarkers from './markers/markers_oldGym.json' // 舊體育館
 import outdoorFieldMarkers from './markers/markers_outdoorField.json' // 室外球場
 import shineMoodAndCCMarkers from './markers/markers_shinemood_cc.json' // 小木屋&校計中
 import swimAndMultiGymMarkers from './markers/markers_swim_multiGym.json' // 游泳館和綜合球館
@@ -60,6 +60,27 @@ function findCategoryType(str) {
   return thisCateType
 }
 
+function updateFloorOptions(floorOptions, newInput) {
+  const existingFloorOption = floorOptions.find(
+    (option) => option.floor === newInput.floor
+  )
+
+  if (existingFloorOption) {
+    if (
+      !existingFloorOption.reportableCateType.includes(newInput.categoryType)
+    ) {
+      existingFloorOption.reportableCateType.push(newInput.categoryType)
+    }
+  } else {
+    floorOptions.push({
+      floor: newInput.floor,
+      reportableCateType: [newInput.categoryType]
+    })
+  }
+
+  return null
+}
+
 function addUniqueCateOfFloor(arr, newItem) {
   const isDuplicate = arr.some(
     (item) =>
@@ -83,39 +104,28 @@ function addUniqueCateOfFloor(arr, newItem) {
 function findCorrespondingOptions(locationName) {
   let thisLocationData
 
-  switch (locationName) {
-    case '二餐&停車場':
-      thisLocationData = secondCafeAndParkingLotsMarkers
-      break
-    case '活動中心&一餐':
-      thisLocationData = activityCenterAndFirstCafeMarkers
-      break
-    case '工三&工四':
-      thisLocationData = engThreeAndEngFourMarkers
-      break
-    case '圖書館':
-      thisLocationData = libraryMarkers
-      break
-    case '舊體育館':
-      thisLocationData = olfGymMarkers
-      break
-    case '室外球場':
-      thisLocationData = outdoorFieldMarkers
-      break
-    case '小木屋&校計中':
-      thisLocationData = shineMoodAndCCMarkers
-      break
-    case '游泳館&綜合球館':
-      thisLocationData = swimAndMultiGymMarkers
-      break
-
-    default:
-      thisLocationData = []
-      break
+  if (/^二餐&停車場/.test(locationName)) {
+    thisLocationData = secondCafeAndParkingLotsMarkers
+  } else if (/^活動中心&一餐/.test(locationName)) {
+    thisLocationData = activityCenterAndFirstCafeMarkers
+  } else if (/^工三&工四/.test(locationName)) {
+    thisLocationData = engThreeAndEngFourMarkers
+  } else if (/^圖書館/.test(locationName)) {
+    thisLocationData = libraryMarkers
+  } else if (/^舊體育館/.test(locationName)) {
+    thisLocationData = oldGymMarkers
+  } else if (/^室外球場/.test(locationName)) {
+    thisLocationData = outdoorFieldMarkers
+  } else if (/^小木屋&校計中/.test(locationName)) {
+    thisLocationData = shineMoodAndCCMarkers
+  } else if (/^游泳館&綜合球館/.test(locationName)) {
+    thisLocationData = swimAndMultiGymMarkers
+  } else {
+    thisLocationData = []
   }
 
   const res1CreateOptions = {
-    floorOptions: [], // 這棟建築物有哪些樓層可回報
+    floorOptions: [], // 這棟建築物有哪些樓層可回報，另外，該樓層有哪些種類可以回報
     uniqueCateOfFloors: [], // 每層樓有那些空間&物體可回報 // 可以的話把物體和空間也分開
     optionData: [] // json 全部資料
   }
@@ -132,9 +142,7 @@ function findCorrespondingOptions(locationName) {
       categoryDescName: thisLocationData[i]?.category?.categoryDescName // 飲水機1
     }
 
-    if (!res1CreateOptions.floorOptions.includes(thisFloor)) {
-      res1CreateOptions.floorOptions.push(thisFloor)
-    }
+    updateFloorOptions(res1CreateOptions.floorOptions, thisDataOption)
 
     addUniqueCateOfFloor(res1CreateOptions.uniqueCateOfFloors, thisDataOption)
 

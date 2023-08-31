@@ -46,42 +46,52 @@ function MissionStep2() {
     locationName
   } = useMissionValue()
 
+  const [thisFloorOption, setThisFloorOption] = useState({})
   const handleChangeFloor = (event) => {
     setFloor(event.target.value)
+    setCategoryType('')
+    setCategoryName('')
+    setCategoryDescName('')
+    setStatusName('')
+    setStatusDescName('')
+
+    for (let i = 0; i < thisLocationOptions?.floorOptions?.length; i += 1) {
+      if (thisLocationOptions.floorOptions[i].floor === event.target.value) {
+        setThisFloorOption(thisLocationOptions.floorOptions[i])
+        console.log(thisLocationOptions.floorOptions[i])
+      }
+    }
   }
 
   const handleChangeCategoryType = (event) => {
     setCategoryType(event.target.value)
+    setCategoryName('')
+    setCategoryDescName('')
+    setStatusName('')
+    setStatusDescName('')
   }
 
   const handleChangeCategoryName = (event) => {
     setCategoryName(event.target.value)
+    setCategoryDescName('')
+    setStatusName('')
+    setStatusDescName('')
   }
 
   const handleChangeCategoryDescName = (event) => {
     setCategoryDescName(event.target.value)
+    setStatusName('')
+    setStatusDescName('')
   }
 
   const handleChangeStatusName = (event) => {
     setStatusName(event.target.value)
+    setStatusDescName('')
   }
 
   const handleChangeStatusDescName = (event) => {
     setStatusDescName(event.target.value)
   }
-
-  useEffect(() => {
-    setCategoryType('')
-    setCategoryName('')
-    setCategoryDescName('')
-    setStatusName('')
-  }, [
-    floor,
-    setCategoryType,
-    setCategoryName,
-    setCategoryDescName,
-    setStatusName
-  ])
 
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
@@ -104,9 +114,9 @@ function MissionStep2() {
 
   return (
     <>
-      <Grid container padding={1}>
+      <Grid container direction='column' rowSpacing={1}>
         {/* 回報地點與樓層 */}
-        <Grid container>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editLocationIcon} alt='回報地點' />
           </Grid>
@@ -126,14 +136,14 @@ function MissionStep2() {
         </Grid>
 
         {/* 回報樓層 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editFloorIcon} alt='回報類別' />
           </Grid>
           <Grid item xs={3}>
             回報樓層
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs>
             <ResearchTextWrapper isEditable>
               <FormControl fullWidth>
                 <NativeSelect onChange={handleChangeFloor} value={floor}>
@@ -143,11 +153,11 @@ function MissionStep2() {
                   {thisLocationOptions?.floorOptions?.map((item) => {
                     return (
                       <option
-                        key={item}
-                        value={item}
+                        key={item.floor}
+                        value={item.floor}
                         style={{ textAlign: 'center' }}
                       >
-                        {`${item}樓`}
+                        {`${item.floor}F`}
                       </option>
                     )
                   })}
@@ -158,14 +168,14 @@ function MissionStep2() {
         </Grid>
 
         {/* 回報類別 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editCategoryTypeIcon} alt='回報類別' />
           </Grid>
           <Grid item xs={3}>
             回報類別
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs>
             {floor === '' ? (
               <ResearchTextWrapper />
             ) : (
@@ -178,12 +188,17 @@ function MissionStep2() {
                     <option value='' style={{ textAlign: 'center' }}>
                       請選擇
                     </option>
-                    <option value='物體' style={{ textAlign: 'center' }}>
-                      物體
-                    </option>
-                    <option value='空間' style={{ textAlign: 'center' }}>
-                      空間
-                    </option>
+                    {thisFloorOption?.reportableCateType?.map((item) => {
+                      return (
+                        <option
+                          key={item}
+                          value={item}
+                          style={{ textAlign: 'center' }}
+                        >
+                          {item}
+                        </option>
+                      )
+                    })}
                   </NativeSelect>
                 </FormControl>
               </ResearchTextWrapper>
@@ -192,14 +207,14 @@ function MissionStep2() {
         </Grid>
 
         {/* 回報項目 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editCategoryNameIcon} alt='回報項目' />
           </Grid>
           <Grid item xs={3}>
             回報項目
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs>
             {categoryType === '' ? (
               <ResearchTextWrapper />
             ) : (
@@ -237,20 +252,16 @@ function MissionStep2() {
         </Grid>
 
         {/* 項目描述 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editCategoryDescIcon} alt='項目描述' />
           </Grid>
           <Grid item xs={3}>
             項目描述
           </Grid>
-          <Grid item xs={4}>
-            {categoryType === '' ? (
-              categoryName === '' ? (
-                <ResearchTextWrapper />
-              ) : (
-                <ResearchTextWrapper />
-              )
+          <Grid item xs>
+            {categoryName === '' ? (
+              <ResearchTextWrapper />
             ) : (
               <ResearchTextWrapper isEditable>
                 <FormControl fullWidth>
@@ -287,15 +298,15 @@ function MissionStep2() {
         </Grid>
 
         {/* 回報狀態 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editStatusNameIcon} alt='回報狀態' />
           </Grid>
           <Grid item xs={3}>
             回報狀態
           </Grid>
-          <Grid item xs={4}>
-            {categoryType === '' ? (
+          <Grid item xs>
+            {categoryDescName === '' ? (
               <ResearchTextWrapper />
             ) : (
               <ResearchTextWrapper isEditable>
@@ -328,16 +339,16 @@ function MissionStep2() {
           </Grid>
         </Grid>
 
-        {/* 狀態描述；唯一可供編輯的欄位 */}
-        <Grid container marginTop={0.5}>
+        {/* 狀態描述 */}
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editStatusDescNameIcon} alt='狀態描述' />
           </Grid>
           <Grid item xs={3}>
             狀態描述
           </Grid>
-          <Grid item xs={4}>
-            {categoryType === '' ? (
+          <Grid item xs>
+            {statusName === '' ? (
               <ResearchTextWrapper />
             ) : (
               <ResearchTextWrapper isEditable>

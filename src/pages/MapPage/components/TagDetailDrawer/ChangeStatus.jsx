@@ -105,36 +105,34 @@ function ChangeStatus(props) {
           flexDirection='column'
           justifyContent='space-around'
         >
-          <Grid container padding={2}>
+          <Grid container padding={2} rowSpacing={1}>
             {/* 回報地點與樓層 */}
-            <Grid container>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editLocationIcon} alt='回報地點' />
               </Grid>
               <Grid item xs={3}>
                 回報地點
               </Grid>
-              <Grid item xs={4} mr={1}>
+              <Grid item mr={1}>
                 <ResearchTextWrapper>
                   {tagDetail.locationName}
                 </ResearchTextWrapper>
               </Grid>
               <Grid item xs={1.5}>
-                <ResearchTextWrapper>
-                  {`${tagDetail.floor}樓`}
-                </ResearchTextWrapper>
+                <ResearchTextWrapper>{tagDetail.floor}</ResearchTextWrapper>
               </Grid>
             </Grid>
 
             {/* 回報類別 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editCategoryTypeIcon} alt='回報類別' />
               </Grid>
               <Grid item xs={3}>
                 回報類別
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <ResearchTextWrapper>
                   {tagDetail.category?.categoryType}
                 </ResearchTextWrapper>
@@ -142,14 +140,14 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 回報項目 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editCategoryNameIcon} alt='回報項目' />
               </Grid>
               <Grid item xs={3}>
                 回報項目
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <ResearchTextWrapper>
                   {tagDetail.category?.categoryName}
                 </ResearchTextWrapper>
@@ -157,14 +155,14 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 項目描述 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editCategoryDescIcon} alt='項目描述' />
               </Grid>
               <Grid item xs={3}>
                 項目描述
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <ResearchTextWrapper>
                   {tagDetail.category?.categoryDescName}
                 </ResearchTextWrapper>
@@ -172,14 +170,14 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 回報狀態 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editStatusNameIcon} alt='回報狀態' />
               </Grid>
               <Grid item xs={3}>
                 回報狀態
               </Grid>
-              <Grid item xs={3}>
+              <Grid item>
                 <ResearchTextWrapper bgcolor={thisStatusType.statusColor}>
                   {tagDetail.status.statusName}
                 </ResearchTextWrapper>
@@ -187,14 +185,14 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 狀態描述；唯一可供編輯的欄位 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editStatusDescNameIcon} alt='狀態描述' />
               </Grid>
               <Grid item xs={3}>
                 狀態描述
               </Grid>
-              <Grid item xs={4}>
+              <Grid item>
                 <ResearchTextWrapper isEditable>
                   <FormControl fullWidth>
                     <NativeSelect

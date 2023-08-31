@@ -11,7 +11,7 @@ import detailStatusOccupationIcon from '../assets/images/res1-detailStatusOccupa
 export default [
   // 物體的五個狀態
   {
-    status: '保養狀態',
+    status: '維護狀態',
     statusColor: '#9CD6D6',
     statusIcon: detailStatusMaintenanceIcon,
     statusOptions: ['保養完成', '保養中'],

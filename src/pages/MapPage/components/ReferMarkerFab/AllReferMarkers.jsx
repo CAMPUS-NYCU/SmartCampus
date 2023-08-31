@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Marker } from '@react-google-maps/api'
 
 import referMarkerIcon from '../../../../assets/images/res1-referMarker.svg'
-import referMarkerActivedIcon from '../../../../assets/images/res1-referMarkerActived.svg'
+// import referMarkerActivedIcon from '../../../../assets/images/res1-referMarkerActived.svg'
 import { findLocationData } from '../../../../constants/res1ReferMarkers'
 
 function AllReferMarkers(props) {
@@ -18,20 +18,20 @@ function AllReferMarkers(props) {
     setThisLocationData(findLocationData(locationName?.locationName))
   }, [locationName])
 
-  const handleMarkerClick = (index) => {
-    const updatedData = [...thisLocationData]
-    updatedData[index].isOpen = !updatedData[index].isOpen
-    setThisLocationData(updatedData)
-  }
+  // const handleMarkerClick = (index) => {
+  //   const updatedData = [...thisLocationData]
+  //   updatedData[index].isOpen = !updatedData[index].isOpen
+  //   setThisLocationData(updatedData)
+  // }
 
   return (
     <>
-      {thisLocationData?.map((item, index) => {
+      {thisLocationData?.map((item) => {
         if (checkedCategoryNames?.includes(item.category.categoryName)) {
-          const markerIcon = item.isOpen
-            ? referMarkerActivedIcon
-            : referMarkerIcon
-          const labelColor = item.isOpen ? '#FDCC4F' : '#97948E'
+          // const markerIcon = item.isOpen
+          //   ? referMarkerActivedIcon
+          //   : referMarkerIcon
+          // const labelColor = item.isOpen ? '#FDCC4F' : '#97948E'
 
           return (
             <Marker
@@ -41,16 +41,16 @@ function AllReferMarkers(props) {
                 lng: item.coordinates.longitude
               }}
               icon={{
-                url: markerIcon,
+                url: referMarkerIcon,
                 labelOrigin: { x: 15, y: 34 }
               }}
               label={{
                 text: item.category.categoryDescName,
                 fontFamily: 'Roboto',
                 fontSize: '14px',
-                color: labelColor
+                color: '#97948E'
               }}
-              onClick={() => handleMarkerClick(index)}
+              // onClick={() => handleMarkerClick(index)}
             />
           )
         }

@@ -3,10 +3,6 @@ import { Button } from '@mui/material'
 import { useMissionValue } from '../../../../../utils/contexts/MissionContext'
 import { useUserValue } from '../../../../../utils/contexts/UserContext'
 
-function removeTrailingLetters(input) {
-  return input.replace(/[a-zA-Z]$/, '')
-}
-
 const MissionFab = (props) => {
   const { activeFixedTag } = props
   const { setFixedTagId, setLocationName, handleStartMission } =
@@ -18,7 +14,7 @@ const MissionFab = (props) => {
       signOut()
     } else {
       setFixedTagId(activeFixedTag.id)
-      setLocationName(removeTrailingLetters(activeFixedTag.locationName))
+      setLocationName(activeFixedTag.locationName)
       handleStartMission(activeFixedTag)
     }
   }
