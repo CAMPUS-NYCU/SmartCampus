@@ -1,0 +1,170 @@
+[
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.787227066059522,
+      "longitude": 120.99752908709452
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-1"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.786742480275922,
+      "longitude": 120.99741375210688
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-2"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.787229501159207,
+      "longitude": 120.99696582320139
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-3"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.786754655821316,
+      "longitude": 120.99695509436533
+    },
+    "category": {
+      "categoryName": "飲水機",
+      "categoryDescName": "飲水機1-4"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.78704199834547,
+      "longitude": 120.99741039934561
+    },
+    "category": {
+      "categoryName": "一般座位區",
+      "categoryDescName": "一般座位區1-1"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.787229501159207,
+      "longitude": 120.99757602575228
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-1"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.78730498922498,
+      "longitude": 120.99714955451891
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-2"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.786721781846037,
+      "longitude": 120.99713077905581
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-3"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.787289161085962,
+      "longitude": 120.99696582320139
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-4"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.78681675108416,
+      "longitude": 120.99695509436533
+    },
+    "category": {
+      "categoryName": "販賣機",
+      "categoryDescName": "販賣機1-5"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.787409698401483,
+      "longitude": 120.99669223788187
+    },
+    "category": {
+      "categoryName": "無障礙停車區",
+      "categoryDescName": "無障礙停車區1-1"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.787066349376232,
+      "longitude": 120.99661311271593
+    },
+    "category": {
+      "categoryName": "沙發區",
+      "categoryDescName": "沙發區1-1"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.786882324042544,
+      "longitude": 120.99754060966015
+    },
+    "category": {
+      "categoryName": "腳踏車停車區",
+      "categoryDescName": "腳踏車停車區1-1"
+    }
+  },
+  {
+    "region": "密度低-室內單",
+    "locationName": "工三&工四",
+    "coordinates": {
+      "latitude": 24.78673882761207,
+      "longitude": 120.99657422068522
+    },
+    "category": {
+      "categoryName": "腳踏車停車區",
+      "categoryDescName": "腳踏車停車區1-2"
+    }
+  }
+]

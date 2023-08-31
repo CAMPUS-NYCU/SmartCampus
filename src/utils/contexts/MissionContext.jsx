@@ -114,6 +114,8 @@ export const MissionContext = React.createContext({
   setStep: () => {},
   fixedTagId: null,
   setFixedTagId: () => {},
+  locationName: null,
+  setLocationName: () => {},
   loading: false,
   ableToNextStep: true,
   ...InitialMissionValue
@@ -129,6 +131,8 @@ export const MissionContextProvider = ({ children }) => {
   const [mapCenter, setMapCenter] = useState(DefaultCenter)
 
   const [fixedTagId, setFixedTagId] = useState(null)
+
+  const [locationName, setLocationName] = useState(null)
 
   // 照片
   const [imageFiles, setImageFiles] = useState([])
@@ -192,6 +196,11 @@ export const MissionContextProvider = ({ children }) => {
     setTextLocation(event.target.value)
   }, [])
   const [floor, setFloor] = useState('')
+  const [categoryType, setCategoryType] = useState('')
+  const [categoryName, setCategoryName] = useState('')
+  const [categoryDescName, setCategoryDescName] = useState('')
+  const [statusName, setStatusName] = useState('')
+  const [statusDescName, setStatusDescName] = useState('')
 
   // ===================== Loading =======================
   const [loading, setLoading] = useState(false)
@@ -213,6 +222,11 @@ export const MissionContextProvider = ({ children }) => {
     setPreviewImages([])
     setImageDeleteUrls([])
     setFloor('')
+    setCategoryType('')
+    setCategoryName('')
+    setCategoryDescName('')
+    setStatusName('')
+    setStatusDescName('')
   }, [setStep])
 
   // ==================== Step control ====================
@@ -292,9 +306,9 @@ export const MissionContextProvider = ({ children }) => {
       locationName: textLocation,
       fixedTagId,
       category: {
-        categoryType: '物體',
-        categoryName: '飲水機',
-        categoryDescName: '飲水機1',
+        categoryType,
+        categoryName,
+        categoryDescName,
         locationImgUrl: []
       },
       coordinates: {
@@ -303,8 +317,8 @@ export const MissionContextProvider = ({ children }) => {
       },
       imageUploadNumber: imageFiles.length,
       floor,
-      statusName: '清潔狀態',
-      statusDescName: '乾淨'
+      statusName,
+      statusDescName
     }
     const context = {
       headers: {
@@ -382,10 +396,22 @@ export const MissionContextProvider = ({ children }) => {
     handleCloseEdit,
     fixedTagId,
     setFixedTagId,
+    locationName,
+    setLocationName,
     mapCenter,
     setMapCenter,
     floor,
     setFloor,
+    categoryType,
+    setCategoryType,
+    categoryName,
+    setCategoryName,
+    categoryDescName,
+    setCategoryDescName,
+    statusName,
+    setStatusName,
+    statusDescName,
+    setStatusDescName,
     setImageDeleteUrls,
     imageDeleteUrls,
     mapInstance

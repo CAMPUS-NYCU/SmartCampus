@@ -1,16 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { styled } from '@mui/material/styles'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
 import PropTypes from 'prop-types'
-import { Box, Button } from '@mui/material'
+import { Box, Button, ButtonBase, Paper } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { MAP_PATH } from '../../../../constants/pageUrls'
-import changeImage from '../../../../assets/images/fixedTagChange.svg'
+// import changeImage from '../../../../assets/images/fixedTagChange.svg'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
+
+import res1StatusType from '../../../../constants/res1StatusType'
+import ResearchTextWrapper from '../../../../components/ResarchTextWrapper'
+
+const Img = styled('img')({
+  margin: 'auto',
+  display: 'block',
+  maxWidth: '100%',
+  maxHeight: '100%'
+})
 
 const DetailPartItem = (props) => {
   const { tag } = props
   const history = useHistory()
   const myRef = React.useRef(null)
+
+  const [thisStatusType, setThisStatusType] = useState({})
+  useEffect(() => {
+    for (let i = 0; i < res1StatusType.length; i += 1) {
+      if (tag.status.statusName === res1StatusType[i].status) {
+        setThisStatusType(res1StatusType[i])
+      }
+    }
+  }, [tag])
 
   const { highlightTagId, setHighLightTagId } = useTagValue()
   const isHighlighted = tag.id === highlightTagId
@@ -24,116 +45,147 @@ const DetailPartItem = (props) => {
     }
   }, [isHighlighted])
 
+  console.log(tag)
+
   return (
     <Grid
       key={tag.id}
       ref={myRef}
       container
-      spacing={2}
+      sx={12}
+      rowSpacing={0}
+      paddingX={1}
       style={{
-        backgroundColor: isHighlighted ? '#888888' : '#EEEEEE',
+        backgroundColor: isHighlighted ? '#97948E' : '#EEEEEE',
         borderRadius: '10px',
         margin: '5px',
-        width: '98%'
+        width: '98%',
+        minHeight: '80px',
+        height: 'calc((50vh - 120px)/4)'
       }}
-      justifyContent='center'
+      justifyContent='space-around'
       alignItems='center'
     >
-      <Grid
-        item
-        xs={6}
+      <ButtonBase
+        sx={12}
         style={{
-          fontFamily: 'Roboto',
-          fontStyle: 'normal',
-          fontWeight: '700',
-          fontSize: '14px',
-          lineHeight: '12px',
-          letterSpacing: '0.75px',
-          textTransform: 'uppercase'
+          width: '100%'
         }}
+        onClick={() => setHighLightTagId(tag.id)}
       >
-        地點: {tag.locationName}
-      </Grid>
-      <Grid
-        item
-        xs={4}
-        style={{
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        {tag.floor && (
-          <Button
-            id='floorButton'
-            size='small'
-            style={{
-              borderRadius: '20px',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-            }}
-            variant='contained'
+        <Grid item sx={8} container direction='column' spacing={1} mr={1}>
+          {/* 第一排 */}
+          <Grid
+            container
+            item
+            columnSpacing={0.5}
+            justifyContent='flex-start'
+            alignItems='center'
           >
-            樓層: {tag.floor}
-          </Button>
-        )}
-      </Grid>
-      <Grid
-        item
-        xs={4}
-        style={{
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <Button
-          id='changeStatusButton'
-          size='small'
-          style={{
-            background: '#FDCC4F',
-            fontSize: '12px',
-            borderRadius: '20px',
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-          }}
-          variant='contained'
-          onClick={() => {
-            alert('[TODO]: 編輯')
-          }}
-        >
-          <img src={changeImage} alt='' />
-          &nbsp;編輯
-        </Button>
-        <Button
-          id='highlightButton'
-          size='small'
-          style={{
-            background: '#FDCC4F',
-            fontSize: '12px',
-            borderRadius: '20px',
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-          }}
-          variant='contained'
-          onClick={() => {
-            setHighLightTagId(tag.id)
-          }}
-        >
-          標記
-        </Button>
-        <Button
-          id='highlightButton'
-          size='small'
-          style={{
-            background: '#FDCC4F',
-            fontSize: '12px',
-            borderRadius: '20px',
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-          }}
-          variant='contained'
-          onClick={() => {
-            history.push(`${MAP_PATH}/tag/${tag.id}`)
-          }}
-        >
-          選取
-        </Button>
-      </Grid>
+            <Grid item>
+              {`${tag.category.categoryType}/${tag.category.categoryName}`}
+            </Grid>
+            <Grid
+              item
+              style={{
+                fontFamily: 'Roboto',
+                fontStyle: 'light',
+                fontSize: '12px',
+                color: 'gray'
+              }}
+            >
+              {tag.category.categoryDescName}
+            </Grid>
+          </Grid>
+
+          {/* 第二排 */}
+          <Grid
+            container
+            item
+            columnSpacing={0.5}
+            justifyContent='flex-start'
+            alignItems='center'
+          >
+            <Grid
+              item
+              style={{
+                fontFamily: 'Roboto',
+                fontStyle: 'light',
+                fontSize: '12px',
+                lineHeight: '12px',
+                letterSpacing: '0.75px',
+                textTransform: 'uppercase'
+              }}
+            >
+              <ResearchTextWrapper>{tag.floor}</ResearchTextWrapper>
+            </Grid>
+            <Grid
+              item
+              style={{
+                fontFamily: 'Roboto',
+                fontStyle: 'light',
+                fontSize: '12px',
+                lineHeight: '12px',
+                letterSpacing: '0.75px',
+                textTransform: 'uppercase'
+              }}
+            >
+              <ResearchTextWrapper bgcolor={thisStatusType.statusColor}>
+                {`${tag.status.statusName}：${tag.status.statusDescName}`}
+              </ResearchTextWrapper>
+            </Grid>
+          </Grid>
+
+          {/* 第三排 */}
+          <Grid
+            container
+            item
+            columnSpacing={1}
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            <Grid
+              item
+              style={{
+                fontFamily: 'Roboto',
+                fontStyle: 'light',
+                fontSize: '12px',
+                color: 'gray'
+              }}
+            >
+              編輯於{' '}
+              {moment(tag?.statusHistory?.statusList?.[0]?.createTime).format(
+                'YYYY-MM-DD h:mm'
+              )}
+            </Grid>
+
+            <Grid item>
+              <Button
+                id='highlightButton'
+                size='small'
+                style={{
+                  background: '#FDCC4F',
+                  fontSize: '12px',
+                  borderRadius: '20px',
+                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
+                }}
+                variant='contained'
+                onClick={() => {
+                  history.push(`${MAP_PATH}/tag/${tag.id}`)
+                }}
+              >
+                選取
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item sx={3}>
+          <Paper sx={{ width: 70, height: 70 }}>
+            <Img alt='fixTaglist圖片' src={tag?.category?.locationImgUrl} />
+          </Paper>
+        </Grid>
+      </ButtonBase>
     </Grid>
   )
 }

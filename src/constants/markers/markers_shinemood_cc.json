@@ -1,0 +1,242 @@
+[
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78762989263285,
+            "longitude": 120.9974750397691
+        },
+        "category": {
+            "categoryName": "一般座位區",
+            "categoryDescName": "一般座位區1-1"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78757449428251,
+            "longitude": 120.99755081217377
+        },
+        "category": {
+            "categoryName": "一般座位區",
+            "categoryDescName": "一般座位區1-2"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787576929375348,
+            "longitude": 120.99765541832535
+        },
+        "category": {
+            "categoryName": "一般座位區",
+            "categoryDescName": "一般座位區1-3"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787635980362136,
+            "longitude": 120.99772247355072
+        },
+        "category": {
+            "categoryName": "一般座位區",
+            "categoryDescName": "一般座位區1-4"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787626848768074,
+            "longitude": 120.99756958763687
+        },
+        "category": {
+            "categoryName": "櫃台",
+            "categoryDescName": "小木屋點餐櫃台1-1"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787628066313975,
+            "longitude": 120.9976272551307
+        },
+        "category": {
+            "categoryName": "櫃台",
+            "categoryDescName": "小木屋取餐櫃台1-1"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78776321383609,
+            "longitude": 120.99761703600572
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-1"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78771572958834,
+            "longitude": 120.99761703600572
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-2"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78776321383609,
+            "longitude": 120.99767738673945
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-3"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78771572958834,
+            "longitude": 120.99767738673945
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-4"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78776321383609,
+            "longitude": 120.9977377374732
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-5"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78771572958834,
+            "longitude": 120.9977377374732
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-6"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78776321383609,
+            "longitude": 120.997798088207
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-7"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78771572958834,
+            "longitude": 120.997798088207
+        },
+        "category": {
+            "categoryName": "公用電腦",
+            "categoryDescName": "公用電腦1-8"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787737645397257,
+            "longitude": 120.9980792073497
+        },
+        "category": {
+            "categoryName": "飲水機",
+            "categoryDescName": "飲水機1-1"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787807045433272,
+            "longitude": 120.99736439864724
+        },
+        "category": {
+            "categoryName": "路邊教職員停車位",
+            "categoryDescName": "路邊教職員停車位1-1"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787737645397257,
+            "longitude": 120.99736573975174
+        },
+        "category": {
+            "categoryName": "路邊教職員停車位",
+            "categoryDescName": "路邊教職員停車位1-2"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.78766946286793,
+            "longitude": 120.99736573975174
+        },
+        "category": {
+            "categoryName": "路邊教職員停車位",
+            "categoryDescName": "路邊教職員停車位1-3"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787606150485715,
+            "longitude": 120.99736976306527
+        },
+        "category": {
+            "categoryName": "路邊教職員停車位",
+            "categoryDescName": "路邊教職員停車位1-4"
+        }
+    },
+    {
+        "region": "暖身題",
+        "locationName": "小木屋和校計中",
+        "coordinates": {
+            "latitude": 24.787882533147663,
+            "longitude": 120.99736439864724
+        },
+        "category": {
+            "categoryName": "路邊殘障停車位",
+            "categoryDescName": "路邊殘障停車位1-1"
+        }
+    }
+]

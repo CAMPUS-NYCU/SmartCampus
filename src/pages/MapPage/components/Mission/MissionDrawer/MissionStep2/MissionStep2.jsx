@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 // import Typography from '@mui/material/Typography'
 import NativeSelect from '@mui/material/NativeSelect'
@@ -12,7 +12,7 @@ import ImageUpload from '../../../../../../utils/functions/ImageUpload'
 import PicturePreview from './PicturePreview'
 
 import ResearchTextWrapper from '../../../../../../components/ResarchTextWrapper'
-// import Res1StatusType from '../../../../../../constants/Res1StatusType'
+import res1StatusType from '../../../../../../constants/res1StatusType'
 
 import editLocationIcon from '../../../../../../assets/images/res1-editLocation.svg'
 import editFloorIcon from '../../../../../../assets/images/res1-editFloor.svg'
@@ -23,6 +23,8 @@ import editCategoryTypeIcon from '../../../../../../assets/images/res1-editCateg
 import editStatusDescNameIcon from '../../../../../../assets/images/res1-editStatusDescName.svg'
 import editStatusNameIcon from '../../../../../../assets/images/res1-editStatusName.svg'
 
+import { findCorrespondingOptions } from '../../../../../../constants/res1CreateOptions'
+
 function MissionStep2() {
   const {
     textLocation,
@@ -30,17 +32,91 @@ function MissionStep2() {
     previewImages,
     setPreviewImages,
     floor,
-    setFloor
+    setFloor,
+    categoryType,
+    setCategoryType,
+    categoryName,
+    setCategoryName,
+    categoryDescName,
+    setCategoryDescName,
+    statusName,
+    setStatusName,
+    statusDescName,
+    setStatusDescName,
+    locationName
   } = useMissionValue()
 
+  const [thisFloorOption, setThisFloorOption] = useState({})
   const handleChangeFloor = (event) => {
     setFloor(event.target.value)
+    setCategoryType('')
+    setCategoryName('')
+    setCategoryDescName('')
+    setStatusName('')
+    setStatusDescName('')
+
+    for (let i = 0; i < thisLocationOptions?.floorOptions?.length; i += 1) {
+      if (thisLocationOptions.floorOptions[i].floor === event.target.value) {
+        setThisFloorOption(thisLocationOptions.floorOptions[i])
+        console.log(thisLocationOptions.floorOptions[i])
+      }
+    }
   }
+
+  const handleChangeCategoryType = (event) => {
+    setCategoryType(event.target.value)
+    setCategoryName('')
+    setCategoryDescName('')
+    setStatusName('')
+    setStatusDescName('')
+  }
+
+  const handleChangeCategoryName = (event) => {
+    setCategoryName(event.target.value)
+    setCategoryDescName('')
+    setStatusName('')
+    setStatusDescName('')
+  }
+
+  const handleChangeCategoryDescName = (event) => {
+    setCategoryDescName(event.target.value)
+    setStatusName('')
+    setStatusDescName('')
+  }
+
+  const handleChangeStatusName = (event) => {
+    setStatusName(event.target.value)
+    setStatusDescName('')
+  }
+
+  const handleChangeStatusDescName = (event) => {
+    setStatusDescName(event.target.value)
+  }
+
+  const [thisStatusType, setThisStatusType] = useState({})
+  useEffect(() => {
+    if (statusName) {
+      res1StatusType.map((item) => {
+        if (item.status === statusName) {
+          setThisStatusType(item)
+        }
+        return null
+      })
+    } else {
+      setThisStatusType({})
+    }
+  }, [statusName])
+
+  const [thisLocationOptions, setThisLocationOptions] = useState([])
+  useEffect(() => {
+    setThisLocationOptions(findCorrespondingOptions(locationName))
+  }, [locationName])
+
   return (
     <>
-      <Grid container padding={1}>
+      <Grid container direction='column' rowSpacing={1}>
         {/* 回報地點與樓層 */}
-        <Grid container>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editLocationIcon} alt='回報地點' />
           </Grid>
@@ -60,136 +136,245 @@ function MissionStep2() {
         </Grid>
 
         {/* 回報樓層 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editFloorIcon} alt='回報類別' />
           </Grid>
           <Grid item xs={3}>
             回報樓層
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs>
             <ResearchTextWrapper isEditable>
-              <NativeSelect
-                native='true'
-                onChange={handleChangeFloor}
-                value={floor}
-              >
-                <option value=''>無</option>
-                <option value='B1'>B1</option>
-                <option value='B2'>B2</option>
-                <option value='1'>1樓</option>
-                <option value='2'>2樓</option>
-                <option value='3'>3樓</option>
-                <option value='4'>4樓</option>
-                <option value='5'>5樓</option>
-                <option value='6'>6樓</option>
-                <option value='7'>7樓</option>
-                <option value='8'>8樓</option>
-                <option value='9'>9樓</option>
-                <option value='10'>10樓</option>
-              </NativeSelect>
-              {/* {tagDetail.category.categoryType} */}
+              <FormControl fullWidth>
+                <NativeSelect onChange={handleChangeFloor} value={floor}>
+                  <option value='' style={{ textAlign: 'center' }}>
+                    請選擇
+                  </option>
+                  {thisLocationOptions?.floorOptions?.map((item) => {
+                    return (
+                      <option
+                        key={item.floor}
+                        value={item.floor}
+                        style={{ textAlign: 'center' }}
+                      >
+                        {`${item.floor}F`}
+                      </option>
+                    )
+                  })}
+                </NativeSelect>
+              </FormControl>
             </ResearchTextWrapper>
           </Grid>
         </Grid>
 
         {/* 回報類別 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editCategoryTypeIcon} alt='回報類別' />
           </Grid>
           <Grid item xs={3}>
             回報類別
           </Grid>
-          <Grid item xs={3}>
-            <ResearchTextWrapper isEditable>
-              <NativeSelect>
-                <option value='物體'>物體</option>
-                <option value='空間'>空間</option>
-              </NativeSelect>
-            </ResearchTextWrapper>
+          <Grid item xs>
+            {floor === '' ? (
+              <ResearchTextWrapper />
+            ) : (
+              <ResearchTextWrapper isEditable>
+                <FormControl fullWidth>
+                  <NativeSelect
+                    onChange={handleChangeCategoryType}
+                    value={categoryType}
+                  >
+                    <option value='' style={{ textAlign: 'center' }}>
+                      請選擇
+                    </option>
+                    {thisFloorOption?.reportableCateType?.map((item) => {
+                      return (
+                        <option
+                          key={item}
+                          value={item}
+                          style={{ textAlign: 'center' }}
+                        >
+                          {item}
+                        </option>
+                      )
+                    })}
+                  </NativeSelect>
+                </FormControl>
+              </ResearchTextWrapper>
+            )}
           </Grid>
         </Grid>
 
         {/* 回報項目 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editCategoryNameIcon} alt='回報項目' />
           </Grid>
           <Grid item xs={3}>
             回報項目
           </Grid>
-          <Grid item xs={3}>
-            <ResearchTextWrapper isEditable>
-              <NativeSelect>
-                <option value='飲水機'>飲水機</option>
-                <option value='停車位'>停車位</option>
-              </NativeSelect>
-            </ResearchTextWrapper>
+          <Grid item xs>
+            {categoryType === '' ? (
+              <ResearchTextWrapper />
+            ) : (
+              <ResearchTextWrapper isEditable>
+                <FormControl fullWidth>
+                  <NativeSelect
+                    onChange={handleChangeCategoryName}
+                    value={categoryName}
+                  >
+                    <option value='' style={{ textAlign: 'center' }}>
+                      請選擇
+                    </option>
+                    {thisLocationOptions?.uniqueCateOfFloors?.map((item) => {
+                      if (
+                        item.categoryType === categoryType &&
+                        item.floor === floor
+                      ) {
+                        return (
+                          <option
+                            key={item.categoryName}
+                            value={item.categoryName}
+                            style={{ textAlign: 'center' }}
+                          >
+                            {item.categoryName}
+                          </option>
+                        )
+                      }
+                      return null
+                    })}
+                  </NativeSelect>
+                </FormControl>
+              </ResearchTextWrapper>
+            )}
           </Grid>
         </Grid>
 
         {/* 項目描述 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editCategoryDescIcon} alt='項目描述' />
           </Grid>
           <Grid item xs={3}>
             項目描述
           </Grid>
-          <Grid item xs={4}>
-            <ResearchTextWrapper isEditable>
-              <NativeSelect>
-                <option value='飲水機1'>飲水機1</option>
-                <option value='飲水機2'>飲水機2</option>
-              </NativeSelect>
-            </ResearchTextWrapper>
+          <Grid item xs>
+            {categoryName === '' ? (
+              <ResearchTextWrapper />
+            ) : (
+              <ResearchTextWrapper isEditable>
+                <FormControl fullWidth>
+                  <NativeSelect
+                    onChange={handleChangeCategoryDescName}
+                    value={categoryDescName}
+                  >
+                    <option value='' style={{ textAlign: 'center' }}>
+                      請選擇
+                    </option>
+                    {thisLocationOptions?.optionData?.map((item) => {
+                      if (
+                        item.categoryType === categoryType &&
+                        item.floor === floor &&
+                        item.categoryName === categoryName
+                      ) {
+                        return (
+                          <option
+                            key={item.categoryDescName}
+                            value={item.categoryDescName}
+                            style={{ textAlign: 'center' }}
+                          >
+                            {item.categoryDescName}
+                          </option>
+                        )
+                      }
+                      return null
+                    })}
+                  </NativeSelect>
+                </FormControl>
+              </ResearchTextWrapper>
+            )}
           </Grid>
         </Grid>
 
         {/* 回報狀態 */}
-        <Grid container marginTop={0.5}>
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editStatusNameIcon} alt='回報狀態' />
           </Grid>
           <Grid item xs={3}>
             回報狀態
           </Grid>
-          <Grid item xs={4}>
-            <ResearchTextWrapper isEditable>
-              <NativeSelect>
-                <option value='清潔狀態'>清潔狀態</option>
-              </NativeSelect>
-            </ResearchTextWrapper>
+          <Grid item xs>
+            {categoryDescName === '' ? (
+              <ResearchTextWrapper />
+            ) : (
+              <ResearchTextWrapper isEditable>
+                <FormControl fullWidth>
+                  <NativeSelect
+                    onChange={handleChangeStatusName}
+                    value={statusName}
+                  >
+                    <option value='' style={{ textAlign: 'center' }}>
+                      請選擇
+                    </option>
+                    {res1StatusType?.map((item) => {
+                      if (item.categoryType === categoryType) {
+                        return (
+                          <option
+                            key={item.status}
+                            value={item.status}
+                            style={{ textAlign: 'center' }}
+                          >
+                            {item.status}
+                          </option>
+                        )
+                      }
+                      return null
+                    })}
+                  </NativeSelect>
+                </FormControl>
+              </ResearchTextWrapper>
+            )}
           </Grid>
         </Grid>
 
-        {/* 狀態描述；唯一可供編輯的欄位 */}
-        <Grid container marginTop={0.5}>
+        {/* 狀態描述 */}
+        <Grid container item>
           <Grid item xs={1}>
             <img src={editStatusDescNameIcon} alt='狀態描述' />
           </Grid>
           <Grid item xs={3}>
             狀態描述
           </Grid>
-          <Grid item xs={4}>
-            <ResearchTextWrapper isEditable>
-              <FormControl fullWidth>
-                {/* <NativeSelect
-                  defaultValue={tagDetail.status.statusDescName}
-                  value={selectedStatusDesc}
-                  onChange={handleSelectChange}
-                >
-                  {thisStatusType?.statusOptions?.map((currentValue) => {
-                    return (
-                      <option key={currentValue} value={currentValue} style={{ textAlign: 'center' }}>
-                        {currentValue}
-                      </option>
-                    )
-                  })}
-                </NativeSelect> */}
-              </FormControl>
-            </ResearchTextWrapper>
+          <Grid item xs>
+            {statusName === '' ? (
+              <ResearchTextWrapper />
+            ) : (
+              <ResearchTextWrapper isEditable>
+                <FormControl fullWidth>
+                  <NativeSelect
+                    onChange={handleChangeStatusDescName}
+                    value={statusDescName}
+                  >
+                    <option value='' style={{ textAlign: 'center' }}>
+                      請選擇
+                    </option>
+                    {thisStatusType?.statusOptions?.map((item) => {
+                      return (
+                        <option
+                          key={item}
+                          value={item}
+                          style={{ textAlign: 'center' }}
+                        >
+                          {item}
+                        </option>
+                      )
+                    })}
+                  </NativeSelect>
+                </FormControl>
+              </ResearchTextWrapper>
+            )}
           </Grid>
         </Grid>
 

@@ -15,7 +15,7 @@ import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
 import ResearchTextWrapper from '../../../../components/ResarchTextWrapper'
-import Res1StatusType from '../../../../constants/Res1StatusType'
+import res1StatusType from '../../../../constants/res1StatusType'
 
 import editLocationIcon from '../../../../assets/images/res1-editLocation.svg'
 // import editAddImgIcon from '../../../../assets/images/res1-editAddImg.svg'
@@ -33,9 +33,12 @@ function ChangeStatus(props) {
 
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
-    for (let i = 0; i < Res1StatusType.length; i += 1) {
-      if (tagDetail.status.statusName === Res1StatusType[i].status) {
-        setThisStatusType(Res1StatusType[i])
+    for (let i = 0; i < res1StatusType.length; i += 1) {
+      if (
+        tagDetail.status.statusName === res1StatusType[i].status &&
+        tagDetail.category.categoryType === res1StatusType[i].categoryType
+      ) {
+        setThisStatusType(res1StatusType[i])
       }
     }
   }, [tagDetail])
@@ -44,7 +47,7 @@ function ChangeStatus(props) {
   useEffect(() => {
     setSelectedStatusDesc(tagDetail.status.statusDescName)
   }, [tagDetail, stateDrawer])
-  const handleSelectChange = (event) => {
+  const handleChangeStatusDescName = (event) => {
     setSelectedStatusDesc(event.target.value)
   }
 
@@ -102,36 +105,34 @@ function ChangeStatus(props) {
           flexDirection='column'
           justifyContent='space-around'
         >
-          <Grid container padding={2}>
+          <Grid container padding={2} rowSpacing={1}>
             {/* 回報地點與樓層 */}
-            <Grid container>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editLocationIcon} alt='回報地點' />
               </Grid>
               <Grid item xs={3}>
                 回報地點
               </Grid>
-              <Grid item xs={4} mr={1}>
+              <Grid item mr={1}>
                 <ResearchTextWrapper>
                   {tagDetail.locationName}
                 </ResearchTextWrapper>
               </Grid>
               <Grid item xs={1.5}>
-                <ResearchTextWrapper>
-                  {`${tagDetail.floor}樓`}
-                </ResearchTextWrapper>
+                <ResearchTextWrapper>{tagDetail.floor}</ResearchTextWrapper>
               </Grid>
             </Grid>
 
             {/* 回報類別 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editCategoryTypeIcon} alt='回報類別' />
               </Grid>
               <Grid item xs={3}>
                 回報類別
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <ResearchTextWrapper>
                   {tagDetail.category?.categoryType}
                 </ResearchTextWrapper>
@@ -139,14 +140,14 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 回報項目 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editCategoryNameIcon} alt='回報項目' />
               </Grid>
               <Grid item xs={3}>
                 回報項目
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <ResearchTextWrapper>
                   {tagDetail.category?.categoryName}
                 </ResearchTextWrapper>
@@ -154,14 +155,14 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 項目描述 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editCategoryDescIcon} alt='項目描述' />
               </Grid>
               <Grid item xs={3}>
                 項目描述
               </Grid>
-              <Grid item xs={2}>
+              <Grid item>
                 <ResearchTextWrapper>
                   {tagDetail.category?.categoryDescName}
                 </ResearchTextWrapper>
@@ -169,14 +170,14 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 回報狀態 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editStatusNameIcon} alt='回報狀態' />
               </Grid>
               <Grid item xs={3}>
                 回報狀態
               </Grid>
-              <Grid item xs={3}>
+              <Grid item>
                 <ResearchTextWrapper bgcolor={thisStatusType.statusColor}>
                   {tagDetail.status.statusName}
                 </ResearchTextWrapper>
@@ -184,20 +185,20 @@ function ChangeStatus(props) {
             </Grid>
 
             {/* 狀態描述；唯一可供編輯的欄位 */}
-            <Grid container marginTop={0.5}>
+            <Grid container item>
               <Grid item xs={1} ml={1}>
                 <img src={editStatusDescNameIcon} alt='狀態描述' />
               </Grid>
               <Grid item xs={3}>
                 狀態描述
               </Grid>
-              <Grid item xs={4}>
+              <Grid item>
                 <ResearchTextWrapper isEditable>
                   <FormControl fullWidth>
                     <NativeSelect
                       defaultValue={tagDetail.status.statusDescName}
                       value={selectedStatusDesc}
-                      onChange={handleSelectChange}
+                      onChange={handleChangeStatusDescName}
                     >
                       {thisStatusType?.statusOptions?.map((currentValue) => {
                         return (

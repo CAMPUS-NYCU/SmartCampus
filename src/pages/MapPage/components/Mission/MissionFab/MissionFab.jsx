@@ -5,7 +5,8 @@ import { useUserValue } from '../../../../../utils/contexts/UserContext'
 
 const MissionFab = (props) => {
   const { activeFixedTag } = props
-  const { setFixedTagId, handleStartMission } = useMissionValue()
+  const { setFixedTagId, setLocationName, handleStartMission } =
+    useMissionValue()
   const { isGuest, signOut } = useUserValue()
 
   const handleClick = () => {
@@ -13,6 +14,7 @@ const MissionFab = (props) => {
       signOut()
     } else {
       setFixedTagId(activeFixedTag.id)
+      setLocationName(activeFixedTag.locationName)
       handleStartMission(activeFixedTag)
     }
   }
