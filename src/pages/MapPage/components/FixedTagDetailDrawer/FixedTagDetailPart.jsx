@@ -11,7 +11,6 @@ import { useTagValue } from '../../../../utils/contexts/TagContext'
 
 import res1StatusType from '../../../../constants/res1StatusType'
 import ResearchTextWrapper from '../../../../components/ResarchTextWrapper'
-import res1FixedListImg from '../../../../assets/images/res1-fixedTagListImg.png'
 
 const Img = styled('img')({
   margin: 'auto',
