@@ -1,23 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { Marker, InfoWindow } from '@react-google-maps/api'
+import { Marker } from '@react-google-maps/api'
 
-import allRefMarkersData from '../../../../constants/markers/allMarkers.json'
+import referMarkerIcon from '../../../../assets/images/res1-referMarker.svg'
+import referMarkerActivedIcon from '../../../../assets/images/res1-referMarkerActived.svg'
+import { findLocationData } from '../../../../constants/res1ReferMarkers'
 
 function AllReferMarkers(props) {
-  const locations = props
-  const [checkedLocations, setCheckedLocations] = useState([])
-  const [activeMarker, setActiveMarker] = useState('')
+  const { checkedItems, locationName } = props
+  const [checkedCategoryNames, setCheckedCategoryNames] = useState([])
+  const [thisLocationData, setThisLocationData] = useState([])
 
   useEffect(() => {
-    setCheckedLocations(locations.locations)
-  }, [locations])
+    setCheckedCategoryNames(checkedItems)
+  }, [checkedItems])
 
-  console.log(checkedLocations)
+  useEffect(() => {
+    setThisLocationData(findLocationData(locationName?.locationName))
+  }, [locationName])
+
+  const handleMarkerClick = (index) => {
+    const updatedData = [...thisLocationData]
+    updatedData[index].isOpen = !updatedData[index].isOpen
+    setThisLocationData(updatedData)
+  }
 
   return (
     <>
-      {allRefMarkersData.map((item) => {
-        if (checkedLocations?.includes(item.locationName)) {
+      {thisLocationData?.map((item, index) => {
+        if (checkedCategoryNames?.includes(item.category.categoryName)) {
+          const markerIcon = item.isOpen
+            ? referMarkerActivedIcon
+            : referMarkerIcon
+          const labelColor = item.isOpen ? '#FDCC4F' : '#97948E'
+
           return (
             <Marker
               key={`${item.locationName}/${item.category.categoryDescName}`}
@@ -25,35 +40,18 @@ function AllReferMarkers(props) {
                 lat: item.coordinates.latitude,
                 lng: item.coordinates.longitude
               }}
-              title={item.category.categoryDescname}
-              onClick={() => {
-                setActiveMarker(
-                  `${item.locationName}/${item.category.categoryDescName}`
-                )
+              icon={{
+                url: markerIcon,
+                labelOrigin: { x: 15, y: 34 }
               }}
-            >
-              {activeMarker ===
-              `${item.locationName}/${item.category.categoryDescName}` ? (
-                <InfoWindow
-                  position={{
-                    lat: item.coordinates.latitude,
-                    lng: item.coordinates.longitude
-                  }}
-                  onCloseClick={() => setActiveMarker(null)}
-                >
-                  <div>{item.category.categoryDescName}</div>
-                </InfoWindow>
-              ) : null}
-              {/* <InfoWindow
-                position={{
-                  lat: item.coordinates.latitude,
-                  lng: item.coordinates.longitude
-                }}
-                onCloseClick={() => setActiveMarker(null)}
-              >
-                <div>{item.category.categoryDescName}</div>
-              </InfoWindow> */}
-            </Marker>
+              label={{
+                text: item.category.categoryDescName,
+                fontFamily: 'Roboto',
+                fontSize: '14px',
+                color: labelColor
+              }}
+              onClick={() => handleMarkerClick(index)}
+            />
           )
         }
         return <></>

@@ -282,7 +282,9 @@ function Map(props) {
             }}
           />
         )}
-        <ReferMarkerFab />
+        {activeFixedTag && (
+          <ReferMarkerFab locationName={activeFixedTag.locationName} />
+        )}
       </GoogleMap>
     </div>
   )

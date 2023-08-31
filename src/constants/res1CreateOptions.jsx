@@ -1,11 +1,3 @@
-// import secondCafeAndParkingLotsMarkers from 'options/markers_2ndCafe_parkingLots_typefloor.json' // 二餐&停車場
-// import activityCenterAndFirstCafeMarkers from 'options/markers_activityCenter_1stCafe_typefloor.json' // 活動中心&一餐
-// import engThreeAndEngFourMarkers from 'options/markers_eng3_eng4_typefloor.json' // 工三&工四
-// import libraryMarkers from 'options/markers_library_typefloor.json' // 圖書館
-// import olfGymMarkers from 'options/markers_oldGym_typefloor.json' // 舊體育館
-// import outdoorFieldMarkers from 'options/markers_outdoorField_typefloor.json' // 室外球場
-// import shineMoodAndCCMarkers from 'options/markers_shinemood_cc_typefloor.json' // 小木屋&校計中
-// import swimAndMultiGymMarkers from 'options/markers_swim_multiGym_typefloor.json' // 游泳館和綜合球館
 import secondCafeAndParkingLotsMarkers from './markers/markers_2ndCafe_parkingLots.json' // 二餐&停車場
 import activityCenterAndFirstCafeMarkers from './markers/markers_activityCenter_1stCafe.json' // 活動中心&一餐
 import engThreeAndEngFourMarkers from './markers/markers_eng3_eng4.json' // 工三&工四
@@ -88,31 +80,6 @@ function addUniqueCateOfFloor(arr, newItem) {
   return null
 }
 
-// function createDataOption(thisLocationData, res1CreateOptions) {
-//   thisLocationData?.map((item) => {
-//     const thisFloor = findFloor(item?.category?.categoryDescName)
-//     const thisCateType = findCategoryType(item?.category?.categoryName)
-//     const thisDataOption = {
-//       floor: thisFloor, // B1, 1, 2, 3, 4...
-//       categoryType: thisCateType, // 物體空間
-//       categoryName: item?.category?.categoryName, // 飲水機
-//       categoryDescName: item?.category?.categoryDescName // 飲水機1
-//     }
-
-//     if (!res1CreateOptions.floorOptions.includes(thisFloor)) {
-//       res1CreateOptions.floorOptions.push(thisFloor)
-//     }
-
-//     addUniqueCateOfFloor(res1CreateOptions.uniqueCateOfFloors, thisDataOption)
-
-//     res1CreateOptions.optionData.push(thisDataOption)
-
-//     return null
-//   })
-
-//   return null
-// }
-
 function findCorrespondingOptions(locationName) {
   let thisLocationData
 
@@ -138,7 +105,7 @@ function findCorrespondingOptions(locationName) {
     case '小木屋&校計中':
       thisLocationData = shineMoodAndCCMarkers
       break
-    case '游泳館和綜合球館':
+    case '游泳館&綜合球館':
       thisLocationData = swimAndMultiGymMarkers
       break
 

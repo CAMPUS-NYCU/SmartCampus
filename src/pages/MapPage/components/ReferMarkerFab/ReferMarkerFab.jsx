@@ -1,83 +1,86 @@
 import React, { useEffect, useState } from 'react'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Checkbox from '@mui/material/Checkbox'
-import Button from '@mui/material/Button'
+import { makeStyles } from '@mui/styles'
+import CustomButton from '../../../../components/CustomButton'
+
 import AllReferMarkers from './AllReferMarkers'
+import { findCategories } from '../../../../constants/res1ReferMarkers'
 
-// const regoinList = ['暖身題', '密度高-室內單', '密度高-室內多', '密度高-室外', '密度低-室內單', '密度低-室外', '空間-室內單', '空間-室內多', '空間-室外']
-const locationList = [
-  '小木屋和校計中',
-  '游泳館&綜合球館',
-  '圖書館',
-  '活動中心&一餐',
-  '工三&工四',
-  '室外球場',
-  '二餐&停車場',
-  '舊體育館'
-]
-
-function ReferMarkerFab() {
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [checkedItems, setCheckedItems] = useState(new Array(8).fill(false)) // 8 is length of locationList
-  const [checkedLocations, setCheckedLocations] = useState([])
-
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget)
+const useStyles = makeStyles(() => ({
+  grid: {
+    position: 'absolute',
+    transform: 'translate(-50%, 0)',
+    top: '32px',
+    width: '100vw',
+    height: '35px',
+    flexGrow: '1',
+    overflowX: 'scroll',
+    overflowY: 'auto',
+    display: '-webkit-flex',
+    flexDirection: 'row',
+    maxWidth: 800,
+    left: '50%',
+    '-ms-overflow-style': 'none',
+    scrollbarWidth: 'none'
   }
+}))
 
-  const handleMenuClose = () => {
-    setAnchorEl(null)
-  }
+function ReferMarkerFab(props) {
+  const classes = useStyles()
+  const locationName = props
+  const [fabStates, setFabStates] = useState(new Array(8).fill(false)) // 8 is max length of categories
+  const [checkedCategoryNames, setCheckedCategoryNames] = useState([])
+  const [categories, setCategories] = useState([])
 
-  const handleToggle = (index) => {
-    const newCheckedItems = [...checkedItems]
-    newCheckedItems[index] = !newCheckedItems[index]
-    setCheckedItems(newCheckedItems)
+  const toggleFabState = (index) => {
+    const newFabStates = [...fabStates]
+    newFabStates[index] = !newFabStates[index]
+    setFabStates(newFabStates)
   }
 
   useEffect(() => {
-    const selectedLocations = []
+    const selectedCategories = []
 
-    checkedItems.map((checked, index) => {
-      if (checked) {
-        selectedLocations.push(locationList[index])
+    fabStates.map((checked, index) => {
+      if (checked && categories) {
+        selectedCategories.push(categories[index])
       }
       return null
     })
-    setCheckedLocations(selectedLocations)
-  }, [checkedItems])
+    setCheckedCategoryNames(selectedCategories)
+  }, [fabStates, categories])
+
+  useEffect(() => {
+    setCategories(findCategories(locationName?.locationName))
+  }, [locationName])
 
   return (
     <>
-      <div>
-        <Button aria-haspopup='true' onClick={handleMenuClick}>
-          可回報項目位置
-        </Button>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
-          MenuListProps={{ 'aria-labelledby': 'checkbox-menu' }}
-        >
-          {locationList.map((location, index) => {
-            return (
-              <MenuItem key={location}>
-                <ListItemIcon>
-                  <Checkbox
-                    checked={checkedItems[index]}
-                    onChange={() => handleToggle(index)}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={location} />
-              </MenuItem>
-            )
-          })}
-        </Menu>
+      <div className={classes.grid}>
+        {categories?.map((item, index) => (
+          <CustomButton
+            key={item}
+            buttonType={
+              fabStates[index] ? 'boxButton_activated' : 'boxButton_inactivated'
+            }
+            variant='contained'
+            size='small'
+            onClick={() => toggleFabState(index)}
+            style={{
+              flexShrink: '0',
+              boxSizing: 'border-box',
+              // width: '20vw',
+              height: '30px',
+              marginRight: '7px'
+            }}
+          >
+            {item}
+          </CustomButton>
+        ))}
       </div>
-      <AllReferMarkers locations={checkedLocations} />
+      <AllReferMarkers
+        checkedItems={checkedCategoryNames}
+        locationName={locationName}
+      />
     </>
   )
 }
