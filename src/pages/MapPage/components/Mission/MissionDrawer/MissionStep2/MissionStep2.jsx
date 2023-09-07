@@ -58,7 +58,6 @@ function MissionStep2() {
     for (let i = 0; i < thisLocationOptions?.floorOptions?.length; i += 1) {
       if (thisLocationOptions.floorOptions[i].floor === event.target.value) {
         setThisFloorOption(thisLocationOptions.floorOptions[i])
-        console.log(thisLocationOptions.floorOptions[i])
       }
     }
   }

@@ -29,8 +29,6 @@ function TagDetailDialog(props) {
     fetchTagDetail()
   }, [fetchTagDetail])
 
-  console.log(tagDetail)
-
   return (
     <>
       <CustomDrawer

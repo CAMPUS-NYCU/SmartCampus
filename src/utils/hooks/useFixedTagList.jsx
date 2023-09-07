@@ -1,9 +1,13 @@
 import { useState, useEffect, useCallback } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
+import { useUserValue } from '../contexts/UserContext'
 
 export const GET_FIXEDTAG_LIST_QUERY = gql`
-  query getfixedTagList($cursor: String!, $pageSize: Int!) {
-    fixedTagResearchList(pageParams: { cursor: $cursor, pageSize: $pageSize }) {
+  query getfixedTagList($uNumber: Int!, $cursor: String!, $pageSize: Int!) {
+    getUserFixedTagResearchList(
+      uNumber: $uNumber
+      pageParams: { cursor: $cursor, pageSize: $pageSize }
+    ) {
       fixedTags {
         id
         locationName
@@ -47,12 +51,22 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
   }
 `
 
+function getUserNumberResearch(userName) {
+  const numberMatch = userName.match(/\d+/)
+
+  if (userName && numberMatch) {
+    return parseInt(numberMatch[0], 10)
+  }
+
+  return null
+}
+
 function useFixedTagList() {
   const [
     getfixedTagList,
     {
       data: {
-        fixedTagResearchList: {
+        getUserFixedTagResearchList: {
           fixedTags = null,
           empty = false,
           cursor = null
@@ -62,20 +76,23 @@ function useFixedTagList() {
   ] = useLazyQuery(GET_FIXEDTAG_LIST_QUERY)
   const [fixedtagList, setfixedTagList] = useState(null)
   const [cachefixedTagList, setfixedCacheTagList] = useState(null)
+  const { userName } = useUserValue()
   const fetchTagList = useCallback(
-    (currentCursor, pageSize) => {
-      getfixedTagList({ variables: { cursor: currentCursor || '', pageSize } })
+    (uNumber, currentCursor, pageSize) => {
+      getfixedTagList({
+        variables: { uNumber, cursor: currentCursor || '', pageSize }
+      })
     },
     [getfixedTagList]
   )
   useEffect(() => {
-    fetchTagList('', 10)
-  }, [fetchTagList])
+    fetchTagList(getUserNumberResearch(userName), '', 10)
+  }, [fetchTagList, userName])
   useEffect(() => {
     if (!empty && cursor) {
-      fetchTagList(cursor, 100)
+      fetchTagList(getUserNumberResearch(userName), cursor, 100)
     }
-  }, [fetchTagList, empty, cursor])
+  }, [fetchTagList, empty, cursor, userName])
   useEffect(() => {
     if (Array.isArray(fixedTags)) {
       setfixedCacheTagList((prevState) => [
