@@ -36,7 +36,6 @@ const DetailPart = (props) => {
   useEffect(() => {
     for (let i = 0; i < res1StatusType.length; i += 1) {
       if (tagDetail.status.statusName === res1StatusType[i].status) {
-        console.log(res1StatusType[i])
         setThisStatusType(res1StatusType[i])
       }
     }

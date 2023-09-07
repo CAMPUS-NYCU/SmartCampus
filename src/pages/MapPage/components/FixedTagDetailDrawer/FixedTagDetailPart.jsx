@@ -45,8 +45,6 @@ const DetailPartItem = (props) => {
     }
   }, [isHighlighted])
 
-  console.log(tag)
-
   return (
     <Grid
       key={tag.id}
