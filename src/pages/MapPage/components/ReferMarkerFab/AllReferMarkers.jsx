@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { Marker } from '@react-google-maps/api'
 
 import referMarkerIcon from '../../../../assets/images/res1-referMarker.svg'
+import userMarkerIcon from '../../../../assets/images/res1-userLocation.svg'
 // import referMarkerActivedIcon from '../../../../assets/images/res1-referMarkerActived.svg'
-import { findLocationData } from '../../../../constants/res1ReferMarkers'
+import {
+  findLocationData,
+  findUserLocation
+} from '../../../../constants/res1ReferMarkers'
 
 function AllReferMarkers(props) {
   const { checkedItems, locationName } = props
   const [checkedCategoryNames, setCheckedCategoryNames] = useState([])
   const [thisLocationData, setThisLocationData] = useState([])
+  const [thisUserLocation, setThisUserLocation] = useState({})
 
   useEffect(() => {
     setCheckedCategoryNames(checkedItems)
@@ -16,6 +21,7 @@ function AllReferMarkers(props) {
 
   useEffect(() => {
     setThisLocationData(findLocationData(locationName?.locationName))
+    setThisUserLocation(findUserLocation(locationName?.locationName))
   }, [locationName])
 
   // const handleMarkerClick = (index) => {
@@ -26,6 +32,13 @@ function AllReferMarkers(props) {
 
   return (
     <>
+      <Marker
+        position={{
+          lat: thisUserLocation?.coordinates?.latitude,
+          lng: thisUserLocation?.coordinates?.longitude
+        }}
+        icon={{ url: userMarkerIcon }}
+      />
       {thisLocationData?.map((item) => {
         if (checkedCategoryNames?.includes(item.category.categoryName)) {
           // const markerIcon = item.isOpen

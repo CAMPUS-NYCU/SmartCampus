@@ -30,7 +30,7 @@ import { useUserValue } from '../../utils/contexts/UserContext'
 import TagDetailDrawer from './components/TagDetailDrawer'
 import FixedTagDetailDrawer from './components/FixedTagDetailDrawer'
 // import FilterFab from './components/Filter/FilterFab'
-import LocationFab from './components/LocationFab'
+// import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
 import UserDialog from './components/UserDialog/UserDialog'
 import { VITE_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
@@ -85,8 +85,7 @@ const MapPageContent = () => {
   const history = useHistory()
   const userDialogControl = useModal()
   const ReportHistoryControl = useModal()
-  const { isInMission, showControl, loading, mapCenter, setMapCenter } =
-    useMissionValue()
+  const { isInMission, showControl, loading, mapCenter } = useMissionValue()
   const {
     activeTag,
     activeFixedTag,
@@ -163,12 +162,12 @@ const MapPageContent = () => {
                 setPlaceName={setPlaceName}
               /> */}
               {/* <FilterFab /> */}
-              <LocationFab
+              {/* <LocationFab
                 setMapCenter={() => {
                   if (!positionError)
                     setMapCenter({ lat: positionLat, lng: positionLng })
                 }}
-              />
+              /> */}
             </div>
           </Fade>
           <MissionDrawer />

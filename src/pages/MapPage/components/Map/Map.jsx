@@ -9,7 +9,7 @@ import {
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 import { MAP_PATH } from '../../../../constants/pageUrls'
 import flagImg from '../../../../assets/images/yellow-flag.svg'
-import myLocationImg from '../../../../assets/images/my-location.svg'
+// import myLocationImg from '../../../../assets/images/my-location.svg'
 import { DefaultZoom } from '../../../../constants/mapConstants'
 import FixedTags from '../../../../assets/images/fixedtag.svg'
 import Mission1 from '../../../../assets/images/mission1_pin.svg'
@@ -20,8 +20,8 @@ import ReferMarkerFab from '../ReferMarkerFab'
 function Map(props) {
   const {
     mapCenter,
-    userPosition,
-    userPositionError,
+    // userPosition,
+    // userPositionError,
     place,
     search,
     placeName
@@ -197,7 +197,7 @@ function Map(props) {
           }
         }}
       >
-        {!userPositionError && userPosition.lat && userPosition.lng && (
+        {/* {!userPositionError && userPosition.lat && userPosition.lng && (
           <Marker
             clickable={false}
             position={userPosition}
@@ -206,7 +206,7 @@ function Map(props) {
               scaledSize: { width: 20, height: 20 }
             }}
           />
-        )}
+        )} */}
         {markerCluster &&
           fixedTags &&
           !activeTagId &&

@@ -6,6 +6,7 @@ import oldGymMarkers from './markers/markers_oldGym.json' // 舊體育館
 import outdoorFieldMarkers from './markers/markers_outdoorField.json' // 室外球場
 import shineMoodAndCCMarkers from './markers/markers_shinemood_cc.json' // 小木屋&校計中
 import swimAndMultiGymMarkers from './markers/markers_swim_multiGym.json' // 游泳館和綜合球館
+import userLocationMarkers from './markers/entry_markers.json' // user location
 
 function findLocationData(locationName) {
   let thisLocationData
@@ -43,4 +44,17 @@ function findCategories(locationName) {
   return Array.from(categories)
 }
 
-export { findLocationData, findCategories }
+function findUserLocation(locationName) {
+  const matches = locationName.match(/[^a-zA-Z]+/g)
+  const pureLocationName = matches ? matches.join('') : ''
+
+  for (let i = 0; i < userLocationMarkers.length; i += 1) {
+    if (userLocationMarkers[i].locationName === pureLocationName) {
+      return userLocationMarkers[i]
+    }
+  }
+
+  return null
+}
+
+export { findLocationData, findCategories, findUserLocation }
