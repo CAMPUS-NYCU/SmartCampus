@@ -56,10 +56,10 @@ const DetailPartItem = (props) => {
       style={{
         backgroundColor: isHighlighted ? '#97948E' : '#EEEEEE',
         borderRadius: '10px',
-        margin: '5px',
+        marginBottom: '5px',
         width: '98%',
         minHeight: '80px',
-        height: 'calc((50vh - 120px)/4)'
+        height: 'calc((50vh - 92px)/4)'
       }}
       justifyContent='space-around'
       alignItems='center'
@@ -200,7 +200,7 @@ const DetailPart = (props) => {
         overflowY: 'scroll',
         height: '80%',
         width: '90%',
-        marginTop: '10px'
+        marginTop: '0px'
       }}
     >
       {tags.map((tag) => (

@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     width: '100%',
     height: 40,
+    minHeight: 40,
     backgroundColor: '#FAFAFA',
     zIndex: 100
   },
