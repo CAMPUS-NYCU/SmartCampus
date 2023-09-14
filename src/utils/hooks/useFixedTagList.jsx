@@ -58,7 +58,7 @@ function getUserNumberResearch(userName) {
     return parseInt(numberMatch[0], 10)
   }
 
-  return null
+  return -1
 }
 
 function useFixedTagList() {

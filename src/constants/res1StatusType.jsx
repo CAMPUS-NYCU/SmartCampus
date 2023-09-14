@@ -1,12 +1,21 @@
-import detailStatusMaintenanceIcon from '../assets/images/res1-detailStatusMaintenance.svg'
-import detailStatusCleanIcon from '../assets/images/res1-detailStatusClean.svg'
-import detailStatusCrowdIcon from '../assets/images/res1-detailStatusCrowd.svg'
-import detailStatusFunctionIcon from '../assets/images/res1-detailStatusFunction.svg'
-import detailStatusNoiseIcon from '../assets/images/res1-detailStatusNoise.svg'
-import detailStatusOutlookIcon from '../assets/images/res1-detailStatusOutlook.svg'
-import detailStatusThermalComfortIcon from '../assets/images/res1-detailStatusThermalComfort.svg'
-import detailStatusUsageIcon from '../assets/images/res1-detailStatusUsage.svg'
-import detailStatusOccupationIcon from '../assets/images/res1-detailStatusOccupation.svg'
+import detailStatusMaintenanceIcon from '../assets/images/res1-detailStatusMaintenance.svg' // 保養狀態
+import detailStatusCleanIcon from '../assets/images/res1-detailStatusClean.svg' // 清潔
+import detailStatusCrowdIcon from '../assets/images/res1-detailStatusCrowd.svg' // 人潮
+import detailStatusFunctionIcon from '../assets/images/res1-detailStatusFunction.svg' // 功能
+import detailStatusNoiseIcon from '../assets/images/res1-detailStatusNoise.svg' // 噪音
+import detailStatusOutlookIcon from '../assets/images/res1-detailStatusOutlook.svg' // 外觀
+import detailStatusThermalComfortIcon from '../assets/images/res1-detailStatusThermalComfort.svg' // 體感
+import detailStatusUsageIcon from '../assets/images/res1-detailStatusUsage.svg' // 使用
+import detailStatusOccupationIcon from '../assets/images/res1-detailStatusOccupation.svg' // 占用
+// import markerCleanIcon from '../assets/images/res1-statusMarkerClean.svg'
+// import markerCrowdIcon from '../assets/images/res1-statusMarkerCrowd.svg'
+// import markerFunctionIcon from '../assets/images/res1-statusMarkerFunction.svg'
+// import markerMaintenanceIcon from '../assets/images/res1-statusMarkerMaintenance.svg'
+// import markerNoiseIcon from '../assets/images/res1-statusMarkerNoise.svg'
+// import markerOccupationIcon from '../assets/images/res1-statusMarkerOccupation.svg'
+// import markerOutlookIcon from '../assets/images/res1-statusMarkerOutlook.svg'
+// import markerThermalComfortIcon from '../assets/images/res1-statusMarkerThermalComfort.svg'
+// import markerUsageIcon from '../assets/images/res1-statusMarkerUsage.svg'
 
 export default [
   // 物體的五個狀態

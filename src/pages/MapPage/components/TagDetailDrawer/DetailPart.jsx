@@ -114,7 +114,7 @@ const DetailPart = (props) => {
             <Grid
               container
               marginTop={0.5}
-              spacingX={1}
+              // spacingX={1}
               alignContent='flex-start'
             >
               <Grid item xs={1}>
@@ -134,7 +134,7 @@ const DetailPart = (props) => {
             <Grid
               container
               marginTop={0.5}
-              spacingX={1}
+              // spacingX={1}
               alignContent='flex-start'
             >
               <Grid item xs={1}>
@@ -151,7 +151,7 @@ const DetailPart = (props) => {
             <Grid
               container
               marginTop={0.5}
-              spacingX={1}
+              // spacingX={1}
               alignContent='flex-start'
             >
               <Grid item xs={1}>
