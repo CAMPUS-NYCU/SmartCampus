@@ -2,18 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Marker } from '@react-google-maps/api'
 
 import referMarkerIcon from '../../../../assets/images/res1-referMarker.svg'
-import userMarkerIcon from '../../../../assets/images/res1-userLocation.svg'
 // import referMarkerActivedIcon from '../../../../assets/images/res1-referMarkerActived.svg'
-import {
-  findLocationData,
-  findUserLocation
-} from '../../../../constants/res1ReferMarkers'
+import { findLocationData } from '../../../../constants/res1ReferMarkers'
 
 function AllReferMarkers(props) {
   const { checkedItems, locationName } = props
   const [checkedCategoryNames, setCheckedCategoryNames] = useState([])
   const [thisLocationData, setThisLocationData] = useState([])
-  const [thisUserLocation, setThisUserLocation] = useState({})
 
   useEffect(() => {
     setCheckedCategoryNames(checkedItems)
@@ -21,7 +16,6 @@ function AllReferMarkers(props) {
 
   useEffect(() => {
     setThisLocationData(findLocationData(locationName?.locationName))
-    setThisUserLocation(findUserLocation(locationName?.locationName))
   }, [locationName])
 
   // const handleMarkerClick = (index) => {
@@ -30,47 +24,38 @@ function AllReferMarkers(props) {
   //   setThisLocationData(updatedData)
   // }
 
-  return (
-    <>
-      <Marker
-        position={{
-          lat: thisUserLocation?.coordinates?.latitude,
-          lng: thisUserLocation?.coordinates?.longitude
-        }}
-        icon={{ url: userMarkerIcon }}
-      />
-      {thisLocationData?.map((item) => {
-        if (checkedCategoryNames?.includes(item.category.categoryName)) {
-          // const markerIcon = item.isOpen
-          //   ? referMarkerActivedIcon
-          //   : referMarkerIcon
-          // const labelColor = item.isOpen ? '#FDCC4F' : '#97948E'
+  thisLocationData.map((item) => {
+    if (checkedCategoryNames?.includes(item.category.categoryName)) {
+      // const markerIcon = item.isOpen
+      //   ? referMarkerActivedIcon
+      //   : referMarkerIcon
+      // const labelColor = item.isOpen ? '#FDCC4F' : '#97948E'
 
-          return (
-            <Marker
-              key={`${item.locationName}/${item.category.categoryDescName}`}
-              position={{
-                lat: item.coordinates.latitude,
-                lng: item.coordinates.longitude
-              }}
-              icon={{
-                url: referMarkerIcon,
-                labelOrigin: { x: 15, y: 34 }
-              }}
-              label={{
-                text: item.category.categoryDescName,
-                fontFamily: 'Roboto',
-                fontSize: '14px',
-                color: '#97948E'
-              }}
-              // onClick={() => handleMarkerClick(index)}
-            />
-          )
-        }
-        return <></>
-      })}
-    </>
-  )
+      return (
+        <Marker
+          key={`${locationName?.locationName}/${item.category.categoryDescName}`}
+          position={{
+            lat: item.coordinates.latitude,
+            lng: item.coordinates.longitude
+          }}
+          icon={{
+            url: referMarkerIcon,
+            labelOrigin: { x: 15, y: 34 }
+          }}
+          label={{
+            text: item.category.categoryDescName,
+            fontFamily: 'Roboto',
+            fontSize: '14px',
+            color: '#97948E'
+          }}
+          // onClick={() => handleMarkerClick(index)}
+        />
+      )
+    }
+    return <></>
+  })
+
+  return <></>
 }
 
 export default AllReferMarkers

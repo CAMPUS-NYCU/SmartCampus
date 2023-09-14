@@ -196,7 +196,6 @@ function ChangeStatus(props) {
                 <ResearchTextWrapper isEditable>
                   <FormControl fullWidth>
                     <NativeSelect
-                      defaultValue={tagDetail.status.statusDescName}
                       value={selectedStatusDesc}
                       onChange={handleChangeStatusDescName}
                     >
@@ -245,8 +244,8 @@ function ChangeStatus(props) {
 ChangeStatus.propTypes = {
   stateDrawer: PropTypes.bool.isRequired,
   tagDetail: PropTypes.object.isRequired,
-  setStateDrawer: PropTypes.func.isRequired,
-  status: PropTypes.arrayOf(PropTypes.object).isRequired
+  setStateDrawer: PropTypes.func.isRequired
+  // status: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default ChangeStatus
