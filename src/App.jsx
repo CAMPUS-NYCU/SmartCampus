@@ -22,7 +22,7 @@ import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
 import { theme } from './utils/theme'
 import { apolloClient } from './utils/grahpql'
-import { TagContextProvider, useTagValue } from './utils/contexts/TagContext'
+import { TagContextProvider } from './utils/contexts/TagContext'
 import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
 
 const CacheTagId = (props) => {
@@ -38,7 +38,6 @@ const CacheTagId = (props) => {
 }
 
 const Pages = () => {
-  const { tags } = useTagValue()
   const { token, isLoadingToken } = useUserValue()
   const [tagIdCache, setTagIdCache] = useState(null)
   const [fixedTagIdCache, setFixedTagIdCache] = useState(null)
@@ -53,7 +52,7 @@ const Pages = () => {
   }
   return (
     <>
-      {!tags || isLoadingToken ? (
+      {isLoadingToken ? (
         <MainPage />
       ) : (
         <BrowserRouter>
