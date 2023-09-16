@@ -52,12 +52,14 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
 `
 
 function getUserNumberResearch(userName) {
-  const numberMatch = userName.match(/\d+/)
+  if (userName) {
+    const numberMatch = userName.match(/\d+/)
 
-  if (userName && numberMatch) {
-    return parseInt(numberMatch[0], 10)
+    if (numberMatch) {
+      return parseInt(numberMatch[0], 10)
+    }
+    return 0
   }
-
   return -1
 }
 
