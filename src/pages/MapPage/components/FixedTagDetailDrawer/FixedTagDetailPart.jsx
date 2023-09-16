@@ -53,7 +53,9 @@ const DetailPartItem = (props) => {
       rowSpacing={0}
       paddingX={1}
       style={{
-        backgroundColor: isHighlighted ? 'rgb(151, 148, 142)' : 'rgb(238, 238, 238)',
+        backgroundColor: isHighlighted
+          ? 'rgb(151, 148, 142)'
+          : 'rgb(238, 238, 238)',
         borderRadius: '10px',
         marginBottom: '5px',
         width: '98%',
@@ -64,7 +66,14 @@ const DetailPartItem = (props) => {
       alignItems='center'
       onClick={() => setHighLightTagId(tag.id)}
     >
-      <Grid item xs={6} container direction='column' justifyContent='space-evenly' height='100%'>
+      <Grid
+        item
+        xs={6}
+        container
+        direction='column'
+        justifyContent='space-evenly'
+        height='100%'
+      >
         {/* 第一排 */}
         <Grid
           container
@@ -153,7 +162,14 @@ const DetailPartItem = (props) => {
       </Grid>
 
       {/* 選取按鈕 */}
-      <Grid item xs={2} container direction='column' height='80%' justifyContent='flex-end'>
+      <Grid
+        item
+        xs={2}
+        container
+        direction='column'
+        height='80%'
+        justifyContent='flex-end'
+      >
         {highlightTagId === tag.id ? (
           <Button
             id='highlightButton'
@@ -192,7 +208,7 @@ const DetailPartItem = (props) => {
           </Button>
         )}
       </Grid>
-      
+
       {/* 圖片 */}
       <Grid item xs={3}>
         <Paper variant='outlined' style={{ width: '100%', height: '100%' }}>
