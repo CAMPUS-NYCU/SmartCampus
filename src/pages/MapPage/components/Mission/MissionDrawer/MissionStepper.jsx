@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
@@ -48,6 +49,8 @@ function MissionStepper(props) {
     isInEdit
   } = useMissionValue()
   const [finishOpen, setFinishOpen] = useState(false)
+  const [redirect, setRedirect] = useState(false)
+  const history = useHistory()
 
   function getBackButton() {
     if (currentStep <= MISSION_MIN_STEP) {
@@ -92,9 +95,15 @@ function MissionStepper(props) {
   }
 
   const handleSubmit = React.useCallback(() => {
-    handleCompleteMission().then(() => setFinishOpen(false))
+    handleCompleteMission().then(() => {
+      setFinishOpen(false)
+      setRedirect(true)
+    })
   }, [handleCompleteMission])
-
+  if (redirect) {
+    console.log('redirect')
+    history.go(0)
+  }
   return (
     <>
       <MobileStepper
