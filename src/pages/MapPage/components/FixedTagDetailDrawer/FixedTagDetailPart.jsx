@@ -53,7 +53,9 @@ const DetailPartItem = (props) => {
       rowSpacing={0}
       paddingX={1}
       style={{
-        backgroundColor: isHighlighted ? '#97948E' : '#EEEEEE',
+        backgroundColor: isHighlighted
+          ? 'rgb(151, 148, 142)'
+          : 'rgb(238, 238, 238)',
         borderRadius: '10px',
         marginBottom: '5px',
         width: '98%',
@@ -64,7 +66,14 @@ const DetailPartItem = (props) => {
       alignItems='center'
       onClick={() => setHighLightTagId(tag.id)}
     >
-      <Grid item xs={8} container direction='column' spacing={1} mr={1}>
+      <Grid
+        item
+        xs={6}
+        container
+        direction='column'
+        justifyContent='space-evenly'
+        height='100%'
+      >
         {/* 第一排 */}
         <Grid
           container
@@ -82,7 +91,7 @@ const DetailPartItem = (props) => {
               fontFamily: 'Roboto',
               fontStyle: 'light',
               fontSize: '12px',
-              color: 'gray'
+              color: 'rgba(0, 0, 0, 0.6)'
             }}
           >
             {tag.category.categoryDescName}
@@ -141,7 +150,7 @@ const DetailPartItem = (props) => {
               fontFamily: 'Roboto',
               fontStyle: 'light',
               fontSize: '12px',
-              color: 'gray'
+              color: 'rgba(0, 0, 0, 0.6)'
             }}
           >
             編輯於{' '}
@@ -149,28 +158,58 @@ const DetailPartItem = (props) => {
               'YYYY-MM-DD h:mm'
             )}
           </Grid>
-
-          <Grid item>
-            <Button
-              id='highlightButton'
-              size='small'
-              style={{
-                background: '#FDCC4F',
-                fontSize: '12px',
-                borderRadius: '20px',
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-              }}
-              variant='contained'
-              onClick={() => {
-                history.push(`${MAP_PATH}/tag/${tag.id}`)
-              }}
-            >
-              選取
-            </Button>
-          </Grid>
         </Grid>
       </Grid>
 
+      {/* 選取按鈕 */}
+      <Grid
+        item
+        xs={2}
+        container
+        direction='column'
+        height='80%'
+        justifyContent='flex-end'
+      >
+        {highlightTagId === tag.id ? (
+          <Button
+            id='highlightButton'
+            size='small'
+            style={{
+              background: 'rgba(253, 204, 79, 1)',
+              color: 'rgba(0, 0, 0, 0.87)',
+              fontSize: '12px',
+              borderRadius: '20px',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
+            }}
+            variant='contained'
+            onClick={() => {
+              history.push(`${MAP_PATH}/tag/${tag.id}`)
+            }}
+          >
+            選取
+          </Button>
+        ) : (
+          <Button
+            id='highlightButton'
+            size='small'
+            style={{
+              background: 'rgba(253, 204, 79, 0.45)',
+              color: 'rgba(0, 0, 0, 0.87)',
+              fontSize: '12px',
+              borderRadius: '20px',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
+            }}
+            variant='contained'
+            onClick={() => {
+              history.push(`${MAP_PATH}/tag/${tag.id}`)
+            }}
+          >
+            選取
+          </Button>
+        )}
+      </Grid>
+
+      {/* 圖片 */}
       <Grid item xs={3}>
         <Paper variant='outlined' style={{ width: '100%', height: '100%' }}>
           <Img alt='fixedTaglist圖片' src={tag?.category?.locationImgUrl} />

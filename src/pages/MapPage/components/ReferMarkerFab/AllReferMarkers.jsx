@@ -24,7 +24,7 @@ function AllReferMarkers(props) {
   //   setThisLocationData(updatedData)
   // }
 
-  thisLocationData.map((item) => {
+  return thisLocationData?.map((item) => {
     if (checkedCategoryNames?.includes(item.category.categoryName)) {
       // const markerIcon = item.isOpen
       //   ? referMarkerActivedIcon
@@ -52,10 +52,8 @@ function AllReferMarkers(props) {
         />
       )
     }
-    return <></>
+    return null
   })
-
-  return <></>
 }
 
 export default AllReferMarkers
