@@ -45,15 +45,16 @@ function findCategories(locationName) {
 }
 
 function findUserLocation(locationName) {
-  const matches = locationName.match(/[^a-zA-Z]+/g)
-  const pureLocationName = matches ? matches.join('') : ''
+  if (locationName) {
+    const matches = locationName.match(/[^a-zA-Z\d]+/g)
+    const pureLocationName = matches ? matches.join('') : ''
 
-  for (let i = 0; i < userLocationMarkers.length; i += 1) {
-    if (userLocationMarkers[i].locationName === pureLocationName) {
-      return userLocationMarkers[i]
+    for (let i = 0; i < userLocationMarkers.length; i += 1) {
+      if (userLocationMarkers[i].locationName === pureLocationName) {
+        return userLocationMarkers[i]
+      }
     }
   }
-
   return null
 }
 
