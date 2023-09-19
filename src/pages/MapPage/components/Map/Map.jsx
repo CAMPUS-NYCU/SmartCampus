@@ -127,7 +127,7 @@ function Map(props) {
         filterTags.includes(tag.category.missionName) ||
         filterTags.includes(tag.category.subTypeName) ||
         (filterTags.includes(tag.category.targetName) &&
-          tags.map((t) => t.id).includes(tag.id))
+          tags?.map((t) => t.id).includes(tag.id))
       )
     },
     [activeFixedTag, activeTag, filterTags, tags]
@@ -197,7 +197,7 @@ function Map(props) {
     if (markerCluster) {
       markerCluster.clearMarkers()
       markerCluster.addMarkers(
-        markers.filter((m) => isShown(m.tag)).map((m) => m.marker)
+        markers.filter((m) => isShown(m.tag))?.map((m) => m.marker)
       )
       if (isInMission) {
         markerCluster.clearMarkers()
@@ -206,11 +206,11 @@ function Map(props) {
   }, [markers, markerCluster, isShown, isInMission])
   useEffect(() => {
     setMarkers((prevMarkers) => {
-      return prevMarkers.filter((m) => tags.map((t) => t.id).includes(m.tag.id))
+      return prevMarkers.filter((m) => tags?.map((t) => t.id).includes(m.tag.id))
     })
   }, [tags])
   useEffect(() => {
-    const newDisplayedTags = tags.map((tag) => {
+    const newDisplayedTags = tags?.map((tag) => {
       return {
         ...tag,
         icon: getTagIcon(tag)
@@ -281,7 +281,7 @@ function Map(props) {
         {markerCluster &&
           fixedTags &&
           !activeTagId &&
-          fixedTags.map((fixedtag) => (
+          fixedTags?.map((fixedtag) => (
             <Marker
               key={fixedtag.id}
               position={{
@@ -311,7 +311,7 @@ function Map(props) {
             />
           ))}
         {markerCluster &&
-          displayTags.map((tag) => (
+          displayTags?.map((tag) => (
             <Marker
               key={tag.id}
               visible={!isInMission && isShown(tag)}
