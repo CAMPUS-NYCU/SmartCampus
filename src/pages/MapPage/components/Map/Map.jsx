@@ -197,7 +197,7 @@ function Map(props) {
     if (markerCluster) {
       markerCluster.clearMarkers()
       markerCluster.addMarkers(
-        markers.filter((m) => isShown(m.tag)).map((m) => m.marker)
+        markers.filter((m) => isShown(m.tag))?.map((m) => m.marker)
       )
       if (isInMission) {
         markerCluster.clearMarkers()
@@ -206,11 +206,11 @@ function Map(props) {
   }, [markers, markerCluster, isShown, isInMission])
   useEffect(() => {
     setMarkers((prevMarkers) => {
-      return prevMarkers.filter((m) => tags.map((t) => t.id).includes(m.tag.id))
+      return prevMarkers.filter((m) => tags?.map((t) => t.id).includes(m.tag.id))
     })
   }, [tags])
   useEffect(() => {
-    const newDisplayedTags = tags.map((tag) => {
+    const newDisplayedTags = tags?.map((tag) => {
       return {
         ...tag,
         icon: getTagIcon(tag)
@@ -218,6 +218,9 @@ function Map(props) {
     })
     setDisplayTags(newDisplayedTags)
   }, [tags, activeTagId, highlightTagId, getTagIcon])
+
+  console.log('tags: ', tags)
+  console.log('fixedtag: ', fixedTags)
 
   return (
     <div
