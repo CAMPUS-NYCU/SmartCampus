@@ -219,9 +219,6 @@ function Map(props) {
     setDisplayTags(newDisplayedTags)
   }, [tags, activeTagId, highlightTagId, getTagIcon])
 
-  console.log('tags: ', tags)
-  console.log('fixedtag: ', fixedTags)
-
   return (
     <div
       style={{
