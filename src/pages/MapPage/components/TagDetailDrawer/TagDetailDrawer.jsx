@@ -7,24 +7,24 @@ import ChangeStatus from './ChangeStatus'
 import DetailPart from './DetailPart'
 import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
-import { useUserValue } from '../../../../utils/contexts/UserContext'
+// import { useUserValue } from '../../../../utils/contexts/UserContext' // for research. we don't need viewcount
 import CustomDrawer from '../../../../components/CustomDrawer'
-import { useViewCount } from '../../../../utils/hooks/useViewCount'
+// import { useViewCount } from '../../../../utils/hooks/useViewCount' // for research. we don't need viewcount
 
 function TagDetailDialog(props) {
   const { activeTag, onClose, tagDetail } = props
   const { isInMission } = useMissionValue()
   const { fetchTagDetail } = useTagValue()
-  const { isGuest } = useUserValue()
+  // const { isGuest } = useUserValue() // for research. we don't need viewcount
   const [largeImg, setLargeImg] = useState(null)
   const [stateDrawer, setStateDrawer] = useState(false)
-  const { incrementViewCount } = useViewCount()
+  // const { incrementViewCount } = useViewCount() // for research. we don't need viewcount
 
-  useEffect(() => {
-    if (!isGuest) {
-      incrementViewCount(activeTag.id)
-    }
-  }, [incrementViewCount, activeTag, isGuest])
+  // useEffect(() => {
+  //   if (!isGuest) {
+  //     incrementViewCount(activeTag.id)
+  //   }
+  // }, [incrementViewCount, activeTag, isGuest])
   useEffect(() => {
     fetchTagDetail()
   }, [fetchTagDetail])

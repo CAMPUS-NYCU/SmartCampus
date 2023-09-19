@@ -7,20 +7,11 @@ import detailStatusOutlookIcon from '../assets/images/res1-detailStatusOutlook.s
 import detailStatusThermalComfortIcon from '../assets/images/res1-detailStatusThermalComfort.svg' // 體感
 import detailStatusUsageIcon from '../assets/images/res1-detailStatusUsage.svg' // 使用
 import detailStatusOccupationIcon from '../assets/images/res1-detailStatusOccupation.svg' // 占用
-// import markerCleanIcon from '../assets/images/res1-statusMarkerClean.svg'
-// import markerCrowdIcon from '../assets/images/res1-statusMarkerCrowd.svg'
-// import markerFunctionIcon from '../assets/images/res1-statusMarkerFunction.svg'
-// import markerMaintenanceIcon from '../assets/images/res1-statusMarkerMaintenance.svg'
-// import markerNoiseIcon from '../assets/images/res1-statusMarkerNoise.svg'
-// import markerOccupationIcon from '../assets/images/res1-statusMarkerOccupation.svg'
-// import markerOutlookIcon from '../assets/images/res1-statusMarkerOutlook.svg'
-// import markerThermalComfortIcon from '../assets/images/res1-statusMarkerThermalComfort.svg'
-// import markerUsageIcon from '../assets/images/res1-statusMarkerUsage.svg'
 
 export default [
   // 物體的五個狀態
   {
-    status: '維護狀態',
+    status: '保養狀態',
     statusColor: '#9CD6D6',
     statusIcon: detailStatusMaintenanceIcon,
     statusOptions: ['保養完成', '保養中'],
