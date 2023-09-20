@@ -48,15 +48,15 @@ function useTagList() {
     {
       data: {
         unarchivedTagListResearch: {
-          tags = null,
+          tags = [],
           empty = false,
           cursor = null
         } = {}
       } = {}
     }
   ] = useLazyQuery(GET_TAG_LIST_QUERY)
-  const [tagList, setTagList] = useState(null)
-  const [cacheTagList, setCacheTagList] = useState(null)
+  const [tagList, setTagList] = useState([])
+  const [cacheTagList, setCacheTagList] = useState([])
   const fetchTagList = useCallback(
     (currentCursor, pageSize) => {
       getTagList({ variables: { cursor: currentCursor || '', pageSize } })
@@ -72,7 +72,7 @@ function useTagList() {
     }
   }, [fetchTagList, empty, cursor])
   useEffect(() => {
-    if (Array.isArray(tags)) {
+    if (tags.length !== 0) {
       setCacheTagList((prevState) => [
         ...(prevState || []).filter(
           (tag) => !tags.map((t) => t.id).includes(tag.id)
