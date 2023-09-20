@@ -1,11 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-  useParams
-} from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 
 import { ApolloProvider } from '@apollo/client'
@@ -25,31 +19,12 @@ import { apolloClient } from './utils/grahpql'
 import { TagContextProvider } from './utils/contexts/TagContext'
 import { UserContextProvider, useUserValue } from './utils/contexts/UserContext'
 
-const CacheTagId = (props) => {
-  const { setTagIdCache } = props
-  const params = useParams()
-  useEffect(() => {
-    const tagId = params?.activeTagId
-    if (tagId) {
-      setTagIdCache(tagId)
-    }
-  })
+const CacheTagId = () => {
   return <Redirect to={LOGIN_PATH} />
 }
 
 const Pages = () => {
   const { token, isLoadingToken } = useUserValue()
-  const [tagIdCache, setTagIdCache] = useState(null)
-  const [fixedTagIdCache, setFixedTagIdCache] = useState(null)
-  const getCacheLink = () => {
-    if (tagIdCache) {
-      return `${MAP_PATH}/tag/${tagIdCache}`
-    }
-    if (fixedTagIdCache) {
-      return `${MAP_PATH}/fixedtag/${fixedTagIdCache}`
-    }
-    return MAP_PATH
-  }
   return (
     <>
       {isLoadingToken ? (
@@ -59,7 +34,7 @@ const Pages = () => {
           <Switch>
             <Route path={INDEX_PATH} exact>
               {token ? (
-                <Redirect to={getCacheLink()} />
+                <Redirect to={MAP_PATH} />
               ) : (
                 <Redirect to={LOGIN_PATH} />
               )}
@@ -68,21 +43,13 @@ const Pages = () => {
               {token ? <MapPage /> : <CacheTagId />}
             </Route>
             <Route path={`${MAP_PATH}/tag/:activeTagId`} exact>
-              {token ? (
-                <MapPage />
-              ) : (
-                <CacheTagId setTagIdCache={setTagIdCache} />
-              )}
+              {token ? <MapPage /> : <CacheTagId />}
             </Route>
             <Route path={`${MAP_PATH}/fixedtag/:activeTagId`} exact>
-              {token ? (
-                <MapPage />
-              ) : (
-                <CacheTagId setTagIdCache={setFixedTagIdCache} />
-              )}
+              {token ? <MapPage /> : <CacheTagId />}
             </Route>
             <Route path={LOGIN_PATH} exact>
-              {token ? <Redirect to={getCacheLink()} /> : <LoginPage />}
+              {token ? <Redirect to={MAP_PATH} /> : <LoginPage />}
             </Route>
             <Route path='/'>
               <Redirect to={LOGIN_PATH} />
