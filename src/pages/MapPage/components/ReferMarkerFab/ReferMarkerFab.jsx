@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
   grid: {
     position: 'absolute',
     transform: 'translate(-50%, 0)',
-    top: '32px',
+    top: '50px',
     width: '100vw',
     height: '35px',
     flexGrow: '1',

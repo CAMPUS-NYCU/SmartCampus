@@ -21,7 +21,10 @@ function UserLocationResearch(props) {
               lat: thisUserLocation.coordinates.latitude,
               lng: thisUserLocation.coordinates.longitude
             }}
-            icon={{ url: userMarkerIcon }}
+            icon={{
+              url: userMarkerIcon,
+              scaledSize: { width: 28, height: 30 }
+            }}
           />
         )}
     </>
