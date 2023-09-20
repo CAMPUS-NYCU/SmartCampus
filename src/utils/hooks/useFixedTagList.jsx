@@ -53,7 +53,7 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
 
 function getUserNumberResearch(userEmail) {
   if (userEmail) {
-    console.log('userEmail: ', userEmail)
+    // console.log('userEmail: ', userEmail)
     const numberMatch = userEmail.match(/\d+/)
 
     if (numberMatch) {
