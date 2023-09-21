@@ -20,6 +20,7 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
           fixedTagId
           locationName
           floor
+          imageUrl
           category {
             categoryType
             categoryName

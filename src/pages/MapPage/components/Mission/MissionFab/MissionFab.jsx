@@ -22,7 +22,7 @@ const MissionFab = (props) => {
     <Button
       display='flex'
       style={{
-        background: '#FDCC4F',
+        background: '#FFD771',
         fontSize: '14px',
         borderRadius: '20px',
         width: '100px',

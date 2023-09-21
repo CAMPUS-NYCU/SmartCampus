@@ -312,7 +312,7 @@ export const MissionContextProvider = ({ children }) => {
         locationImgUrl: []
       },
       coordinates: {
-        latitude: markerPosition.latitude.toString(),
+        latitude: (markerPosition.latitude+0.0001).toString(),
         longitude: markerPosition.longitude.toString()
       },
       imageUploadNumber: imageFiles.length,

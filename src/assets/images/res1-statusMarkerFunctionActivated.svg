@@ -1,8 +1,8 @@
 <svg width="32" height="38" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_1601_8939)">
-<path d="M16 32C22 28 28 20.6274 28 14C28 7.37258 22.6274 2 16 2C9.37258 2 4 7.37258 4 14C4 20.6274 10 28 16 32Z" fill="#FDCC4F"/>
+<path d="M16 32C22 28 28 20.6274 28 14C28 7.37258 22.6274 2 16 2C9.37258 2 4 7.37258 4 14C4 20.6274 10 28 16 32Z" fill="#FFD771"/>
 </g>
-<circle cx="16" cy="14" r="10" fill="#FDCC4F"/>
+<circle cx="16" cy="14" r="10" fill="#FFD771"/>
 <path d="M23.1448 17.875L16.6496 6.625C16.3609 6.125 15.6392 6.125 15.3506 6.625L8.85538 17.875C8.56671 18.375 8.92755 19 9.5049 19H22.4953C23.0726 19 23.4335 18.375 23.1448 17.875Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M17.125 16C17.125 16.6213 16.6213 17.125 16 17.125C15.3787 17.125 14.875 16.6213 14.875 16C14.875 15.3787 15.3787 14.875 16 14.875C16.6213 14.875 17.125 15.3787 17.125 16Z" fill="white"/>
 <path d="M16 13L16 10.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

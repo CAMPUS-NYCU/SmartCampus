@@ -14,13 +14,19 @@ function FixedTagDetailDialog(props) {
   React.useEffect(() => {
     setHighLightTagId(null)
   }, [setHighLightTagId, activeFixedTag])
+
+  function removePostfix(inputText) {
+    let result = inputText.replace(/[0-9A-Za-z]+$/, '')
+    return result
+  }
+
   return (
     <CustomDrawer
       open={activeFixedTag ? true : ' '}
       handleClose={onClose}
       height='part'
       closeButton={false}
-      title={`${activeFixedTag.locationName}現有回報資訊`}
+      title={`${removePostfix(activeFixedTag.locationName)}現有回報資訊`}
       variant='persistent'
     >
       <>

@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import { useUserValue } from '../../../../utils/contexts/UserContext'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   grid: {
     position: 'absolute',
     top: '10px',
@@ -13,6 +13,13 @@ const useStyles = makeStyles(() => ({
     height: '35px',
     justifyContent: 'flex-end',
     alignItems: 'center'
+  },
+  button: {
+    background: theme.palette.primary.main,
+    color: 'rgba(0, 0, 0, 0.87)',
+    fontSize: '12px',
+    borderRadius: '20px',
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
   }
 }))
 
@@ -27,13 +34,7 @@ function UserInfoResearch() {
 
         <Button
           variant='contained'
-          style={{
-            background: 'rgb(253, 204, 79)',
-            color: 'rgba(0, 0, 0, 0.87)',
-            fontSize: '12px',
-            borderRadius: '20px',
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-          }}
+          className={classes.button}
           onClick={signOut}
         >
           登出
