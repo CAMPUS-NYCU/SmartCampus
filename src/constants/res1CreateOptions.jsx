@@ -14,9 +14,8 @@ function findFloor(str) {
   if (match && match.length === 3) {
     if (match[1] === 'B1') {
       return match[1]
-    } else {
-      return `${match[1]}F`
     }
+    return `${match[1]}F`
   }
 
   return null

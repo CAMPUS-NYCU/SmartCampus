@@ -111,7 +111,13 @@ const CustomDrawer = (props) => {
               <KeyboardReturnIcon />
             </IconButton>
           )}
-          <Typography variant='h6' style={{ fontSize: '1rem', fontWeight: 'bold' }}>
+          <Typography
+            variant='h6'
+            style={{
+              fontSize: '1rem',
+              fontWeight: 'bold'
+            }}
+          >
             {title}
           </Typography>
           <Box className={classes.titleActionContainer}>
