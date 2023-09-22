@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo, useCallback } from 'react'
+import React, { useContext, useState, useMemo, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { gql, useMutation } from '@apollo/client'
@@ -181,7 +181,7 @@ export const MissionContextProvider = ({ children }) => {
   const handleSetMarkerPosition = useCallback(() => {
     setMarkerPosition({
       longitude: mapInstance.getCenter().lng(),
-      latitude: mapInstance.getCenter().lat()
+      latitude: mapInstance.getBounds()?.Ua?.hi - (mapInstance?.getBounds()?.Ua?.hi - mapInstance?.getBounds()?.Ua?.lo)/4
     })
   }, [mapInstance])
 
@@ -244,7 +244,7 @@ export const MissionContextProvider = ({ children }) => {
     const center = mapInstance.getCenter()
     setMarkerPosition({
       longitude: center.lng(),
-      latitude: center.lat()
+      latitude: mapInstance.getBounds()?.Ua?.hi - (mapInstance?.getBounds()?.Ua?.hi - mapInstance?.getBounds()?.Ua?.lo)/4
     })
     setStep(MISSION_FIRST_STEP)
   }, [mapInstance, setStep])
@@ -312,7 +312,7 @@ export const MissionContextProvider = ({ children }) => {
         locationImgUrl: []
       },
       coordinates: {
-        latitude: (markerPosition.latitude+0.0001).toString(),
+        latitude: (markerPosition.latitude).toString(),
         longitude: markerPosition.longitude.toString()
       },
       imageUploadNumber: imageFiles.length,
