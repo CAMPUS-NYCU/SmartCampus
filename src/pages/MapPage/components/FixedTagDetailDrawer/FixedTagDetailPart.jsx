@@ -101,14 +101,21 @@ const DetailPartItem = (props) => {
           justifyContent='flex-start'
           alignItems='center'
         >
-          <Grid item>
+          <Grid
+            item
+            style={{
+              fontFamily: 'Roboto',
+              fontWeight: 'bold',
+              fontSize: '0.5rem',
+              color: 'rgba(0, 0, 0, 0.6)'
+            }}
+          >
             {`${tag.category.categoryType}/${tag.category.categoryName}`}
           </Grid>
           <Grid
             item
             style={{
               fontFamily: 'Roboto',
-              fontStyle: 'light',
               fontSize: '0.5rem',
               color: 'rgba(0, 0, 0, 0.6)'
             }}

@@ -12,8 +12,11 @@ function findFloor(str) {
   const match = str.match(regex)
 
   if (match && match.length === 3) {
-    const floor = `${match[1]}F`
-    return floor
+    if (match[1] === 'B1') {
+      return match[1]
+    } else {
+      return `${match[1]}F`
+    }
   }
 
   return null
