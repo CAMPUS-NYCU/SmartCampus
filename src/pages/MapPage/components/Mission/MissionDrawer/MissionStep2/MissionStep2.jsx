@@ -156,7 +156,7 @@ function MissionStep2() {
                         value={item.floor}
                         style={{ textAlign: 'center' }}
                       >
-                        {`${item.floor}F`}
+                        {item.floor}
                       </option>
                     )
                   })}

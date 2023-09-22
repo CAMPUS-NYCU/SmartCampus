@@ -12,7 +12,7 @@ function findFloor(str) {
   const match = str.match(regex)
 
   if (match && match.length === 3) {
-    const floor = match[1]
+    const floor = `${match[1]}F`
     return floor
   }
 
@@ -64,6 +64,7 @@ function updateFloorOptions(floorOptions, newInput) {
   const existingFloorOption = floorOptions.find(
     (option) => option.floor === newInput.floor
   )
+  console.log('?', newInput.floor)
 
   if (existingFloorOption) {
     if (
