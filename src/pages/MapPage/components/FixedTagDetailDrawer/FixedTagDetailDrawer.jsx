@@ -16,7 +16,7 @@ function FixedTagDetailDialog(props) {
   }, [setHighLightTagId, activeFixedTag])
 
   function removePostfix(inputText) {
-    let result = inputText.replace(/[0-9A-Za-z]+$/, '')
+    const result = inputText.replace(/[0-9A-Za-z]+$/, '')
     return result
   }
 

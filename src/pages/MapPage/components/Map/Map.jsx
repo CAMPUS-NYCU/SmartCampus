@@ -51,7 +51,13 @@ function Map(props) {
     activeFixedTag
   } = useTagValue()
 
-  const markerStatusIcon = useMemo(() => markerIcon.map((markerInfo) => {return markerInfo}), [])
+  const markerStatusIcon = useMemo(
+    () =>
+      markerIcon.map((markerInfo) => {
+        return markerInfo
+      }),
+    []
+  )
 
   const isShown = useCallback(
     (tag) => {
@@ -91,12 +97,14 @@ function Map(props) {
       }
       return {
         url: markerStatusIcon[
-          markerStatusIcon.findIndex((markerInfo) => markerInfo.status === tag.status.statusName)
+          markerStatusIcon.findIndex(
+            (markerInfo) => markerInfo.status === tag.status.statusName
+          )
         ].normalIcon,
         scaledSize: { width: 28, height: 30 }
       }
     },
-    [highlightTagId]
+    [highlightTagId, markerStatusIcon]
   )
   useEffect(() => {
     if (mapInstance) {

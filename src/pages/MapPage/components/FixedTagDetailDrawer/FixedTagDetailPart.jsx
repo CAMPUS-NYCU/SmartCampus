@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { styled } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { Box, Button, Paper } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { MAP_PATH } from '../../../../constants/pageUrls'
 // import changeImage from '../../../../assets/images/fixedTagChange.svg'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
-import { makeStyles } from '@mui/styles'
 
 import noImage from '../../../../assets/images/no-image.svg'
 import res1StatusType from '../../../../constants/res1StatusType'
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '0px',
     display: 'block',
     maxWidth: '100%',
-    maxHeight: '100%',
+    maxHeight: '100%'
   },
   imgGround: {
     display: 'block',
@@ -73,15 +72,9 @@ const DetailPartItem = (props) => {
       rowSpacing={0}
       paddingX={1}
       style={{
-        backgroundColor: isHighlighted
-          ? '#FFF2CF'
-          : 'rgb(238, 238, 238)',
-        border: isHighlighted
-          ? 'solid'
-          : 'none',
-        borderColor: isHighlighted
-          ? '#FFD771'
-          : 'none',
+        backgroundColor: isHighlighted ? '#FFF2CF' : 'rgb(238, 238, 238)',
+        border: isHighlighted ? 'solid' : 'none',
+        borderColor: isHighlighted ? '#FFD771' : 'none',
         borderRadius: '10px',
         marginBottom: '5px',
         width: '98%',
@@ -215,7 +208,11 @@ const DetailPartItem = (props) => {
           {tag?.imageUrl?.length === 0 ? (
             <img className={classes.img} alt='fixedTaglist圖片' src={noImage} />
           ) : (
-            <img className={classes.img} alt='fixedTaglist圖片' src={tag?.imageUrl[0]} />
+            <img
+              className={classes.img}
+              alt='fixedTaglist圖片'
+              src={tag?.imageUrl[0]}
+            />
           )}
         </Grid>
       </Grid>
