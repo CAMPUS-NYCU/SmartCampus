@@ -1,25 +1,44 @@
 import React, { useState, useEffect } from 'react'
-import { styled } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { Box, Button, Paper } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { MAP_PATH } from '../../../../constants/pageUrls'
 // import changeImage from '../../../../assets/images/fixedTagChange.svg'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 
+import noImage from '../../../../assets/images/no-image.svg'
 import res1StatusType from '../../../../constants/res1StatusType'
 import ResearchTextWrapper from '../../../../components/ResarchTextWrapper'
 
-const Img = styled('img')({
-  margin: '0px',
-  display: 'block',
-  maxWidth: '100%',
-  maxHeight: '100%'
-})
+const useStyles = makeStyles((theme) => ({
+  img: {
+    margin: '0px',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%'
+  },
+  imgGround: {
+    display: 'block',
+    width: '100%',
+    height: '90%',
+    maxHeight: '80px',
+    maxWidth: '100%',
+    overflow: 'hidden'
+  },
+  button: {
+    background: theme.palette.primary.main,
+    color: 'rgba(0, 0, 0, 0.87)',
+    fontSize: '12px',
+    borderRadius: '20px',
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
+  }
+}))
 
 const DetailPartItem = (props) => {
+  const classes = useStyles()
   const { tag } = props
   const history = useHistory()
   const myRef = React.useRef(null)
@@ -53,9 +72,9 @@ const DetailPartItem = (props) => {
       rowSpacing={0}
       paddingX={1}
       style={{
-        backgroundColor: isHighlighted
-          ? 'rgb(151, 148, 142)'
-          : 'rgb(238, 238, 238)',
+        backgroundColor: isHighlighted ? '#FFF2CF' : 'rgb(238, 238, 238)',
+        border: isHighlighted ? 'solid' : 'none',
+        borderColor: isHighlighted ? '#FFD771' : 'none',
         borderRadius: '10px',
         marginBottom: '5px',
         width: '98%',
@@ -68,7 +87,7 @@ const DetailPartItem = (props) => {
     >
       <Grid
         item
-        xs={6}
+        xs={7}
         container
         direction='column'
         justifyContent='space-evenly'
@@ -90,7 +109,7 @@ const DetailPartItem = (props) => {
             style={{
               fontFamily: 'Roboto',
               fontStyle: 'light',
-              fontSize: '12px',
+              fontSize: '0.5rem',
               color: 'rgba(0, 0, 0, 0.6)'
             }}
           >
@@ -170,50 +189,32 @@ const DetailPartItem = (props) => {
         height='80%'
         justifyContent='flex-end'
       >
-        {highlightTagId === tag.id ? (
-          <Button
-            id='highlightButton'
-            size='small'
-            style={{
-              background: 'rgba(253, 204, 79, 1)',
-              color: 'rgba(0, 0, 0, 0.87)',
-              fontSize: '12px',
-              borderRadius: '20px',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-            }}
-            variant='contained'
-            onClick={() => {
-              history.push(`${MAP_PATH}/tag/${tag.id}`)
-            }}
-          >
-            選取
-          </Button>
-        ) : (
-          <Button
-            id='highlightButton'
-            size='small'
-            style={{
-              background: 'rgba(253, 204, 79, 0.45)',
-              color: 'rgba(0, 0, 0, 0.87)',
-              fontSize: '12px',
-              borderRadius: '20px',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.12)'
-            }}
-            variant='contained'
-            onClick={() => {
-              history.push(`${MAP_PATH}/tag/${tag.id}`)
-            }}
-          >
-            選取
-          </Button>
-        )}
+        <Button
+          id='highlightButton'
+          size='small'
+          className={classes.button}
+          variant='contained'
+          onClick={() => {
+            history.push(`${MAP_PATH}/tag/${tag.id}`)
+          }}
+        >
+          編輯
+        </Button>
       </Grid>
 
       {/* 圖片 */}
-      <Grid item xs={3}>
-        <Paper variant='outlined' style={{ width: '100%', height: '100%' }}>
-          <Img alt='fixedTaglist圖片' src={tag?.category?.locationImgUrl} />
-        </Paper>
+      <Grid item xs={2}>
+        <Grid className={classes.imgGround}>
+          {tag?.imageUrl?.length === 0 ? (
+            <img className={classes.img} alt='fixedTaglist圖片' src={noImage} />
+          ) : (
+            <img
+              className={classes.img}
+              alt='fixedTaglist圖片'
+              src={tag?.imageUrl[0]}
+            />
+          )}
+        </Grid>
       </Grid>
     </Grid>
   )

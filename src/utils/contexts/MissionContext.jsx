@@ -181,7 +181,10 @@ export const MissionContextProvider = ({ children }) => {
   const handleSetMarkerPosition = useCallback(() => {
     setMarkerPosition({
       longitude: mapInstance.getCenter().lng(),
-      latitude: mapInstance.getCenter().lat()
+      latitude:
+        mapInstance.getBounds()?.Ua?.hi -
+        (mapInstance?.getBounds()?.Ua?.hi - mapInstance?.getBounds()?.Ua?.lo) /
+          4
     })
   }, [mapInstance])
 
@@ -244,7 +247,10 @@ export const MissionContextProvider = ({ children }) => {
     const center = mapInstance.getCenter()
     setMarkerPosition({
       longitude: center.lng(),
-      latitude: center.lat()
+      latitude:
+        mapInstance.getBounds()?.Ua?.hi -
+        (mapInstance?.getBounds()?.Ua?.hi - mapInstance?.getBounds()?.Ua?.lo) /
+          4
     })
     setStep(MISSION_FIRST_STEP)
   }, [mapInstance, setStep])

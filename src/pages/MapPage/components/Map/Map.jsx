@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
 import { useHistory } from 'react-router-dom'
@@ -17,24 +17,7 @@ import FixedTags from '../../../../assets/images/fixedtag.svg'
 import Searchposition from '../../../../assets/images/searchPositionIcon.svg'
 import ReferMarkerFab from '../ReferMarkerFab'
 import UserLocationResearch from '../ReferMarkerFab/UserLocationResearch'
-import markerCleanIcon from '../../../../assets/images/res1-statusMarkerClean.svg'
-import markerCrowdIcon from '../../../../assets/images/res1-statusMarkerCrowd.svg'
-import markerFunctionIcon from '../../../../assets/images/res1-statusMarkerFunction.svg'
-import markerMaintenanceIcon from '../../../../assets/images/res1-statusMarkerMaintenance.svg'
-import markerNoiseIcon from '../../../../assets/images/res1-statusMarkerNoise.svg'
-import markerOccupationIcon from '../../../../assets/images/res1-statusMarkerOccupation.svg'
-import markerOutlookIcon from '../../../../assets/images/res1-statusMarkerOutlook.svg'
-import markerThermalComfortIcon from '../../../../assets/images/res1-statusMarkerThermalComfort.svg'
-import markerUsageIcon from '../../../../assets/images/res1-statusMarkerUsage.svg'
-import markerCleanActivatedIcon from '../../../../assets/images/res1-statusMarkerCleanActivated.svg'
-import markerCrowdActivatedIcon from '../../../../assets/images/res1-statusMarkerCrowdActivated.svg'
-import markerFunctionActivatedIcon from '../../../../assets/images/res1-statusMarkerFunctionActivated.svg'
-import markerMainenanceActiatedIcon from '../../../../assets/images/res1-statusMarkerMaintenanceActivated.svg'
-import markerNoiseActivatedIcon from '../../../../assets/images/res1-statusMarkerNoiseActivated.svg'
-import markerOccupationActivatedIcon from '../../../../assets/images/res1-statusMarkerOccupationActivated.svg'
-import markerOutlookActivatedIcon from '../../../../assets/images/res1-statusMarkerOutlookActivated.svg'
-import markerThermalComfortActivatedIcon from '../../../../assets/images/res1-statusMarkerThermalComfortActivated.svg'
-import markerUsageActivatedIcon from '../../../../assets/images/res1-statusMarkerUsageActivated.svg'
+import { markerIcon } from '../../../../constants/res1MarkerIcon'
 
 function Map(props) {
   const {
@@ -68,47 +51,11 @@ function Map(props) {
     activeFixedTag
   } = useTagValue()
 
-  // const missionImage = useMemo(() => [Mission1, Mission2], [])
-  const statusName = useMemo(
-    () => [
-      '清潔狀態',
-      '人潮狀態',
-      '功能狀態',
-      '保養狀態',
-      '噪音狀態',
-      '佔用狀態',
-      '外觀狀態',
-      '體感狀態',
-      '使用狀態'
-    ],
-    []
-  )
-  const displayMarkerIcon = useMemo(
-    () => [
-      markerCleanIcon,
-      markerCrowdIcon,
-      markerFunctionIcon,
-      markerMaintenanceIcon,
-      markerNoiseIcon,
-      markerOccupationIcon,
-      markerOutlookIcon,
-      markerThermalComfortIcon,
-      markerUsageIcon
-    ],
-    []
-  )
-  const highlightMarkerIcon = useMemo(
-    () => [
-      markerCleanActivatedIcon,
-      markerCrowdActivatedIcon,
-      markerFunctionActivatedIcon,
-      markerMainenanceActiatedIcon,
-      markerNoiseActivatedIcon,
-      markerOccupationActivatedIcon,
-      markerOutlookActivatedIcon,
-      markerThermalComfortActivatedIcon,
-      markerUsageActivatedIcon
-    ],
+  const markerStatusIcon = useMemo(
+    () =>
+      markerIcon.map((markerInfo) => {
+        return markerInfo
+      }),
     []
   )
 
@@ -127,7 +74,7 @@ function Map(props) {
         filterTags.includes(tag.category.missionName) ||
         filterTags.includes(tag.category.subTypeName) ||
         (filterTags.includes(tag.category.targetName) &&
-          tags.map((t) => t.id).includes(tag.id))
+          tags?.map((t) => t.id).includes(tag.id))
       )
     },
     [activeFixedTag, activeTag, filterTags, tags]
@@ -140,26 +87,24 @@ function Map(props) {
     (tag) => {
       if (highlightTagId === tag.id) {
         return {
-          url: highlightMarkerIcon[
-            statusName.findIndex((name) => name === tag.status.statusName)
-          ],
+          url: markerStatusIcon[
+            markerStatusIcon.findIndex(
+              (markerInfo) => markerInfo.status === tag.status.statusName
+            )
+          ].highlightIcon,
           scaledSize: { width: 42, height: 45 }
         }
       }
-      if (displayMarkerIcon) {
-        return {
-          url: displayMarkerIcon[
-            statusName.findIndex((name) => name === tag.status.statusName)
-          ],
-          scaledSize: { width: 28, height: 30 }
-        }
-      }
       return {
-        url: '',
+        url: markerStatusIcon[
+          markerStatusIcon.findIndex(
+            (markerInfo) => markerInfo.status === tag.status.statusName
+          )
+        ].normalIcon,
         scaledSize: { width: 28, height: 30 }
       }
     },
-    [highlightTagId, displayMarkerIcon, highlightMarkerIcon, statusName]
+    [highlightTagId, markerStatusIcon]
   )
   useEffect(() => {
     if (mapInstance) {
@@ -197,7 +142,7 @@ function Map(props) {
     if (markerCluster) {
       markerCluster.clearMarkers()
       markerCluster.addMarkers(
-        markers.filter((m) => isShown(m.tag)).map((m) => m.marker)
+        markers.filter((m) => isShown(m.tag))?.map((m) => m.marker)
       )
       if (isInMission) {
         markerCluster.clearMarkers()
@@ -206,11 +151,13 @@ function Map(props) {
   }, [markers, markerCluster, isShown, isInMission])
   useEffect(() => {
     setMarkers((prevMarkers) => {
-      return prevMarkers.filter((m) => tags.map((t) => t.id).includes(m.tag.id))
+      return prevMarkers.filter((m) =>
+        tags?.map((t) => t.id).includes(m.tag.id)
+      )
     })
   }, [tags])
   useEffect(() => {
-    const newDisplayedTags = tags.map((tag) => {
+    const newDisplayedTags = tags?.map((tag) => {
       return {
         ...tag,
         icon: getTagIcon(tag)
@@ -281,7 +228,7 @@ function Map(props) {
         {markerCluster &&
           fixedTags &&
           !activeTagId &&
-          fixedTags.map((fixedtag) => (
+          fixedTags?.map((fixedtag) => (
             <Marker
               key={fixedtag.id}
               position={{
@@ -311,7 +258,7 @@ function Map(props) {
             />
           ))}
         {markerCluster &&
-          displayTags.map((tag) => (
+          displayTags?.map((tag) => (
             <Marker
               key={tag.id}
               visible={!isInMission && isShown(tag)}

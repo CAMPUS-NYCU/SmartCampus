@@ -20,6 +20,7 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
           fixedTagId
           locationName
           floor
+          imageUrl
           category {
             categoryType
             categoryName
@@ -51,9 +52,10 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
   }
 `
 
-function getUserNumberResearch(userName) {
-  if (userName) {
-    const numberMatch = userName.match(/\d+/)
+function getUserNumberResearch(userEmail) {
+  if (userEmail) {
+    // console.log('userEmail: ', userEmail)
+    const numberMatch = userEmail.match(/\d+/)
 
     if (numberMatch) {
       return parseInt(numberMatch[0], 10)
@@ -78,7 +80,7 @@ function useFixedTagList() {
   ] = useLazyQuery(GET_FIXEDTAG_LIST_QUERY)
   const [fixedtagList, setfixedTagList] = useState(null)
   const [cachefixedTagList, setfixedCacheTagList] = useState(null)
-  const { userName } = useUserValue()
+  const { userEmail } = useUserValue()
   const fetchTagList = useCallback(
     (uNumber, currentCursor, pageSize) => {
       getfixedTagList({
@@ -88,13 +90,13 @@ function useFixedTagList() {
     [getfixedTagList]
   )
   useEffect(() => {
-    fetchTagList(getUserNumberResearch(userName), '', 10)
-  }, [fetchTagList, userName])
+    fetchTagList(getUserNumberResearch(userEmail), '', 10)
+  }, [fetchTagList, userEmail])
   useEffect(() => {
     if (!empty && cursor) {
-      fetchTagList(getUserNumberResearch(userName), cursor, 100)
+      fetchTagList(getUserNumberResearch(userEmail), cursor, 100)
     }
-  }, [fetchTagList, empty, cursor, userName])
+  }, [fetchTagList, empty, cursor, userEmail])
   useEffect(() => {
     if (Array.isArray(fixedTags)) {
       setfixedCacheTagList((prevState) => [

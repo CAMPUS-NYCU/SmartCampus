@@ -111,12 +111,14 @@ const CustomDrawer = (props) => {
               <KeyboardReturnIcon />
             </IconButton>
           )}
-          <Typography variant='h6'>{title}</Typography>
+          <Typography variant='h6' style={{ fontSize: '1rem' }}>
+            {title}
+          </Typography>
           <Box className={classes.titleActionContainer}>
             {titleActions.map((titleAction) => (
               <Box key={titleAction.name} p={2}>
                 <CustomButton
-                  buttonType='roundButton_inactivated'
+                  buttonType='roundButton_activated'
                   size='small'
                   onClick={titleAction.handleOnClick}
                   disabled={titleAction.disable}

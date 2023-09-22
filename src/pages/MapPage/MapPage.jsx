@@ -17,24 +17,25 @@ import { useParams, useHistory } from 'react-router-dom'
 
 // import SearchBar from './components/SearchBar'
 import Map from './components/Map'
-import useModal from '../../utils/hooks/useModal'
+// import useModal from '../../utils/hooks/useModal'
 import MissionDrawer from './components/Mission/MissionDrawer'
 import {
   MissionContextProvider,
   useMissionValue
 } from '../../utils/contexts/MissionContext'
 import { MAP_PATH } from '../../constants/pageUrls'
-import ReportHistory from './components/ReportHistory'
+// import ReportHistory from './components/ReportHistory' // commit for research
 import { useTagValue } from '../../utils/contexts/TagContext'
-import { useUserValue } from '../../utils/contexts/UserContext'
+// import { useUserValue } from '../../utils/contexts/UserContext'
 import TagDetailDrawer from './components/TagDetailDrawer'
 import FixedTagDetailDrawer from './components/FixedTagDetailDrawer'
 // import FilterFab from './components/Filter/FilterFab'
 // import LocationFab from './components/LocationFab'
 import WindowBackProvider from '../../utils/WindowBackProvider'
-import UserDialog from './components/UserDialog/UserDialog'
+// import UserDialog from './components/UserDialog/UserDialog' // commit for research
 import { VITE_GOOGLE_MAP_API_KEY } from '../../constants/envValues'
 import { LOADED_LIBRARIES } from '../../constants/mapConstants'
+import UserInfoResearch from './components/UserInfoResearch'
 
 const style = {
   position: 'absolute',
@@ -83,8 +84,8 @@ const MapPageContent = () => {
     language: 'zh-TW'
   })
   const history = useHistory()
-  const userDialogControl = useModal()
-  const ReportHistoryControl = useModal()
+  // const userDialogControl = useModal()
+  // const ReportHistoryControl = useModal()
   const { isInMission, showControl, loading, mapCenter } = useMissionValue()
   const {
     activeTag,
@@ -96,7 +97,7 @@ const MapPageContent = () => {
     setActiveTagId,
     isDeleting
   } = useTagValue()
-  const { uid } = useUserValue()
+  // const { uid } = useUserValue()
   const { activeTagId } = useParams()
   const {
     latitude: positionLat,
@@ -171,8 +172,9 @@ const MapPageContent = () => {
             </div>
           </Fade>
           <MissionDrawer />
-          <ReportHistory control={ReportHistoryControl} />
-          <UserDialog userId={uid} control={userDialogControl} />
+          {/* <ReportHistory control={ReportHistoryControl} />
+          <UserDialog userId={uid} control={userDialogControl} /> */}
+          <UserInfoResearch />
           {!isInMission && activeTag && (
             <TagDetailDrawer
               activeTag={activeTag}

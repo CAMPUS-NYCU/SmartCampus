@@ -57,7 +57,7 @@ const DetailPart = (props) => {
               flexDirection: 'row'
             }}
           >
-            {tagDetail?.category?.locationImgUrl?.length === 0 ? (
+            {tagDetail?.imageUrl?.length === 0 ? (
               <div
                 style={{
                   width: '100%',
@@ -69,7 +69,7 @@ const DetailPart = (props) => {
                 }}
               />
             ) : (
-              tagDetail?.category?.locationImgUrl?.map((url) => {
+              tagDetail?.imageUrl?.map((url) => {
                 if (tagDetail.imageUrl.length === 1) {
                   return (
                     <Button
