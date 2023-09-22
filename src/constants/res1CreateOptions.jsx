@@ -67,7 +67,6 @@ function updateFloorOptions(floorOptions, newInput) {
   const existingFloorOption = floorOptions.find(
     (option) => option.floor === newInput.floor
   )
-  console.log('?', newInput.floor)
 
   if (existingFloorOption) {
     if (
