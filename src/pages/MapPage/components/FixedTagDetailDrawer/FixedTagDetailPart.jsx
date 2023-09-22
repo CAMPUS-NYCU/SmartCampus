@@ -106,7 +106,7 @@ const DetailPartItem = (props) => {
             style={{
               fontFamily: 'Roboto',
               fontWeight: 'bold',
-              fontSize: '0.5rem',
+              fontSize: '12px',
               color: 'rgba(0, 0, 0, 0.6)'
             }}
           >
@@ -116,7 +116,7 @@ const DetailPartItem = (props) => {
             item
             style={{
               fontFamily: 'Roboto',
-              fontSize: '0.5rem',
+              fontSize: '12px',
               color: 'rgba(0, 0, 0, 0.6)'
             }}
           >
