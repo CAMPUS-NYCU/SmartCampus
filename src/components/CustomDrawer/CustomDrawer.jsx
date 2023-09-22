@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: 'calc(100vh - 100px)'
   },
   drawerContentPart: {
-    minHeight: 300,
+    // minHeight: 300,
     height: 'calc(50vh)'
   },
   titleBar: {
