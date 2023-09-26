@@ -14,6 +14,7 @@ import { Google, Visibility, VisibilityOff } from '@mui/icons-material'
 
 import { useSnackbar } from 'notistack'
 
+import { VITE_FIREBASE_LOCAL_SERVER } from '../../constants/envValues'
 import { useUserValue } from '../../utils/contexts/UserContext'
 import wave1 from '../../assets/images/main-wave1.svg'
 import wave2 from '../../assets/images/main-wave2.svg'
@@ -53,6 +54,7 @@ function SignInWithEmailAndPasswordForm() {
           autoHideDuration: 3000
         })
       )
+      .then(() => !VITE_FIREBASE_LOCAL_SERVER && window.location.reload())
       .catch(() =>
         enqueueSnackbar('登入失敗', {
           variant: 'error',
