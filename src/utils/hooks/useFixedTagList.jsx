@@ -88,7 +88,7 @@ function useFixedTagList() {
         variables: { uNumber, cursor: currentCursor || '', pageSize }
       })
     },
-    [getfixedTagList]
+    [getfixedTagList, userEmail]
   )
   useEffect(() => {
     fetchTagList('', 10)
