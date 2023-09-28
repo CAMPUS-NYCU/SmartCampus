@@ -39,6 +39,17 @@ function findFixedTagById(id, fixedTags) {
 export const TagContextProvider = ({ children }) => {
   const { tags, setTagList } = useTagList()
   const { fixedTags } = useFixedTagList()
+  // const [fixedTags, setFixedTags] = useState([])
+  // const fetchFixedTagList = () => {
+  //   console.log('fetch?')
+  //   const { fixedTags: fixedTagsFromHook } = useFixedTagList()
+  //   setFixedTags(fixedTagsFromHook)
+  // }
+  // useEffect(() => {
+  //   console.log('effect')
+  //   fetchFixedTagList()
+  // }, [])
+  
   const { userAddTags, getUserTagList, setUserAddTags } = useUserTags()
   const threshold = useThreshold()
   const { deleteTag, isDeleting } = useDeleteTag()

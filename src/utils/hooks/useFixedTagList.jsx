@@ -82,7 +82,8 @@ function useFixedTagList() {
   const [cachefixedTagList, setfixedCacheTagList] = useState(null)
   const { userEmail } = useUserValue()
   const fetchTagList = useCallback(
-    (uNumber, currentCursor, pageSize) => {
+    (currentCursor, pageSize) => {
+      const uNumber = getUserNumberResearch(userEmail)
       getfixedTagList({
         variables: { uNumber, cursor: currentCursor || '', pageSize }
       })
@@ -90,15 +91,16 @@ function useFixedTagList() {
     [getfixedTagList]
   )
   useEffect(() => {
-    fetchTagList(getUserNumberResearch(userEmail), '', 10)
+    fetchTagList('', 10)
   }, [fetchTagList, userEmail])
   useEffect(() => {
     if (!empty && cursor) {
-      fetchTagList(getUserNumberResearch(userEmail), cursor, 100)
+      fetchTagList(cursor, 100)
     }
   }, [fetchTagList, empty, cursor, userEmail])
   useEffect(() => {
     if (Array.isArray(fixedTags)) {
+      console.log(fixedTags)
       setfixedCacheTagList((prevState) => [
         ...(prevState || []).filter(
           (fixedTag) => !fixedTags.map((t) => t.id).includes(fixedTag.id)
