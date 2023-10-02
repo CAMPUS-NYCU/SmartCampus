@@ -101,7 +101,6 @@ function MissionStepper(props) {
     })
   }, [handleCompleteMission])
   if (redirect) {
-    console.log('redirect')
     history.go(0)
   }
   return (

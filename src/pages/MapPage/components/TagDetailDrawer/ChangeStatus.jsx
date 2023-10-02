@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import {
   Box,
   Button,
@@ -9,6 +9,7 @@ import {
   NativeSelect,
   FormControl
 } from '@mui/material'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import CustomDrawer from '../../../../components/CustomDrawer'
 import { useUpdateTagStatus } from '../../../../utils/Mutation/updateTagStatus'
@@ -30,6 +31,8 @@ function ChangeStatus(props) {
   const { fetchTagDetail } = useTagValue()
   const { token } = useUserValue()
   const [loading, setLoading] = useState(false)
+  const [redirect, setRedirect] = useState(false)
+  const history = useHistory()
 
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
@@ -55,7 +58,7 @@ function ChangeStatus(props) {
     setStateDrawer(false)
   }
   const { updateStatus } = useUpdateTagStatus()
-  const handleDrawerComplete = async () => {
+  const handleDrawerComplete = useCallback(async () => {
     setLoading(true)
     if (token) {
       try {
@@ -89,6 +92,24 @@ function ChangeStatus(props) {
         setStateDrawer(false)
       }
     }
+  }, [
+    token,
+    updateStatus,
+    tagDetail,
+    selectedStatusDesc,
+    fetchTagDetail,
+    setStateDrawer
+  ])
+
+  const handleSubmit = useCallback(
+    () =>
+      handleDrawerComplete().then(() => {
+        setRedirect(true)
+      }),
+    [handleDrawerComplete]
+  )
+  if (redirect) {
+    history.go(0)
   }
 
   return (
@@ -218,7 +239,7 @@ function ChangeStatus(props) {
           </Grid>
 
           <DialogActions>
-            <Button color='primary' onClick={() => handleDrawerComplete()}>
+            <Button color='primary' onClick={handleSubmit}>
               確定
             </Button>
           </DialogActions>
