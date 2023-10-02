@@ -18,6 +18,9 @@ export const GET_FIXEDTAG_LIST_QUERY = gql`
         tags {
           id
           fixedTagId
+          createUser {
+            uid
+          }
           locationName
           floor
           imageUrl
@@ -80,7 +83,7 @@ function useFixedTagList() {
   ] = useLazyQuery(GET_FIXEDTAG_LIST_QUERY)
   const [fixedtagList, setfixedTagList] = useState(null)
   const [cachefixedTagList, setfixedCacheTagList] = useState(null)
-  const { userEmail } = useUserValue()
+  const { uid, userEmail } = useUserValue()
   const fetchTagList = useCallback(
     (currentCursor, pageSize) => {
       const uNumber = getUserNumberResearch(userEmail)
@@ -100,7 +103,6 @@ function useFixedTagList() {
   }, [fetchTagList, empty, cursor, userEmail])
   useEffect(() => {
     if (Array.isArray(fixedTags)) {
-      console.log(fixedTags)
       setfixedCacheTagList((prevState) => [
         ...(prevState || []).filter(
           (fixedTag) => !fixedTags.map((t) => t.id).includes(fixedTag.id)
@@ -111,9 +113,18 @@ function useFixedTagList() {
   }, [fixedTags, empty, cursor])
   useEffect(() => {
     if (cachefixedTagList && (empty || cachefixedTagList.length === 10)) {
-      setfixedTagList(cachefixedTagList)
+      const copiedTagList = cachefixedTagList.map((item) => ({
+        ...item,
+        tags: item.tags.filter(
+          (tag) =>
+            tag.createUser.uid === 'JDh8VD63kVOxqOvAnfrewhFjqNt2' ||
+            tag.createUser.uid === uid
+        )
+      }))
+
+      setfixedTagList(copiedTagList)
     }
-  }, [cachefixedTagList, empty])
+  }, [cachefixedTagList, empty, uid])
   return { fixedTags: fixedtagList }
 }
 

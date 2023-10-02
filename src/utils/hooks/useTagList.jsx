@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
+import { useUserValue } from '../contexts/UserContext'
 
 export const GET_TAG_LIST_QUERY = gql`
   query getTagList($cursor: String!, $pageSize: Int!) {
@@ -11,6 +12,9 @@ export const GET_TAG_LIST_QUERY = gql`
       tags {
         id
         fixedTagId
+        createUser {
+          uid
+        }
         locationName
         category {
           categoryType
@@ -57,6 +61,7 @@ function useTagList() {
   ] = useLazyQuery(GET_TAG_LIST_QUERY)
   const [tagList, setTagList] = useState([])
   const [cacheTagList, setCacheTagList] = useState([])
+  const { uid } = useUserValue()
   const fetchTagList = useCallback(
     (currentCursor, pageSize) => {
       getTagList({ variables: { cursor: currentCursor || '', pageSize } })
@@ -83,9 +88,14 @@ function useTagList() {
   }, [tags, empty, cursor])
   useEffect(() => {
     if (cacheTagList && (empty || cacheTagList.length === 10)) {
-      setTagList(cacheTagList)
+      const copiedTagList = cacheTagList.filter(
+        (tag) =>
+          tag.createUser.uid === 'JDh8VD63kVOxqOvAnfrewhFjqNt2' ||
+          tag.createUser.uid === uid
+      )
+      setTagList(copiedTagList)
     }
-  }, [cacheTagList, empty])
+  }, [cacheTagList, empty, uid])
   return { tags: tagList, setTagList }
 }
 
