@@ -69,6 +69,7 @@ function getUserNumberResearch(userEmail) {
 }
 
 function useFixedTagList() {
+  const [fetched, setFetched] = useState(false)
   const [
     getfixedTagList,
     {
@@ -94,8 +95,11 @@ function useFixedTagList() {
     [getfixedTagList, userEmail]
   )
   useEffect(() => {
-    fetchTagList('', 10)
-  }, [fetchTagList, userEmail])
+    if (uid && !fetched) {
+      fetchTagList('', 10)
+      setFetched(true)
+    }
+  }, [fetchTagList, fetched, uid, userEmail])
   useEffect(() => {
     if (!empty && cursor) {
       fetchTagList(cursor, 100)
