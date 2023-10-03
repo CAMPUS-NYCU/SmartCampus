@@ -47,6 +47,7 @@ export const GET_TAG_LIST_QUERY = gql`
 `
 
 function useTagList() {
+  const [fetched, setFetched] = useState(false)
   const [
     getTagList,
     {
@@ -69,8 +70,11 @@ function useTagList() {
     [getTagList]
   )
   useEffect(() => {
-    fetchTagList('', 10)
-  }, [fetchTagList])
+    if (uid && !fetched) {
+      fetchTagList('', 10)
+      setFetched(true)
+    }
+  }, [fetchTagList, fetched, uid])
   useEffect(() => {
     if (!empty && cursor) {
       fetchTagList(cursor, 100)
