@@ -101,10 +101,11 @@ function useFixedTagList() {
     }
   }, [fetchTagList, fetched, uid, userEmail])
   useEffect(() => {
-    if (!empty && cursor) {
+    if (uid && !empty && cursor) {
       fetchTagList(cursor, 100)
+      setFetched(true)
     }
-  }, [fetchTagList, empty, cursor, userEmail])
+  }, [fetchTagList, empty, cursor, uid, userEmail])
   useEffect(() => {
     if (Array.isArray(fixedTags)) {
       setfixedCacheTagList((prevState) => [

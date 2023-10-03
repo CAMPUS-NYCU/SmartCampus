@@ -76,10 +76,11 @@ function useTagList() {
     }
   }, [fetchTagList, fetched, uid])
   useEffect(() => {
-    if (!empty && cursor) {
+    if (uid && !empty && cursor) {
       fetchTagList(cursor, 100)
+      setFetched(true)
     }
-  }, [fetchTagList, empty, cursor])
+  }, [fetchTagList, empty, cursor, uid])
   useEffect(() => {
     if (tags.length !== 0) {
       setCacheTagList((prevState) => [
