@@ -32,8 +32,14 @@ function findCategoryType(str) {
     case '無障礙停車區':
     case '腳踏車停車區':
     case '一般停車區':
+    case '桌球場': // 是嗎？
+    case '室內排球場': // 是嗎？
+    case '室內籃球場': // 是嗎？
+    case '室外排球場': // 是嗎？
+    case '室外籃球場': // 是嗎？
       thisCateType = '空間'
       break
+
     case '櫃台':
     case '公用電腦':
     case '飲水機':
@@ -43,14 +49,9 @@ function findCategoryType(str) {
     case '販賣機':
     case '路邊無障礙停車位':
     case '路邊一般停車位':
-    case '室內排球場': // 是嗎？
-    case '室內籃球場': // 是嗎？
-    case '室外排球場': // 是嗎？
-    case '室外籃球場': // 是嗎？
     case '置物櫃':
     case '跑步機':
     case '轉體機':
-    case '桌球場': // 是嗎？
       thisCateType = '物體'
       break
 
