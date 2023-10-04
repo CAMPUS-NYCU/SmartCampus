@@ -271,7 +271,13 @@ function Map(props) {
               }}
               icon={tag.icon}
               clickable
-              onClick={() => setHighLightTagId(tag.id)}
+              onClick={() => {
+                setHighLightTagId(tag.id)
+                handlePanTo({
+                  lat: parseFloat(tag.coordinates.latitude),
+                  lng: parseFloat(tag.coordinates.longitude)
+                })
+              }}
             />
           ))}
         {isInMission && currentStep === MissionStep.PlaceFlagOnMap && (
