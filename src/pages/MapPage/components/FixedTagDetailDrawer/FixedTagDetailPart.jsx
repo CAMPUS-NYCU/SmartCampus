@@ -7,6 +7,7 @@ import { Box, Button } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { MAP_PATH } from '../../../../constants/pageUrls'
 // import changeImage from '../../../../assets/images/fixedTagChange.svg'
+import { useMissionValue } from '../../../../utils/contexts/MissionContext'
 import { useTagValue } from '../../../../utils/contexts/TagContext'
 
 import noImage from '../../../../assets/images/no-image.svg'
@@ -42,6 +43,7 @@ const DetailPartItem = (props) => {
   const { tag } = props
   const history = useHistory()
   const myRef = React.useRef(null)
+  const { handlePanTo } = useMissionValue()
 
   const [thisStatusType, setThisStatusType] = useState({})
   useEffect(() => {
@@ -83,7 +85,13 @@ const DetailPartItem = (props) => {
       }}
       justifyContent='space-around'
       alignItems='center'
-      onClick={() => setHighLightTagId(tag.id)}
+      onClick={() => {
+        setHighLightTagId(tag.id)
+        handlePanTo({
+          lat: parseFloat(tag.coordinates.latitude),
+          lng: parseFloat(tag.coordinates.longitude)
+        })
+      }}
     >
       <Grid
         item
