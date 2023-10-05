@@ -48,6 +48,7 @@ function AllReferMarkers(props) {
             fontSize: '14px',
             color: '#97948E'
           }}
+          zIndex={2}
           // onClick={() => handleMarkerClick(index)}
         />
       )

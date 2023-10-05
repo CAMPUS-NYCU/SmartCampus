@@ -182,8 +182,8 @@ export const MissionContextProvider = ({ children }) => {
     setMarkerPosition({
       longitude: mapInstance.getCenter().lng(),
       latitude:
-        mapInstance.getBounds()?.Ua?.hi -
-        (mapInstance?.getBounds()?.Ua?.hi - mapInstance?.getBounds()?.Ua?.lo) /
+        mapInstance.getBounds()?.rb?.hi -
+        (mapInstance?.getBounds()?.rb?.hi - mapInstance?.getBounds()?.rb?.lo) /
           4
     })
   }, [mapInstance])
