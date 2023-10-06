@@ -169,7 +169,10 @@ export const MissionContextProvider = ({ children }) => {
 
   const handlePanTo = useCallback(
     (latlng) => {
-      mapInstance.panTo(latlng)
+      mapInstance.panTo({
+        lat: latlng.lat - (mapInstance?.getBounds()?.rb?.hi - mapInstance?.getBounds()?.rb?.lo) / 4,
+        lng: latlng.lng
+      })
     },
     [mapInstance]
   )
