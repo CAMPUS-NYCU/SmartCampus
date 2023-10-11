@@ -172,8 +172,8 @@ export const MissionContextProvider = ({ children }) => {
       mapInstance.panTo({
         lat:
           latlng.lat -
-          (mapInstance?.getBounds()?.rb?.hi -
-            mapInstance?.getBounds()?.rb?.lo) /
+          (mapInstance?.getBounds()?.mb?.hi -
+            mapInstance?.getBounds()?.mb?.lo) /
             4,
         lng: latlng.lng
       })
@@ -189,8 +189,8 @@ export const MissionContextProvider = ({ children }) => {
     setMarkerPosition({
       longitude: mapInstance.getCenter().lng(),
       latitude:
-        mapInstance.getBounds()?.rb?.hi -
-        (mapInstance?.getBounds()?.rb?.hi - mapInstance?.getBounds()?.rb?.lo) /
+        mapInstance.getBounds()?.mb?.hi -
+        (mapInstance?.getBounds()?.mb?.hi - mapInstance?.getBounds()?.mb?.lo) /
           4
     })
   }, [mapInstance])
@@ -255,8 +255,8 @@ export const MissionContextProvider = ({ children }) => {
     setMarkerPosition({
       longitude: center.lng(),
       latitude:
-        mapInstance.getBounds()?.rb?.hi -
-        (mapInstance?.getBounds()?.rb?.hi - mapInstance?.getBounds()?.rb?.lo) /
+        mapInstance.getBounds()?.mb?.hi -
+        (mapInstance?.getBounds()?.mb?.hi - mapInstance?.getBounds()?.mb?.lo) /
           4
     })
     setStep(MISSION_FIRST_STEP)
