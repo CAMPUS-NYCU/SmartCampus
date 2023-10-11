@@ -169,12 +169,11 @@ export const MissionContextProvider = ({ children }) => {
 
   const handlePanTo = useCallback(
     (latlng) => {
+      const bounds = JSON.parse(JSON.stringify(mapInstance.getBounds()))
       mapInstance.panTo({
-        lat:
-          latlng.lat -
-          (mapInstance?.getBounds()?.mb?.hi -
-            mapInstance?.getBounds()?.mb?.lo) /
-            4,
+        lat: bounds
+          ? latlng.lat - (bounds.north - bounds.south) / 4
+          : latlng.lat,
         lng: latlng.lng
       })
     },
@@ -186,12 +185,12 @@ export const MissionContextProvider = ({ children }) => {
     InitialMissionValue.markerPosition
   )
   const handleSetMarkerPosition = useCallback(() => {
+    const bounds = JSON.parse(JSON.stringify(mapInstance.getBounds()))
     setMarkerPosition({
       longitude: mapInstance.getCenter().lng(),
-      latitude:
-        mapInstance.getBounds()?.mb?.hi -
-        (mapInstance?.getBounds()?.mb?.hi - mapInstance?.getBounds()?.mb?.lo) /
-          4
+      latitude: bounds
+        ? bounds.north - (bounds.north - bounds.south) / 4
+        : mapInstance.getCenter().lat()
     })
   }, [mapInstance])
 
@@ -252,12 +251,12 @@ export const MissionContextProvider = ({ children }) => {
   const handleStartMission = useCallback(() => {
     setShowControl(true)
     const center = mapInstance.getCenter()
+    const bounds = JSON.parse(JSON.stringify(mapInstance.getBounds()))
     setMarkerPosition({
       longitude: center.lng(),
-      latitude:
-        mapInstance.getBounds()?.mb?.hi -
-        (mapInstance?.getBounds()?.mb?.hi - mapInstance?.getBounds()?.mb?.lo) /
-          4
+      latitude: bounds
+        ? bounds.north - (bounds.north - bounds.south) / 4
+        : center.lat()
     })
     setStep(MISSION_FIRST_STEP)
   }, [mapInstance, setStep])
