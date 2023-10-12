@@ -7,7 +7,7 @@ import useStep from '../hooks/useStep'
 import { useTagValue } from './TagContext'
 import { useUserValue } from './UserContext'
 import { DefaultCenter } from '../../constants/mapConstants'
-import { findLocationCenter } from '../../constants/res1FixedTagMissionConfig'
+import { findUserLocation } from '../../constants/res1FixedTagMissionConfig'
 
 export const TAG_ADD_MUTATION = gql`
   mutation addNewTagData($input: addTagResearchDataInput!) {
@@ -185,10 +185,12 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleFixedTagPanTo = useCallback(
     (thisLocationName) => {
-      console.log(findLocationCenter(thisLocationName)) // for testing
-      const centerLatLng = findLocationCenter(thisLocationName).coordinates
+      console.log(findUserLocation(thisLocationName)) // for testing
+      const centerLatLng = findUserLocation(thisLocationName).coordinates
+      const north = mapInstance.getBounds().getNorthEast().lat()
+      const south = mapInstance.getBounds().getSouthWest().lat()
       mapInstance.panTo({
-        lat: centerLatLng.latitude,
+        lat: centerLatLng.latitude - (north - south) / 6,
         lng: centerLatLng.longitude
       })
       mapInstance.setZoom(18)
