@@ -7,6 +7,7 @@ import useStep from '../hooks/useStep'
 import { useTagValue } from './TagContext'
 import { useUserValue } from './UserContext'
 import { DefaultCenter } from '../../constants/mapConstants'
+import { findUserLocation } from '../../constants/res1FixedTagMissionConfig'
 
 export const TAG_ADD_MUTATION = gql`
   mutation addNewTagData($input: addTagResearchDataInput!) {
@@ -109,6 +110,7 @@ export const MissionContext = React.createContext({
   setPhotos: () => {},
   handleMapOnLoad: () => {},
   handlePanTo: () => {},
+  handleFixedTagPanTo: () => {},
   imageFiles: [],
   setImageFiles: () => {},
   setStep: () => {},
@@ -169,13 +171,26 @@ export const MissionContextProvider = ({ children }) => {
 
   const handlePanTo = useCallback(
     (latlng) => {
-      const bounds = JSON.parse(JSON.stringify(mapInstance.getBounds()))
+      const north = mapInstance.getBounds().getNorthEast().lat()
+      const south = mapInstance.getBounds().getSouthWest().lat()
       mapInstance.panTo({
-        lat: bounds
-          ? latlng.lat - (bounds.north - bounds.south) / 4
-          : latlng.lat,
+        lat: north && south ? latlng.lat - (north - south) / 4 : latlng.lat,
         lng: latlng.lng
       })
+    },
+    [mapInstance]
+  )
+
+  const handleFixedTagPanTo = useCallback(
+    (thisLocationName) => {
+      const centerLatLng = findUserLocation(thisLocationName).coordinates
+      const north = mapInstance.getBounds().getNorthEast().lat()
+      const south = mapInstance.getBounds().getSouthWest().lat()
+      mapInstance.panTo({
+        lat: centerLatLng.latitude - (north - south) / 6,
+        lng: centerLatLng.longitude
+      })
+      mapInstance.setZoom(18)
     },
     [mapInstance]
   )
@@ -185,12 +200,14 @@ export const MissionContextProvider = ({ children }) => {
     InitialMissionValue.markerPosition
   )
   const handleSetMarkerPosition = useCallback(() => {
-    const bounds = JSON.parse(JSON.stringify(mapInstance.getBounds()))
+    const north = mapInstance.getBounds().getNorthEast().lat()
+    const south = mapInstance.getBounds().getSouthWest().lat()
     setMarkerPosition({
       longitude: mapInstance.getCenter().lng(),
-      latitude: bounds
-        ? bounds.north - (bounds.north - bounds.south) / 4
-        : mapInstance.getCenter().lat()
+      latitude:
+        north && south
+          ? north - (north - south) / 4
+          : mapInstance.getCenter().lat()
     })
   }, [mapInstance])
 
@@ -251,12 +268,12 @@ export const MissionContextProvider = ({ children }) => {
   const handleStartMission = useCallback(() => {
     setShowControl(true)
     const center = mapInstance.getCenter()
-    const bounds = JSON.parse(JSON.stringify(mapInstance.getBounds()))
+    const north = mapInstance.getBounds().getNorthEast().lat()
+    const south = mapInstance.getBounds().getSouthWest().lat()
+
     setMarkerPosition({
       longitude: center.lng(),
-      latitude: bounds
-        ? bounds.north - (bounds.north - bounds.south) / 4
-        : center.lat()
+      latitude: north && south ? north - (north - south) / 4 : center.lat()
     })
     setStep(MISSION_FIRST_STEP)
   }, [mapInstance, setStep])
@@ -396,6 +413,7 @@ export const MissionContextProvider = ({ children }) => {
     setPhotos,
     handleMapOnLoad,
     handlePanTo,
+    handleFixedTagPanTo,
     imageFiles,
     setImageFiles,
     setStep,

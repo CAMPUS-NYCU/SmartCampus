@@ -1,0 +1,58 @@
+[
+	{
+		"locationName": "二餐&停車場",
+		"coordinates": {
+			"latitude": 24.78850060568609,
+			"longitude": 120.99753370422208
+		}
+	},
+	{
+		"locationName": "活動中心&一餐",
+		"coordinates": {
+			"latitude": 24.78567884601535,
+			"longitude": 121.00033907717227
+		}
+	},
+	{
+		"locationName": "工三&工四",
+		"coordinates": {
+			"latitude": 24.786095090454427,
+			"longitude": 120.99709074385565
+		}
+	},
+	{
+		"locationName": "圖書館",
+		"coordinates": {
+			"latitude": 24.78580580926859,
+			"longitude": 120.99813164438174
+		}
+	},
+	{
+		"locationName": "舊體育館",
+		"coordinates": {
+			"latitude": 24.78806932883949,
+			"longitude": 120.99583980720172
+		}
+	},
+	{
+		"locationName": "室外球場",
+		"coordinates": {
+			"latitude": 24.786727415488983,
+			"longitude": 120.99521337722283
+		}
+	},
+	{
+		"locationName": "小木屋&校計中",
+		"coordinates": {
+			"latitude": 24.786612359960877,
+			"longitude": 120.99783173874427
+		}
+	},
+	{
+		"locationName": "游泳館&綜合球館",
+		"coordinates": {
+			"latitude": 24.788812133571767,
+			"longitude": 120.9953386328031
+		}
+	}
+]
