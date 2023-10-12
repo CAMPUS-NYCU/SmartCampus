@@ -183,14 +183,14 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleFixedTagPanTo = useCallback(
     (thisLocationName) => {
+      mapInstance.setZoom(18)
       const centerLatLng = findUserLocation(thisLocationName).coordinates
       const north = mapInstance.getBounds().getNorthEast().lat()
       const south = mapInstance.getBounds().getSouthWest().lat()
       mapInstance.panTo({
-        lat: centerLatLng.latitude - (north - south) / 6,
+        lat: centerLatLng.latitude - (north - south) / 4,
         lng: centerLatLng.longitude
       })
-      mapInstance.setZoom(18)
     },
     [mapInstance]
   )
