@@ -73,4 +73,9 @@ function findLocationCenter(locationName) {
   return null
 }
 
-export { findLocationData, findCategories, findUserLocation, findLocationCenter }
+export {
+  findLocationData,
+  findCategories,
+  findUserLocation,
+  findLocationCenter
+}

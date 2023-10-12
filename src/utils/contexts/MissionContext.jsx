@@ -159,8 +159,6 @@ export const MissionContextProvider = ({ children }) => {
   // 是否顯示各控制元件，點地圖來toggle
   const [showControl, setShowControl] = useState(true)
   const handleToggleShowControl = useCallback(() => {
-    console.log(mapInstance?.getZoom()) // for testing
-    console.log(mapInstance?.getCenter().lat(), mapInstance?.getCenter().lng()) // for testing
     if (isInMission || isInEdit) return // 正在標注中就不能調整
     setShowControl(!showControl)
   }, [isInEdit, isInMission, showControl])
@@ -185,7 +183,6 @@ export const MissionContextProvider = ({ children }) => {
 
   const handleFixedTagPanTo = useCallback(
     (thisLocationName) => {
-      console.log(findUserLocation(thisLocationName)) // for testing
       const centerLatLng = findUserLocation(thisLocationName).coordinates
       const north = mapInstance.getBounds().getNorthEast().lat()
       const south = mapInstance.getBounds().getSouthWest().lat()
