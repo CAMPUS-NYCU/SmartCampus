@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles'
 import CustomButton from '../../../../components/CustomButton'
 
 import AllReferMarkers from './AllReferMarkers'
-import { findCategories } from '../../../../constants/res1ReferMarkers'
+import { findCategories } from '../../../../constants/res1FixedTagMissionConfig'
 
 const useStyles = makeStyles(() => ({
   grid: {

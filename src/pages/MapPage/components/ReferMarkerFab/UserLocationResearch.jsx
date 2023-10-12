@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Marker } from '@react-google-maps/api'
 
 import userMarkerIcon from '../../../../assets/images/res1-userLocation.svg'
-import { findUserLocation } from '../../../../constants/res1ReferMarkers'
+import { findUserLocation } from '../../../../constants/res1FixedTagMissionConfig'
 
 function UserLocationResearch(props) {
   const { locationName } = props

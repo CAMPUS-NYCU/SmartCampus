@@ -3,7 +3,7 @@ import { Marker } from '@react-google-maps/api'
 
 import referMarkerIcon from '../../../../assets/images/res1-referMarker.svg'
 // import referMarkerActivedIcon from '../../../../assets/images/res1-referMarkerActived.svg'
-import { findLocationData } from '../../../../constants/res1ReferMarkers'
+import { findLocationData } from '../../../../constants/res1FixedTagMissionConfig'
 
 function AllReferMarkers(props) {
   const { checkedItems, locationName } = props

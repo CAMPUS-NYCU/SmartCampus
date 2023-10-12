@@ -7,6 +7,7 @@ import outdoorFieldMarkers from './markers/markers_outdoorField.json' // 室外�
 import shineMoodAndCCMarkers from './markers/markers_shinemood_cc.json' // 小木屋&校計中
 import swimAndMultiGymMarkers from './markers/markers_swim_multiGym.json' // 游泳館和綜合球館
 import userLocationMarkers from './markers/entry_markers.json' // user location
+import locationCenters from './markers/location_centers.json' // 每個地點的 center
 
 function findLocationData(locationName) {
   let thisLocationData
@@ -58,4 +59,18 @@ function findUserLocation(locationName) {
   return null
 }
 
-export { findLocationData, findCategories, findUserLocation }
+function findLocationCenter(locationName) {
+  if (locationName) {
+    const matches = locationName.match(/[^a-zA-Z\d]+/g)
+    const pureLocationName = matches ? matches.join('') : ''
+
+    for (let i = 0; i < locationCenters.length; i += 1) {
+      if (locationCenters[i].locationName === pureLocationName) {
+        return locationCenters[i]
+      }
+    }
+  }
+  return null
+}
+
+export { findLocationData, findCategories, findUserLocation, findLocationCenter }
